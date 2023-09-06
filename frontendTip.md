@@ -22,7 +22,7 @@ android {
 class [엑티비티이름] : AppCompatActivity() {
 
     private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+        [엑티비티이름]Binding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,5 +32,25 @@ class [엑티비티이름] : AppCompatActivity() {
         binding.[뷰 이름].[동작]
     }
 
+}
+```
+
+주의 할 점: [엑티비티이름]이 "MainActivity"라면..  
+class MainActivity : AppCompatActivity() { 와 같이 쓰고,  
+ActivityMainBinding.inflate(layoutInflater) 와 같이 쓴다.  
+
+## 화면이동 및 데이터 전달  
+보내는 쪽  (MainActivity)  
+```kotlin
+val intent = Intent(this, SubActivity::class.java)  // [이동할 엑티비티 이름]::class.java
+intent.putExtra("key", "value") // intent.putExtra("[키]", "[값]")
+startActivity(intent)
+// finish() -> 엑티비티 파괴
+```
+
+받는 쪽 (SubActivity)  
+```kotlin
+if(intent.hasExtra("key")) {    // intent에 [키]의 값이 있다면 
+    binding.[뷰 이름].text = intent.getStringExtra("key")
 }
 ```

@@ -1,29 +1,31 @@
 # ID 규칙  
+ID 규칙은 snake_case로 표기하기로 규칙을 정함  
+아래는 자주 사용되는 ID 규칙에 대한 명시  
 
 ## Text  
-TextView: tv_[이름]  
-PlainText: et_[이름]  
-Password: pwd_[이름]  
+TextView: tv_[camelCase 이름]  
+PlainText: et_[camelCase 이름]  
+Password: pwd_[camelCase 이름]  
 
 ## Buttons  
-Button: btn_[이름]  
-ImageButton: imgbtn_[이름]  
-CheckBox: chkb_[이름]  
-Switch: sw_[이름]  
+Button: btn_[camelCase 이름]  
+ImageButton: imgbtn_[camelCase 이름]  
+CheckBox: chkb_[camelCase 이름]  
+Switch: sw_[camelCase 이름]  
 
 ## Widgets  
-View: v_[이름]  
-ImageView: imgv_[이름]  
-ScrollView: sv_[이름]  
+View: v_[camelCase 이름]  
+ImageView: imgv_[camelCase 이름]  
+ScrollView: sv_[camelCase 이름]  
 
 ## Layout
-LinearLayout(horizontal): llh_[이름]  
-LinearLayout(vertical): llv_[이름]  
-FrameLayout: fl_[이름]  
-TableLayout: tl_[이름]  
-Space: sp_[이름]  
+LinearLayout(horizontal): llh_[camelCase 이름]  
+LinearLayout(vertical): llv_[camelCase 이름]  
+FrameLayout: fl_[camelCase 이름]  
+TableLayout: tl_[camelCase 이름]  
+Space: sp_[camelCase 이름]  
 
 ## Containers  
 
 ## Activity  
-[대문자로 시작하는 Camel case]Activity  
+[PascalCase]Activity  
