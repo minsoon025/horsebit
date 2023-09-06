@@ -100,13 +100,9 @@ class [어뎁터 이름](val context: Context, val [리스트 이름]: ArrayList
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         val binding = [레이아웃 이름 PascalCase]Binding.inflate(LayoutInflater.from(context))
-
-        // 값 입력
-        val [변수 이름1] = binding.[뷰 이름]
-
         val [클래스 변수 이름] = [클래스 이름][position]
 
-        [변수 이름2].[타입] = [클래스 변수 이름].[변수 이름1]
+        binding.[뷰 이름].[타입] = [클래스 변수 이름].[변수 이름] // 값 이름
 
         return binding.root
     }
