@@ -9,13 +9,13 @@ Password: pwd_[camelCase 이름]
 
 ## Buttons  
 Button: btn_[camelCase 이름]  
-ImageButton: imgbtn_[camelCase 이름]  
+ImageButton: ibtn_[camelCase 이름]  
 CheckBox: chkb_[camelCase 이름]  
 Switch: sw_[camelCase 이름]  
 
 ## Widgets  
 View: v_[camelCase 이름]  
-ImageView: imgv_[camelCase 이름]  
+ImageView: iv_[camelCase 이름]  
 ScrollView: sv_[camelCase 이름]  
 
 ## Layout
@@ -26,6 +26,9 @@ TableLayout: tl_[camelCase 이름]
 Space: sp_[camelCase 이름]  
 
 ## Containers  
+
+## Legacy
+ListView: lv_[camelCase 이름]
 
 ## Activity  
 [PascalCase]Activity  
