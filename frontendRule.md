@@ -17,6 +17,7 @@ Switch: sw_[PascalCase 이름]
 View: v_[PascalCase 이름]  
 ImageView: iv_[PascalCase 이름]  
 ScrollView: sv_[PascalCase 이름]  
+WebView: wv_[PascalCase 이름]
 
 ## Layout
 LinearLayout(horizontal): llh_[PascalCase 이름]  

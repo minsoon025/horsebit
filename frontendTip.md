@@ -185,29 +185,45 @@ override fun onBackPressed() {
 ```
 
 ## Shared Preferences  
+[Gradle Scripts] -> [build.gradle] 에 아래와 같은 코드를 추가  
+```kotlin
+dependencies {
+    
+    // 생략
+
+    implementation 'androidx.preference:preference-ktx:1.2.1'
+    
+    // 생략
+}
+```
+그 후 Sync Now 링크를 클릭하여 싱크  
+
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(binding.root)
 
-    loadData()  // 엑티비티가 시작할 때 값을 불러옴
+    binding.[버튼 아이디].setOnClickListener {
+        saveData()  // 데이터 저장
+
+        val intent = Intent(this, [이동할 엑티비티 이름]::class.java)
+        startActivity(intent)
+    }
+
+    loadData()  // 데이터 불러오기
 }
 
 private fun loadData() {
-    val pref = getSharedPreferences("pref", 0)
-    binding.[값을 적용시킬 곳].setText(pref.getString("[key]", ""))
-}
+    val pref = PreferenceManager.getDefaultSharedPreferences(this)  // import androidx.preference.PreferenceManager 인지 확인
+
+    binding.[데이터를 쓸 곳].setText(pref.getString("[키]", "[키가 없을 경우의 값]"))
+}    
+
 private fun saveData() {
-    val pref = getSharedPreferences("pref", 0)  // 앱 내부에 pref 라는 파일이 생성됨
-    val edit = pref.edit()  // 수정 모드
+    val pref = PreferenceManager.getDefaultSharedPreferences(this)
+    val edit = pref.edit()  // edit을 수정하여 값을 변경
 
-    edit.putString("[key]", "[value]")
+    edit.putString("[키]", "[데이터]")
     edit.apply()    // 적용
-}
-
-override fun onDestroy() {  // 엑티비티가 종료되는 시점에 호출
-    super.onDestroy()
-
-    saveData()  // 데이터 저장
 }
 ```
