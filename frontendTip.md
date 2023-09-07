@@ -158,7 +158,7 @@ override fun onNavigationItemSelected(item: MenuItem): Boolean {
 }
 ```
 
-클릭되면 내비게이션이 나올 수 있도록 클릭 이벤트 연결
+클릭되면 내비게이션이 나올 수 있도록 클릭 이벤트 연결  
 ```
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -172,7 +172,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 
-내비게이션 바가 열려 있을 경우 뒤로가기 버튼을 누르면 내비게이션만 
+내비게이션 바가 열려 있을 경우 뒤로가기 버튼을 누르면 내비게이션만 닫힐 수 있도록  
 ```kotlin
 override fun onBackPressed() {
     if(binding.[DrawerLayout 아이디].isDrawerOpen(GravityCompat.START)){   // 내비게이션바가 열려 있을 경우
@@ -181,5 +181,33 @@ override fun onBackPressed() {
     else{   // 닫혀 있을 경우
         super.onBackPressed()
     }
+}
+```
+
+## Shared Preferences  
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(binding.root)
+
+    loadData()  // 엑티비티가 시작할 때 값을 불러옴
+}
+
+private fun loadData() {
+    val pref = getSharedPreferences("pref", 0)
+    binding.[값을 적용시킬 곳].setText(pref.getString("[key]", ""))
+}
+private fun saveData() {
+    val pref = getSharedPreferences("pref", 0)  // 앱 내부에 pref 라는 파일이 생성됨
+    val edit = pref.edit()  // 수정 모드
+
+    edit.putString("[key]", "[value]")
+    edit.apply()    // 적용
+}
+
+override fun onDestroy() {  // 엑티비티가 종료되는 시점에 호출
+    super.onDestroy()
+
+    saveData()  // 데이터 저장
 }
 ```
