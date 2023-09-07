@@ -27,7 +27,8 @@ TableLayout: tl_[PascalCase 이름]
 Space: sp_[PascalCase 이름]  
 
 ## Containers  
-NavigationView: nv_[PascalCase 이름]
+NavigationView: nv_[PascalCase 이름]  
+RecyclerView: rv_[PascalCase 이름]  
 
 ## Legacy
 ListView: lv_[PascalCase 이름]

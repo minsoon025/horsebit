@@ -227,3 +227,40 @@ private fun saveData() {
     edit.apply()    // 적용
 }
 ```
+
+## RecyclerView  
+리스트 뷰의 상위호환 버전이기 때문에 리사이클러 뷰를 많이 사용할 것  
+Adapter는 아래와 같은 기본 틀을 갖음  
+```kotlin
+class [어뎁터 이름](val [리스트 이름]: ArrayList<[리스트 클래스]>) : RecyclerView.Adapter<[어뎁터 이름].CustomViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): [어뎁터 이름].CustomViewHolder {
+        val binding = ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CustomViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int {
+        return [리스트 이름].size
+    }
+
+    override fun onBindViewHolder(holder: [어뎁터 이름].CustomViewHolder, position: Int) {
+        val [변수 이름] = [리스트 이름][position]
+        holder.bind([변수 이름])
+    }
+
+    class CustomViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind([변수 이름]: [변수 클래스]) {
+            binding.[레이아웃 변수 아이디].text = [변수 이름].[클래스 속성]
+        }
+    }
+
+}
+```
+
+리사이클러 뷰를 적용할 곳에는 다음과 같은 기본 틀을 갖음  
+```kotlin
+binding.[리사이클러 뷰 아이디].layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
+binding.[리사이클러 뷰 아이디].setHasFixedSize(true) // 성능 개선
+
+binding.[리사이클러 뷰 아이디].adapter = [어뎁터 이름]([데이터])
+```
