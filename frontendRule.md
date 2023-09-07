@@ -1,5 +1,5 @@
 # ID 규칙  
-ID 규칙은 snake_case로 표기하기로 규칙을 정함  
+ID 규칙은 snake_case와 PascalCase로 표기하기로 규칙을 정함  
 아래는 자주 사용되는 ID 규칙에 대한 명시  
 
 ## Text  
@@ -26,9 +26,13 @@ TableLayout: tl_[PascalCase 이름]
 Space: sp_[PascalCase 이름]  
 
 ## Containers  
+NavigationView: nv_[PascalCase 이름]
 
 ## Legacy
 ListView: lv_[PascalCase 이름]
+
+## 기타  
+DrawerLayout: layout_drawer_[PascalCase 이름]  
 
 ## Activity  
 [PascalCase]Activity  

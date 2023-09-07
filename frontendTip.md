@@ -1,7 +1,7 @@
 # 시작하기  
 
 ## gradle 파일 편집  
-[Gradle Scripts] -> [build.gradle] 에 다래와 같은 코드를 추가  
+[Gradle Scripts] -> [build.gradle] 에 아래와 같은 코드를 추가  
 ```kotlin
 android {
 
@@ -12,7 +12,6 @@ android {
     }
 }
 ```
-
 그 후 Sync Now 링크를 클릭하여 싱크  
 
 ## 공통된 엑티비티의 과정  
@@ -119,5 +118,68 @@ binding.[레이아웃 이름].onItemClickListener = AdapterView.OnItemClickListe
     val selectItem = parent.getItemAtPosition(position) as [클래스 이름]
 
     // selectItem.[변수 이름] 으로 데이터 출력 가능
+}
+```
+
+## 내비게이션 뷰  
+[Gradle Scripts] -> [build.gradle] 에 아래와 같은 코드를 추가  
+```kotlin
+dependencies {
+
+    // 생략
+
+    implementation 'com.google.android.material:material:1.9.0'
+    
+    // 생략
+}
+```
+그 후 Sync Now 링크를 클릭하여 싱크  
+
+[app] -> [res] 에서 우클릭 후 [New] -> [Android Resource Directory] 클릭 후 나오는 창에서 [Resource type] 에서 menu를 선택  
+생성된 [app] -> [res] -> [menu] 폴더에서 우클릭 후 [New] -> [Menu Resource File] 클릭 후 나오는 창에서 [File name]에 snake_case 파일명 [네비게이션 메뉴] 지정  
+[네비게이션 메뉴]에 group을 추가하고 checkableBehavior을 single로 설정  
+추가하고 싶은 메뉴 만큼 Menu item을 추가하고 id, title, icon 등을 설정  
+NavigationView를 화면에 배치하고 menu 속성을 [네비게이션 메뉴]로 지정, layout_gravity 속성을 start로 지정, id 지정  
+
+인터페이스 상송
+```kotlin
+class [엑티비티이름] : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+```
+
+onNavigationItemSelected 함수 오버라이딩  
+```kotlin
+override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+    when(item.itemId) {
+        R.id.[아이템의 아이디] -> [동작]
+    }
+    binding.[DrawerLayout 아이디].closeDrawers()    // 내비게이션 닫음
+    return false
+}
+```
+
+클릭되면 내비게이션이 나올 수 있도록 클릭 이벤트 연결
+```
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(binding.root)
+
+    binding.[이미지 뷰 이름].setOnClickListener {   // 이미지 뷰를 클릭하면
+        binding.[DrawerLayout 아이디].openDrawer(GravityCompat.START)  // LEFT에서 시작해서 밀기
+    }
+
+    binding.[NavigationView 이름].setNavigationItemSelectedListener(this)
+}
+```
+
+내비게이션 바가 열려 있을 경우 뒤로가기 버튼을 누르면 내비게이션만 
+```kotlin
+override fun onBackPressed() {
+    if(binding.[DrawerLayout 아이디].isDrawerOpen(GravityCompat.START)){   // 내비게이션바가 열려 있을 경우
+        binding.[DrawerLayout 아이디].closeDrawers()
+    }
+    else{   // 닫혀 있을 경우
+        super.onBackPressed()
+    }
 }
 ```
