@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <TextView
+        android:id="@+id/tv_MainTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="거래소"
+        android:textColor="#171717"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llh_TableTop"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llh_MainFilter">
+
+        <TextView
+            android:id="@+id/tv_AssetName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:text="자산명"
+            android:textColor="#171717" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/iv_AssetNameUp"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_up_24" />
+
+            <ImageView
+                android:id="@+id/iv_AssetNameDown"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_down_24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_CurrentPrice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:text="현재가"
+            android:textColor="#171717" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/iv_CurrentPriceUp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_up_24" />
+
+            <ImageView
+                android:id="@+id/iv_CurrentPriceDown"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_down_24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_YesterdayPrice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:text="변동가(어제)"
+            android:textColor="#171717" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/iv_YesterdayPriceUp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_up_24" />
+
+            <ImageView
+                android:id="@+id/iv_YesterdayPriceDown"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_down_24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_TransactionPrice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:text="거래금액"
+            android:textColor="#171717" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/iv_TransactionPriceUp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_up_24" />
+
+            <ImageView
+                android:id="@+id/iv_TransactionPriceDown"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/baseline_arrow_drop_down_24" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llh_MainFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:weightSum="11"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_MainTitle">
+
+        <LinearLayout
+            android:id="@+id/llv_Whole"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_Whole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:gravity="center"
+                android:text="전체"
+                android:textColor="#171717"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_Whole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_horizontal_rule_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llv_Hold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_Hold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:gravity="center"
+                android:text="보유"
+                android:textColor="#171717"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_Hold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_horizontal_rule_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llv_Interest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_Interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:gravity="center"
+                android:text="관심"
+                android:textColor="#171717"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_Interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_horizontal_rule_24" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llh_Setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_Search"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_search_24" />
+
+        <ImageView
+            android:id="@+id/iv_Alarm"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/baseline_notifications_none_24" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llh_TableTop" />
+</androidx.constraintlayout.widget.ConstraintLayout>
