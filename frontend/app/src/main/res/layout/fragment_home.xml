@@ -22,7 +22,9 @@
         android:id="@+id/llh_TableTop"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:weightSum="100"
@@ -34,10 +36,11 @@
             android:id="@+id/tv_AssetName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"
+            android:layout_weight="26"
             android:gravity="center"
             android:text="자산명"
-            android:textColor="#171717" />
+            android:textColor="#171717"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -65,10 +68,11 @@
             android:id="@+id/tv_CurrentPrice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"
+            android:layout_weight="18"
             android:gravity="center"
             android:text="현재가"
-            android:textColor="#171717" />
+            android:textColor="#171717"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -96,10 +100,11 @@
             android:id="@+id/tv_YesterdayPrice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"
+            android:layout_weight="18"
             android:gravity="center"
             android:text="변동가(어제)"
-            android:textColor="#171717" />
+            android:textColor="#171717"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -127,10 +132,11 @@
             android:id="@+id/tv_TransactionPrice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"
+            android:layout_weight="18"
             android:gravity="center"
             android:text="거래금액"
-            android:textColor="#171717" />
+            android:textColor="#171717"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -268,8 +274,11 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_AssetTable"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
