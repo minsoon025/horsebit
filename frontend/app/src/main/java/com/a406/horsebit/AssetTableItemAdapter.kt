@@ -1,14 +1,14 @@
 package com.a406.horsebit
 
-import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.AssetTableItemBinding
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 
 class AssetTableItemAdapter(val assetItemList: ArrayList<AssetItem>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>() {
@@ -35,9 +35,17 @@ class AssetTableItemAdapter(val assetItemList: ArrayList<AssetItem>) : RecyclerV
             binding.ivNew.setImageResource(R.drawable.baseline_face_24)
             if(assetItem.new) {binding.ivNew.isVisible = true}
             else {binding.ivNew.isInvisible = true}
+
+            var color = ContextCompat.getColor(binding.root.context, R.color.black)
+
+            if(assetItem.yesterdayPrice > 0) {color = ContextCompat.getColor(binding.root.context, R.color.red)}
+            else if(assetItem.yesterdayPrice < 0) {color = ContextCompat.getColor(binding.root.context, R.color.blue)}
+
+            binding.tvItemCurrentPrice.setTextColor(color)
+            binding.tvItemYesterdayPrice.setTextColor(color)
             binding.tvItemCurrentPrice.text = assetItem.currentPrice.toString()
-            binding.tvItemYesterdayPrice.text = assetItem.yesterdayPrice.toString()
-            binding.tvItemTransactionPrice.text = assetItem.transactionPrice.toString()
+            binding.tvItemYesterdayPrice.text = "${assetItem.yesterdayPrice.toString()}%"
+            binding.tvItemTransactionPrice.text = "${assetItem.transactionPrice.toString()}만원"
         }
     }
 
