@@ -264,3 +264,54 @@ binding.[리사이클러 뷰 아이디].setHasFixedSize(true) // 성능 개선
 
 binding.[리사이클러 뷰 아이디].adapter = [어뎁터 이름]([데이터])
 ```
+
+## Fragment
+[app] -> [java] -> [com.[페키지이름].[프로젝트 이름]] -> [New] -> [Fragment] -> [Gallery] -> [Fragment (Blank)]를 선택  
+[Fragment Name] 을 PascalCase로 작성하되, [PascalCase]Fragment의 규칙을 지켜서 생성함  
+
+생성된 프래그먼트는 아래와 같은 기본틀을 갖음  
+```kotlin
+class [프래그먼트 이름] : Fragment() {
+
+    private lateinit var binding: [프래그먼트 이름]Binding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.[프래그먼트 이름], container, false)
+
+        binding = [프래그먼트 이름]Binding.bind(view)    
+
+        return view
+    }
+}
+```
+프래그먼트를 변경할 경우는 아래와 같이 동작  
+```kotlin
+private fun [함수 이름]() {
+    val ft = requireActivity().supportFragmentManager.beginTransaction()
+    val [프래그먼트 변수 이름] = [변경할 프래그먼트 이름]()
+
+    ft.replace([갈아 끼울 곳의 ID], [프래그먼트 변수 이름])
+    ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+    ft.commit()
+}
+```
+
+프래그먼트간 데이터를 전송할 경우는 아래와 같은 코드를 추가  
+```kotlin
+private fun [함수 이름]() {
+    val ft = requireActivity().supportFragmentManager.beginTransaction()
+    val bundle = Bundle()        
+    val [프래그먼트 변수 이름] = [변경할 프래그먼트 이름]()
+
+    bundle.putString("[키]", "[값]")
+
+    ft.replace([갈아 끼울 곳의 ID], [프래그먼트 변수 이름])
+    ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+    ft.commit()
+}
+```
+
+데이터를 받는 곳은 아래와 같은 코드로 받을 수 있음
+```kotlin
+binding.[데이터를 받을 곳].text = arguments?.getString("[키]").toString()
+```
