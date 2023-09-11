@@ -1,6 +1,7 @@
 package com.a406.horsebit
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,46 @@ class HomeFragment : Fragment() {
         binding.rvAssetTable.setHasFixedSize(true) // 성능 개선
 
         binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+
+        binding.ivAssetNameUp.setOnClickListener {  // 자산명 내림차순 정렬
+            AssetItemList.sortByDescending { it.assetName }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
+
+        binding.ivAssetNameDown.setOnClickListener {    // 자산명 오름차순 정렬
+            AssetItemList.sortBy { it.assetName }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
+
+        binding.ivCurrentPriceUp.setOnClickListener { // 현재가 오름차순 정렬
+            AssetItemList.sortBy { it.currentPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
+
+        binding.ivCurrentPriceDown.setOnClickListener { // 현재가 내림차순 정렬
+            AssetItemList.sortByDescending { it.currentPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
+
+        binding.ivYesterdayPriceUp.setOnClickListener {
+            AssetItemList.sortBy { it.yesterdayPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
+
+        binding.ivYesterdayPriceDown.setOnClickListener {
+            AssetItemList.sortByDescending { it.yesterdayPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
+
+        binding.ivTransactionPriceUp.setOnClickListener {
+            AssetItemList.sortBy { it.transactionPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
+
+        binding.ivTransactionPriceDown.setOnClickListener {
+            AssetItemList.sortByDescending { it.transactionPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        }
 
         return view
     }
