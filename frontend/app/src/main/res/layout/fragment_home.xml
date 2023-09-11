@@ -276,15 +276,15 @@
 
         <ImageView
             android:id="@+id/iv_Search"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/baseline_search_24" />
 
         <ImageView
             android:id="@+id/iv_Alarm"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/baseline_notifications_none_24" />
     </LinearLayout>
