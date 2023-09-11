@@ -6,4 +6,5 @@
     <color name="normal_hover">#FF448FAE</color>
     <color name="red">#FFFF0000</color>
     <color name="blue">#FF0038FF</color>
+    <color name="main_color">#FF4C9FC1</color>
 </resources>
