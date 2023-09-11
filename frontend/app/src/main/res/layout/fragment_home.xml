@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/line_seed_kr_rg"
+        android:includeFontPadding="false"
         android:text="거래소"
         android:textColor="#171717"
         android:textSize="24sp"
@@ -37,7 +39,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="26"
+            android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="자산명"
             android:textColor="#171717"
             android:textSize="12sp" />
@@ -69,7 +73,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="18"
+            android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="현재가"
             android:textColor="#171717"
             android:textSize="12sp" />
@@ -101,7 +107,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="18"
+            android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="변동가(어제)"
             android:textColor="#171717"
             android:textSize="12sp" />
@@ -133,7 +141,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="18"
+            android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="거래금액"
             android:textColor="#171717"
             android:textSize="12sp" />
@@ -185,7 +195,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
+                android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center"
+                android:includeFontPadding="false"
                 android:text="전체"
                 android:textColor="#171717"
                 android:textSize="16sp" />
@@ -209,7 +221,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
+                android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center"
+                android:includeFontPadding="false"
                 android:text="보유"
                 android:textColor="#171717"
                 android:textSize="16sp" />
@@ -233,7 +247,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="3"
+                android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center"
+                android:includeFontPadding="false"
                 android:text="관심"
                 android:textColor="#171717"
                 android:textSize="16sp" />

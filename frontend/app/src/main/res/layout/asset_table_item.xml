@@ -40,7 +40,9 @@
                     android:id="@+id/tv_ItemAssetName"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
+                    android:includeFontPadding="false"
                     android:text="TextView"
                     android:textColor="#171717" />
 
@@ -59,7 +61,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
                 android:text="TextView"
                 android:textSize="8sp" />
         </LinearLayout>
@@ -69,7 +73,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="23"
+            android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="right|center_vertical"
+            android:includeFontPadding="false"
             android:text="TextView"
             android:textSize="10sp" />
 
@@ -78,7 +84,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="23"
+            android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="right|center_vertical"
+            android:includeFontPadding="false"
             android:text="TextView"
             android:textSize="10sp" />
 
@@ -87,7 +95,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="23"
+            android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="right|center_vertical"
+            android:includeFontPadding="false"
             android:text="TextView"
             android:textSize="10sp" />
 
