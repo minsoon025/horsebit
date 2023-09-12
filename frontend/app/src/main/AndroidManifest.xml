@@ -19,9 +19,6 @@
             android:name=".LoginRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginPassActivity"
-            android:exported="false" />
-        <activity
             android:name=".LoginMainActivity"
             android:exported="false" />
         <activity
