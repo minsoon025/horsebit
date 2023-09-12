@@ -85,14 +85,6 @@ class HomeFragment : Fragment() {
             binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
         }
 
-        binding.btnTmp.setOnClickListener {
-            Log.d("asdfdsaf", "asdfsadf")
-
-            val intent = Intent(requireActivity(), OrderActivity::class.java)
-
-            startActivity(intent)
-        }
-
         return view
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".OrderActivity">
 
     <ImageView
@@ -25,7 +25,8 @@
         android:fontFamily="@font/line_seed_kr_rg"
         android:includeFontPadding="false"
         android:text="TextView"
-        android:textSize="48sp"
+        android:textColor="@color/black"
+        android:textSize="34sp"
         app:layout_constraintStart_toEndOf="@+id/iv_GoBack"
         app:layout_constraintTop_toTopOf="@+id/iv_GoBack" />
 
@@ -37,6 +38,7 @@
         android:fontFamily="@font/line_seed_kr_rg"
         android:includeFontPadding="false"
         android:text="TextView"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/tv_Title"
         app:layout_constraintTop_toBottomOf="@+id/tv_Title" />
@@ -49,6 +51,7 @@
         android:fontFamily="@font/line_seed_kr_rg"
         android:includeFontPadding="false"
         android:text="TextView"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/tv_CurrPrice"
         app:layout_constraintStart_toEndOf="@+id/tv_CurrPrice" />
 
@@ -62,13 +65,14 @@
         app:srcCompat="@drawable/baseline_arrow_drop_up_24" />
 
     <TextView
-        android:id="@+id/tv_PercntageYesterday2"
+        android:id="@+id/tv_RisePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/line_seed_kr_rg"
         android:includeFontPadding="false"
         android:text="TextView"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/iv_UpOrDown"
         app:layout_constraintStart_toEndOf="@+id/iv_UpOrDown" />
 
@@ -92,7 +96,7 @@
         app:srcCompat="@drawable/baseline_notifications_none_24" />
 
     <LinearLayout
-        android:id="@+id/llh_OderTable"
+        android:id="@+id/llh_OderTableHeader"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
@@ -119,6 +123,16 @@
                 android:text="주문"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_StockOrder"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_gravity="bottom"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/baseline_horizontal_rule_24"
+                app:tint="@color/white" />
+
         </FrameLayout>
 
         <FrameLayout
@@ -138,17 +152,26 @@
                 android:text="차트"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_StockChart"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_gravity="bottom"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/baseline_horizontal_rule_24"
+                app:tint="@color/white" />
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/fl_StockInfomation"
+            android:id="@+id/fl_StockInformation"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/background">
 
             <TextView
-                android:id="@+id/tv_StockInfomation"
+                android:id="@+id/tv_StockInformation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/line_seed_kr_rg"
@@ -157,6 +180,27 @@
                 android:text="정보"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_StockInformation"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_gravity="bottom"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/baseline_horizontal_rule_24"
+                app:tint="@color/white" />
         </FrameLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_Order"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llh_OderTableHeader">
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

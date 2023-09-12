@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                 ft.addToBackStack(null)
                 ft.commit()
             }
-
         }
     }
 }
