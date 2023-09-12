@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".OrderActivity">
+
+    <ImageView
+        android:id="@+id/iv_GoBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
+
+    <TextView
+        android:id="@+id/tv_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/line_seed_kr_rg"
+        android:includeFontPadding="false"
+        android:text="TextView"
+        android:textSize="48sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_GoBack"
+        app:layout_constraintTop_toTopOf="@+id/iv_GoBack" />
+
+    <TextView
+        android:id="@+id/tv_CurrPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/line_seed_kr_rg"
+        android:includeFontPadding="false"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_Title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Title" />
+
+    <TextView
+        android:id="@+id/tv_PercntageYesterday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/line_seed_kr_rg"
+        android:includeFontPadding="false"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_CurrPrice"
+        app:layout_constraintStart_toEndOf="@+id/tv_CurrPrice" />
+
+    <ImageView
+        android:id="@+id/iv_UpOrDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_PercntageYesterday"
+        app:layout_constraintStart_toEndOf="@+id/tv_PercntageYesterday"
+        app:srcCompat="@drawable/baseline_arrow_drop_up_24" />
+
+    <TextView
+        android:id="@+id/tv_PercntageYesterday2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/line_seed_kr_rg"
+        android:includeFontPadding="false"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_UpOrDown"
+        app:layout_constraintStart_toEndOf="@+id/iv_UpOrDown" />
+
+    <ImageView
+        android:id="@+id/iv_FavoriteOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_star_border_24" />
+
+    <ImageView
+        android:id="@+id/iv_AlarmOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_FavoriteOrder"
+        app:layout_constraintEnd_toStartOf="@+id/iv_FavoriteOrder"
+        app:srcCompat="@drawable/baseline_notifications_none_24" />
+
+    <LinearLayout
+        android:id="@+id/llh_OderTable"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_PercntageYesterday">
+
+        <FrameLayout
+            android:id="@+id/fl_StockOrder"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/background">
+
+            <TextView
+                android:id="@+id/tv_StockOrder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="주문"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_StockChart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/background">
+
+            <TextView
+                android:id="@+id/tv_StockChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="차트"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_StockInfomation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/background">
+
+            <TextView
+                android:id="@+id/tv_StockInfomation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="정보"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </FrameLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
