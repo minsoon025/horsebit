@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import com.a406.horsebit.databinding.FragmentMoreBinding
 
 class MoreFragment : Fragment() {
@@ -29,6 +30,22 @@ class MoreFragment : Fragment() {
 
             // 액티비티를 실행하여 웹 페이지로 이동
             startActivity(intent)
+        }
+
+        // lih_InOut LinearLayout에 클릭 리스너를 추가
+        binding.lihInOut.setOnClickListener {
+
+            // FragmentTransaction을 시작하여 화면 전환
+            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val ft = requireActivity().supportFragmentManager.beginTransaction()
+
+            val exchangeFragment = ExchangeFragment()
+
+            ft.replace(R.id.fl_MainFrameLayout, exchangeFragment)
+            ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+            ft.commit()
+
+
         }
 
         return view
