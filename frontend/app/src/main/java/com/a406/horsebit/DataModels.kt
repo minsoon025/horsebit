@@ -9,3 +9,9 @@ data class AssetItem(
     val yesterdayPrice: Double,
     val transactionPrice: Double,
 )
+
+data class Order(
+    val price: Long,
+    val volume: Long,
+    val trend: Double,
+)

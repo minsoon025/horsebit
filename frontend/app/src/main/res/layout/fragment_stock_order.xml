@@ -12,6 +12,7 @@
         android:weightSum="10">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_Order"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4">

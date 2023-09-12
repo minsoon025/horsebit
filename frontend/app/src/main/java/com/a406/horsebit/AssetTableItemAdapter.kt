@@ -1,19 +1,14 @@
 package com.a406.horsebit
 
 import android.content.Intent
-import android.graphics.Color
-import android.os.Bundle
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.AssetTableItemBinding
-
 
 class AssetTableItemAdapter(val assetItemList: ArrayList<AssetItem>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>() {
 

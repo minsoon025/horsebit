@@ -14,7 +14,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    val AssetItemList = arrayListOf(
+    val assetItemList = arrayListOf(
         AssetItem(R.drawable.baseline_dashboard_customize_24, "보겸코인", "YBC", false, 22.0, -0.45, 44.3),
         AssetItem(R.drawable.baseline_dashboard_customize_24, "임서희코인", "BTC", true, 2.4, 12.4, 44.33),
         AssetItem(R.drawable.baseline_dashboard_customize_24, "팀장님은발표", "BBB", true, 2222.4, -2.2, 4.3),
@@ -43,46 +43,46 @@ class HomeFragment : Fragment() {
         binding.rvAssetTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
         binding.rvAssetTable.setHasFixedSize(true) // 성능 개선
 
-        binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+        binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
 
         binding.ivAssetNameUp.setOnClickListener {  // 자산명 내림차순 정렬
-            AssetItemList.sortByDescending { it.assetName }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortByDescending { it.assetName }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         binding.ivAssetNameDown.setOnClickListener {    // 자산명 오름차순 정렬
-            AssetItemList.sortBy { it.assetName }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortBy { it.assetName }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         binding.ivCurrentPriceUp.setOnClickListener { // 현재가 오름차순 정렬
-            AssetItemList.sortBy { it.currentPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortBy { it.currentPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         binding.ivCurrentPriceDown.setOnClickListener { // 현재가 내림차순 정렬
-            AssetItemList.sortByDescending { it.currentPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortByDescending { it.currentPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         binding.ivYesterdayPriceUp.setOnClickListener {
-            AssetItemList.sortBy { it.yesterdayPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortBy { it.yesterdayPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         binding.ivYesterdayPriceDown.setOnClickListener {
-            AssetItemList.sortByDescending { it.yesterdayPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortByDescending { it.yesterdayPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         binding.ivTransactionPriceUp.setOnClickListener {
-            AssetItemList.sortBy { it.transactionPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortBy { it.transactionPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         binding.ivTransactionPriceDown.setOnClickListener {
-            AssetItemList.sortByDescending { it.transactionPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(AssetItemList)
+            assetItemList.sortByDescending { it.transactionPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
         return view

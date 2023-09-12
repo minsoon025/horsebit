@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/llv_OrderBack"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#C32B2B"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/v_TopLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EFEFEF" />
+
+        <LinearLayout
+            android:id="@+id/llh_OrderItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="200">
+
+            <LinearLayout
+                android:id="@+id/llv_LeftText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="115"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tv_Price"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="right|center_vertical"
+                    android:includeFontPadding="false"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/tv_Trend"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="right|center_vertical"
+                    android:includeFontPadding="false"
+                    android:text="TextView" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
+
+            <View
+                android:id="@+id/v_buttomLine3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#EFEFEF" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/tv_Volume"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="74"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/v_buttomLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EFEFEF" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
