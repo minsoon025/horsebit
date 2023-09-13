@@ -162,10 +162,10 @@
                     android:layout_weight="3" />
 
                 <TextView
-                    android:id="@+id/tv__UnderrAgree1"
+                    android:id="@+id/tv_UnderAgree1"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="68"
+                    android:layout_weight="67"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
                     android:text="[필수] 홀스빗 이용약관  "
@@ -176,7 +176,7 @@
                     android:id="@+id/tv_LookingText1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
+                    android:layout_weight="6"
                     android:ems="10"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_horizontal"
@@ -263,10 +263,10 @@
                     android:layout_weight="3" />
 
                 <TextView
-                    android:id="@+id/tv__UnderrAgree2"
+                    android:id="@+id/tv_UnderAgree2"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="68"
+                    android:layout_weight="67"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
                     android:text="[필수] 개인정보 처리방침"
@@ -277,19 +277,20 @@
                     android:id="@+id/tv_LookingText2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="10"
+                    android:layout_weight="6"
                     android:ems="10"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_horizontal"
                     android:inputType="textMultiLine"
                     android:text="보기"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:background="@drawable/underline"/>
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2" />
+                    android:layout_weight="5" />
             </LinearLayout>
 
 
@@ -364,10 +365,10 @@
                     android:layout_weight="3" />
 
                 <TextView
-                    android:id="@+id/tv__UnderrAgree3"
+                    android:id="@+id/tv_UnderAgree3"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="70"
+                    android:layout_weight="67"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
                     android:text="[필수] 청소년 보호정책"
@@ -378,20 +379,21 @@
                     android:id="@+id/tv_LookingText3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="10"
+                    android:layout_weight="6"
                     android:ems="10"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_horizontal"
                     android:inputType="textMultiLine"
                     android:text="보기"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:background="@drawable/underline"/>
 
                 <Space
                     android:id="@+id/sp_underagreeright3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2" />
+                    android:layout_weight="5" />
             </LinearLayout>
 
             <LinearLayout
@@ -465,10 +467,10 @@
                     android:layout_weight="3" />
 
                 <TextView
-                    android:id="@+id/tv__UnderrAgree4"
+                    android:id="@+id/tv_UnderAgree4"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="70"
+                    android:layout_weight="67"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
                     android:text="[선택] 이벤트 및 정보수신"
@@ -479,20 +481,21 @@
                     android:id="@+id/tv_LookingText4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="10"
+                    android:layout_weight="6"
                     android:ems="10"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_horizontal"
                     android:inputType="textMultiLine"
                     android:text="보기"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:background="@drawable/underline"/>
 
                 <Space
                     android:id="@+id/sp_underagreeright4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2" />
+                    android:layout_weight="5" />
             </LinearLayout>
 
             <LinearLayout
@@ -592,109 +595,6 @@
                     android:layout_weight="10" />
             </LinearLayout>
 
-            <Space
-                android:id="@+id/sp_MainRegisterV7"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-            <LinearLayout
-                android:id="@+id/llh_InviteTitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="100"
-                android:orientation="horizontal">
-
-                <Space
-                    android:id="@+id/sp_InviteTitleLeft"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-
-                <TextView
-                    android:id="@+id/tv_InviteTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="15"
-                    android:fontFamily="@font/line_seed_kr_rg"
-                    android:gravity="center_vertical"
-                    android:text="초대코드"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_InviteTitle2"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="65"
-                    android:fontFamily="@font/line_seed_kr_rg"
-                    android:gravity="center_vertical"
-                    android:text="이벤트 및 정보수신 동의 후 이용 가능"
-                    android:textColor="@color/font_gray" />
-
-                <Space
-                    android:id="@+id/sp_InviteTitleRight"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-            </LinearLayout>
-
-            <Space
-                android:id="@+id/sp_MainRegisterV6"
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-            <LinearLayout
-                android:id="@+id/llh_InviteCode"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="100"
-                android:orientation="horizontal">
-
-                <Space
-                    android:id="@+id/sp_InviteCodeLeft"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-
-                <FrameLayout
-                    android:id="@+id/fl_InviteCode"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="80">
-
-                    <View
-                        android:id="@+id/v_InviteCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="80"
-                        android:background="@drawable/rounded_shape_filled_ractangle" />
-
-
-                    <EditText
-                        android:id="@+id/et_InviteCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:ems="10"
-                        android:fontFamily="@font/line_seed_kr_rg"
-                        android:hint="초대코드 입력"
-                        android:inputType="text"
-                        android:padding="10dp"
-                        android:background="@android:color/transparent"
-                        android:textColorHint="@color/font_gray"
-                        android:textSize="14sp" />
-
-
-
-
-
-                </FrameLayout>
-
-                <Space
-                    android:id="@+id/sp_InviteCodeRight"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-            </LinearLayout>
 
             <Space
                 android:id="@+id/sp_MainRegisterV8"
