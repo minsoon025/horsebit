@@ -165,7 +165,7 @@
                     android:id="@+id/tv__UnderrAgree1"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="70"
+                    android:layout_weight="68"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
                     android:text="[필수] 홀스빗 이용약관  "
@@ -176,19 +176,20 @@
                     android:id="@+id/tv_LookingText1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="10"
+                    android:layout_weight="5"
                     android:ems="10"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_horizontal"
                     android:inputType="textMultiLine"
                     android:text="보기"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:background="@drawable/underline"/>
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2" />
+                    android:layout_weight="5" />
             </LinearLayout>
 
             <LinearLayout
@@ -265,7 +266,7 @@
                     android:id="@+id/tv__UnderrAgree2"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="70"
+                    android:layout_weight="68"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
                     android:text="[필수] 개인정보 처리방침"
