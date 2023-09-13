@@ -73,7 +73,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView"
                     android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:layout_height="80dp"
                     android:layout_weight="5"
                     android:elevation="2dp"
                     android:scaleType="centerCrop"
@@ -85,9 +85,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="10"
                     android:gravity="center_vertical"
-                    android:text="안돼 내돈 🖊"
+                    android:text="   안돼 내돈 🖊"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="24sp" />
 
                 <Space
                     android:layout_width="0dp"
@@ -116,14 +116,97 @@
                 android:id="@+id/tv_BankInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="       계좌정보"
+                android:text="    계좌정보"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="22sp"
+                android:textAlignment="viewStart" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="0" />
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterGone1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_GoneSpageSquireLeft1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Gone1"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="88">
+
+                    <!-- 상단 계좌번호 입력란 -->
+
+                    <!-- 하단 은행/증권사 Spinner -->
+                    <EditText
+                        android:id="@+id/et_account_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="78dp"
+                        android:background="@drawable/rounded_shape_ractangle"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:hint="  계좌번호"
+                        android:padding="10dp"
+                        android:textColor="#000000" />
+
+                    <Spinner
+                        android:id="@+id/spinner_bank_or_securities"
+                        android:layout_width="match_parent"
+                        android:layout_height="78dp"
+                        android:layout_below="@id/et_account_number"
+                        android:layout_gravity="bottom"
+                        android:background="@drawable/rounded_shape_ractangle"
+                        android:fontFamily="@font/line_seed_kr_rg" />
+                </FrameLayout>
+
+
+                <Space
+                    android:id="@+id/sp_GoneSpageSquireRight1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_weight="0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="8"
+                    android:background="@color/ic_icon_background"
+                    android:text="로그아웃"
+                    android:textColor="@color/black" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
