@@ -1,5 +1,6 @@
 package com.a406.horsebit
 
+import android.content.Intent
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,16 @@ class LoginMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        //binding.tvLoginPass.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        binding.ivGoogleLogin.setOnClickListener {
+            val intent = Intent(binding.root.context, LoginRegisterActivity::class.java)
+            binding.root.context.startActivity(intent)
+        }
+
+        binding.tvLoginPass.setOnClickListener {
+            val intent = Intent(binding.root.context, MainActivity::class.java)
+            binding.root.context.startActivity(intent)
+        }
     }
+
 }

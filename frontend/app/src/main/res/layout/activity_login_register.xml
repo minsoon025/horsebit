@@ -172,7 +172,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/tv_LookingText1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -195,7 +195,8 @@
                 android:id="@+id/llh_RegisterGone1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <Space
                     android:id="@+id/sp_GoneSpageSquireLeft1"
@@ -271,7 +272,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/tv_LookingText2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -295,7 +296,8 @@
                 android:id="@+id/llh_RegisterGone2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <Space
                     android:id="@+id/sp_GoneSpageLeft2"
@@ -371,7 +373,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/tv_LookingText3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -395,7 +397,8 @@
                 android:id="@+id/llh_RegisterGone3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <Space
                     android:id="@+id/sp_GoneSpageLeft3"
@@ -471,7 +474,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/tv_LookingText4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -495,7 +498,8 @@
                 android:id="@+id/llh_RegisterGone4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <Space
                     android:id="@+id/sp_GoneSpageLeft4"
@@ -576,6 +580,7 @@
                         android:text="- 만 19세 이상인 경우 정상적인 서비스 이용이 가능합니다. \n - 국내 비거주 중이신 고객은 서비스 이용에 제한이 있습니다. \n - 국적이 금융당국에서 이용을 제한한 국가인 경우 거래가 제한될 수 있습니다."
                         android:textColor="@color/font_gray"
                         android:textSize="12sp" />
+
 
                 </FrameLayout>
 
@@ -664,15 +669,23 @@
                         android:background="@drawable/rounded_shape_filled_ractangle" />
 
 
-                    <TextView
-                        android:id="@+id/tv_InviteCode"
+                    <EditText
+                        android:id="@+id/et_InviteCode"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:ems="10"
                         android:fontFamily="@font/line_seed_kr_rg"
-                        android:gravity="center_vertical"
+                        android:hint="초대코드 입력"
+                        android:inputType="text"
                         android:padding="10dp"
-                        android:text="초대코드 입력" />
+                        android:background="@android:color/transparent"
+                        android:textColorHint="@color/font_gray"
+                        android:textSize="14sp" />
+
+
+
+
+
                 </FrameLayout>
 
                 <Space
@@ -770,6 +783,360 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
+
+
+
+            <LinearLayout
+                android:id="@+id/llh_PasswordTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/tv_Password"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"
+                    android:fontFamily="@font/line_seed_kr_bd"
+                    android:text="비밀번호를 입력하세요."
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_Password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Password"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="80">
+
+                    <View
+                        android:id="@+id/v_Password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="80"
+                        android:background="@drawable/rounded_shape_filled_ractangle" />
+
+
+                    <EditText
+                        android:id="@+id/et_PasswordMake"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:hint="비밀번호 입력"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:background="@android:color/transparent"
+                        android:textColorHint="@color/font_gray"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_PasswordCheck1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_PasswordCheck1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageView
+                    android:id="@+id/iv_PasswordCheck1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/check__grey" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/tv__PasswordCheck1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="80"
+                    android:fontFamily="@font/line_seed_kr_bd"
+                    android:gravity="center_vertical"
+                    android:text="10자리 이상 입력"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_PasswordCheck2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_PasswordCheck2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageView
+                    android:id="@+id/iv_PasswordCheck2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/check__grey" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/tv__PasswordCheck2"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="80"
+                    android:fontFamily="@font/line_seed_kr_bd"
+                    android:gravity="center_vertical"
+                    android:text="영문 대, 소문자 포함"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_PasswordCheck3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_PasswordCheck3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageView
+                    android:id="@+id/iv_PasswordCheck3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/check__grey" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/tv__PasswordCheck3"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="80"
+                    android:fontFamily="@font/line_seed_kr_bd"
+                    android:gravity="center_vertical"
+                    android:text="숫자 포함"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_Password2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Password2"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="80">
+
+                    <View
+                        android:id="@+id/v_Password2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="80"
+                        android:background="@drawable/rounded_shape_filled_ractangle" />
+
+
+                    <EditText
+                        android:id="@+id/et_PasswordMake2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:hint="비밀번호 확인"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:background="@android:color/transparent"
+                        android:textColorHint="@color/font_gray"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_PasswordConFirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/tv_PasswordConFirm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:text="비밀번호가 다릅니다"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterFinal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_RegisterFinal"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="80">
+
+                    <View
+                        android:id="@+id/v_RegisterFinal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="80"
+                        android:background="@drawable/rounded_shape_grey_ractangle" />
+
+                    <TextView
+                        android:id="@+id/tv_InviteCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="회원가입 시작"
+                        android:textSize="20sp" />
+
+                </FrameLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
 
         </LinearLayout>
     </ScrollView>
