@@ -15,6 +15,6 @@ class LoginMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.tvLoginPass.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        //binding.tvLoginPass.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 }

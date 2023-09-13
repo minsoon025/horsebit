@@ -85,6 +85,11 @@ class HomeFragment : Fragment() {
             binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
         }
 
+        binding.btnTmp.setOnClickListener {
+            val intent = Intent(binding.root.context, LoginMainActivity::class.java)
+            binding.root.context.startActivity(intent)
+        }
+
         return view
     }
 }
