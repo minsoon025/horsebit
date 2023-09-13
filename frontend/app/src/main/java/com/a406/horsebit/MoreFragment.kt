@@ -48,6 +48,21 @@ class MoreFragment : Fragment() {
 
         }
 
+        // lih_EditMe LinearLayout에 클릭 리스너를 추가
+        binding.lihEditMe.setOnClickListener {
+
+            // FragmentTransaction을 시작하여 화면 전환
+            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val ft = requireActivity().supportFragmentManager.beginTransaction()
+
+            val myEditFragment = MyEditFragment()
+
+            // FragmentTransaction을 시작하여 화면 전환
+            ft.replace(R.id.fl_MainFrameLayout, myEditFragment) // R.id.fragment_container는 Fragment를 표시할 레이아웃 컨테이너의 ID입니다.
+            ft.addToBackStack(null) // 뒤로 가기 버튼을 누를 때 이전 Fragment로 이동할 수 있도록 스택에 추가
+            ft.commit()
+        }
+
         return view
     }
 }
