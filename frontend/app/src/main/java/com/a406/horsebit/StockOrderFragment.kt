@@ -35,8 +35,6 @@ class StockOrderFragment : Fragment() {
         Order(9106, 837, -0.47),
         Order(9997, 286, -0.42)
     )
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_stock_order, container, false)
 
@@ -47,6 +45,48 @@ class StockOrderFragment : Fragment() {
 
         binding.rvOrder.adapter = OrderItemAdapter(orderList)
 
+        changFrag(0)
+
+        binding.tvOrderBuyTabHeader.setOnClickListener {
+            changFrag(0)
+        }
+
+        binding.tvOrderSellTabHeader.setOnClickListener {
+            changFrag(1)
+        }
+
+        binding.tvOrderTransactionHistoryTabHeader.setOnClickListener {
+            changFrag(2)
+        }
+
         return view
+    }
+
+    private fun changFrag(fragNum: Int) {
+        val ft = requireActivity().supportFragmentManager.beginTransaction()
+
+        when(fragNum){
+            0->{
+                val changeFragment = OrderBuyTabFragment()
+
+                ft.replace(R.id.fl_OrderTab, changeFragment)
+                ft.addToBackStack(null)
+                ft.commit()
+            }
+            1->{
+                val changeFragment = OrderSellTabFragment()
+
+                ft.replace(R.id.fl_OrderTab, changeFragment)
+                ft.addToBackStack(null)
+                ft.commit()
+            }
+            2->{
+                val changeFragment = OrderTransactionHistoryTabFragment()
+
+                ft.replace(R.id.fl_OrderTab, changeFragment)
+                ft.addToBackStack(null)
+                ft.commit()
+            }
+        }
     }
 }
