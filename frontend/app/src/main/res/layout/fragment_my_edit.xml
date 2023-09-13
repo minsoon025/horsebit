@@ -153,6 +153,7 @@
                         android:background="@drawable/rounded_shape_ractangle"
                         android:fontFamily="@font/line_seed_kr_rg"
                         android:hint="  계좌번호"
+                        android:inputType="phone"
                         android:padding="10dp"
                         android:textColor="#000000" />
 
@@ -172,14 +173,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5" />
+
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="133dp"
                 android:layout_weight="0" />
 
             <LinearLayout
+                android:id="@+id/lih_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -205,6 +208,38 @@
                     android:layout_height="20dp"
                     android:layout_weight="1" />
 
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="0" />
+
+            <LinearLayout
+                android:id="@+id/lih_out"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/tv_Out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:background="@drawable/underline_gray"
+                    android:text="회원탈퇴"
+                    android:textColor="@color/font_gray"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="10" />
             </LinearLayout>
 
 
