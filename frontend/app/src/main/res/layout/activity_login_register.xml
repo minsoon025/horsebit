@@ -7,87 +7,73 @@
     tools:context=".LoginRegisterActivity">
 
     <ScrollView
+        android:id="@+id/sv_Register"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
+            android:id="@+id/llv_MainRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="10"
-                android:orientation="horizontal">
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-
-                <ImageView
-                    android:id="@+id/iv__CircleCheck1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    app:srcCompat="@drawable/circle_check" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3" />
-
-                <TextView
-                    android:id="@+id/tv_MainRegister2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="70"
-                    android:fontFamily="@font/line_seed_kr_bd"
-                    android:gravity="center_vertical"
-                    android:text="모든 항목에 동의합니다."
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10" />
-
-            </LinearLayout>
-
             <Space
+                android:id="@+id/sp_MainRegisterV1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="10" />
-
-            <TextView
-                android:id="@+id/tv_MainRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/line_seed_kr_bd"
-                android:text="가입 약관을 확인해 주세요."
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="10" />
+                android:layout_height="50dp" />
 
             <LinearLayout
+                android:id="@+id/llh_MainRegister"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="100"
                 android:orientation="horizontal">
 
                 <Space
+                    android:id="@+id/sp_Left1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/tv_MainRegister"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"
+                    android:fontFamily="@font/line_seed_kr_bd"
+                    android:text="가입 약관을 확인해 주세요."
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <Space
+                    android:id="@+id/sp_Right1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+
+            <Space
+                android:id="@+id/sp_MainRegisterV2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_Register1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_Left2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10" />
@@ -96,6 +82,7 @@
                     android:id="@+id/iv__CircleCheck"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:layout_weight="5"
                     app:srcCompat="@drawable/circle_check" />
 
@@ -113,13 +100,671 @@
                     android:gravity="center_vertical"
                     android:text="모든 항목에 동의합니다."
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10" />
 
+            </LinearLayout>
+
+
+            <Space
+                android:id="@+id/sp_MainRegisterV3"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterLine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/v_Line1"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_weight="100"
+                    android:background="#EFEFEF" />
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/sp_MainRegisterV4"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterWord1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_underagreeleft1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/check__grey" />
+
+                <Space
+                    android:id="@+id/sp_underagreemiddle1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/tv__UnderrAgree1"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="70"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="[필수] 홀스빗 이용약관  "
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_LookingText1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:ems="10"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:text="보기"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterGone1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_GoneSpageSquireLeft1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Gone1"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="88">
+
+                    <View
+                        android:id="@+id/v_Gon1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="88"
+                        android:background="@drawable/rounded_shape_ractangle" />
+
+                    <TextView
+                        android:id="@+id/tv_Gone1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:padding="10dp"
+                        android:text="몰라 여기 텍스트 들어갈꺼야" />
+
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_GoneSpageSquireRight1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterWord2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_underagreeleft2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/check__grey" />
+
+                <Space
+                    android:id="@+id/sp_underagreemiddle2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/tv__UnderrAgree2"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="70"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="[필수] 개인정보 처리방침"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_LookingText2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:ems="10"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:text="보기"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterGone2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_GoneSpageLeft2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Gone2"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="88">
+
+                    <View
+                        android:id="@+id/v_Gon2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="88"
+                        android:background="@drawable/rounded_shape_ractangle" />
+
+                    <TextView
+                        android:id="@+id/tv_Gone2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:padding="10dp"
+                        android:text="몰라 여기 텍스트 들어갈꺼야" />
+
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_GoneSpageRight2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterWord3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_underagreeleft3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageView
+                    android:id="@+id/iv_GreyCheck3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/check__grey" />
+
+                <Space
+                    android:id="@+id/sp_underagreemiddle3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/tv__UnderrAgree3"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="70"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="[필수] 청소년 보호정책"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_LookingText3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:ems="10"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:text="보기"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:id="@+id/sp_underagreeright3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterGone3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_GoneSpageLeft3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Gone3"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="88">
+
+                    <View
+                        android:id="@+id/v_Gon3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="88"
+                        android:background="@drawable/rounded_shape_ractangle" />
+
+                    <TextView
+                        android:id="@+id/tv_Gone3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:padding="10dp"
+                        android:text="몰라 여기 텍스트 들어갈꺼야" />
+
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_GoneSpageRight3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterWord4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_underagreeleft4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageView
+                    android:id="@+id/iv_GreyCheck4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/check__grey" />
+
+                <Space
+                    android:id="@+id/sp_underagreemiddle4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <TextView
+                    android:id="@+id/tv__UnderrAgree4"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="70"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="[선택] 이벤트 및 정보수신"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_LookingText4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:ems="10"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_horizontal"
+                    android:inputType="textMultiLine"
+                    android:text="보기"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <Space
+                    android:id="@+id/sp_underagreeright4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llh_RegisterGone4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_GoneSpageLeft4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Gone4"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="88">
+
+                    <View
+                        android:id="@+id/v_Gon4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="88"
+                        android:background="@drawable/rounded_shape_ractangle" />
+
+                    <TextView
+                        android:id="@+id/tv_Gone4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:padding="10dp"
+                        android:text="몰라 여기 텍스트 들어갈꺼야" />
+
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_GoneSpageRight4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/sp_MainRegisterV5"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_AlertMessage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_AlertMessageLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_AlertMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="80">
+
+                    <View
+                        android:id="@+id/v_AlertMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/filled_ractangle" />
+
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:gravity="center_vertical"
+                        android:lineSpacingMultiplier="1.5"
+                        android:padding="15dp"
+                        android:text="- 만 19세 이상인 경우 정상적인 서비스 이용이 가능합니다. \n - 국내 비거주 중이신 고객은 서비스 이용에 제한이 있습니다. \n - 국적이 금융당국에서 이용을 제한한 국가인 경우 거래가 제한될 수 있습니다."
+                        android:textColor="@color/font_gray"
+                        android:textSize="12sp" />
+
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_AlertMessageRight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/sp_MainRegisterV7"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_InviteTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_InviteTitleLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/tv_InviteTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="15"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="초대코드"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_InviteTitle2"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="65"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="이벤트 및 정보수신 동의 후 이용 가능"
+                    android:textColor="@color/font_gray" />
+
+                <Space
+                    android:id="@+id/sp_InviteTitleRight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/sp_MainRegisterV6"
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_InviteCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:id="@+id/sp_InviteCodeLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_InviteCode"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="80">
+
+                    <View
+                        android:id="@+id/v_InviteCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="80"
+                        android:background="@drawable/rounded_shape_filled_ractangle" />
+
+
+                    <TextView
+                        android:id="@+id/tv_InviteCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:gravity="center_vertical"
+                        android:padding="10dp"
+                        android:text="초대코드 입력" />
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_InviteCodeRight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/sp_MainRegisterV8"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_NicknameTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/tv_Nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"
+                    android:fontFamily="@font/line_seed_kr_bd"
+                    android:text="닉네임을 입력하세요."
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <Space
+                android:id="@+id/sp_MainRegisterV9"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_Nickname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <FrameLayout
+                    android:id="@+id/fl_Nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="80">
+
+                    <View
+                        android:id="@+id/v_NickName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="80"
+                        android:background="@drawable/rounded_shape_filled_ractangle" />
+
+
+                    <EditText
+                        android:id="@+id/et_NicknameMake"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ems="10"
+                        android:fontFamily="@font/line_seed_kr_rg"
+                        android:hint="닉네임 입력"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:background="@android:color/transparent"
+                        android:textColorHint="@color/font_gray"
+                        android:textSize="14sp" />
+                </FrameLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
             </LinearLayout>
 
         </LinearLayout>
