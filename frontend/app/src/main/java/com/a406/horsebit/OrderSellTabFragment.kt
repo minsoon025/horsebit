@@ -16,6 +16,8 @@ class OrderSellTabFragment : Fragment() {
 
         binding = FragmentOrderSellTabBinding.bind(view)
 
+        binding.tvOrderCanSellPrice.text = "${arguments?.getString("ticker").toString()}"
+
         return view
     }
 }

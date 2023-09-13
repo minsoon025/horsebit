@@ -6,19 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".OrderActivity">
 
-    <TextView
-        android:id="@+id/tv_Title"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/hsv_Title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/line_seed_kr_rg"
-        android:includeFontPadding="false"
-        android:text="TextView"
-        android:textColor="@color/black"
-        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_AlarmOrder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:text="TextView"
+                android:textColor="@color/black"
+                android:textSize="34sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <TextView
         android:id="@+id/tv_CurrPrice"
@@ -26,12 +38,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/line_seed_kr_rg"
-        android:includeFontPadding="false"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_Title"
-        app:layout_constraintTop_toBottomOf="@+id/tv_Title" />
+        app:layout_constraintStart_toStartOf="@id/hsv_Title"
+        app:layout_constraintTop_toBottomOf="@id/hsv_Title" />
 
     <TextView
         android:id="@+id/tv_PercntageYesterday"
@@ -39,7 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/line_seed_kr_rg"
-        android:includeFontPadding="false"
         android:text="TextView"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/tv_CurrPrice"
@@ -60,7 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/line_seed_kr_rg"
-        android:includeFontPadding="false"
         android:text="TextView"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/iv_UpOrDown"
@@ -109,7 +118,6 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center"
-                android:includeFontPadding="false"
                 android:text="주문"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
@@ -138,7 +146,6 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center"
-                android:includeFontPadding="false"
                 android:text="차트"
                 android:textColor="@color/white"
                 android:textSize="20sp" />

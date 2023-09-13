@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_FragmentOrderBuyTab"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OrderBuyTabFragment">
@@ -28,13 +29,12 @@
                 android:layout_weight="5" />
 
             <TextView
-                android:id="@+id/tv_OrderCan"
+                android:id="@+id/tv_OrderCanBuy"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center_vertical"
-                android:includeFontPadding="false"
                 android:text="주문가능"
                 android:textColor="@color/font_gray" />
 
@@ -44,18 +44,17 @@
                 android:layout_weight="5" />
 
             <TextView
-                android:id="@+id/tv_OrderCanPrice"
+                android:id="@+id/tv_OrderCanBuyPrice"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="55"
-                android:fontFamily="@font/line_seed_kr_rg"
+                android:fontFamily="@font/line_seed_kr_bd"
                 android:gravity="right|center_vertical"
-                android:includeFontPadding="false"
                 android:text="KRW"
                 android:textColor="@color/black" />
 
             <Space
-                android:layout_width="20dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5" />
         </LinearLayout>
@@ -65,7 +64,7 @@
             android:layout_height="10dp" />
 
         <LinearLayout
-            android:id="@+id/llv_OrderNum"
+            android:id="@+id/llv_OrderBuyNum"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal"
@@ -77,7 +76,7 @@
                 android:layout_weight="5" />
 
             <LinearLayout
-                android:id="@+id/llh_OrderNumBackground"
+                android:id="@+id/llh_OrderBuyNumBackground"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="90"
@@ -91,17 +90,16 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/tv_OrderNumText"
+                    android:id="@+id/tv_OrderBuyNumText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
-                    android:includeFontPadding="false"
                     android:text="수량" />
 
                 <EditText
-                    android:id="@+id/et_OrderNum"
+                    android:id="@+id/et_OrderBuyNum"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
@@ -110,23 +108,18 @@
                     android:gravity="right|center_vertical"
                     android:hint="0"
                     android:includeFontPadding="false"
-                    android:inputType="number"
+                    android:inputType="number|numberDecimal"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_OrderNumType"
+                    android:id="@+id/tv_OrderBuyNumType"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="수량" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </LinearLayout>
 
             <Space
@@ -142,7 +135,7 @@
             android:layout_height="10dp" />
 
         <LinearLayout
-            android:id="@+id/llv_OrderPrice"
+            android:id="@+id/llv_OrderBuyPrice"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal"
@@ -154,7 +147,7 @@
                 android:layout_weight="5" />
 
             <LinearLayout
-                android:id="@+id/llh_OrderPriceBackground"
+                android:id="@+id/llh_OrderBuyPriceBackground"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="90"
@@ -168,17 +161,16 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/tv_OrderPriceText"
+                    android:id="@+id/tv_OrderBuyPriceText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
-                    android:includeFontPadding="false"
                     android:text="가격" />
 
                 <EditText
-                    android:id="@+id/et_OrderPrice"
+                    android:id="@+id/et_OrderBuyPrice"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
@@ -191,19 +183,14 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_OrderPriceType"
+                    android:id="@+id/tv_OrderBuyPriceType"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="KRW" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </LinearLayout>
 
             <Space
@@ -219,7 +206,7 @@
             android:layout_height="10dp" />
 
         <LinearLayout
-            android:id="@+id/llv_OrderTotalPrice"
+            android:id="@+id/llv_OrderSellTotalPrice"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal"
@@ -231,7 +218,7 @@
                 android:layout_weight="5" />
 
             <LinearLayout
-                android:id="@+id/llh_OrderTotalPriceBackground"
+                android:id="@+id/llh_OrderBuyTotalPriceBackground"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="90"
@@ -245,17 +232,16 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/tv_OrderTotalPriceText"
+                    android:id="@+id/tv_OrderBuyTotalPriceText"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center_vertical"
-                    android:includeFontPadding="false"
                     android:text="총액" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/tv_OrderBuyTotalPrice"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
@@ -265,19 +251,14 @@
                     android:text="0" />
 
                 <TextView
-                    android:id="@+id/tv_OrderTotalPriceType"
+                    android:id="@+id/tv_OrderBuyTotalPriceType"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:fontFamily="@font/line_seed_kr_rg"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="KRW" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
             </LinearLayout>
 
             <Space
@@ -293,7 +274,7 @@
             android:layout_height="30dp" />
 
         <LinearLayout
-            android:id="@+id/llh_Commit"
+            android:id="@+id/llh_CommitBuy"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal"
@@ -305,7 +286,7 @@
                 android:layout_weight="10" />
 
             <TextView
-                android:id="@+id/tv_OrderReset"
+                android:id="@+id/tv_OrderBuyReset"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="35"
@@ -323,7 +304,7 @@
                 android:layout_weight="10" />
 
             <TextView
-                android:id="@+id/tv_OrderReset2"
+                android:id="@+id/tv_OrderBuyCommit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="35"

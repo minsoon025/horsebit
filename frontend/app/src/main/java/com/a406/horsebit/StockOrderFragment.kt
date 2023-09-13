@@ -95,14 +95,20 @@ class StockOrderFragment : Fragment() {
 
         when(fragNum){
             0->{
-                val changeFragment = OrderBuyTabFragment()
+                val bundle = Bundle()
+                bundle.putString("ticker", arguments?.getString("ticker").toString())
 
+                val changeFragment = OrderBuyTabFragment()
+                changeFragment.arguments = bundle
                 ft.replace(R.id.fl_OrderTab, changeFragment)
                 ft.commit()
             }
             1->{
-                val changeFragment = OrderSellTabFragment()
+                val bundle = Bundle()
+                bundle.putString("ticker", arguments?.getString("ticker").toString())
 
+                val changeFragment = OrderSellTabFragment()
+                changeFragment.arguments = bundle
                 ft.replace(R.id.fl_OrderTab, changeFragment)
                 ft.commit()
             }
