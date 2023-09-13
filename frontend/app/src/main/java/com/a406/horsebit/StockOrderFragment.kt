@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentHomeBinding
 import com.a406.horsebit.databinding.FragmentStockOrderBinding
@@ -45,17 +46,44 @@ class StockOrderFragment : Fragment() {
 
         binding.rvOrder.adapter = OrderItemAdapter(orderList)
 
+        // 탭 헤더 색상 변경 시작
+        binding.tvOrderBuyTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
+        binding.tvOrderBuyTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.white))
+        binding.tvOrderSellTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+        binding.tvOrderSellTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+        binding.tvOrderTransactionHistoryTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+        binding.tvOrderTransactionHistoryTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+        // 텝 헤더 색상 변경 끝
+
         changFrag(0)
 
         binding.tvOrderBuyTabHeader.setOnClickListener {
+            binding.tvOrderBuyTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
+            binding.tvOrderBuyTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.white))
+            binding.tvOrderSellTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.tvOrderSellTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+            binding.tvOrderTransactionHistoryTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.tvOrderTransactionHistoryTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
             changFrag(0)
         }
 
         binding.tvOrderSellTabHeader.setOnClickListener {
+            binding.tvOrderBuyTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.tvOrderBuyTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+            binding.tvOrderSellTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
+            binding.tvOrderSellTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.white))
+            binding.tvOrderTransactionHistoryTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.tvOrderTransactionHistoryTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
             changFrag(1)
         }
 
         binding.tvOrderTransactionHistoryTabHeader.setOnClickListener {
+            binding.tvOrderBuyTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.tvOrderBuyTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+            binding.tvOrderSellTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.tvOrderSellTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.gray))
+            binding.tvOrderTransactionHistoryTabHeader.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.tvOrderTransactionHistoryTabHeader.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.white))
             changFrag(2)
         }
 
@@ -70,21 +98,18 @@ class StockOrderFragment : Fragment() {
                 val changeFragment = OrderBuyTabFragment()
 
                 ft.replace(R.id.fl_OrderTab, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
             1->{
                 val changeFragment = OrderSellTabFragment()
 
                 ft.replace(R.id.fl_OrderTab, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
             2->{
                 val changeFragment = OrderTransactionHistoryTabFragment()
 
                 ft.replace(R.id.fl_OrderTab, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
         }

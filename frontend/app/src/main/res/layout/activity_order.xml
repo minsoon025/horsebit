@@ -6,29 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".OrderActivity">
 
-    <ImageView
-        android:id="@+id/iv_GoBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_arrow_back_ios_new_24" />
-
     <TextView
         android:id="@+id/tv_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/line_seed_kr_rg"
         android:includeFontPadding="false"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="34sp"
-        app:layout_constraintStart_toEndOf="@+id/iv_GoBack"
-        app:layout_constraintTop_toTopOf="@+id/iv_GoBack" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_CurrPrice"

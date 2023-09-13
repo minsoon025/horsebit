@@ -5,10 +5,77 @@
     android:layout_height="match_parent"
     tools:context=".OrderBuyTabFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/llv_OrderBuyTab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="매수" />
+        android:orientation="vertical">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:id="@+id/llv_OrderCanBuy"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/tv_OrderCan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="주문가능"
+                android:textColor="@color/font_gray" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/tv_OrderCanPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="55"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="right|center_vertical"
+                android:includeFontPadding="false"
+                android:text="KRW"
+                android:textColor="@color/black" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/llv_OrderNum"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
 </FrameLayout>

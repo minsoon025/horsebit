@@ -3,6 +3,7 @@ package com.a406.horsebit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.a406.horsebit.databinding.ActivityOrderBinding
 
 class OrderActivity : AppCompatActivity() {
@@ -19,19 +20,29 @@ class OrderActivity : AppCompatActivity() {
         binding.tvCurrPrice.text = intent.getStringExtra("currentPrice")
         binding.tvPercntageYesterday.text = "${intent.getStringExtra("yesterdayPrice")}%"
 
-        Log.d("로그", intent.getStringExtra("currentPrice").toString())
-
+        binding.ivStockOrder.visibility = View.VISIBLE
+        binding.ivStockChart.visibility = View.INVISIBLE
+        binding.ivStockInformation.visibility = View.INVISIBLE
         changeFrag(0)
 
         binding.flStockOrder.setOnClickListener {
+            binding.ivStockOrder.visibility = View.VISIBLE
+            binding.ivStockChart.visibility = View.INVISIBLE
+            binding.ivStockInformation.visibility = View.INVISIBLE
             changeFrag(0)
         }
 
         binding.flStockChart.setOnClickListener {
+            binding.ivStockOrder.visibility = View.INVISIBLE
+            binding.ivStockChart.visibility = View.VISIBLE
+            binding.ivStockInformation.visibility = View.INVISIBLE
             changeFrag(1)
         }
 
         binding.flStockInformation.setOnClickListener {
+            binding.ivStockOrder.visibility = View.INVISIBLE
+            binding.ivStockChart.visibility = View.INVISIBLE
+            binding.ivStockInformation.visibility = View.VISIBLE
             changeFrag(2)
         }
     }
@@ -43,21 +54,18 @@ class OrderActivity : AppCompatActivity() {
             0 -> {
                 val changeFragment = StockOrderFragment()
                 ft.replace(R.id.fl_Order, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
 
             1 -> {
                 val changeFragment = StockChartFragment()
                 ft.replace(R.id.fl_Order, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
 
             2 -> {
                 val changeFragment = StockInformationFragment()
                 ft.replace(R.id.fl_Order, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
         }
