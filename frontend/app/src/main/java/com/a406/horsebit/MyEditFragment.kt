@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import com.a406.horsebit.databinding.FragmentMyEditBinding
 
 class MyEditFragment : Fragment() {
 
         private lateinit var binding: FragmentMyEditBinding
         private lateinit var spinnerBankOrSecurities: Spinner // 스피너 추가
+        private lateinit var tvSend: TextView // 텍스트뷰로 설정
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             val view = inflater.inflate(R.layout.fragment_my_edit, container, false)
@@ -55,6 +57,10 @@ class MyEditFragment : Fragment() {
 
         // 디폴트 선택 항목 설정
         spinnerBankOrSecurities.setSelection(0) // "은행 / 증권사"를 선택된 상태로 만듭니다.
+
+
+
+
 
         return view
         }
