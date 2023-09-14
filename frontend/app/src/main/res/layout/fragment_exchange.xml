@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     tools:context=".ExchangeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -16,35 +18,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:id="@+id/rl_BackGround"
+    <LinearLayout
+        android:id="@+id/lih_BackBack"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_BackGround"
-            android:layout_width="wrap_content"
+        <Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="143dp"
-            android:layout_marginTop="54dp"
-            android:src="@tools:sample/avatars"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            android:layout_weight="2" />
 
-        <HorizontalScrollView
-            android:id="@+id/hsv_ExchangeTableItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="185dp"
-            android:layout_marginBottom="272dp">
+        <LinearLayout
+            android:id="@+id/lih_ExBack"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="20"
+            android:background="@drawable/softback"
+            android:hapticFeedbackEnabled="false"
+            android:orientation="horizontal">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_ExchangeTable"
+            <Space
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </HorizontalScrollView>
-    </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_MyKrw"
+                android:layout_width="124dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="122,334"
+                android:textColor="@color/black"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/hsv_ExchangeTableItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="281dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ExchangeTable"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
