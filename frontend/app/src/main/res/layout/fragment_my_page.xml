@@ -56,7 +56,7 @@
                             android:layout_weight="5" />
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/textView22"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="75"
@@ -70,7 +70,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView4"
+                            android:id="@+id/textView44"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="80
@@ -150,8 +150,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
                         <View
-                            android:id="@+id/v_Line1"
+                            android:id="@+id/v_Line11"
                             android:layout_width="0dp"
                             android:layout_height="2dp"
                             android:layout_weight="100"
@@ -197,7 +204,7 @@
                             android:orientation="vertical">
 
                             <View
-                                android:id="@+id/v_Line1"
+                                android:id="@+id/v_Line111"
                                 android:layout_width="2dp"
                                 android:layout_height="0dp"
                                 android:layout_weight="100"
