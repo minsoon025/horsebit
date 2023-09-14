@@ -51,47 +51,16 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
         when(i) {
             0 -> {
-                var newStrokeColor = ContextCompat.getColor(binding.root.context, R.color.main_color)
-                var drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.edge)
-
-                drawable?.setColorFilter(newStrokeColor, android.graphics.PorterDuff.Mode.SRC_ATOP)
-                binding.tvNotConclusion.background = drawable
-                binding.tvNotConclusion.setTextColor(ContextCompat.getColor(binding.root.context, R.color.background))
-                // binding.tvNotConclusion.setBackgroundResource(R.color.main_color)
-
-
-
-                newStrokeColor = ContextCompat.getColor(binding.root.context, R.color.font_gray)
-                drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.edge)
-
-                drawable?.setColorFilter(newStrokeColor, android.graphics.PorterDuff.Mode.SRC_ATOP)
-                binding.tvConclusion.background = drawable
-
+                binding.tvNotConclusion.setTextColor(ContextCompat.getColor(binding.root.context, R.color.main_color))
+                binding.tvNotConclusion.setBackgroundResource(R.drawable.edge_main_color)
                 binding.tvConclusion.setTextColor(ContextCompat.getColor(binding.root.context, R.color.font_gray))
-                //binding.tvConclusion.setBackgroundResource(R.color.font_gray)
+                binding.tvConclusion.setBackgroundResource(R.drawable.edge)
             }
             1 -> {
-                var newStrokeColor = ContextCompat.getColor(binding.root.context, R.color.font_gray)
-                var drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.edge)
-
-                drawable?.setColorFilter(newStrokeColor, android.graphics.PorterDuff.Mode.SRC_ATOP)
-                binding.tvNotConclusion.background = drawable
-
-
                 binding.tvNotConclusion.setTextColor(ContextCompat.getColor(binding.root.context, R.color.font_gray))
-                //binding.tvNotConclusion.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.font_gray))
-
-
-                newStrokeColor = ContextCompat.getColor(binding.root.context, R.color.main_color)
-                drawable = ContextCompat.getDrawable(binding.root.context, R.drawable.edge)
-
-                drawable?.setColorFilter(newStrokeColor, android.graphics.PorterDuff.Mode.SRC_ATOP)
-                binding.tvConclusion.background = drawable
-
-
-
-                binding.tvConclusion.setTextColor(ContextCompat.getColor(binding.root.context, R.color.background))
-                //binding.tvConclusion.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.main_color))
+                binding.tvNotConclusion.setBackgroundResource(R.drawable.edge)
+                binding.tvConclusion.setTextColor(ContextCompat.getColor(binding.root.context, R.color.main_color))
+                binding.tvConclusion.setBackgroundResource(R.drawable.edge_main_color)
             }
         }
     }
