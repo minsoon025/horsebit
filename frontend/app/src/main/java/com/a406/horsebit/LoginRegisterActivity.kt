@@ -1,5 +1,6 @@
 package com.a406.horsebit
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -102,6 +103,11 @@ class LoginRegisterActivity : AppCompatActivity() {
                 binding.llhRegisterGone4.visibility = View.VISIBLE
             }
 
+        }
+
+        binding.flRegisterFinal.setOnClickListener {
+            val intent = Intent(binding.root.context, MainActivity::class.java)
+            binding.root.context.startActivity(intent)
         }
 
 
