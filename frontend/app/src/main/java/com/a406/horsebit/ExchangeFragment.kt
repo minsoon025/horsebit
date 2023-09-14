@@ -12,6 +12,16 @@ class ExchangeFragment : Fragment() {
 
     private lateinit var binding: FragmentExchangeBinding
 
+    val tmpData = arrayListOf(
+        Exchange(1, 2, 3),
+        Exchange(1, 2, 3),
+        Exchange(1, 2, 3),
+        Exchange(1, 2, 3),
+        Exchange(1, 2, 3),
+        Exchange(1, 2, 3),
+    )
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_exchange, container, false)
 

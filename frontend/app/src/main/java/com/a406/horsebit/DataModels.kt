@@ -15,3 +15,9 @@ data class Order(
     val volume: Long,
     val trend: Double,
 )
+
+data class Exchange(
+    val data1: Int,
+    val data2: Int,
+    val data3 : Int,
+)
