@@ -25,7 +25,6 @@
             binding = FragmentOrderBuyTabBinding.bind(view)
 
             binding.tvOrderBuyNumType.text = arguments?.getString("ticker").toString()
-            Log.d("aaaaaaa", arguments?.getString("ticker").toString())
 
             binding.etOrderBuyNum.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
