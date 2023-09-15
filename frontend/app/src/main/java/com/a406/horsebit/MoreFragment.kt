@@ -19,7 +19,6 @@ class MoreFragment : Fragment() {
 
         binding = FragmentMoreBinding.bind(view)
 
-
         // lih_Notice LinearLayout에 클릭 리스너를 추가
         binding.lihNotice.setOnClickListener {
             // 웹 페이지로 이동할 URL 정의
