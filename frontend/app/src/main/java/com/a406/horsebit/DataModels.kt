@@ -34,3 +34,11 @@ data class TransactionShow(
     val remainQuantityOrPrice: Double,  //미체결량
 
 )
+
+data class Candle(
+    val createdAt: Long,
+    val open: Float,
+    val close: Float,
+    val shadowHigh: Float,
+    val shadowLow: Float
+)

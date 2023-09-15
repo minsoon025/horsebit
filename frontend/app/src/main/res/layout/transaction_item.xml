@@ -33,12 +33,6 @@
                 android:layout_weight="30"
                 android:fontFamily="@font/line_seed_kr_bd"
                 android:gravity="center_vertical"
-                android:outlineAmbientShadowColor="@color/font_gray"
-                android:outlineSpotShadowColor="@color/font_gray"
-                android:shadowColor="@color/font_gray"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="2"
                 android:text="매도"
                 android:textSize="24sp" />
 
