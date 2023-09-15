@@ -1,4 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/llv_MyAssetItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rounded_shape_mycolor_ractangle"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/llh_MyAssetItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="80"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_InformationHorseImg"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="15"
+                android:elevation="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/happydog" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="55"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_MyAssetCoin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:text="CMT"
+                        android:textColor="@color/black"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tv_MyAssetHorse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:text="클레멘타인"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llh_MyAssetCoin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="22.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_MyAssetCoinTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="11.25"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center"
+                        android:text="평가손익"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_MyAssetCoinNum"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="11.25"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="right|center_horizontal"
+                        android:text="+1000000000"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <LinearLayout
+                    android:id="@+id/llh_MyAssetRate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="22.5"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_MyAssetRateTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="11.25"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center"
+                        android:text="수익률"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_MyAssetRateNum"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="11.25"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="right|center_horizontal"
+                        android:text="+30%"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
