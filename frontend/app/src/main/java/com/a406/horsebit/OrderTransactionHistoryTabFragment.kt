@@ -16,12 +16,19 @@ class OrderTransactionHistoryTabFragment : Fragment() {
     private lateinit var binding : FragmentOrderTransactionHistoryTabBinding
 
     val transactionItemList = arrayListOf(
-        TransactionOrder(1, 1, 1, "asdf", 1, 1.1, 1.2, Date()),
-        TransactionOrder(1, 1, 1, "asdf", 1, 1.1, 1.2, Date()),
-        TransactionOrder(1, 1, 1, "asdf", 1, 1.1, 1.2, Date()),
-        TransactionOrder(1, 1, 1, "asdf", 1, 1.1, 1.2, Date()),
-        TransactionOrder(1, 1, 1, "asdf", 1, 1.1, 1.2, Date()),
+        TransactionShow(false,'B', Date(), "TTT", 111, 111.3, 123.2),
+        TransactionShow(false,'B', Date(), "TTT", 111, 111.3, 123.2),
+        TransactionShow(false,'S', Date(), "TTT", 111, 111.3, 123.2),
+        TransactionShow(false,'S', Date(), "TTT", 111, 111.3, 123.2),
+    )
 
+    val transactionItemList1 = arrayListOf(
+        TransactionShow(true,'S', Date(), "AAA", 111, 111.3, 123.2),
+        TransactionShow(true,'B', Date(), "BBB", 111, 111.3, 123.2),
+        TransactionShow(true,'B', Date(), "CCC", 111, 111.3, 123.2),
+        TransactionShow(true,'B', Date(), "DDD", 111, 111.3, 123.2),
+        TransactionShow(true,'S', Date(), "EEEE", 111, 111.3, 123.2),
+        TransactionShow(true,'S', Date(), "FFFF", 111, 111.3, 123.2),
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,10 +40,12 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
         binding.tvNotConclusion.setOnClickListener {
             changeColor(0)
+            binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
         }
 
         binding.tvConclusion.setOnClickListener {
             changeColor(1)
+            binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList1)
         }
 
         binding.rvTransactionTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로

@@ -24,13 +24,13 @@ data class Exchange(
     val data3 : Int,
 )
 
-data class TransactionOrder(
-    val orderNo: Long,  //주문번호
-    val userNo: Long,  //유저번호
-    val tokenNo: Long,  //토큰번호
+data class TransactionShow(
+    val completeOrNot: Boolean, // 체결 or 미체결
+    val sellORBuy: Char,    // 매수 or 매도
+    val time: Date,  // 주문시간 or 채결시간
     val tokenCode: String, //토큰 코드
     val price: Long,  //가격
     val quantity: Double,  //수량
-    val remain_quantity: Double,  //미체결량
-    val orderTime: Date,  //주문일자
+    val remainQuantityOrPrice: Double,  //미체결량
+
 )
