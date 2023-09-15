@@ -26,9 +26,9 @@ class ExchangeTableAdapter(val exchangeList: ArrayList<Exchange>) : RecyclerView
     class CustomViewHolder(private val binding: ExchangeItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(exchangeItem: Exchange) {
 
-            binding.tv1.text = exchangeItem.data1.toString()
-            binding.tv2.text = exchangeItem.data2.toString()
-            binding.tv3.text = exchangeItem.data3.toString()
+//            binding.tv1.text = exchangeItem.data1.toString()
+//            binding.tv2.text = exchangeItem.data2.toString()
+//            binding.tv3.text = exchangeItem.data3.toString()
 
         }
     }
