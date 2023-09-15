@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".StockChartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.github.mikephil.charting.charts.CandleStickChart
+        android:id="@+id/tmpCandle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="StockChart" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

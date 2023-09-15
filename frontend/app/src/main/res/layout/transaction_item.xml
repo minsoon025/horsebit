@@ -34,7 +34,7 @@
                 android:fontFamily="@font/line_seed_kr_bd"
                 android:gravity="center_vertical"
                 android:text="매도"
-                android:textSize="34sp" />
+                android:textSize="24sp" />
 
             <Space
                 android:layout_width="0dp"
@@ -48,7 +48,8 @@
                 android:layout_weight="40"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="right|center_vertical"
-                android:text="09.14. 10:33" />
+                android:text="09.14. 10:33"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,7 +67,7 @@
                 android:fontFamily="@font/line_seed_kr_bd"
                 android:gravity="center_vertical"
                 android:text="코인명"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Space
                 android:layout_width="0dp"
@@ -80,7 +81,8 @@
                 android:layout_weight="40"
                 android:fontFamily="@font/line_seed_kr_bd"
                 android:gravity="right|center_vertical"
-                android:text="BABO/KRW" />
+                android:text="BABO/KRW"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +100,7 @@
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center_vertical"
                 android:text="주문가격"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Space
                 android:layout_width="0dp"
@@ -112,7 +114,8 @@
                 android:layout_weight="40"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="right|center_vertical"
-                android:text="1,123" />
+                android:text="1,123"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +133,7 @@
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center_vertical"
                 android:text="주문수량"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Space
                 android:layout_width="0dp"
@@ -144,7 +147,8 @@
                 android:layout_weight="40"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="right|center_vertical"
-                android:text="45" />
+                android:text="45"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -162,7 +166,7 @@
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center_vertical"
                 android:text="미체결량"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <Space
                 android:layout_width="0dp"
@@ -176,13 +180,14 @@
                 android:layout_weight="40"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="right|center_vertical"
-                android:text="45" />
+                android:text="45"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="10dp" />
 
         <View
             android:id="@+id/v_TransactionButtomLine"
