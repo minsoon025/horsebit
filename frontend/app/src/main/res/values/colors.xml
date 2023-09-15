@@ -12,4 +12,6 @@
     <color name="font_gray">#FF9D9DA7</color>
     <color name="order_back_blue">#FFC8E1EC</color>
     <color name="order_back_red">#FFECC8C8</color>
+    <color name="light_active">#FFC8E1EC</color>
+    <color name="blue_light">#FFEDF5F9</color>
 </resources>
