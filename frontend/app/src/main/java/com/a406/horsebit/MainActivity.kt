@@ -1,5 +1,6 @@
 package com.a406.horsebit
 
+import ExchangeFragment
 import android.graphics.ColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

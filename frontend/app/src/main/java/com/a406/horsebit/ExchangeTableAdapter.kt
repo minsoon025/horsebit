@@ -1,36 +1,50 @@
-package com.a406.horsebit
+// ExchangeDataAdapter.kt
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.a406.horsebit.databinding.ExchangeItemBinding
+import com.a406.horsebit.ExchangeData
+import com.a406.horsebit.R
 
-class ExchangeTableAdapter(val exchangeList: ArrayList<Exchange>) : RecyclerView.Adapter<ExchangeTableAdapter.CustomViewHolder>() {
+class ExchangeTableAdapter(private val context: Context, private val exchangeDataList: List<ExchangeData>) :
+    RecyclerView.Adapter<ExchangeTableAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExchangeTableAdapter.CustomViewHolder {
-        val binding = ExchangeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CustomViewHolder(binding).apply {
-
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.exchange_item, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ExchangeTableAdapter.CustomViewHolder, position: Int) {
-        val exchangeItem = exchangeList[position]
-        holder.bind(exchangeItem)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val exchangeData = exchangeDataList[position]
+
+        holder.tvOrderTime.text = exchangeData.orderTime
+        holder.tvCoinName.text = exchangeData.coinName
+        holder.tvType.text = exchangeData.type
+        holder.tvSeep.text = exchangeData.seep
+        holder.tvOne.text = exchangeData.one
+        holder.tvMoney.text = exchangeData.money
+        holder.tvFee.text = exchangeData.fee
+        holder.tvRealMoney.text = exchangeData.realMoney
+        holder.tvOrderTime2.text = exchangeData.orderTime2
     }
 
     override fun getItemCount(): Int {
-        return exchangeList.size
+        return exchangeDataList.size
     }
 
-    class CustomViewHolder(private val binding: ExchangeItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(exchangeItem: Exchange) {
-
-//            binding.tv1.text = exchangeItem.data1.toString()
-//            binding.tv2.text = exchangeItem.data2.toString()
-//            binding.tv3.text = exchangeItem.data3.toString()
-
-        }
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvOrderTime: TextView = itemView.findViewById(R.id.tv_iExOrderTime)
+        val tvCoinName: TextView = itemView.findViewById(R.id.tv_iExCoin)
+        val tvType: TextView = itemView.findViewById(R.id.tv_iExType)
+        val tvSeep: TextView = itemView.findViewById(R.id.tv_iExSeep)
+        val tvOne: TextView = itemView.findViewById(R.id.tv_iExOne)
+        val tvMoney: TextView = itemView.findViewById(R.id.tv_IExMoney)
+        val tvFee: TextView = itemView.findViewById(R.id.tv_iExFee)
+        val tvRealMoney: TextView = itemView.findViewById(R.id.tv_iExRealMoney)
+        val tvOrderTime2: TextView = itemView.findViewById(R.id.tv_iExOrderTime2)
     }
-
 }
