@@ -14,6 +14,7 @@ import java.util.Date
 class OrderTransactionHistoryTabFragment : Fragment() {
 
     private lateinit var binding : FragmentOrderTransactionHistoryTabBinding
+    val api = APIS.create();
 
     val transactionItemList = arrayListOf(
         TransactionShow(false,'B', Date(), "TTT", 111, 111.3, 123.2),
@@ -40,6 +41,31 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
         binding.tvNotConclusion.setOnClickListener {
             changeColor(0)
+
+            
+
+            /*
+            api.acceptFollowRequest(followerId = followerId, followRequestId = followRequestId, Authorization = "Bearer ${serverAccessToken}", params = data).enqueue(object: Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if(response.code() == 201) {    // 성공
+                            Log.d("로그", "팔로우 수락 201 Created")
+                        }
+                        else if(response.code() == 401) {   // AccessToken이 유효하지 않은 경우
+                            Log.d("로그", "팔로우 수락 401 Unauthorized: AccessToken이 유효하지 않은 경우")
+                        }
+                        else if(response.code() == 400) {   // 해당하는 member나 followRequest가 존재하지 않는 경우
+                            Log.d("로그", "팔로우 수락 400  Bad Request: 해당하는 member나 followRequest가 존재하지 않는 경우")
+                        }
+                    }
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Log.d("로그", "팔로우 수락 onFailure")
+                    }
+                })
+
+
+            */
+
+
             binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
         }
 

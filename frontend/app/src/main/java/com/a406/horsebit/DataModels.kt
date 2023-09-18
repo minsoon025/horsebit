@@ -2,6 +2,29 @@ package com.a406.horsebit
 
 import java.util.Date
 
+data class NotConcludedRequestBodyModel(
+    val userNo: Int, //유저번호
+    val tokenNo: Int, //토큰번호
+    val startDate: Date, //시작일자
+    val endDate: Date, //종료일자
+)
+
+data class NotConcludedResponseBodyModel(
+    val orders: ArrayList<NotConcludedResponseBodyOrderModel>,
+)
+
+data class NotConcludedResponseBodyOrderModel(
+    val orderNo: Int,  //주문번호
+    val userNo: Int,  //유저번호
+    val tokenNo: Int,  //토큰번호
+    val tokenCode: String, //토큰코드명
+    val price: Int,  //가격
+    val quantity: Double,  //주문수량
+    val remain_quantity: Double,  //잔여수량
+    val orderTime: Date,  //주문일자
+    val sellOrBuy: Char, //매수 매도 여부
+)
+
 data class AssetItem(
     val graph: Int,
     val assetName: String,
