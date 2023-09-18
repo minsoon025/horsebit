@@ -8,19 +8,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface APIS {
 
-    @POST("/api/exchange/orders")
+    @GET("/api/exchange/orders")
     fun notConcluded(
-        @Body requestBody: NotConcludedRequestBodyModel,
+        //@Body requestBody: NotConcludedRequestBodyModel,
     ): Call<NotConcludedResponseBodyModel>
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"
 
         fun create(): APIS {
-            val gson : Gson =   GsonBuilder().setLenient().create();
+            val gson : Gson = GsonBuilder().setLenient().create();
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)

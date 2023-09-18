@@ -25,7 +25,7 @@ class TransactionItemAdapter(val transactionOrderList: ArrayList<TransactionShow
     class CustomViewHolder(private val binding: TransactionItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionItem : TransactionShow) {
 
-            if(transactionItem.sellORBuy == 'S') {
+            if(transactionItem.sellORBuy == "S") {
                 binding.tvBuyOrSell.text = "매도"
                 binding.tvBuyOrSell.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
             }

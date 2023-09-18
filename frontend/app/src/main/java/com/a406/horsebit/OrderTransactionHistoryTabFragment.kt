@@ -20,20 +20,15 @@ class OrderTransactionHistoryTabFragment : Fragment() {
     private lateinit var binding : FragmentOrderTransactionHistoryTabBinding
     val api = APIS.create();
 
-    val transactionItemList = arrayListOf(
-        TransactionShow(false,'B', Date(), "TTT", 111, 111.3, 123.2),
-        TransactionShow(false,'B', Date(), "TTT", 111, 111.3, 123.2),
-        TransactionShow(false,'S', Date(), "TTT", 111, 111.3, 123.2),
-        TransactionShow(false,'S', Date(), "TTT", 111, 111.3, 123.2),
-    )
+    var transactionItemList : ArrayList<TransactionShow> = ArrayList()
 
     val transactionItemList1 = arrayListOf(
-        TransactionShow(true,'S', Date(), "AAA", 111, 111.3, 123.2),
-        TransactionShow(true,'B', Date(), "BBB", 111, 111.3, 123.2),
-        TransactionShow(true,'B', Date(), "CCC", 111, 111.3, 123.2),
-        TransactionShow(true,'B', Date(), "DDD", 111, 111.3, 123.2),
-        TransactionShow(true,'S', Date(), "EEEE", 111, 111.3, 123.2),
-        TransactionShow(true,'S', Date(), "FFFF", 111, 111.3, 123.2),
+        TransactionShow(true,"S", Date(), "AAA", 111, 111.3, 123.2),
+        TransactionShow(true,"S", Date(), "BBB", 111, 111.3, 123.2),
+        TransactionShow(true,"S", Date(), "CCC", 111, 111.3, 123.2),
+        TransactionShow(true,"S", Date(), "DDD", 111, 111.3, 123.2),
+        TransactionShow(true,"S", Date(), "EEEE", 111, 111.3, 123.2),
+        TransactionShow(true,"S", Date(), "FFFF", 111, 111.3, 123.2),
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,57 +36,76 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
         binding = FragmentOrderTransactionHistoryTabBinding.bind(view)
 
+        binding.rvTransactionTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
+        binding.rvTransactionTable.setHasFixedSize(true) // 성능 개선
+
         changeColor(0)
+        makeData()
+        binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
 
         binding.tvNotConclusion.setOnClickListener {
             changeColor(0)
-
-            val requestBodyData = NotConcludedRequestBodyModel(
-                userNo = 1, //유저번호
-                tokenNo = 1, //토큰번호
-                startDate = Date(), //시작일자
-                endDate =  Date(), //종료일자
-            )
-
-            api.notConcluded(requestBody = requestBodyData).enqueue(object: Callback<NotConcludedResponseBodyModel> {
-                override fun onResponse(call: Call<NotConcludedResponseBodyModel>, response: Response<NotConcludedResponseBodyModel>) {
-                    if(response.code() == 200) {    // 200 Success
-                        Log.d("로그", "미체결 내역 조회: 200 Success")
-                    }
-                    else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
-                        Log.d("로그", "미체결 내역 조회: 400 Bad Request")
-                    }
-                    else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
-                        Log.d("로그", "미체결 내역 조회: 401 Unauthorized")
-                    }
-                    else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
-                        Log.d("로그", "미체결 내역 조회: 403 Forbidden")
-                    }
-                    else if(response.code() == 404) {   // 404 Not Found
-                        Log.d("로그", "미체결 내역 조회: 404 Not Found")
-                    }
-                }
-                override fun onFailure(call: Call<NotConcludedResponseBodyModel>, t: Throwable) {
-                    Log.d("로그", "미체결 내역 조회: onFailure")
-                }
-            })
-
-            binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
+            makeData()
         }
 
         binding.tvConclusion.setOnClickListener {
             changeColor(1)
+            makeData()
             binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList1)
         }
-
-        binding.rvTransactionTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
-        binding.rvTransactionTable.setHasFixedSize(true) // 성능 개선
 
         binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
 
 
         return view
     }
+
+    private fun makeData() {
+        transactionItemList.clear()
+
+        val requestBodyData = NotConcludedRequestBodyModel(
+            userNo = 1, //유저번호
+            tokenNo = 1, //토큰번호
+            startDate = Date(), //시작일자
+            endDate =  Date(), //종료일자
+        )
+//requestBody = requestBodyData
+        api.notConcluded().enqueue(object: Callback<NotConcludedResponseBodyModel> {
+            override fun onResponse(call: Call<NotConcludedResponseBodyModel>, response: Response<NotConcludedResponseBodyModel>) {
+                if(response.code() == 200) {    // 200 Success
+                    Log.d("로그", "미체결 내역 조회: 200 Success")
+                    Log.d("asdfsadf", response.body().toString())
+
+                    val responseBody = response.body()
+
+                    if(responseBody != null) {
+                        for(order in responseBody.orders) {
+                            val transaction = TransactionShow(false, order.sellOrBuy, order.orderTime, order.tokenCode, order.price, order.quantity, order.remain_quantity)
+                            transactionItemList.add(transaction)
+                        }
+                    }
+                    binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
+
+                }
+                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                    Log.d("로그", "미체결 내역 조회: 400 Bad Request")
+                }
+                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                    Log.d("로그", "미체결 내역 조회: 401 Unauthorized")
+                }
+                else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                    Log.d("로그", "미체결 내역 조회: 403 Forbidden")
+                }
+                else if(response.code() == 404) {   // 404 Not Found
+                    Log.d("로그", "미체결 내역 조회: 404 Not Found")
+                }
+            }
+            override fun onFailure(call: Call<NotConcludedResponseBodyModel>, t: Throwable) {
+                Log.d("로그", "미체결 내역 조회: onFailure")
+            }
+        })
+    }
+
     private fun changeColor(i: Int) {
 
         when(i) {
