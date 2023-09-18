@@ -49,7 +49,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_Logo"
-        app:srcCompat="@drawable/horsebit_logo" />
+        app:srcCompat="@drawable/horsebit_logo"
+        tools:srcCompat="@drawable/blue_main_log" />
 
     <ImageView
         android:id="@+id/iv_GoogleLogin"
