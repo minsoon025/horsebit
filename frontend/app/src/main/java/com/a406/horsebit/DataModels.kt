@@ -41,10 +41,18 @@ data class Order(
     val trend: Double,
 )
 
-data class Exchange(
-    val data1: Int,
-    val data2: Int,
-    val data3 : Int,
+// ExchangeData.kt
+
+data class ExchangeData(
+    val orderTime: String,
+    val coinName: String,
+    val type: String,
+    val seep: String,
+    val one: String,
+    val money: String,
+    val fee: String,
+    val realMoney: String,
+    val orderTime2: String
 )
 
 data class TransactionShow(
