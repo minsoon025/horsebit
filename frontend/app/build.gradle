@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0' // 이미지뷰 동그라미
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'   // 차트
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
 
     // API 통신을 위한 retorfit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
