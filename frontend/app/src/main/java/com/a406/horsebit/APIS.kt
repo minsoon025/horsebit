@@ -7,10 +7,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface APIS {
 
-    @GET("/api/exchange/orders")
+    @POST("/api/exchange/orders")
     fun notConcluded(
         @Body requestBody: NotConcludedRequestBodyModel,
     ): Call<NotConcludedResponseBodyModel>

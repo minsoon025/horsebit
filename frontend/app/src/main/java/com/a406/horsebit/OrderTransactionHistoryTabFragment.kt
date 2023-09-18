@@ -46,14 +46,14 @@ class OrderTransactionHistoryTabFragment : Fragment() {
         binding.tvNotConclusion.setOnClickListener {
             changeColor(0)
 
-            val RequestBodyData = NotConcludedRequestBodyModel(
+            val requestBodyData = NotConcludedRequestBodyModel(
                 userNo = 1, //유저번호
                 tokenNo = 1, //토큰번호
                 startDate = Date(), //시작일자
                 endDate =  Date(), //종료일자
             )
 
-            api.notConcluded(requestBody = RequestBodyData).enqueue(object: Callback<NotConcludedResponseBodyModel> {
+            api.notConcluded(requestBody = requestBodyData).enqueue(object: Callback<NotConcludedResponseBodyModel> {
                 override fun onResponse(call: Call<NotConcludedResponseBodyModel>, response: Response<NotConcludedResponseBodyModel>) {
                     if(response.code() == 200) {    // 200 Success
                         Log.d("로그", "미체결 내역 조회: 200 Success")
