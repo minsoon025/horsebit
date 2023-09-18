@@ -79,3 +79,11 @@ data class Candle(
     val shadowHigh: Float,
     val shadowLow: Float
 )
+
+data class MyAsset(
+    val horseImage: Int,
+    val coinTicker: String,
+    val coinName: String,
+    val value: String,
+    val rate: String
+)
