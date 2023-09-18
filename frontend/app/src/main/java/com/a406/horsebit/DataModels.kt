@@ -55,6 +55,12 @@ data class ExchangeData(
     val orderTime2: String
 )
 
+data class Exchange(
+    val data1: Int,
+    val data2: Int,
+    val data3: Int,
+)
+
 data class TransactionShow(
     val completeOrNot: Boolean, // 체결 or 미체결
     val sellORBuy: Char,    // 매수 or 매도

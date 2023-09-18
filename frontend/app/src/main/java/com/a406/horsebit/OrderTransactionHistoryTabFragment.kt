@@ -2,6 +2,7 @@ package com.a406.horsebit
 
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentOrderTransactionHistoryTabBinding
 import java.util.Date
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class OrderTransactionHistoryTabFragment : Fragment() {
 
@@ -42,29 +46,35 @@ class OrderTransactionHistoryTabFragment : Fragment() {
         binding.tvNotConclusion.setOnClickListener {
             changeColor(0)
 
-            
+            val RequestBodyData = NotConcludedRequestBodyModel(
+                userNo = 1, //유저번호
+                tokenNo = 1, //토큰번호
+                startDate = Date(), //시작일자
+                endDate =  Date(), //종료일자
+            )
 
-            /*
-            api.acceptFollowRequest(followerId = followerId, followRequestId = followRequestId, Authorization = "Bearer ${serverAccessToken}", params = data).enqueue(object: Callback<Void> {
-                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                        if(response.code() == 201) {    // 성공
-                            Log.d("로그", "팔로우 수락 201 Created")
-                        }
-                        else if(response.code() == 401) {   // AccessToken이 유효하지 않은 경우
-                            Log.d("로그", "팔로우 수락 401 Unauthorized: AccessToken이 유효하지 않은 경우")
-                        }
-                        else if(response.code() == 400) {   // 해당하는 member나 followRequest가 존재하지 않는 경우
-                            Log.d("로그", "팔로우 수락 400  Bad Request: 해당하는 member나 followRequest가 존재하지 않는 경우")
-                        }
+            api.notConcluded(requestBody = RequestBodyData).enqueue(object: Callback<NotConcludedResponseBodyModel> {
+                override fun onResponse(call: Call<NotConcludedResponseBodyModel>, response: Response<NotConcludedResponseBodyModel>) {
+                    if(response.code() == 200) {    // 200 Success
+                        Log.d("로그", "미체결 내역 조회: 200 Success")
                     }
-                    override fun onFailure(call: Call<Void>, t: Throwable) {
-                        Log.d("로그", "팔로우 수락 onFailure")
+                    else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                        Log.d("로그", "미체결 내역 조회: 400 Bad Request")
                     }
-                })
-
-
-            */
-
+                    else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                        Log.d("로그", "미체결 내역 조회: 401 Unauthorized")
+                    }
+                    else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                        Log.d("로그", "미체결 내역 조회: 403 Forbidden")
+                    }
+                    else if(response.code() == 404) {   // 404 Not Found
+                        Log.d("로그", "미체결 내역 조회: 404 Not Found")
+                    }
+                }
+                override fun onFailure(call: Call<NotConcludedResponseBodyModel>, t: Throwable) {
+                    Log.d("로그", "미체결 내역 조회: onFailure")
+                }
+            })
 
             binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
         }
