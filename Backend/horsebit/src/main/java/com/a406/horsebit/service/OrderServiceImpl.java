@@ -1,11 +1,11 @@
 package com.a406.horsebit.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.a406.horsebit.domain.Order;
+import com.a406.horsebit.dto.OrderDTO;
 import com.a406.horsebit.repository.OrderRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getOrders() {
-		return orderRepository.findAll();
+	public Optional<OrderDTO> getOrders(Long userNo, Long tokenNo) {
+		return orderRepository.findByUserNoAndTokenNo(userNo, tokenNo);
 	}
 }

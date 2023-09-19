@@ -1,97 +1,57 @@
 package com.a406.horsebit.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+/**
+ * 주문 내역(미체결)
+ */
+@Getter
+@Setter
 @Entity
+@ToString(exclude = {"token"})
 @Table(name = "ORDER_HISTORY")
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_no", nullable = false)
-	private int orderNo;
+	private Long orderNo;
+
 	@Column(name = "user_no", nullable = false)
-	private int userNo;
+	private Long userNo;
+
 	@Column(name = "hr_no", nullable = false)
-	private int hrNo;
-	@Column(name = "token_no", nullable = false)
-	private int tokenNo;
+	private Long hrNo;
+
 	@Column(name = "price", nullable = false)
 	private int price;
+
 	@Column(name = "quantity", nullable = false)
 	private double quantity;
+
 	@Column(name = "remain", nullable = false)
 	private double remain;
+
 	@Column(name = "order_time", nullable = false)
 	private Date orderTime;
 
-	public int getOrderNo() {
-		return orderNo;
-	}
+	@Column(name = "sell_buy_flag", nullable = false)
+	private String sellBuyFlag;
 
-	public void setOrderNo(int orderNo) {
-		this.orderNo = orderNo;
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "token_no")
+	private Token token;
 
-	public int getUserNo() {
-		return userNo;
-	}
-
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
-	}
-
-	public int getHrNo() {
-		return hrNo;
-	}
-
-	public void setHrNo(int hrNo) {
-		this.hrNo = hrNo;
-	}
-
-	public int getTokenNo() {
-		return tokenNo;
-	}
-
-	public void setTokenNo(int tokenNo) {
-		this.tokenNo = tokenNo;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-	public double getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-
-	public double getRemain() {
-		return remain;
-	}
-
-	public void setRemain(double remain) {
-		this.remain = remain;
-	}
-
-	public Date getOrderTime() {
-		return orderTime;
-	}
-
-	public void setOrderTime(Date orderTime) {
-		this.orderTime = orderTime;
-	}
 }
