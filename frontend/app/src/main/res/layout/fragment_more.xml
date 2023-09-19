@@ -502,10 +502,6 @@
 
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
             <LinearLayout
                 android:id="@+id/lih_Child"
                 android:layout_width="match_parent"
@@ -518,42 +514,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/tv_Child"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="10"
-                    android:gravity="center_vertical"
-                    android:text="청소년보호정책"
-                    android:textColor="#000000"
-                    android:textIsSelectable="false"
-                    android:textSize="16sp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_ChildGo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text=">"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
             </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
 
             <Space
                 android:layout_width="match_parent"
