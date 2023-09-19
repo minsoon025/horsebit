@@ -74,7 +74,6 @@ class OrderTransactionHistoryTabFragment : Fragment() {
             override fun onResponse(call: Call<NotConcludedResponseBodyModel>, response: Response<NotConcludedResponseBodyModel>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "미체결 내역 조회: 200 Success")
-                    Log.d("asdfsadf", response.body().toString())
 
                     val responseBody = response.body()
 
