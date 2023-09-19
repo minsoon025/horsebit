@@ -14,4 +14,6 @@
     <color name="order_back_red">#FFECC8C8</color>
     <color name="light_active">#FFC8E1EC</color>
     <color name="blue_light">#FFEDF5F9</color>
+    <color name="ok_green">#FF3CB371</color>
+
 </resources>

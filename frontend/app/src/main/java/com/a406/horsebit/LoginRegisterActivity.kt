@@ -1,9 +1,9 @@
 package com.a406.horsebit
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.a406.horsebit.databinding.ActivityLoginRegisterBinding
 
 class LoginRegisterActivity : AppCompatActivity() {
@@ -63,27 +63,8 @@ class LoginRegisterActivity : AppCompatActivity() {
 
         }
 
-        binding.tvLookingText3.setOnClickListener {
-            // LinearLayout의 visibility를 visible로 변경합니다.
-            if (binding.llhRegisterGone3.visibility == View.VISIBLE) {
-                binding.llhRegisterGone3.visibility = View.GONE
-            }
-            else {
-                binding.llhRegisterGone3.visibility = View.VISIBLE
-            }
 
-        }
 
-        binding.tvUnderAgree3.setOnClickListener {
-            // LinearLayout의 visibility를 visible로 변경합니다.
-            if (binding.llhRegisterGone3.visibility == View.VISIBLE) {
-                binding.llhRegisterGone3.visibility = View.GONE
-            }
-            else {
-                binding.llhRegisterGone3.visibility = View.VISIBLE
-            }
-
-        }
 
         binding.tvLookingText4.setOnClickListener {
             if (binding.llhRegisterGone4.visibility == View.VISIBLE) {
