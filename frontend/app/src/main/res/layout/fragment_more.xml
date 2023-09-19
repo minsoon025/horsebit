@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_More"
@@ -10,7 +11,8 @@
     <ScrollView
         android:id="@+id/sv_More"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/llv_more"
@@ -240,8 +242,42 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="Biometric"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Biometric status ..."
+                    android:textSize="15sp"
+                    android:background="@color/cardview_shadow_end_color"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    app:layout_constraintBottom_toTopOf="@id/btn_bio_set"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"  />
+
+                <Button
+                    android:id="@+id/btn_bio_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지문 인증 호출"
+                    app:layout_constraintTop_toBottomOf="@id/tv_status"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"  />
+
                 <Switch
-                    android:id="@+id/btn_BodyCheck"
+                    android:id="@+id/btn_body_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -587,4 +623,5 @@
 
     </ScrollView>
 
-</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
