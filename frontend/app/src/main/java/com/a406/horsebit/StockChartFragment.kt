@@ -26,16 +26,16 @@ class StockChartFragment : Fragment() {
     private lateinit var binding: FragmentStockChartBinding
 
     val candleChartData = arrayListOf(
-        CandleShow(1, 1.2f, 1.8f, 1.1f, 1.9f),
-        CandleShow(2, 1.8f, 2.2f, 1.6f, 2.1f),
-        CandleShow(3, 2.2f, 1.2f, 1.1f, 2.9f),
-        CandleShow(4, 1.3f, 1.7f, 1.2f, 1.8f),
-        CandleShow(5, 1.7f, 2.0f, 1.6f, 2.1f),
-        CandleShow(6, 2.1f, 1.5f, 1.4f, 2.2f),
-        CandleShow(7, 1.4f, 1.9f, 1.3f, 2.0f),
-        CandleShow(8, 1.9f, 2.1f, 1.8f, 2.2f),
-        CandleShow(9, 2.1f, 1.7f, 1.6f, 2.3f),
-        CandleShow(10, 1.7f, 2.0f, 1.6f, 2.2f),
+        CandleShow(0, 1.2f, 1.8f, 1.1f, 1.9f),
+        CandleShow(1, 1.8f, 2.2f, 1.6f, 2.1f),
+        CandleShow(2, 2.2f, 1.2f, 1.1f, 2.9f),
+        CandleShow(3, 1.3f, 1.7f, 1.2f, 1.8f),
+        CandleShow(4, 1.7f, 2.0f, 1.6f, 2.1f),
+        CandleShow(5, 2.1f, 1.5f, 1.4f, 2.2f),
+        CandleShow(6, 1.4f, 1.9f, 1.3f, 2.0f),
+        CandleShow(7, 1.9f, 2.1f, 1.8f, 2.2f),
+        CandleShow(8, 2.1f, 1.7f, 1.6f, 2.3f),
+        CandleShow(9, 1.7f, 2.0f, 1.6f, 2.2f),
     )
 
     val valueListData = arrayListOf(
@@ -62,18 +62,29 @@ class StockChartFragment : Fragment() {
         return view
     }
 
+    // https://velog.io/@kimjihun1001/Android-MPAndroidChart-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EC%82%AC%EC%9A%A9-%ED%9B%84%EA%B8%B0-%EB%B0%A9%EB%B2%95
     private fun initChart() {
+        // 캔들 차트
         binding.apply {
-            ccCandleChart.description.isEnabled = false
-            ccCandleChart.setMaxVisibleValueCount(200)
-            ccCandleChart.setPinchZoom(false)
-            ccCandleChart.setDrawGridBackground(false)
+            ccCandleChart.description.isEnabled = false // description 표시하지 않기
+
+            ccCandleChart.setTouchEnabled(true) // 그래프 터치 가능
+            ccCandleChart.isDragXEnabled = true // x 축 드래그 활성화
+            ccCandleChart.isDragYEnabled = true // y 축 드래그 비활성화
+
+            ccCandleChart.setScaleEnabled(true) // 확대 가능
+            ccCandleChart.setPinchZoom(true)    // 축소가능
+
+            ccCandleChart.setVisibleXRange(5f, 5f)
+            //ccCandleChart.setDrawGridBackground(false)
+
             // x축 설정
             ccCandleChart.xAxis.apply {
-                textColor = Color.TRANSPARENT
-                position = XAxis.XAxisPosition.BOTTOM
-                // 세로선 표시 여부 설정
+                textColor = Color.TRANSPARENT   // 레이블 텍스트 투명
+                position = XAxis.XAxisPosition.BOTTOM   // 레이블 위치 아래
+
                 this.setDrawGridLines(true)
+
                 axisLineColor = Color.rgb(50, 59, 76)
                 gridColor = Color.rgb(50, 59, 76)
             }
@@ -96,55 +107,36 @@ class StockChartFragment : Fragment() {
             ccCandleChart.legend.isEnabled = false
         }
 
+        // 바 차트
         binding.apply{
+            ccBarChart.description.isEnabled = false
             ccBarChart.setDrawGridBackground(false)
             ccBarChart.setDrawBarShadow(false)
             ccBarChart.setDrawBorders(false)
+            ccBarChart.setPinchZoom(false)
 
-            //val description = Description()
-            //description.isEnabled
-            //ccBarChart.description(description)
-
-            ccBarChart.animateY(1000)
-            ccBarChart.animateX(1000)
-
+            // x 축 설정
             val xAxis: XAxis = ccBarChart.getXAxis()
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.granularity = 1f
-            xAxis.textColor = Color.RED
+            xAxis.textColor = ContextCompat.getColor(binding.root.context, R.color.black)
             xAxis.setDrawAxisLine(false)
             xAxis.setDrawGridLines(false)
 
-            //좌측 값 hiding the left y-axis line, default true if not set
+            // 왼쪽 y 축 설정
             val leftAxis: YAxis = ccBarChart.getAxisLeft()
             leftAxis.setDrawAxisLine(false)
-            leftAxis.textColor = Color.RED
+            leftAxis.textColor = ContextCompat.getColor(binding.root.context, R.color.black)
 
+            // 오른쪽 y 축 설정
+            val rightAxis: YAxis = ccBarChart.axisRight
 
-            //우측 값 hiding the right y-axis line, default true if not set
-            val rightAxis: YAxis = ccBarChart.getAxisRight()
-            rightAxis.setDrawAxisLine(false)
-            rightAxis.textColor = Color.RED
-
-
-            //바차트의 타이틀
-            val legend: Legend = ccBarChart.getLegend()
-            //setting the shape of the legend form to line, default square shape
-            legend.form = Legend.LegendForm.LINE
-            //setting the text size of the legend
-            legend.textSize = 11f
-            legend.textColor = Color.YELLOW
-            //setting the alignment of legend toward the chart
-            legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-            //setting the stacking direction of legend
-            legend.orientation = Legend.LegendOrientation.HORIZONTAL
-            //setting the location of legend outside the chart, default false if not set
-            legend.setDrawInside(false)
         }
     }
 
     private fun setChartData(candles: ArrayList<CandleShow>, volumes: ArrayList<Int>) {
+
+        // 캔들차트
         val priceEntries = ArrayList<CandleEntry>()
         for (candle in candles) {
             // 캔들 차트 entry 생성
@@ -173,6 +165,7 @@ class StockChartFragment : Fragment() {
 
             neutralColor = ContextCompat.getColor(binding.root.context, R.color.black)
             setDrawValues(false)
+
             // 터치시 노란 선 제거
             highLightColor = Color.TRANSPARENT
         }
@@ -182,22 +175,22 @@ class StockChartFragment : Fragment() {
             invalidate()
         }
 
-
-        binding.ccBarChart.setScaleEnabled(false)
-
-
+        // 바 차트
         val volumeEntries = ArrayList<BarEntry>()
-        for(i in 0 until valueListData.size) {
+        for(i in 0 until volumes.size) {
             volumeEntries.add(
                 BarEntry(
-                    i.toFloat(), valueListData[i].toFloat()
+                    i.toFloat(), volumes[i].toFloat()
                 )
             )
         }
-        val barDataSet = BarDataSet(volumeEntries, "dd")
-        val data = BarData(barDataSet)
-        binding.ccBarChart.data = data
-        binding.ccBarChart.invalidate()
+        val barDataSet = BarDataSet(volumeEntries, "").apply {
 
+        }
+
+        binding.ccBarChart.apply {
+            this.data = BarData(barDataSet)
+            invalidate()
+        }
     }
 }

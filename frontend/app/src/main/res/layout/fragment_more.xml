@@ -216,31 +216,26 @@
 
             <LinearLayout
                 android:id="@+id/lih_Body"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_weight="40"
                 android:orientation="horizontal">
 
                 <Space
-                    android:layout_width="0dp"
+                    android:layout_width="31dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/tv_BodyCheck"
-                    android:layout_width="0dp"
+                    android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:layout_weight="10"
-                    android:gravity="center_vertical"
+                    android:gravity="center|left"
                     android:text="생체인증 사용"
                     android:textColor="#000000"
                     android:textIsSelectable="false"
                     android:textSize="16sp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -248,44 +243,45 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
                     android:text="Biometric"
-                    android:textStyle="bold"
                     android:textSize="20sp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_status"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Biometric status ..."
-                    android:textSize="15sp"
                     android:background="@color/cardview_shadow_end_color"
-                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toTopOf="@id/btn_bio_set"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"  />
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
                 <Button
                     android:id="@+id/btn_bio_set"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="지문 인증 호출"
-                    app:layout_constraintTop_toBottomOf="@id/tv_status"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"  />
+                    app:layout_constraintTop_toBottomOf="@id/tv_status"
+                    app:layout_constraintHeight_default="spread"
+                    app:layout_constraintWidth_default="spread"
+                    android:visibility="visible" />
 
                 <Switch
                     android:id="@+id/btn_body_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="0" />
 
                 <Space
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
