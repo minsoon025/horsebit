@@ -29,38 +29,38 @@ public class WebOAuthSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         //토큰 방식으로 인증을 하기 때문에 기존에 사용하던 폼로그인, 세션 비활성화
-        http.csrf().disable()
-                .httpBasic().disable()
-                .formLogin().disable()
-                .logout().disable();
-
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
-
-        http.authorizeRequests()
-                .requestMatchers("/api/token").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll();
-
-        http.oauth2Login()
-                .loginPage("/login")
-                .authorizationEndpoint()
-                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-                .and()
-                .successHandler(oAuth2SuccessHandler())
-                .userInfoEndpoint()
-                .userService(oAuth2UserCustomService);
-
-        http.logout()
-                .logoutSuccessUrl("/login");
-
-
-        http.exceptionHandling()
-                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
-                        new AntPathRequestMatcher("/api/**"));
+//        http.csrf().disable()
+//                .httpBasic().disable()
+//                .formLogin().disable()
+//                .logout().disable();
+//
+//        http.sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//
+//        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//
+//
+//        http.authorizeRequests()
+//                .requestMatchers("/api/token").permitAll()
+//                .requestMatchers("/api/**").authenticated()
+//                .anyRequest().permitAll();
+//
+//        http.oauth2Login()
+//                .loginPage("/login")
+//                .authorizationEndpoint()
+//                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+//                .and()
+//                .successHandler(oAuth2SuccessHandler())
+//                .userInfoEndpoint()
+//                .userService(oAuth2UserCustomService);
+//
+//        http.logout()
+//                .logoutSuccessUrl("/login");
+//
+//
+//        http.exceptionHandling()
+//                .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
+//                        new AntPathRequestMatcher("/api/**"));
 
         return http.build();
     }
