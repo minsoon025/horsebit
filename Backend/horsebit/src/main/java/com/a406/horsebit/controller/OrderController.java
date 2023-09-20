@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.a406.horsebit.dto.OrderDTO;
 import com.a406.horsebit.service.OrderService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequestMapping("/api/exchange")
 @RestController
 public class OrderController {
@@ -24,6 +27,7 @@ public class OrderController {
 	//TODO: userNo는 GET요청의 헤더의 유효성 검사하는 AOP 개발 후 제거 예정
 	@GetMapping("/orders/{tokenNo}")
 	public List<OrderDTO> getTokenOrders(@PathVariable("tokenNo") Long tokenNo) {
+		log.info("OrderController::getTokenOrders() START");
 		Long userNo = 1L;
 		return orderService.getOrders(userNo, tokenNo)
 			.stream().toList();
