@@ -1,6 +1,6 @@
 package com.a406.horsebit.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Optional<OrderDTO> getOrders(Long userNo, Long tokenNo) {
+	public List<OrderDTO> getOrders(Long userNo, Long tokenNo) {
 		log.info("OrderServiceImpl::getOrders() START");
-		return orderRepository.findByUserNoAndTokenNo(userNo, tokenNo);
+		return orderRepository.findAllByUserNoAndTokenNo(userNo, tokenNo);
 	}
 }
