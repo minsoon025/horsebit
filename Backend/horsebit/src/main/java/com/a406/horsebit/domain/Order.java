@@ -1,6 +1,7 @@
 package com.a406.horsebit.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +46,7 @@ public class Order {
 	private double remain;
 
 	@Column(name = "order_time", nullable = false)
-	private Date orderTime;
+	private Timestamp orderTime;
 
 	@Column(name = "sell_buy_flag", nullable = false)
 	private String sellBuyFlag;
