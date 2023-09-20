@@ -49,6 +49,19 @@ class MoreFragment : Fragment() {
         }
 
 
+        binding.lihMy.setOnClickListener {
+            // LinearLayout의 visibility를 visible로 변경합니다.
+
+            if (binding.llhMoreGone2.visibility == View.VISIBLE) {
+                binding.llhMoreGone2.visibility = View.GONE
+            }
+            else {
+                binding.llhMoreGone2.visibility = View.VISIBLE
+            }
+
+        }
+
+
         binding.lihPromise.setOnClickListener {
             // LinearLayout의 visibility를 visible로 변경합니다.
 
