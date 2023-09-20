@@ -70,15 +70,16 @@ class OrderTransactionHistoryTabFragment : Fragment() {
             endDate =  Date(), //종료일자
         )
 //requestBody = requestBodyData
-        api.notConcluded().enqueue(object: Callback<NotConcludedResponseBodyModel> {
-            override fun onResponse(call: Call<NotConcludedResponseBodyModel>, response: Response<NotConcludedResponseBodyModel>) {
+        api.notConcluded(tokenNo = 1, accessToken = "1").enqueue(object: Callback<ArrayList<NotConcludedResponseBodyOrderModel>> {
+            override fun onResponse(call: Call<ArrayList<NotConcludedResponseBodyOrderModel>>, response: Response<ArrayList<NotConcludedResponseBodyOrderModel>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "미체결 내역 조회: 200 Success")
 
                     val responseBody = response.body()
+                    Log.d("로그", responseBody.toString())
 
                     if(responseBody != null) {
-                        for(order in responseBody.orders) {
+                        for(order in responseBody) {
                             val transaction = TransactionShow(false, order.sellOrBuy, order.orderTime, order.tokenCode, order.price, order.quantity, order.remain_quantity)
                             transactionItemList.add(transaction)
                         }
@@ -99,8 +100,9 @@ class OrderTransactionHistoryTabFragment : Fragment() {
                     Log.d("로그", "미체결 내역 조회: 404 Not Found")
                 }
             }
-            override fun onFailure(call: Call<NotConcludedResponseBodyModel>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<NotConcludedResponseBodyOrderModel>>, t: Throwable) {
                 Log.d("로그", "미체결 내역 조회: onFailure")
+                Log.d("asdfadsf", t.toString())
             }
         })
     }

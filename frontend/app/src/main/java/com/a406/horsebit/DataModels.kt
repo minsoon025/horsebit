@@ -9,10 +9,6 @@ data class NotConcludedRequestBodyModel(
     val endDate: Date, //종료일자
 )
 
-data class NotConcludedResponseBodyModel(
-    val orders: ArrayList<NotConcludedResponseBodyOrderModel>,
-)
-
 data class NotConcludedResponseBodyOrderModel(
     val orderNo: Int,  //주문번호
     val userNo: Int,  //유저번호
