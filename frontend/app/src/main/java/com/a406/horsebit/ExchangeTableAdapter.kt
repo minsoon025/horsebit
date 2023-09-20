@@ -2,8 +2,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.HorizontalScrollView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.ExchangeData
@@ -13,15 +11,8 @@ class ExchangeTableAdapter(private val context: Context, private val exchangeDat
     RecyclerView.Adapter<ExchangeTableAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // HorizontalScrollView로 감싸진 아이템 레이아웃을 생성합니다.
-        val scrollView = HorizontalScrollView(context)
-        val itemLayout = LinearLayout(context)
-        itemLayout.orientation = LinearLayout.HORIZONTAL
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.exchange_item, itemLayout, false)
-        itemLayout.addView(view)
-        scrollView.addView(itemLayout)
-        return ViewHolder(scrollView)
+        val view = LayoutInflater.from(context).inflate(R.layout.exchange_item, parent, false)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -52,16 +43,5 @@ class ExchangeTableAdapter(private val context: Context, private val exchangeDat
         val tvFee: TextView = itemView.findViewById(R.id.tv_iExFee)
         val tvRealMoney: TextView = itemView.findViewById(R.id.tv_iExRealMoney)
         val tvOrderTime2: TextView = itemView.findViewById(R.id.tv_iExOrderTime2)
-
-        init {
-            // HorizontalScrollView가 스크롤되면 모든 아이템이 함께 스크롤되도록 설정합니다.
-            (itemView as HorizontalScrollView).setOnScrollChangeListener { _, scrollX, _, _, _ ->
-                for (i in 0 until itemCount) {
-                    val item = (itemView as HorizontalScrollView).getChildAt(0) as LinearLayout
-                    val textView = item.getChildAt(i) as TextView
-                    textView.translationX = -scrollX.toFloat()
-                }
-            }
-        }
     }
 }

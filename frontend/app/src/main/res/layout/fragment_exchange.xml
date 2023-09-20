@@ -55,6 +55,8 @@
                     android:layout_height="0dp" />
             </LinearLayout>
 
+
+
             <TextView
                 android:id="@+id/tv_MyKrw"
                 android:layout_width="124dp"
@@ -92,132 +94,18 @@
     </LinearLayout>
 
     <HorizontalScrollView
-        android:id="@+id/hsv_Bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lih_BackBack">
 
-        <LinearLayout
-            android:id="@+id/lih_iExBar"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ExchangeTable"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="1dp"
-            android:background="@color/order_back_blue"
-            android:orientation="horizontal"
-            android:weightSum="30">
-
-            <TextView
-                android:id="@+id/tv_ExOrderTime"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:text="체결시간"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ExCoinName"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:text="코인명"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_EX_Type"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:text="종류"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ExSeep"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:text="거래수량"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ExOne"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:text="거래단가"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ExMoney"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:text="거래금액"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ExFee"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:text="수수료"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ExRealMoney"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:text="정산금액"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ExOrderTime2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:text="주문시간"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/order_back_blue"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:layout_height="match_parent" />
     </HorizontalScrollView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_ExchangeTable"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hsv_Bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

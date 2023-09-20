@@ -5,94 +5,85 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <HorizontalScrollView
-        android:id="@+id/hsv_iBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:id="@+id/lih_iExBar2"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="30">
 
-        <LinearLayout
-            android:id="@+id/lih_iExBar"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tv_iExOrderTime"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="30">
+            android:layout_weight="5"
+            android:background="@drawable/side_board"
+            android:gravity="center"
+            android:text="채결시간" />
 
-            <TextView
-                android:id="@+id/tv_iExOrderTime"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:background="@drawable/side_board"
-                android:gravity="center"
-                android:text="채결시간" />
+        <TextView
+            android:id="@+id/tv_iExCoin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="코인명" />
 
-            <TextView
-                android:id="@+id/tv_iExCoin"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:gravity="center"
-                android:text="코인명" />
+        <TextView
+            android:id="@+id/tv_iExType"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="종류" />
 
-            <TextView
-                android:id="@+id/tv_iExType"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="종류" />
+        <TextView
+            android:id="@+id/tv_iExSeep"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="거래수량" />
 
-            <TextView
-                android:id="@+id/tv_iExSeep"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="거래수량" />
+        <TextView
+            android:id="@+id/tv_iExOne"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="거래단가" />
 
-            <TextView
-                android:id="@+id/tv_iExOne"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="거래단가" />
+        <TextView
+            android:id="@+id/tv_IExMoney"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="거래금액" />
 
-            <TextView
-                android:id="@+id/tv_IExMoney"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="거래금액" />
+        <TextView
+            android:id="@+id/tv_iExFee"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="수수료" />
 
-            <TextView
-                android:id="@+id/tv_iExFee"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:gravity="center"
-                android:text="수수료" />
+        <TextView
+            android:id="@+id/tv_iExRealMoney"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="정산금액" />
 
-            <TextView
-                android:id="@+id/tv_iExRealMoney"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="정산금액" />
-
-            <TextView
-                android:id="@+id/tv_iExOrderTime2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="주문시간" />
-        </LinearLayout>
-    </HorizontalScrollView>
+        <TextView
+            android:id="@+id/tv_iExOrderTime2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="주문시간" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

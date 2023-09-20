@@ -61,7 +61,6 @@ class MoreFragment : Fragment() {
 
         }
 
-
         binding.lihPromise.setOnClickListener {
             // LinearLayout의 visibility를 visible로 변경합니다.
 
