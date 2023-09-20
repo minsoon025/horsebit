@@ -1,6 +1,6 @@
 package com.a406.horsebit.config.oauth;
 
-import com.a406.horsebit.config.TokenProvider;
+import com.a406.horsebit.config.jwt.TokenProvider;
 import com.a406.horsebit.domain.RefreshToken;
 import com.a406.horsebit.domain.User;
 import com.a406.horsebit.repository.RefreshTokenRepository;
@@ -9,6 +9,7 @@ import com.a406.horsebit.util.CookieUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -20,6 +21,7 @@ import java.time.Duration;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
@@ -44,6 +46,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         //액세스 토큰 생성 -> 패스에 액세스 토큰을 추가
         String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
         String targetUrl = getTargetUrl(accessToken);
+
+        log.info("액세스토큰 발급 : "+accessToken);
 
         //인증 관련 설정값, 쿠키 제거
         clearAuthenticationAttributes(request, response);
