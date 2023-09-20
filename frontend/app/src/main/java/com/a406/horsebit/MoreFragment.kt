@@ -49,6 +49,20 @@ class MoreFragment : Fragment() {
         }
 
 
+        binding.lihPromise.setOnClickListener {
+            // LinearLayout의 visibility를 visible로 변경합니다.
+
+            if (binding.llhMoreGone1.visibility == View.VISIBLE) {
+                binding.llhMoreGone1.visibility = View.GONE
+            }
+            else {
+                binding.llhMoreGone1.visibility = View.VISIBLE
+            }
+
+        }
+
+
+
         // lih_Notice LinearLayout에 클릭 리스너를 추가
         binding.lihNotice.setOnClickListener {
             // 웹 페이지로 이동할 URL 정의

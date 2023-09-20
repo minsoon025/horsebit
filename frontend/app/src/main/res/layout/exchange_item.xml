@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:id="@+id/lih_iExBar"
-            android:layout_width="500dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:weightSum="30">
