@@ -75,61 +75,66 @@ class StockChartFragment : Fragment() {
             ccCandleChart.setScaleEnabled(true) // 확대 가능
             ccCandleChart.setPinchZoom(true)    // 축소가능
 
-            ccCandleChart.setVisibleXRange(5f, 5f)
-            //ccCandleChart.setDrawGridBackground(false)
+            // ccCandleChart.setVisibleXRange(5f, 5f)
 
             // x축 설정
             ccCandleChart.xAxis.apply {
-                textColor = Color.TRANSPARENT   // 레이블 텍스트 투명
-                position = XAxis.XAxisPosition.BOTTOM   // 레이블 위치 아래
+                this.position = XAxis.XAxisPosition.BOTTOM   // 레이블 위치 아래
 
-                this.setDrawGridLines(true)
-
-                axisLineColor = Color.rgb(50, 59, 76)
-                gridColor = Color.rgb(50, 59, 76)
+                // x축 선 생성
+                this.setDrawAxisLine(true)
+                this.axisLineColor = ContextCompat.getColor(binding.root.context, R.color.black)
             }
+
             // 왼쪽 y축 설정
             ccCandleChart.axisLeft.apply {
-                textColor = Color.WHITE
-                isEnabled = false
+                this.setDrawLabels(false)
             }
             // 오른쪽 y축 설정
             ccCandleChart.axisRight.apply {
-                setLabelCount(7, false)
-                textColor = Color.WHITE
-                // 가로선 표시 여부 설정
-                setDrawGridLines(true)
-                // 차트의 오른쪽 테두리 라인 설정
-                setDrawAxisLine(true)
-                axisLineColor = Color.rgb(50, 59, 76)
-                gridColor = Color.rgb(50, 59, 76)
+                this.textColor = ContextCompat.getColor(binding.root.context, R.color.black)
+
+                // 오른쪽 y축 선 생성
+                this.setDrawAxisLine(true)
+                this.axisLineColor = ContextCompat.getColor(binding.root.context, R.color.black)
             }
             ccCandleChart.legend.isEnabled = false
         }
 
         // 바 차트
         binding.apply{
-            ccBarChart.description.isEnabled = false
-            ccBarChart.setDrawGridBackground(false)
-            ccBarChart.setDrawBarShadow(false)
-            ccBarChart.setDrawBorders(false)
-            ccBarChart.setPinchZoom(false)
+            ccBarChart.description.isEnabled = false    // description 표시하지 않기
+
+            ccBarChart.setTouchEnabled(true) // 그래프 터치 가능
+            ccBarChart.isDragXEnabled = true // x 축 드래그 활성화
+            ccBarChart.isDragYEnabled = true // y 축 드래그 비활성화
+
+            ccBarChart.setScaleEnabled(true) // 확대 가능
+            ccBarChart.setPinchZoom(true)    // 축소가능
+
+
+            ccBarChart.animateY(1000)
+            ccBarChart.animateX(100)
 
             // x 축 설정
-            val xAxis: XAxis = ccBarChart.getXAxis()
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.granularity = 1f
-            xAxis.textColor = ContextCompat.getColor(binding.root.context, R.color.black)
-            xAxis.setDrawAxisLine(false)
-            xAxis.setDrawGridLines(false)
+            ccBarChart.xAxis.apply {
+                this.position = XAxis.XAxisPosition.BOTTOM  // 레이블 위치 아래
 
-            // 왼쪽 y 축 설정
-            val leftAxis: YAxis = ccBarChart.getAxisLeft()
-            leftAxis.setDrawAxisLine(false)
-            leftAxis.textColor = ContextCompat.getColor(binding.root.context, R.color.black)
+                // x 축 선 생성
+                this.setDrawAxisLine(true)
+                this.textColor = ContextCompat.getColor(binding.root.context, R.color.black)
+            }
 
             // 오른쪽 y 축 설정
-            val rightAxis: YAxis = ccBarChart.axisRight
+            ccBarChart.axisRight.apply {
+                this.setDrawAxisLine(false)
+                this.setDrawLabels(true)
+                this.textColor = ContextCompat.getColor(binding.root.context, R.color.black)
+            }
+
+            ccBarChart.axisLeft.apply {
+                this.setDrawLabels(false)
+            }
 
         }
     }
@@ -152,22 +157,22 @@ class StockChartFragment : Fragment() {
         }
 
         val priceDataSet = CandleDataSet(priceEntries, "").apply {
-            axisDependency = YAxis.AxisDependency.LEFT
+            this.axisDependency = YAxis.AxisDependency.LEFT
             // 심지 부분 설정
-            shadowColor = ContextCompat.getColor(binding.root.context, R.color.font_gray)
-            shadowWidth = 0.7F
+            this.shadowColor = ContextCompat.getColor(binding.root.context, R.color.font_gray)
+            this.shadowWidth = 0.7F
             // 음봉 설정
-            decreasingColor = ContextCompat.getColor(binding.root.context, R.color.blue)
-            decreasingPaintStyle = Paint.Style.FILL
+            this.decreasingColor = ContextCompat.getColor(binding.root.context, R.color.blue)
+            this.decreasingPaintStyle = Paint.Style.FILL
             // 양봉 설정
-            increasingColor = ContextCompat.getColor(binding.root.context, R.color.red)
-            increasingPaintStyle = Paint.Style.FILL
+            this.increasingColor = ContextCompat.getColor(binding.root.context, R.color.red)
+            this.increasingPaintStyle = Paint.Style.FILL
 
-            neutralColor = ContextCompat.getColor(binding.root.context, R.color.black)
-            setDrawValues(false)
+            this.neutralColor = ContextCompat.getColor(binding.root.context, R.color.black)
+            this.setDrawValues(false)
 
             // 터치시 노란 선 제거
-            highLightColor = Color.TRANSPARENT
+            this.highLightColor = Color.TRANSPARENT
         }
 
         binding.ccCandleChart.apply {
@@ -185,6 +190,10 @@ class StockChartFragment : Fragment() {
             )
         }
         val barDataSet = BarDataSet(volumeEntries, "").apply {
+            this.valueTextColor = Color.TRANSPARENT
+
+            volumeEntries
+            this.color = ContextCompat.getColor(binding.root.context, R.color.red)
 
         }
 

@@ -22,15 +22,6 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
     var transactionItemList : ArrayList<TransactionShow> = ArrayList()
 
-    val transactionItemList1 = arrayListOf(
-        TransactionShow(true,"S", Date(), "AAA", 111, 111.3, 123.2),
-        TransactionShow(true,"S", Date(), "BBB", 111, 111.3, 123.2),
-        TransactionShow(true,"S", Date(), "CCC", 111, 111.3, 123.2),
-        TransactionShow(true,"S", Date(), "DDD", 111, 111.3, 123.2),
-        TransactionShow(true,"S", Date(), "EEEE", 111, 111.3, 123.2),
-        TransactionShow(true,"S", Date(), "FFFF", 111, 111.3, 123.2),
-    )
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_order_transaction_history_tab, container, false)
 
@@ -51,7 +42,6 @@ class OrderTransactionHistoryTabFragment : Fragment() {
         binding.tvConclusion.setOnClickListener {
             changeColor(1)
             makeData(1)
-            binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList1)
         }
 
         binding.rvTransactionTable.adapter = TransactionItemAdapter(transactionItemList)
@@ -100,8 +90,8 @@ class OrderTransactionHistoryTabFragment : Fragment() {
                 })
             }
             1 -> {
-                api.concluded(tokenNo = 1, authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<concludedResponseBodyOrderModel>> {
-                    override fun onResponse(call: Call<ArrayList<concludedResponseBodyOrderModel>>, response: Response<ArrayList<concludedResponseBodyOrderModel>>) {
+                api.concluded(tokenNo = 1, authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<ConcludedResponseBodyOrderModel>> {
+                    override fun onResponse(call: Call<ArrayList<ConcludedResponseBodyOrderModel>>, response: Response<ArrayList<ConcludedResponseBodyOrderModel>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "체결 내역 조회: 200 Success")
 
@@ -128,9 +118,8 @@ class OrderTransactionHistoryTabFragment : Fragment() {
                             Log.d("로그", "체결 내역 조회: 404 Not Found")
                         }
                     }
-                    override fun onFailure(call: Call<ArrayList<concludedResponseBodyOrderModel>>, t: Throwable) {
+                    override fun onFailure(call: Call<ArrayList<ConcludedResponseBodyOrderModel>>, t: Throwable) {
                         Log.d("로그", "체결 내역 조회: onFailure")
-
                     }
                 })
             }

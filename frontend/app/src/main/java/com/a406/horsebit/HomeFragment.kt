@@ -9,31 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentHomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    val api = APIS.create();
 
-    val assetItemList = arrayListOf(
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "보겸코인", "YBC", false, 22.0, -0.45, 44.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "임서희코인", "BTC", true, 2.4, 12.4, 44.33),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "팀장님은발표", "BBB", true, 2222.4, -2.2, 4.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "군것질화영코인", "AAA", false, 4422.4, 33.2, 434.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "할어버지코인", "TTT", true, 5555.4, -22.3, 444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "버섯코인", "DDD", false, 2312.4, 22.2, 4.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "이마에점", "AAA", true, 22233.4, 43.2, 43.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "어제는2개", "EEE", true, 22444.4, 1.1, 1.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "오늘은3개", "RRRR", false, 5555.4, -0.2, 14.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "그럼내일은?", "YONG", true, 2266.4, -0.22, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "당연히5개", "YONTTG", false, 7777.4, -0.23, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "놀랬지?", "YY", false, 8888.4, 0.01, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "구라얌", "HHH", false, 99999.4, 0.00, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "짱구는", "JJJ", false, 34343.4, 0.22, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "엉덩이로", "JJJJ", false, 367643.4, 3.2, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "춤을춰", "EEE", false, 34543.4, 1.2, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "어허잇", "PPP", false, 34534.4, -1.2, 4444.3),
-        AssetItem(R.drawable.baseline_dashboard_customize_24, "헤헤", "LLL", false, 32432.4, -2.2, 4444.3),
-    )
+    val tokenShowList: ArrayList<TokenShow> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -43,46 +28,78 @@ class HomeFragment : Fragment() {
         binding.rvAssetTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
         binding.rvAssetTable.setHasFixedSize(true) // 성능 개선
 
-        binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+        tokenShowList.clear()
+        api.tokenList(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+            override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
+                if(response.code() == 200) {    // 200 Success
+                    Log.d("로그", "코인 목록 조회 (SSE): 200 Success")
+
+                    val responseBody = response.body()
+
+                    Log.d("dddd", responseBody.toString())
+
+                    if(responseBody != null) {
+                        for(token in responseBody) {
+                            val tokenShow = TokenShow(1, token.name, token.code, token.currentPrice, token.priceTrend, token.volume, token.newFlag)
+                            tokenShowList.add(tokenShow)
+                        }
+                    }
+                    binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+                }
+                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                    Log.d("로그", "코인 목록 조회 (SSE): 400 Bad Request")
+                }
+                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                    Log.d("로그", "코인 목록 조회 (SSE): 401 Unauthorized")
+                }
+                else if(response.code() == 404) {   // 404 Not Found
+                    Log.d("로그", "코인 목록 조회 (SSE): 404 Not Found")
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<Token>>, t: Throwable) {
+                Log.d("로그", "코인 목록 조회 (SSE): onFailure")
+                Log.d("ddddd", t.toString())
+            }
+        })
 
         binding.ivAssetNameUp.setOnClickListener {  // 자산명 내림차순 정렬
-            assetItemList.sortByDescending { it.assetName }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortByDescending { it.name }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.ivAssetNameDown.setOnClickListener {    // 자산명 오름차순 정렬
-            assetItemList.sortBy { it.assetName }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortBy { it.name }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.ivCurrentPriceUp.setOnClickListener { // 현재가 오름차순 정렬
-            assetItemList.sortBy { it.currentPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortBy { it.currentPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.ivCurrentPriceDown.setOnClickListener { // 현재가 내림차순 정렬
-            assetItemList.sortByDescending { it.currentPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortByDescending { it.currentPrice }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.ivYesterdayPriceUp.setOnClickListener {
-            assetItemList.sortBy { it.yesterdayPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortBy { it.priceTrend }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.ivYesterdayPriceDown.setOnClickListener {
-            assetItemList.sortByDescending { it.yesterdayPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortByDescending { it.priceTrend }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.ivTransactionPriceUp.setOnClickListener {
-            assetItemList.sortBy { it.transactionPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortBy { it.volume }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.ivTransactionPriceDown.setOnClickListener {
-            assetItemList.sortByDescending { it.transactionPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(assetItemList)
+            tokenShowList.sortByDescending { it.volume }
+            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
         }
 
         binding.btnTmp.setOnClickListener {

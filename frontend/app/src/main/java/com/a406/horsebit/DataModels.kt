@@ -16,7 +16,7 @@ data class NotConcludedResponseBodyOrderModel(
 )
 
 // 체결 내역 조회
-data class concludedResponseBodyOrderModel(
+data class ConcludedResponseBodyOrderModel(
     val executionNo: Int, //거래번호
     val tokenNo: Int,  //토큰번호
     val tokenCode: String, //토큰코드명
@@ -37,14 +37,25 @@ data class TransactionShow(
     val remainQuantityOrPrice: Double,  //미체결량
 )
 
-data class AssetItem(
-    val graph: Int,
-    val assetName: String,
-    val assetTicker: String,
-    val new: Boolean,
-    val currentPrice: Double,
-    val yesterdayPrice: Double,
-    val transactionPrice: Double,
+// 코인 목록 조회 (SSE)
+data class Token(
+    val tokenNo: Long,  //토큰번호
+    val name: String,  //토큰 이름
+    val code: String,  // 토큰 코드
+    val currentPrice: Double,  // 토큰 현재가
+    val priceTrend: Double, //변동추이
+    val volume: Double, //거래금액
+    val newFlag: Boolean,   // 새로운 코인 여부
+)
+
+data class TokenShow(
+    val graph: Int,     // 그래프 수정 예정
+    val name: String,   // 토큰 이름
+    val code: String,   // 토큰 코드
+    val currentPrice: Double,   // 토큰 현재가
+    val priceTrend: Double, // 변동추기
+    val volume: Double, // 거래금액
+    val newFlag: Boolean,   // 새로운 코인 여부
 )
 
 data class Order(

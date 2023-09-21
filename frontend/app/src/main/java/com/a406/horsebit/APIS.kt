@@ -26,7 +26,13 @@ interface APIS {
     fun concluded(
         @Path("tokenNo") tokenNo: Long,
         @Header("Authorization") authorization: String,
-    ): Call<ArrayList<concludedResponseBodyOrderModel>>
+    ): Call<ArrayList<ConcludedResponseBodyOrderModel>>
+
+    // 코인 목록 조회 (SSE)
+    @GET("/api/exchange/tokens")
+    fun tokenList(
+        @Header("Authorization") authorization: String,
+    ): Call<ArrayList<Token>>
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"
