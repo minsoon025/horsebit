@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
                 val changeFragment = HomeFragment()
                 ft.replace(R.id.fl_MainFrameLayout, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
             1 -> {
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
                 val changeFragment = MyPageFragment()
                 ft.replace(R.id.fl_MainFrameLayout, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
             2 -> {
@@ -70,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
                 val changeFragment = ExchangeFragment()
                 ft.replace(R.id.fl_MainFrameLayout, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
             3 -> {
@@ -81,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 
                 val changeFragment = MoreFragment()
                 ft.replace(R.id.fl_MainFrameLayout, changeFragment)
-                ft.addToBackStack(null)
                 ft.commit()
             }
         }
