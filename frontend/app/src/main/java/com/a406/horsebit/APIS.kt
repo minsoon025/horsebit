@@ -14,13 +14,19 @@ import retrofit2.http.Query
 
 interface APIS {
 
+    // 미체결 내역 조회
     @GET("/api/exchange/orders/{tokenNo}")
     fun notConcluded(
         @Path("tokenNo") tokenNo: Long,
-        @Header("accessToken") accessToken: String,
-        //@Body requestBody: NotConcludedRequestBodyModel,
-    //): Call<NotConcludedResponseBodyModel>
+        @Header("Authorization") authorization: String,
     ): Call<ArrayList<NotConcludedResponseBodyOrderModel>>
+
+    // 체결 내역 조회
+    @GET("/api/exchange/executions/{tokenNo}")
+    fun concluded(
+        @Path("tokenNo") tokenNo: Long,
+        @Header("Authorization") authorization: String,
+    ): Call<ArrayList<concludedResponseBodyOrderModel>>
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"
