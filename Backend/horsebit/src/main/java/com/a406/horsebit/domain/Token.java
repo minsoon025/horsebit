@@ -35,4 +35,7 @@ public class Token {
 
 	@Column(name = "publish_date", nullable = false)
 	private Date publishDate;
+
+	@Column(name = "new_flag", nullable = false)
+	private Boolean newFlag;
 }
