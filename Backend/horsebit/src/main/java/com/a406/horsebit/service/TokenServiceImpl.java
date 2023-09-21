@@ -20,6 +20,7 @@ public class TokenServiceImpl implements TokenService {
 		this.tokenRepository = tokenRepository;
 	}
 
+	//TODO: 아래 refactoring 필요
 	@Override
 	public List<TokenDTO> getAllTokens() {
 		List<TokenDTO> result = tokenRepository.findAllTokens();
@@ -28,4 +29,9 @@ public class TokenServiceImpl implements TokenService {
 
 		return result;
 	}
+
+	// @Override
+	// public TokenDTO getTokenByTokenNo() {
+	// 	return tokenRepository.findTokenByTokenNo();
+	// }
 }
