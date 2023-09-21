@@ -6,17 +6,17 @@ import java.sql.Timestamp;
 public class TradeDTO {
 	private Long executionNo;
 	private Long tokenNo;
-	private String tokenCOde;
+	private String tokenCode;
 	private int price;
 	private double quantity;
 	private Timestamp timestamp;
 	private String sellOrBuy;
 
-	public TradeDTO(Long executionNo, Long tokenNo, String tokenCOde, int price, double quantity, Timestamp timestamp,
+	public TradeDTO(Long executionNo, Long tokenNo, String tokenCode, int price, double quantity, Timestamp timestamp,
 		String sellOrBuy) {
 		this.executionNo = executionNo;
 		this.tokenNo = tokenNo;
-		this.tokenCOde = tokenCOde;
+		this.tokenCode = tokenCode;
 		this.price = price;
 		this.quantity = quantity;
 		this.timestamp = timestamp;
@@ -39,12 +39,12 @@ public class TradeDTO {
 		this.tokenNo = tokenNo;
 	}
 
-	public String getTokenCOde() {
-		return tokenCOde;
+	public String getTokenCode() {
+		return tokenCode;
 	}
 
-	public void setTokenCOde(String tokenCOde) {
-		this.tokenCOde = tokenCOde;
+	public void setTokenCode(String tokenCode) {
+		this.tokenCode = tokenCode;
 	}
 
 	public int getPrice() {
