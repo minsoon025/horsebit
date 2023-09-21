@@ -1,4 +1,5 @@
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,29 @@ class ExchangeTableAdapter(private val context: Context, private val exchangeDat
         holder.tvFee.text = exchangeData.fee
         holder.tvRealMoney.text = exchangeData.realMoney
         holder.tvOrderTime2.text = exchangeData.orderTime2
+
+        // 첫 줄에만 볼드 텍스트 스타일과 배경색 적용
+        if (position == 0) {
+            holder.tvOrderTime.setTypeface(null, Typeface.BOLD)
+            holder.tvCoinName.setTypeface(null, Typeface.BOLD)
+            holder.tvType.setTypeface(null, Typeface.BOLD)
+            holder.tvSeep.setTypeface(null, Typeface.BOLD)
+            holder.tvOne.setTypeface(null, Typeface.BOLD)
+            holder.tvMoney.setTypeface(null, Typeface.BOLD)
+            holder.tvFee.setTypeface(null, Typeface.BOLD)
+            holder.tvRealMoney.setTypeface(null, Typeface.BOLD)
+            holder.tvOrderTime2.setTypeface(null, Typeface.BOLD)
+
+            holder.tvOrderTime.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvCoinName.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvType.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvSeep.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvOne.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvMoney.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvFee.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvRealMoney.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+            holder.tvOrderTime2.setBackgroundColor(context.resources.getColor(R.color.main_color)) // 파란 배경색 설정
+        }
     }
 
     override fun getItemCount(): Int {

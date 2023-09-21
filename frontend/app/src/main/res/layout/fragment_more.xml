@@ -47,7 +47,7 @@
                         android:id="@+id/tv_Welcome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="홀스빗 님 안녕하세요!"
+                        android:text="홀스빗 님"
                         android:textColor="#171717"
                         android:textSize="28sp" />
 

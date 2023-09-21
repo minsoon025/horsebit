@@ -1,5 +1,7 @@
 package com.a406.horsebit
 
+import ExchangeFragment
+import MoreFragment
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import com.a406.horsebit.databinding.FragmentMyEditBinding
 
 class MyEditFragment : Fragment() {
@@ -22,6 +25,23 @@ class MyEditFragment : Fragment() {
             val view = inflater.inflate(R.layout.fragment_my_edit, container, false)
 
             binding = FragmentMyEditBinding.bind(view)
+
+        binding.tvEditBack.setOnClickListener {
+            val ft = requireActivity().supportFragmentManager.beginTransaction()
+            val moreFragment = MoreFragment()
+            ft.replace(R.id.fl_MainFrameLayout, moreFragment)
+            ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+            ft.commit()
+        }
+
+        // 로그아웃
+        binding.btnLogout.setOnClickListener {
+            val ft = requireActivity().supportFragmentManager.beginTransaction()
+            val homeFragment = HomeFragment()
+            ft.replace(R.id.fl_MainFrameLayout, homeFragment)
+            ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+            ft.commit()
+        }
 
         // Spinner 초기화 및 은행 목록 설정
         spinnerBankOrSecurities = view.findViewById(R.id.spinner_bank_or_securities)
@@ -55,12 +75,9 @@ class MyEditFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerBankOrSecurities.adapter = adapter
 
+
         // 디폴트 선택 항목 설정
         spinnerBankOrSecurities.setSelection(0) // "은행 / 증권사"를 선택된 상태로 만듭니다.
-
-
-
-
 
         return view
         }
