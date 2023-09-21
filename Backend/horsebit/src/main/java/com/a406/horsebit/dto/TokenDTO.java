@@ -4,12 +4,12 @@ public class TokenDTO {
 	private Long tokenNo;
 	private String name;
 	private String code;
-	private String currentPrice;
-	private String priceTrend;
-	private String volume;
+	private double currentPrice;
+	private double priceTrend;
+	private double volume;
 	private Boolean newFlag;
 
-	public TokenDTO(Long tokenNo, String name, String code, String currentPrice, String priceTrend, String volume, Boolean newFlag) {
+	public TokenDTO(Long tokenNo, String name, String code, double currentPrice, double priceTrend, double volume, Boolean newFlag) {
 		this.tokenNo = tokenNo;
 		this.name = name;
 		this.code = code;
@@ -25,9 +25,9 @@ public class TokenDTO {
 		this.name = name;
 		this.code = code;
 		this.newFlag = newFlag;
-		this.currentPrice = "203400";
-		this.priceTrend = "4.3%";
-		this.volume = "3";
+		this.currentPrice = 203400;
+		this.priceTrend = 4.3;
+		this.volume = 3;
 	}
 
 	public Long getTokenNo() {
@@ -54,27 +54,27 @@ public class TokenDTO {
 		this.code = code;
 	}
 
-	public String getCurrentPrice() {
+	public double getCurrentPrice() {
 		return currentPrice;
 	}
 
-	public void setCurrentPrice(String currentPrice) {
+	public void setCurrentPrice(double currentPrice) {
 		this.currentPrice = currentPrice;
 	}
 
-	public String getPriceTrend() {
+	public double getPriceTrend() {
 		return priceTrend;
 	}
 
-	public void setPriceTrend(String priceTrend) {
+	public void setPriceTrend(double priceTrend) {
 		this.priceTrend = priceTrend;
 	}
 
-	public String getVolume() {
+	public double getVolume() {
 		return volume;
 	}
 
-	public void setVolume(String volume) {
+	public void setVolume(double volume) {
 		this.volume = volume;
 	}
 
