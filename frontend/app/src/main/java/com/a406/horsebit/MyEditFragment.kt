@@ -1,68 +1,119 @@
 package com.a406.horsebit
 
-import ExchangeFragment
 import MoreFragment
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.Fragment
 import com.a406.horsebit.databinding.FragmentMyEditBinding
+import com.google.android.material.button.MaterialButton
 
 class MyEditFragment : Fragment() {
 
-        private lateinit var binding: FragmentMyEditBinding
-        private lateinit var spinnerBankOrSecurities: Spinner // 스피너 추가
-        private lateinit var tvSend: TextView // 텍스트뷰로 설정
+    private lateinit var binding: FragmentMyEditBinding
+    private lateinit var spinnerBankOrSecurities: Spinner
+    private lateinit var tvSend: TextView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            val view = inflater.inflate(R.layout.fragment_my_edit, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_my_edit, container, false)
 
-            binding = FragmentMyEditBinding.bind(view)
+        binding = FragmentMyEditBinding.bind(view)
+
+        // 이름 변경 팝업 / 일단 안됨
+        binding.btnEditName.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setView(R.layout.fragment_my_edit)
+                .show()
+                .also { alertDialog ->
+
+                    if (alertDialog == null) {
+                        return@also
+                    }
+
+                    val userName = alertDialog.findViewById<EditText>(R.id.tv_EditName)?.text
+                    val button = alertDialog.findViewById<MaterialButton>(R.id.btn_EditName)
+
+                    button?.setOnClickListener {
+                        alertDialog.dismiss()
+                        Log.d("MyTag", "userName : $userName")
+                    }
+                }
+        }
+
+
+        // 회원탈퇴 - 팝업 추가
+        binding.tvOut.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("경고")
+                .setMessage(" 홀스빗을 떠나시겠습니까??")
+                .setPositiveButton("ok", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface, which: Int) {
+                        Log.d("MyTag", "positive")
+                    }
+                })
+                .setNegativeButton("cancel", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface, which: Int) {
+                        Log.d("MyTag", "negative")
+                    }
+                })
+                .setNeutralButton("후원하기", object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface, which: Int) {
+                        Log.d("MyTag", "neutral")
+                    }
+                })
+                .create()
+                .show()
+        }
 
         binding.tvEditBack.setOnClickListener {
             val ft = requireActivity().supportFragmentManager.beginTransaction()
             val moreFragment = MoreFragment()
             ft.replace(R.id.fl_MainFrameLayout, moreFragment)
-            ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+            ft.addToBackStack(null)
             ft.commit()
         }
 
-        // 로그아웃
         binding.btnLogout.setOnClickListener {
             val ft = requireActivity().supportFragmentManager.beginTransaction()
             val homeFragment = HomeFragment()
             ft.replace(R.id.fl_MainFrameLayout, homeFragment)
-            ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+            ft.addToBackStack(null)
             ft.commit()
         }
 
-        // Spinner 초기화 및 은행 목록 설정
         spinnerBankOrSecurities = view.findViewById(R.id.spinner_bank_or_securities)
-        val bankList = arrayOf("  은행 / 증권사", "  신한은행", "  국민은행", "  우리은행", "  기타") // 원하는 은행 목록 추가
+        val bankList = arrayOf("  은행 / 증권사", "  신한은행", "  국민은행", "  우리은행", "  기타")
 
-        // 어댑터 생성 및 설정
         val adapter = object : ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item,
             bankList
         ) {
             override fun isEnabled(position: Int): Boolean {
-                // "은행 / 증권사" 항목만 비활성화
                 return position != 0
             }
 
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
                 val view = super.getDropDownView(position, convertView, parent)
                 val textView = view.findViewById<TextView>(android.R.id.text1)
 
-                // "은행 / 증권사" 항목의 글씨를 회색으로 설정
                 if (position == 0) {
                     textView.setTextColor(Color.GRAY)
                 } else {
@@ -75,10 +126,8 @@ class MyEditFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerBankOrSecurities.adapter = adapter
 
-
-        // 디폴트 선택 항목 설정
-        spinnerBankOrSecurities.setSelection(0) // "은행 / 증권사"를 선택된 상태로 만듭니다.
+        spinnerBankOrSecurities.setSelection(0)
 
         return view
-        }
     }
+}
