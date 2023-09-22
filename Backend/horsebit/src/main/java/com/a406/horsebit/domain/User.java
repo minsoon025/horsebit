@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,31 +14,39 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "users")
+@Table(name = "USER_INFO")
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
+    @Column(name = "user_no", updatable = false)
     private Long id;
+
+    @Column(name = "nickname", unique = true)
+    private String nickname;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password")
-    private String password;
+    private String password; //TODO: 필요없어서 삭제필요
 
-    //사용자 이름
-    @Column(name = "nickname", unique = true)
-    private String nickname;
+    @Column(name = "alarm_push_flag", nullable = false)
+    private boolean alarmPushFlag;
+
+    @Column(name = "biometric_login_flag", nullable = false)
+    private boolean biometricLoginFlag;
 
     @Builder
-    public User(String email, String password, String nickname) {
-        this.email = email;
-        this.password = password;
+    public User(Long id, String nickname, String password, String email, boolean alarmPushFlag, boolean biometricLoginFlag) {
+        this.id = id;
         this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+        this.alarmPushFlag = alarmPushFlag;
+        this.biometricLoginFlag = biometricLoginFlag;
     }
 
     // 권한 반환
@@ -51,6 +61,7 @@ public class User implements UserDetails {
         return email;
     }
 
+    //TODO: 성민 확인 필요 - password 필요없다고 했는데 Override 필수인데 어떻게 해야돼?
     //사용자의 패스워드 반환
     @Override
     public String getPassword() {
