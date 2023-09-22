@@ -7,23 +7,42 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentHomeBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale.filter
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     val api = APIS.create();
 
-    val tokenShowList: ArrayList<TokenShow> = ArrayList()
+    var tokenShowList: ArrayList<TokenShow> = ArrayList()
+
+    lateinit var assetTableItemAdapter : AssetTableItemAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         binding = FragmentHomeBinding.bind(view)
+
+        assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+
+        var searchViewTextListener: SearchView.OnQueryTextListener = object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(s: String?): Boolean {
+                assetTableItemAdapter.filter.filter(s)
+                return true
+            }
+        }
+
+        binding.svAssert.setOnQueryTextListener(searchViewTextListener)
 
         binding.rvAssetTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
         binding.rvAssetTable.setHasFixedSize(true) // 성능 개선
@@ -44,7 +63,9 @@ class HomeFragment : Fragment() {
                             tokenShowList.add(tokenShow)
                         }
                     }
-                    binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+                    // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+                    assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+                    binding.rvAssetTable.adapter = assetTableItemAdapter
                 }
                 else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                     Log.d("로그", "코인 목록 조회 (SSE): 400 Bad Request")
@@ -58,18 +79,15 @@ class HomeFragment : Fragment() {
             }
             override fun onFailure(call: Call<ArrayList<Token>>, t: Throwable) {
                 Log.d("로그", "코인 목록 조회 (SSE): onFailure")
-                Log.d("ddddd", t.toString())
             }
         })
 
         binding.ivAssetNameUp.setOnClickListener {  // 자산명 내림차순 정렬
-            tokenShowList.sortByDescending { it.name }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+            assetTableItemAdapter.sortByAssetNameDescending()
         }
 
         binding.ivAssetNameDown.setOnClickListener {    // 자산명 오름차순 정렬
-            tokenShowList.sortBy { it.name }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+            assetTableItemAdapter.sortByAssetNameAscending()
         }
 
         binding.ivCurrentPriceUp.setOnClickListener { // 현재가 오름차순 정렬

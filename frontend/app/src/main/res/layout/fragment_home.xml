@@ -177,7 +177,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:orientation="horizontal"
         android:weightSum="11"
         app:layout_constraintStart_toStartOf="parent"
@@ -263,25 +263,15 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llh_Setting"
-        android:layout_width="wrap_content"
+    <SearchView
+        android:id="@+id/sv_Assert"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_Search"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:src="@drawable/baseline_search_24" />
-
-    </LinearLayout>
+        android:layout_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/tv_MainTitle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_AssetTable"
@@ -299,6 +289,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

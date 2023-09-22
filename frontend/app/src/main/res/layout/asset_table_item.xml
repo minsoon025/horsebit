@@ -19,7 +19,9 @@
             android:id="@+id/iv_Graph"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="5"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
@@ -27,29 +29,48 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="26"
+            android:background="@drawable/gray_border_background"
             android:orientation="vertical"
+            android:paddingLeft="1dp"
             android:weightSum="3">
 
             <LinearLayout
+                android:id="@+id/llh_Name"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="5">
 
-                <TextView
-                    android:id="@+id/tv_ItemAssetName"
-                    android:layout_width="wrap_content"
+                <HorizontalScrollView
+                    android:id="@+id/hsv_AssetTableItemName"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/line_seed_kr_rg"
-                    android:gravity="center_vertical"
-                    android:includeFontPadding="false"
-                    android:text="TextView"
-                    android:textColor="#171717" />
+                    android:layout_weight="4">
+
+                    <LinearLayout
+                        android:id="@+id/llh_AssetTableName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_ItemAssetName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/line_seed_kr_rg"
+                            android:gravity="center_vertical"
+                            android:includeFontPadding="false"
+                            android:text="TextView"
+                            android:textColor="#171717" />
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <ImageView
                     android:id="@+id/iv_New"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="3dp"
                     android:layout_weight="1"
@@ -73,9 +94,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="23"
+            android:background="@drawable/gray_border_background"
             android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="right|center_vertical"
             android:includeFontPadding="false"
+            android:paddingRight="2dp"
             android:text="TextView"
             android:textSize="10sp" />
 
@@ -84,9 +107,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="23"
+            android:background="@drawable/gray_border_background"
             android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="right|center_vertical"
             android:includeFontPadding="false"
+            android:paddingRight="2dp"
             android:text="TextView"
             android:textSize="10sp" />
 
@@ -95,9 +120,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="23"
+            android:background="@drawable/gray_border_background"
             android:fontFamily="@font/line_seed_kr_rg"
             android:gravity="right|center_vertical"
             android:includeFontPadding="false"
+            android:paddingRight="2dp"
             android:text="TextView"
             android:textSize="10sp" />
 
