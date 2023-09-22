@@ -35,6 +35,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        log.info("OAuth2 Login 성공!");
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
 
@@ -54,6 +55,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         //리다이렉트
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
+
+        //리프레시 토큰, 액세스 토큰 전송
+        tokenProvider.sendAccessAndRefreshToken(response, accessToken, refreshToken);
+        log.info("리다이렉트, 토큰 정보 전송 완료");
+
     }
 
     //생성된 리프레시 토큰을 전달받아 데이터베이스에 저장
