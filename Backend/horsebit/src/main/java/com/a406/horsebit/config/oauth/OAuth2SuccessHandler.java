@@ -36,29 +36,29 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         log.info("OAuth2 Login 성공!");
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
-
-        //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
-        String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
-        saveRefreshToken(user.getId(), refreshToken);
-        addRefreshTokenToCookie(request, response, refreshToken);
-
-        //액세스 토큰 생성 -> 패스에 액세스 토큰을 추가
-        String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
-        String targetUrl = getTargetUrl(accessToken);
-
-        log.info("액세스토큰 발급 : "+accessToken);
-
-        //인증 관련 설정값, 쿠키 제거
-        clearAuthenticationAttributes(request, response);
-
-        //리다이렉트
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
-
-        //리프레시 토큰, 액세스 토큰 전송
-        tokenProvider.sendAccessAndRefreshToken(response, accessToken, refreshToken);
-        log.info("리다이렉트, 토큰 정보 전송 완료");
+//        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+//        User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
+//
+//        //리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
+//        String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
+//        saveRefreshToken(user.getId(), refreshToken);
+//        addRefreshTokenToCookie(request, response, refreshToken);
+//
+//        //액세스 토큰 생성 -> 패스에 액세스 토큰을 추가
+//        String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
+//        String targetUrl = getTargetUrl(accessToken);
+//
+//        log.info("액세스토큰 발급 : "+accessToken);
+//
+//        //인증 관련 설정값, 쿠키 제거
+//        clearAuthenticationAttributes(request, response);
+//
+//        //리다이렉트
+//        getRedirectStrategy().sendRedirect(request, response, targetUrl);
+//
+//        //리프레시 토큰, 액세스 토큰 전송
+//        tokenProvider.sendAccessAndRefreshToken(response, accessToken, refreshToken);
+//        log.info("리다이렉트, 토큰 정보 전송 완료");
 
     }
 
