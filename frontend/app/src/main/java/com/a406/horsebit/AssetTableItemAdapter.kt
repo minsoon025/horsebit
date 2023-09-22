@@ -1,11 +1,8 @@
 package com.a406.horsebit
 
-
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -13,7 +10,6 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.AssetTableItemBinding
 
@@ -89,15 +85,20 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
     }
 
     class CustomViewHolder(private val binding: AssetTableItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(tokenShow: TokenShow) {
-
+            Log.d("asdfaasdf", tokenShow.toString())
             binding.ivGraph.setImageResource(R.drawable.baseline_dashboard_customize_24)
             binding.tvItemAssetName.text = tokenShow.name
             binding.hsvAssetTableItemName.isHorizontalScrollBarEnabled = false
             binding.tvItemAssetTicker.text = tokenShow.code
-            binding.ivNew.setImageResource(R.drawable.baseline_face_24)
-            if(tokenShow.newFlag) {binding.ivNew.isVisible = true}
+            binding.ivNew.setImageResource(R.drawable.baseline_fiber_new_24)
+            binding.ivNew.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.orange_red))
+            if(tokenShow.newFlag) {
+                binding.ivNew.isVisible = true
+                val params = binding.hsvAssetTableItemName.layoutParams as LinearLayout.LayoutParams
+                params.weight = 4f
+                binding.hsvAssetTableItemName.layoutParams = params
+            }
             else {
                 binding.ivNew.isInvisible = true
                 val params = binding.hsvAssetTableItemName.layoutParams as LinearLayout.LayoutParams
