@@ -44,18 +44,32 @@ public class WebOAuthSecurityConfig {
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
+//        http.authorizeRequests()
+//                .requestMatchers("/api/token").permitAll()
+//                .requestMatchers("/api/**").authenticated()
+//                .anyRequest().permitAll();
+//
+//        http.oauth2Login()
+//                .loginPage("/login")
+//                .authorizationEndpoint()
+//                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
+//                .and()
+//                .successHandler(oAuth2SuccessHandler())
+//                .userInfoEndpoint()
+//                .userService(oAuth2UserCustomService);
+
         http.authorizeRequests()
                 .requestMatchers("/api/token").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll();
-
-        http.oauth2Login()
-                .loginPage("/login")
+                .requestMatchers("/api/**").permitAll()
+                .anyRequest().permitAll()
+            .and()
+            .oauth2Login()
+                .loginPage("/login") // OAuth2 로그인 페이지 설정 (사용하지 않을 경우, 디폴트 로그인 페이지로 이동)
                 .authorizationEndpoint()
                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
-                .and()
-                .successHandler(oAuth2SuccessHandler())
-                .userInfoEndpoint()
+            .and()
+            .successHandler(oAuth2SuccessHandler())
+            .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
 
         http.logout()
