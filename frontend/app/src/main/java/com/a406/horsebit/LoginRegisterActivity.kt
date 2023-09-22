@@ -2,14 +2,12 @@ package com.a406.horsebit
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.ActivityLoginRegisterBinding
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,8 +15,6 @@ import retrofit2.Response
 class LoginRegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginRegisterBinding
     private val api = APIS.create();
-
-    private val tokenShowList: ArrayList<TokenShow> = ArrayList()
 
     private var checkflag = arrayOf(false,false,false)
     private var flag = arrayOf(false,false,false)
@@ -35,7 +31,6 @@ class LoginRegisterActivity : AppCompatActivity() {
 
         loadData()
 
-        tokenShowList.clear()
         api.tokenList(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
             override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
                 if(response.code() == 200) {    // 200 Success
@@ -45,12 +40,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
                     Log.d("dddd", responseBody.toString())
 
-                    if(responseBody != null) {
-                        for(token in responseBody) {
-                            val tokenShow = TokenShow(1, token.name, token.code, token.currentPrice, token.priceTrend, token.volume, token.newFlag)
-                            tokenShowList.add(tokenShow)
-                        }
-                    }
+
                 }
                 else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                     Log.d("로그", "토큰 조회: 400 Bad Request")

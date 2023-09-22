@@ -94,6 +94,7 @@ data class CandleShow(
     val shadowLow: Float
 )
 
+// 마이페이지 코인 component
 data class MyAsset(
     val horseImage: Int,
     val coinTicker: String,

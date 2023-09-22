@@ -5,14 +5,23 @@ import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface APIS {
+
+    // 로그인
+    @POST("/api/auth/login")
+    fun login(
+        @Header("Authorization") authorization: String,
+    )
+//    :Call<ArrayList<>>
+
+    // 회원가입
+
+    // 닉네임 중복체크
 
     // 미체결 내역 조회
     @GET("/api/exchange/orders/{tokenNo}")
