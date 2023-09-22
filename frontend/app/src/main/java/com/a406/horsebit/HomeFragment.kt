@@ -55,8 +55,6 @@ class HomeFragment : Fragment() {
 
                     val responseBody = response.body()
 
-                    Log.d("dddd", responseBody.toString())
-
                     if(responseBody != null) {
                         for(token in responseBody) {
                             val tokenShow = TokenShow(1, token.name, token.code, token.currentPrice, token.priceTrend, token.volume, token.newFlag)

@@ -1,6 +1,8 @@
 package com.a406.horsebit
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,6 +14,11 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.AssetTableItemBinding
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.CandleData
+import com.github.mikephil.charting.data.CandleDataSet
+import com.github.mikephil.charting.data.CandleEntry
 
 class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
 
@@ -86,8 +93,9 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
 
     class CustomViewHolder(private val binding: AssetTableItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tokenShow: TokenShow) {
-            Log.d("asdfaasdf", tokenShow.toString())
-            binding.ivGraph.setImageResource(R.drawable.baseline_dashboard_customize_24)
+            initChart()
+            setChartData(CandleShow(0, 0f, if(tokenShow.priceTrend.toFloat() > 20f) 20f else if(tokenShow.priceTrend.toFloat() < -20f) -20f else tokenShow.priceTrend.toFloat(), 20f, -20f))
+
             binding.tvItemAssetName.text = tokenShow.name
             binding.hsvAssetTableItemName.isHorizontalScrollBarEnabled = false
             binding.tvItemAssetTicker.text = tokenShow.code
@@ -116,6 +124,76 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
             binding.tvItemCurrentPrice.text = tokenShow.currentPrice.toString()
             binding.tvItemYesterdayPrice.text = "${tokenShow.priceTrend.toString()}%"
             binding.tvItemTransactionPrice.text = "${tokenShow.priceTrend.toString()}만원"
+        }
+
+        private fun setChartData(candle: CandleShow) {
+            // 캔들차트
+            val priceEntries = ArrayList<CandleEntry>()
+
+            priceEntries.add(
+                CandleEntry(
+                    candle.createdAt.toFloat(),
+                    candle.shadowHigh,
+                    candle.shadowLow,
+                    candle.open,
+                    candle.close
+                )
+            )
+
+            val priceDataSet = CandleDataSet(priceEntries, "").apply {
+                this.axisDependency = YAxis.AxisDependency.LEFT
+                // 심지 부분 설정
+                this.shadowColor = ContextCompat.getColor(binding.root.context, R.color.font_gray)
+                this.shadowWidth = 0.7F
+                // 음봉 설정
+                this.decreasingColor = ContextCompat.getColor(binding.root.context, R.color.blue)
+                this.decreasingPaintStyle = Paint.Style.FILL
+                // 양봉 설정
+                this.increasingColor = ContextCompat.getColor(binding.root.context, R.color.red)
+                this.increasingPaintStyle = Paint.Style.FILL
+
+                this.neutralColor = ContextCompat.getColor(binding.root.context, R.color.black)
+                this.setDrawValues(false)
+
+                // 터치시 노란 선 제거
+                this.highLightColor = Color.TRANSPARENT
+            }
+
+            binding.ccGraph.apply {
+                this.data = CandleData(priceDataSet)
+                invalidate()
+            }
+        }
+
+        private fun initChart() {
+            // 캔들 차트
+            binding.apply {
+                ccGraph.description.isEnabled = false // description 표시하지 않기
+
+                ccGraph.setTouchEnabled(false) // 그래프 터치 가능
+                ccGraph.setDrawGridBackground(false)
+
+                // x축 설정
+                ccGraph.xAxis.apply {
+                    this.setDrawLabels(false)
+                    this.setDrawAxisLine(false)
+                    this.setDrawGridLines(false)
+                }
+
+                // 왼쪽 y축 설정
+                ccGraph.axisLeft.apply {
+                    this.setDrawLabels(false)
+                    this.setDrawAxisLine(false)
+                    this.setDrawGridLines(false)
+                }
+                // 오른쪽 y축 설정
+                ccGraph.axisRight.apply {
+                    this.setDrawLabels(false)
+                    this.setDrawAxisLine(false)
+                    this.setDrawGridLines(false)
+                }
+                ccGraph.legend.isEnabled = false
+            }
         }
     }
 
