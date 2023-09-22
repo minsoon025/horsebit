@@ -1,5 +1,6 @@
 package com.a406.horsebit.config;
 
+import com.a406.horsebit.config.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

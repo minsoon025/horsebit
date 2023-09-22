@@ -1,4 +1,4 @@
-package com.a406.horsebit.config;
+package com.a406.horsebit.config.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

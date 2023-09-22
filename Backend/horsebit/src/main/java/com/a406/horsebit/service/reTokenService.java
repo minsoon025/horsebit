@@ -1,6 +1,6 @@
 package com.a406.horsebit.service;
 
-import com.a406.horsebit.config.TokenProvider;
+import com.a406.horsebit.config.jwt.TokenProvider;
 import com.a406.horsebit.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
