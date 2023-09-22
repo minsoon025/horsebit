@@ -29,7 +29,6 @@ public class OrderController {
 	public List<OrderDTO> getTokenOrders(@PathVariable("tokenNo") Long tokenNo) {
 		log.info("OrderController::getTokenOrders() START");
 		Long userNo = 1L;
-		return orderService.getOrders(userNo, tokenNo)
-			.stream().toList();
+		return orderService.getOrders(userNo, tokenNo);
 	}
 }

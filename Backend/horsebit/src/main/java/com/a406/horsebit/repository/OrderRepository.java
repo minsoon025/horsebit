@@ -1,7 +1,6 @@
 package com.a406.horsebit.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +18,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 	 * @return
 	 */
 	@Query("SELECT NEW com.a406.horsebit.dto.OrderDTO(o.orderNo, o.userNo, o.token.tokenNo, o.token.code, o.price, o.quantity, o.remain, o.orderTime, o.sellBuyFlag) from Order o left join o.token where o.userNo = :userNo and o.token.tokenNo = :tokenNo")
-	Optional<OrderDTO> findByUserNoAndTokenNo(Long userNo, Long tokenNo);
+	List<OrderDTO> findAllByUserNoAndTokenNo(Long userNo, Long tokenNo);
 }
