@@ -2,7 +2,7 @@ package com.a406.horsebit.service;
 
 import java.util.List;
 
-import com.a406.horsebit.repository.OrderRedisRepository;
+import com.a406.horsebit.repository.redis.OrderRedisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

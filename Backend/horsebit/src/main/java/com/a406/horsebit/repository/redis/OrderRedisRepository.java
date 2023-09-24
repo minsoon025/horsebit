@@ -1,4 +1,4 @@
-package com.a406.horsebit.repository;
+package com.a406.horsebit.repository.redis;
 
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderPage;
@@ -103,5 +103,5 @@ public class OrderRedisRepository {
         return tokenVolumeBook.add(price, volumePage);
     }
 
-    
+
 }
