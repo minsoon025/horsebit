@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 public class Order {
-    // use orderNo as score in map
-    // use userNo as name of map
-    private Long hrNo;
-    private Long tokenNo;
+    /*
+    userNo as name of map
+    tokenNo, orderNo as score in map
+     */
     private int price;
     private double quantity;
     private double remain;
