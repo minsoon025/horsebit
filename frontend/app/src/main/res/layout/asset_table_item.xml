@@ -5,127 +5,157 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
-        android:weightSum="100"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.github.mikephil.charting.charts.CandleStickChart
-            android:id="@+id/cc_Graph"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:paddingLeft="1dp"
-            android:paddingRight="1dp" />
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:id="@+id/llv_Name"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="26"
-            android:background="@drawable/gray_border_background"
-            android:orientation="vertical"
-            android:paddingLeft="1dp"
-            android:weightSum="3">
+            android:orientation="horizontal"
+            android:weightSum="4">
 
             <LinearLayout
-                android:id="@+id/llh_Name"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:weightSum="5">
+                android:layout_height="match_parent"
+                android:background="#eeeeee"
+                android:layout_weight="1"/>
 
-                <HorizontalScrollView
-                    android:id="@+id/hsv_AssetTableItemName"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4">
+            <TextView
+                android:id="@+id/tvRemove"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/red"
+                android:text="삭제"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_weight="3"/>
 
-                    <LinearLayout
-                        android:id="@+id/llh_AssetTableName"
-                        android:layout_width="wrap_content"
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llh_AssetTableItem"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <com.github.mikephil.charting.charts.CandleStickChart
+                android:id="@+id/cc_Graph"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp" />
+
+            <LinearLayout
+                android:id="@+id/llv_Name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="26"
+                android:background="@drawable/gray_border_background"
+                android:orientation="vertical"
+                android:paddingLeft="1dp"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/llh_Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <HorizontalScrollView
+                        android:id="@+id/hsv_AssetTableItemName"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_weight="4">
 
-                        <TextView
-                            android:id="@+id/tv_ItemAssetName"
+                        <LinearLayout
+                            android:id="@+id/llh_AssetTableName"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/line_seed_kr_rg"
-                            android:gravity="center_vertical"
-                            android:includeFontPadding="false"
-                            android:text="TextView"
-                            android:textColor="#171717" />
-                    </LinearLayout>
-                </HorizontalScrollView>
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_New"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="3dp"
+                            <TextView
+                                android:id="@+id/tv_ItemAssetName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/line_seed_kr_rg"
+                                android:gravity="center_vertical"
+                                android:includeFontPadding="false"
+                                android:text="TextView"
+                                android:textColor="#171717" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <ImageView
+                        android:id="@+id/iv_New"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="3dp"
+                        android:layout_weight="1"
+                        tools:srcCompat="@tools:sample/avatars" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_ItemAssetTicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:text="TextView"
+                    android:textSize="8sp" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_ItemAssetTicker"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:id="@+id/tv_ItemCurrentPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="23"
+                android:background="@drawable/gray_border_background"
                 android:fontFamily="@font/line_seed_kr_rg"
-                android:gravity="center_vertical"
+                android:gravity="right|center_vertical"
                 android:includeFontPadding="false"
+                android:paddingRight="2dp"
                 android:text="TextView"
-                android:textSize="8sp" />
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_ItemYesterdayPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="23"
+                android:background="@drawable/gray_border_background"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="right|center_vertical"
+                android:includeFontPadding="false"
+                android:paddingRight="2dp"
+                android:text="TextView"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_ItemTransactionPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="23"
+                android:background="@drawable/gray_border_background"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="right|center_vertical"
+                android:includeFontPadding="false"
+                android:paddingRight="2dp"
+                android:text="TextView"
+                android:textSize="10sp" />
+
         </LinearLayout>
+    </FrameLayout>
 
-        <TextView
-            android:id="@+id/tv_ItemCurrentPrice"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="23"
-            android:background="@drawable/gray_border_background"
-            android:fontFamily="@font/line_seed_kr_rg"
-            android:gravity="right|center_vertical"
-            android:includeFontPadding="false"
-            android:paddingRight="2dp"
-            android:text="TextView"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/tv_ItemYesterdayPrice"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="23"
-            android:background="@drawable/gray_border_background"
-            android:fontFamily="@font/line_seed_kr_rg"
-            android:gravity="right|center_vertical"
-            android:includeFontPadding="false"
-            android:paddingRight="2dp"
-            android:text="TextView"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/tv_ItemTransactionPrice"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="23"
-            android:background="@drawable/gray_border_background"
-            android:fontFamily="@font/line_seed_kr_rg"
-            android:gravity="right|center_vertical"
-            android:includeFontPadding="false"
-            android:paddingRight="2dp"
-            android:text="TextView"
-            android:textSize="10sp" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

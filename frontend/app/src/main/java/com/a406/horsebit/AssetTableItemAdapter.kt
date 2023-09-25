@@ -19,6 +19,7 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
+import java.util.Collections
 
 class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
 
@@ -235,6 +236,15 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
     fun sortByVolumeAscending() {
         filteredTokenShowList.sortBy { it.volume }
         notifyDataSetChanged()
+    }
+
+    fun removeData(position: Int) {
+        tokenShowList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+    fun swapData(fromPos: Int, toPos: Int) {
+        Collections.swap(tokenShowList, fromPos, toPos)
+        notifyItemMoved(fromPos, toPos)
     }
 
 }

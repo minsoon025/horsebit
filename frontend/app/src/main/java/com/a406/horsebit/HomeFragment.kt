@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentHomeBinding
 import retrofit2.Call
@@ -152,6 +153,17 @@ class HomeFragment : Fragment() {
         binding.btnTmp.setOnClickListener {
             val intent = Intent(binding.root.context, LoginMainActivity::class.java)
             binding.root.context.startActivity(intent)
+        }
+
+        val swipeHelperCallback = SwipeHelperCallback(assetTableItemAdapter).apply {
+            // 스와이프한 뒤 고정시킬 위치 지정
+            setClamp(resources.displayMetrics.widthPixels.toFloat() / 4)    // 1080 / 4 = 270
+        }
+        ItemTouchHelper(swipeHelperCallback).attachToRecyclerView(binding.rvAssetTable)
+
+        binding.rvAssetTable.setOnTouchListener { _, _ ->
+            swipeHelperCallback.removePreviousClamp(binding.rvAssetTable)
+            false
         }
 
         return view
