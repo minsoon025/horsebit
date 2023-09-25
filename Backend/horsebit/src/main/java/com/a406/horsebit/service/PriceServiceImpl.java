@@ -20,11 +20,11 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public PriceDTO getCurrentPrice(Long tokenNo) {
-        return priceRepository.findOneByTokenNo(tokenNo);
+        return priceRepository.findOneCurrentPriceByTokenNo(tokenNo);
     }
 
     @Override
     public List<PriceDTO> getCurrentPrice(List<Long> tokenNoList) {
-        return priceRepository.findAllByTokenNo(tokenNoList);
+        return priceRepository.findAllCurrentPriceByTokenNo(tokenNoList);
     }
 }
