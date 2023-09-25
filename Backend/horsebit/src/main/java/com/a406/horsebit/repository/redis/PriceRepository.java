@@ -32,7 +32,7 @@ public class PriceRepository {
         List<PriceDTO> priceDTOList = new ArrayList<>(tokenNoList.size());
         int index = 0;
         for (Long tokenNo: tokenNoList) {
-            priceDTOList.set(index++, findOneCurrentPriceByTokenNo(tokenNo));
+            priceDTOList.add(findOneCurrentPriceByTokenNo(tokenNo));
         }
         return priceDTOList;
     }
@@ -47,7 +47,7 @@ public class PriceRepository {
         List<PriceDTO> priceDTOList = new ArrayList<>(tokenNoList.size());
         int index = 0;
         for (Long tokenNo: tokenNoList) {
-            priceDTOList.set(index++, findOneStartPriceByTokenNo(tokenNo));
+            priceDTOList.add(findOneStartPriceByTokenNo(tokenNo));
         }
         return priceDTOList;
     }
