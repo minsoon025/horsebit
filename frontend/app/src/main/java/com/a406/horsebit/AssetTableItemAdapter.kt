@@ -123,7 +123,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
             binding.tvItemYesterdayPrice.setTextColor(color)
             binding.tvItemCurrentPrice.text = tokenShow.currentPrice.toString()
             binding.tvItemYesterdayPrice.text = "${tokenShow.priceTrend.toString()}%"
-            binding.tvItemTransactionPrice.text = "${tokenShow.priceTrend.toString()}만원"
+            binding.tvItemTransactionPrice.text = "${tokenShow.volume.toString()}만원"
         }
 
         private fun setChartData(candle: CandleShow) {
@@ -204,6 +204,38 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
 
     fun sortByAssetNameAscending() {
         filteredTokenShowList.sortBy { it.name }
+        notifyDataSetChanged()
+    }
+
+    fun sortByAssetCurrentPriceDescending() {
+        filteredTokenShowList.sortByDescending { it.currentPrice }
+        notifyDataSetChanged()
+    }
+
+    fun sortByAssetCurrentPriceAscending() {
+        filteredTokenShowList.sortBy { it.currentPrice }
+        notifyDataSetChanged()
+    }
+
+    fun sortByPriceTrendDescending() {
+        filteredTokenShowList.sortByDescending { it.priceTrend }
+        notifyDataSetChanged()
+    }
+
+    fun sortByPriceTrendAscending() {
+        filteredTokenShowList.sortBy { it.priceTrend }
+        notifyDataSetChanged()
+    }
+
+    fun sortByVolumeDescending() {
+        Log.d("asdfsadfsad", "내림")
+        Log.d("aaaa", filteredTokenShowList.toString())
+        filteredTokenShowList.sortByDescending { it.volume }
+        notifyDataSetChanged()
+    }
+
+    fun sortByVolumeAscending() {
+        filteredTokenShowList.sortBy { it.volume }
         notifyDataSetChanged()
     }
 

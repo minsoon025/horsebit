@@ -80,42 +80,77 @@ class HomeFragment : Fragment() {
             }
         })
 
-        binding.ivAssetNameUp.setOnClickListener {  // 자산명 내림차순 정렬
-            assetTableItemAdapter.sortByAssetNameDescending()
+        val sotingFlag: ArrayList<Int> = arrayListOf(0, 0, 0, 0)
+
+        binding.llhAssetName.setOnClickListener {
+            sotingFlag[0] = (sotingFlag[0] + 1) % 3
+            when(sotingFlag[0]){
+                0 -> {
+                    binding.ivAssetNameSort.setImageResource(R.drawable.sort_not)
+                }
+                1->{
+                    binding.ivAssetNameSort.setImageResource(R.drawable.sort_ascending)
+                    assetTableItemAdapter.sortByAssetNameAscending()    // 자산명 내림차순 정렬
+                }
+                2->{
+                    binding.ivAssetNameSort.setImageResource(R.drawable.sort_descending)
+                    assetTableItemAdapter.sortByAssetNameDescending()    // 자산명 오름차순정렬
+
+                }
+            }
         }
 
-        binding.ivAssetNameDown.setOnClickListener {    // 자산명 오름차순 정렬
-            assetTableItemAdapter.sortByAssetNameAscending()
+        binding.llhCurrentPrice.setOnClickListener {
+            sotingFlag[1] = (sotingFlag[1] + 1) % 3
+            when(sotingFlag[1]) {
+                0 -> {
+                    binding.ivCurrentPriceSort.setImageResource(R.drawable.sort_not)
+                }
+                1 -> {
+                    binding.ivCurrentPriceSort.setImageResource(R.drawable.sort_ascending)
+                    assetTableItemAdapter.sortByAssetCurrentPriceAscending()    // 토큰 현재가 내림차순 정렬
+
+                }
+                2 -> {
+                    binding.ivCurrentPriceSort.setImageResource(R.drawable.sort_descending)
+                    assetTableItemAdapter.sortByAssetCurrentPriceDescending()   // 토큰 현재가 오름차순 정렬
+                }
+            }
         }
 
-        binding.ivCurrentPriceUp.setOnClickListener { // 현재가 오름차순 정렬
-            tokenShowList.sortBy { it.currentPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+        binding.llhYesterdayPrice.setOnClickListener {
+            sotingFlag[2] = (sotingFlag[2] + 1) % 3
+            when(sotingFlag[2]) {
+                0 -> {
+                    binding.ivYesterdayPriceSort.setImageResource(R.drawable.sort_not)
+                }
+                1 -> {
+                    binding.ivYesterdayPriceSort.setImageResource(R.drawable.sort_ascending)
+                    assetTableItemAdapter.sortByPriceTrendAscending()   // 변동 추이 내림차순 정렬
+                }
+                2 -> {
+                    binding.ivYesterdayPriceSort.setImageResource(R.drawable.sort_descending)
+                    assetTableItemAdapter.sortByPriceTrendDescending()   // 변동 추이 오름차순 정렬
+                }
+            }
         }
 
-        binding.ivCurrentPriceDown.setOnClickListener { // 현재가 내림차순 정렬
-            tokenShowList.sortByDescending { it.currentPrice }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
-        }
-
-        binding.ivYesterdayPriceUp.setOnClickListener {
-            tokenShowList.sortBy { it.priceTrend }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
-        }
-
-        binding.ivYesterdayPriceDown.setOnClickListener {
-            tokenShowList.sortByDescending { it.priceTrend }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
-        }
-
-        binding.ivTransactionPriceUp.setOnClickListener {
-            tokenShowList.sortBy { it.volume }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
-        }
-
-        binding.ivTransactionPriceDown.setOnClickListener {
-            tokenShowList.sortByDescending { it.volume }
-            binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+        binding.llhTransactionPrice.setOnClickListener {
+            sotingFlag[3] = (sotingFlag[3] + 1) % 3
+            Log.d("asdfasdf", sotingFlag.toString())
+            when(sotingFlag[3]) {
+                0 -> {
+                    binding.ivTransactionPriceSort.setImageResource(R.drawable.sort_not)
+                }
+                1 -> {
+                    binding.ivTransactionPriceSort.setImageResource(R.drawable.sort_ascending)
+                    assetTableItemAdapter.sortByVolumeAscending()   // 거래금액 내림차순 정렬
+                }
+                2 -> {
+                    binding.ivTransactionPriceSort.setImageResource(R.drawable.sort_descending)
+                    assetTableItemAdapter.sortByVolumeDescending()  // 거래금액 오름차순 정렬
+                }
+            }
         }
 
         binding.btnTmp.setOnClickListener {

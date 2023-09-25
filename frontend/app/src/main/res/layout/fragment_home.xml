@@ -34,140 +34,126 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llh_MainFilter">
 
-        <TextView
-            android:id="@+id/tv_AssetName"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="26"
-            android:fontFamily="@font/line_seed_kr_rg"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="자산명"
-            android:textColor="#171717"
-            android:textSize="12sp" />
-
         <LinearLayout
+            android:id="@+id/llh_AssetName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:layout_weight="31"
+            android:orientation="horizontal"
+            android:weightSum="31">
+
+            <TextView
+                android:id="@+id/tv_AssetName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="26"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="자산명"
+                android:textColor="#171717"
+                android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/iv_AssetNameUp"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_up_24" />
+                android:id="@+id/iv_AssetNameSort"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sort_not" />
 
-            <ImageView
-                android:id="@+id/iv_AssetNameDown"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_down_24" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_CurrentPrice"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="18"
-            android:fontFamily="@font/line_seed_kr_rg"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="현재가"
-            android:textColor="#171717"
-            android:textSize="12sp" />
-
         <LinearLayout
+            android:id="@+id/llh_CurrentPrice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:layout_weight="23"
+            android:orientation="horizontal"
+            android:weightSum="23">
+
+            <TextView
+                android:id="@+id/tv_CurrentPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="18"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="현재가"
+                android:textColor="#171717"
+                android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/iv_CurrentPriceUp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_up_24" />
+                android:id="@+id/iv_CurrentPriceSort"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sort_not" />
 
-            <ImageView
-                android:id="@+id/iv_CurrentPriceDown"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_down_24" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_YesterdayPrice"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="18"
-            android:fontFamily="@font/line_seed_kr_rg"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="변동가(어제)"
-            android:textColor="#171717"
-            android:textSize="12sp" />
-
         <LinearLayout
+            android:id="@+id/llh_YesterdayPrice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:layout_weight="23"
+            android:orientation="horizontal"
+            android:weightSum="23">
+
+            <TextView
+                android:id="@+id/tv_YesterdayPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="18"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="변동가(어제)"
+                android:textColor="#171717"
+                android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/iv_YesterdayPriceUp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_up_24" />
-
-            <ImageView
-                android:id="@+id/iv_YesterdayPriceDown"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_down_24" />
+                android:id="@+id/iv_YesterdayPriceSort"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sort_not" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_TransactionPrice"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="18"
-            android:fontFamily="@font/line_seed_kr_rg"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="거래금액"
-            android:textColor="#171717"
-            android:textSize="12sp" />
-
         <LinearLayout
+            android:id="@+id/llh_TransactionPrice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:layout_weight="23"
+            android:orientation="horizontal"
+            android:weightSum="23">
+
+            <TextView
+                android:id="@+id/tv_TransactionPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="18"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="거래금액"
+                android:textColor="#171717"
+                android:textSize="12sp" />
 
             <ImageView
-                android:id="@+id/iv_TransactionPriceUp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_up_24" />
-
-            <ImageView
-                android:id="@+id/iv_TransactionPriceDown"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/baseline_arrow_drop_down_24" />
+                android:id="@+id/iv_TransactionPriceSort"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sort_not" />
         </LinearLayout>
 
     </LinearLayout>
