@@ -24,7 +24,7 @@ public class PriceRepository {
 
     public PriceDTO findOneCurrentPriceByTokenNo(Long tokenNo) {
         RBucket<Long> currentPrice = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
-        currentPrice.setIfAbsent(0L);
+        currentPrice.setIfAbsent(1L);
         return new PriceDTO(currentPrice.get());
     }
 
@@ -39,7 +39,7 @@ public class PriceRepository {
 
     public PriceDTO findOneStartPriceByTokenNo(Long tokenNo) {
         RBucket<Long> startPrice = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
-        startPrice.setIfAbsent(0L);
+        startPrice.setIfAbsent(1L);
         return new PriceDTO(startPrice.get());
     }
 
