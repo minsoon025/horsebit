@@ -3,7 +3,8 @@ package com.a406.horsebit.domain.redis;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -15,6 +16,6 @@ public class Order {
     private int price;
     private double quantity;
     private double remain;
-    private Timestamp orderTime;
+    private LocalDateTime orderTime;
     private String sellBuyFlag;
 }
