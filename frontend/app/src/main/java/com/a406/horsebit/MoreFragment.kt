@@ -1,3 +1,4 @@
+
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
@@ -22,6 +23,8 @@ import com.a406.horsebit.databinding.FragmentMoreBinding
 class MoreFragment : Fragment() {
 
     private lateinit var binding: FragmentMoreBinding
+
+
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: PromptInfo
 
@@ -47,7 +50,6 @@ class MoreFragment : Fragment() {
             //ft.addToBackStack(null) // 뒤로 가기 버튼을 누를 때 이전 Fragment로 이동할 수 있도록 스택에 추가
             ft.commit()
         }
-
 
 
         binding.lihMy.setOnClickListener {

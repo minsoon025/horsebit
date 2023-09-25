@@ -1,13 +1,20 @@
 // ExchangeFragment.kt
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.Toast
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -72,8 +79,11 @@ class ExchangeFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.rv_ExchangeTable)
 
+
+
+        // 입출금 팝업 뜨는 곳
         binding.btnExchange.setOnClickListener {
-            showTransactionPopup()
+            authenticateToEncrypt() // 지문인식
         }
         // RecyclerView의 레이아웃 매니저를 수평 방향으로 설정합니다.
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -106,5 +116,98 @@ class ExchangeFragment : Fragment() {
         recyclerView.adapter = adapter
 
         return view
+    }
+    private fun setPromptInfo(): BiometricPrompt.PromptInfo {
+        val promptBuilder = BiometricPrompt.PromptInfo.Builder()
+
+        promptBuilder.setTitle("Biometric login for my app")
+        promptBuilder.setSubtitle("Log in using your biometric credential")
+        promptBuilder.setNegativeButtonText("Use account password")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            promptBuilder.setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+        }
+
+        return promptBuilder.build()
+    }
+
+
+
+    private fun setBiometricPrompt(): BiometricPrompt {
+        val executor = ContextCompat.getMainExecutor(requireContext())
+
+
+        return BiometricPrompt(requireActivity(), executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(requireContext(), "Biometric authentication error: $errString", Toast.LENGTH_SHORT).show()
+            }
+
+            // onAuthenticationSucceeded 메서드 내에서 버튼 가시성을 숨깁니다.
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                Toast.makeText(requireContext(), "Biometric authentication succeeded", Toast.LENGTH_SHORT).show()
+                
+                // 지문 완료
+                showTransactionPopup()   // 팝업 불러오기
+
+
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Toast.makeText(requireContext(), "Biometric authentication failed", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun authenticateToEncrypt() {
+        val biometricManager = BiometricManager.from(requireContext())
+
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                val biometricPrompt = setBiometricPrompt() // BiometricPrompt를 생성
+                val promptInfo = setPromptInfo() // BiometricPrompt.PromptInfo를 설정
+                biometricPrompt.authenticate(promptInfo) // 지문 인식을 시작
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Toast.makeText(requireContext(), "No biometric hardware available", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Toast.makeText(requireContext(), "Biometric hardware unavailable", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                showEnrollmentDialog()
+            }
+        }
+    }
+
+
+    private fun showEnrollmentDialog() {
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        dialogBuilder
+            .setTitle("Biometric Enrollment")
+            .setMessage("Biometric authentication is not enrolled. Do you want to enroll now?")
+            .setPositiveButton("Enroll") { dialog, which -> goBiometricSettings() }
+            .setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+            .show()
+    }
+
+    private fun goBiometricSettings() {
+        val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+            putExtra(
+                Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                BiometricManager.Authenticators.BIOMETRIC_STRONG
+            )
+        }
+        startActivityForResult(enrollIntent, 123)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123) {
+            // After returning from biometric enrollment settings, attempt biometric authentication again.
+            authenticateToEncrypt()
+        }
     }
 }
