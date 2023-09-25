@@ -15,23 +15,39 @@ import java.util.List;
 public class PriceRepository {
     private final RedissonClient redissonClient;
     private String CURRENT_PRICE_PREFIX = "CURRENT_PRICE:";
+    private String START_PRICE_PREFIX = "START_PRICE:";
 
     @Autowired
     public PriceRepository(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 
-    public PriceDTO findOneByTokenNo(Long tokenNo) {
+    public PriceDTO findOneCurrentPriceByTokenNo(Long tokenNo) {
         RBucket<Long> currentPrice = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
-        currentPrice.setIfAbsent(0L);
+        currentPrice.setIfAbsent(1L);
         return new PriceDTO(currentPrice.get());
     }
 
-    public List<PriceDTO> findAllByTokenNo(List<Long> tokenNoList) {
+    public List<PriceDTO> findAllCurrentPriceByTokenNo(List<Long> tokenNoList) {
         List<PriceDTO> priceDTOList = new ArrayList<>(tokenNoList.size());
         int index = 0;
         for (Long tokenNo: tokenNoList) {
-            priceDTOList.set(index++, findOneByTokenNo(tokenNo));
+            priceDTOList.add(findOneCurrentPriceByTokenNo(tokenNo));
+        }
+        return priceDTOList;
+    }
+
+    public PriceDTO findOneStartPriceByTokenNo(Long tokenNo) {
+        RBucket<Long> startPrice = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
+        startPrice.setIfAbsent(1L);
+        return new PriceDTO(startPrice.get());
+    }
+
+    public List<PriceDTO> findAllStartPriceByTokenNo(List<Long> tokenNoList) {
+        List<PriceDTO> priceDTOList = new ArrayList<>(tokenNoList.size());
+        int index = 0;
+        for (Long tokenNo: tokenNoList) {
+            priceDTOList.add(findOneStartPriceByTokenNo(tokenNo));
         }
         return priceDTOList;
     }
