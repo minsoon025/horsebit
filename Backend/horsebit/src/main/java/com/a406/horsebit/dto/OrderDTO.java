@@ -88,11 +88,11 @@ public class OrderDTO {
 		this.remainQuantity = remainQuantity;
 	}
 
-	public Timestamp getOrderTime() {
+	public LocalDateTime getOrderTime() {
 		return orderTime;
 	}
 
-	public void setOrderTime(Timestamp orderTime) {
+	public void setOrderTime(LocalDateTime orderTime) {
 		this.orderTime = orderTime;
 	}
 
