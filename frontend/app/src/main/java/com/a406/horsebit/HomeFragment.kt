@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentHomeBinding
 import retrofit2.Call
@@ -46,39 +47,34 @@ class HomeFragment : Fragment() {
 
         binding.rvAssetTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)   // VERTICAL은 세로로
         binding.rvAssetTable.setHasFixedSize(true) // 성능 개선
-
         tokenShowList.clear()
-        api.tokenList(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
-            override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
-                if(response.code() == 200) {    // 200 Success
-                    Log.d("로그", "코인 목록 조회 (SSE): 200 Success")
 
-                    val responseBody = response.body()
+        binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
+        changeShowType(0)
 
-                    if(responseBody != null) {
-                        for(token in responseBody) {
-                            val tokenShow = TokenShow(1, token.name, token.code, token.currentPrice, token.priceTrend, token.volume, token.newFlag)
-                            tokenShowList.add(tokenShow)
-                        }
-                    }
-                    // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
-                    assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
-                    binding.rvAssetTable.adapter = assetTableItemAdapter
-                }
-                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
-                    Log.d("로그", "코인 목록 조회 (SSE): 400 Bad Request")
-                }
-                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
-                    Log.d("로그", "코인 목록 조회 (SSE): 401 Unauthorized")
-                }
-                else if(response.code() == 404) {   // 404 Not Found
-                    Log.d("로그", "코인 목록 조회 (SSE): 404 Not Found")
-                }
-            }
-            override fun onFailure(call: Call<ArrayList<Token>>, t: Throwable) {
-                Log.d("로그", "코인 목록 조회 (SSE): onFailure")
-            }
-        })
+        binding.llvWhole.setOnClickListener {
+            binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+            binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+            tokenShowList.clear()
+            changeShowType(0)
+        }
+
+        binding.llvInterest.setOnClickListener {
+            binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+            binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
+            binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+            tokenShowList.clear()
+            changeShowType(1)
+        }
+
+        binding.llvHold.setOnClickListener {
+            binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+            binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+            binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
+            tokenShowList.clear()
+            changeShowType(2)
+        }
 
         val sotingFlag: ArrayList<Int> = arrayListOf(0, 0, 0, 0)
 
@@ -159,5 +155,81 @@ class HomeFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun changeShowType(showType: Int) {
+        when(showType) {
+            0 -> {
+                api.tokenList(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+                    override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
+                        if(response.code() == 200) {    // 200 Success
+                            Log.d("로그", "코인 목록 조회 (SSE): 200 Success")
+
+                            val responseBody = response.body()
+
+                            if(responseBody != null) {
+                                for(token in responseBody) {
+                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag)
+                                    tokenShowList.add(tokenShow)
+                                }
+                            }
+                            // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+                            binding.rvAssetTable.adapter = assetTableItemAdapter
+                        }
+                        else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                            Log.d("로그", "코인 목록 조회 (SSE): 400 Bad Request")
+                        }
+                        else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                            Log.d("로그", "코인 목록 조회 (SSE): 401 Unauthorized")
+                        }
+                        else if(response.code() == 404) {   // 404 Not Found
+                            Log.d("로그", "코인 목록 조회 (SSE): 404 Not Found")
+                        }
+                    }
+                    override fun onFailure(call: Call<ArrayList<Token>>, t: Throwable) {
+                        Log.d("로그", "코인 목록 조회 (SSE): onFailure")
+                    }
+                })
+            }
+            1 -> {
+                api.favorites(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+                    override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
+                        if(response.code() == 200) {    // 200 Success
+                            Log.d("로그", "즐겨찾기 코인 목록 조회: 200 Success")
+
+                            val responseBody = response.body()
+
+                            if(responseBody != null) {
+                                for(token in responseBody) {
+                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag)
+                                    tokenShowList.add(tokenShow)
+                                }
+                            }
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+                            binding.rvAssetTable.adapter = assetTableItemAdapter
+                        }
+                        else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                            Log.d("로그", "즐겨찾기 코인 목록 조회: 400 Bad Request")
+                        }
+                        else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                            Log.d("로그", "즐겨찾기 코인 목록 조회: 401 Unauthorized")
+                        }
+                        else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                            Log.d("로그", "즐겨찾기 코인 목록 조회: 403 Forbidden")
+                        }
+                        else if(response.code() == 404) {   // 404 Not Found
+                            Log.d("로그", "즐겨찾기 코인 목록 조회: 404 Not Found")
+                        }
+                    }
+                    override fun onFailure(call: Call<ArrayList<Token>>, t: Throwable) {
+                        Log.d("로그", "즐겨찾기 코인 목록 조회: onFailure")
+                    }
+                })
+            }
+            2 -> {
+
+            }
+        }
     }
 }

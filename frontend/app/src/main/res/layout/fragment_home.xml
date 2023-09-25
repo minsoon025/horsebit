@@ -27,6 +27,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
+        android:background="@color/light_active"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:weightSum="100"
@@ -160,19 +161,19 @@
 
     <LinearLayout
         android:id="@+id/llh_MainFilter"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:orientation="horizontal"
-        android:weightSum="11"
+        android:weightSum="9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_MainTitle">
 
         <LinearLayout
             android:id="@+id/llv_Whole"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
             android:orientation="vertical">
 
@@ -180,7 +181,6 @@
                 android:id="@+id/tv_Whole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="3"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center"
                 android:includeFontPadding="false"
@@ -192,12 +192,14 @@
                 android:id="@+id/iv_Whole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_horizontal_rule_24" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_horizontal_rule_24"
+                android:tint="@color/font_gray" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llv_Hold"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical">
@@ -206,7 +208,6 @@
                 android:id="@+id/tv_Hold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="3"
                 android:fontFamily="@font/line_seed_kr_rg"
                 android:gravity="center"
                 android:includeFontPadding="false"
@@ -218,12 +219,14 @@
                 android:id="@+id/iv_Hold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_horizontal_rule_24" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_horizontal_rule_24"
+                android:tint="@color/font_gray" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llv_Interest"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical">
@@ -244,7 +247,9 @@
                 android:id="@+id/iv_Interest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_horizontal_rule_24" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_horizontal_rule_24"
+                android:tint="@color/font_gray" />
         </LinearLayout>
 
     </LinearLayout>
@@ -264,6 +269,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -65,6 +65,12 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ): Call<ArrayList<Token>>
 
+    // 즐겨찾기 코인 목록 조회
+    @GET("/api/exchange/favorites")
+    fun favorites(
+        @Header("Authorization") authorization: String,
+    ): Call<ArrayList<Token>>
+
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"
 

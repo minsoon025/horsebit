@@ -40,7 +40,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
                 intent.putExtra("assetName", assetItem.name)
                 intent.putExtra("assetTicker", assetItem.code)
                 intent.putExtra("currentPrice", assetItem.currentPrice.toString())
-                intent.putExtra("yesterdayPrice", assetItem.priceTrend.toString())
+                intent.putExtra("yesterdayPrice", assetItem.priceRateOfChange.toString())
                 binding.root.context.startActivity(intent)
             }
         }
@@ -94,7 +94,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
     class CustomViewHolder(private val binding: AssetTableItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tokenShow: TokenShow) {
             initChart()
-            setChartData(CandleShow(0, 0f, if(tokenShow.priceTrend.toFloat() > 20f) 20f else if(tokenShow.priceTrend.toFloat() < -20f) -20f else tokenShow.priceTrend.toFloat(), 20f, -20f))
+            setChartData(CandleShow(0, 0f, if(tokenShow.priceRateOfChange.toFloat() > 20f) 20f else if(tokenShow.priceRateOfChange.toFloat() < -20f) -20f else tokenShow.priceRateOfChange.toFloat(), 20f, -20f))
 
             binding.tvItemAssetName.text = tokenShow.name
             binding.hsvAssetTableItemName.isHorizontalScrollBarEnabled = false
@@ -116,13 +116,13 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
 
             var color = ContextCompat.getColor(binding.root.context, R.color.black)
 
-            if(tokenShow.priceTrend > 0) {color = ContextCompat.getColor(binding.root.context, R.color.red)}
-            else if(tokenShow.priceTrend < 0) {color = ContextCompat.getColor(binding.root.context, R.color.blue)}
+            if(tokenShow.priceRateOfChange > 0) {color = ContextCompat.getColor(binding.root.context, R.color.red)}
+            else if(tokenShow.priceRateOfChange < 0) {color = ContextCompat.getColor(binding.root.context, R.color.blue)}
 
             binding.tvItemCurrentPrice.setTextColor(color)
             binding.tvItemYesterdayPrice.setTextColor(color)
             binding.tvItemCurrentPrice.text = tokenShow.currentPrice.toString()
-            binding.tvItemYesterdayPrice.text = "${tokenShow.priceTrend.toString()}%"
+            binding.tvItemYesterdayPrice.text = "${tokenShow.priceRateOfChange.toString()}%"
             binding.tvItemTransactionPrice.text = "${tokenShow.volume.toString()}만원"
         }
 
@@ -218,18 +218,16 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
     }
 
     fun sortByPriceTrendDescending() {
-        filteredTokenShowList.sortByDescending { it.priceTrend }
+        filteredTokenShowList.sortByDescending { it.priceRateOfChange }
         notifyDataSetChanged()
     }
 
     fun sortByPriceTrendAscending() {
-        filteredTokenShowList.sortBy { it.priceTrend }
+        filteredTokenShowList.sortBy { it.priceRateOfChange }
         notifyDataSetChanged()
     }
 
     fun sortByVolumeDescending() {
-        Log.d("asdfsadfsad", "내림")
-        Log.d("aaaa", filteredTokenShowList.toString())
         filteredTokenShowList.sortByDescending { it.volume }
         notifyDataSetChanged()
     }
