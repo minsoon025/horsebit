@@ -17,7 +17,7 @@ public class OrderServiceImpl implements OrderService {
 	private final OrderRepository orderRepository;
 
 	@Autowired
-	public OrderServiceImpl(com.a406.horsebit.repository.OrderRepository orderRepository, OrderRepository orderRedisRepository) {
+	public OrderServiceImpl(OrderRepository orderRedisRepository) {
 		this.orderRepository = orderRedisRepository;
 	}
 
