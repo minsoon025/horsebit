@@ -6,17 +6,15 @@ import com.a406.horsebit.domain.redis.OrderSummary;
 import com.a406.horsebit.domain.redis.VolumePage;
 import com.a406.horsebit.dto.OrderDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
 import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Slf4j
 @Repository
-public class OrderRedisRepository {
+public class OrderRepository {
     private final RedissonClient redissonClient;
     private static final String REDIS_TOKEN_BUY_TOTAL_VOLUME_PREFIX = "BUY_TOTAL_VOLUME:";
     private static final String REDIS_TOKEN_SELL_TOTAL_VOLUME_PREFIX = "SELL_TOTAL_VOLUME:";
@@ -29,7 +27,7 @@ public class OrderRedisRepository {
     private static final String REDIS_USER_ORDER_BOOK_PREFIX = "USER_ORDER_BOOK:";
 
     @Autowired
-    public OrderRedisRepository(RedissonClient redissonClient) {
+    public OrderRepository(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 
