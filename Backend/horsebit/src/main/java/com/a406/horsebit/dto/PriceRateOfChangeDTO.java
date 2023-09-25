@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Setter
-public class PriceDTO {
-    private Long price;
+public class PriceRateOfChangeDTO {
+    private Double priceRateOfChange;
 }

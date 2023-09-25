@@ -1,4 +1,4 @@
-package com.a406.horsebit.dto;
+package com.a406.horsebit.domain.redis;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Setter
-public class PriceDTO {
-    private Long price;
+public class PriceRateOfChange {
+    private Double priceRateOfChange;
 }
