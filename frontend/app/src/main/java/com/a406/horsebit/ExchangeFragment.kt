@@ -1,29 +1,80 @@
 // ExchangeFragment.kt
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.ExchangeData
 import com.a406.horsebit.R
+import com.a406.horsebit.databinding.FragmentExchangeBinding
 
 class ExchangeFragment : Fragment() {
 
+    private lateinit var binding: FragmentExchangeBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ExchangeTableAdapter
     private lateinit var exchangeDataList: List<ExchangeData>
+
+    private fun showTransactionPopup() {
+        // 팝업창을 위한 레이아웃을 가져옵니다.
+        val popupView = LayoutInflater.from(requireContext()).inflate(R.layout.popup_transaction, null)
+
+        // 팝업창 내부의 뷰를 참조합니다.
+        val amountEditText = popupView.findViewById<EditText>(R.id.amountEditText)
+        val depositRadioButton = popupView.findViewById<RadioButton>(R.id.depositRadioButton)
+        val withdrawRadioButton = popupView.findViewById<RadioButton>(R.id.withdrawRadioButton)
+        val sendButton = popupView.findViewById<Button>(R.id.sendButton)
+        val closeButton = popupView.findViewById<Button>(R.id.closeButton)
+
+        // AlertDialog를 생성하고 팝업창을 설정합니다.
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(popupView)
+        val alertDialog = builder.create()
+
+        // "보내기" 버튼 클릭 이벤트 처리
+        sendButton.setOnClickListener {
+            val amount = amountEditText.text.toString()
+            val transactionType = when {
+                depositRadioButton.isChecked -> "입금"
+                withdrawRadioButton.isChecked -> "출금"
+                else -> "선택 안 함"
+            }
+
+            // TODO: 입력된 금액과 입출금 유형을 처리하거나 전달합니다.
+            // 여기에 데이터 처리 로직을 추가하세요.
+
+            alertDialog.dismiss() // 팝업창을 닫습니다.
+        }
+
+        // "닫기" 버튼 클릭 이벤트 처리
+        closeButton.setOnClickListener {
+            alertDialog.dismiss() // 팝업창을 닫습니다.
+        }
+
+        // 팝업창을 표시합니다.
+        alertDialog.show()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_exchange, container, false)
+        binding = FragmentExchangeBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         recyclerView = view.findViewById(R.id.rv_ExchangeTable)
 
+        binding.btnExchange.setOnClickListener {
+            showTransactionPopup()
+        }
         // RecyclerView의 레이아웃 매니저를 수평 방향으로 설정합니다.
         recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
