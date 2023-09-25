@@ -37,7 +37,7 @@ public class TokenServiceImpl implements TokenService {
 		testTrend.add(23.8);
 		int i = 0;
 		for(TokenDTO token : result) {
-			token.setPriceTrend(testTrend.get(i++));
+			token.setPriceRateOfChange(testTrend.get(i++));
 		}
 
 		log.debug("TokenServiceImpl::getAllTokens() START" + result.toString());
