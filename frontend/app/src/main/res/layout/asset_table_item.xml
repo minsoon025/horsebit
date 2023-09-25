@@ -15,14 +15,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_Graph"
+        <com.github.mikephil.charting.charts.CandleStickChart
+            android:id="@+id/cc_Graph"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:paddingLeft="1dp"
-            android:paddingRight="1dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:paddingRight="1dp" />
 
         <LinearLayout
             android:id="@+id/llv_Name"
