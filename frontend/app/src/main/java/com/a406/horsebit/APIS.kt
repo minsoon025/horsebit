@@ -18,12 +18,34 @@ interface APIS {
         @Header("Authorization") authorization: String,
     )
 //    :Call<ArrayList<>>
-
+    // 로그인
+    @POST("/login")
+    fun Login(
+    @Header("Authorization") authorization: String,
+    )
     // 회원가입
-
+    @POST("/api/user/signup")
+    fun SingUp(
+        @Header("Authorization") authorization: String,
+    )
     // 닉네임 중복체크
 
     // 미체결 내역 조회
+
+    // 마이페이지 총 자산 불러오기
+    @GET("/api/assets")
+    fun MyTotalAsset(
+        @Header("Authorization") authorization: String,
+    ):Call<ArrayList<MyTotalAssetModel>>
+
+
+    // 마이페이지 코인 불러오기
+    @GET("/api/assets/horses")
+    fun MyCoins(
+        @Header("Authorization") authorization: String,
+    ):Call<ArrayList<MyAssetModel>>
+
+
     @GET("/api/exchange/orders/{tokenNo}")
     fun notConcluded(
         @Path("tokenNo") tokenNo: Long,

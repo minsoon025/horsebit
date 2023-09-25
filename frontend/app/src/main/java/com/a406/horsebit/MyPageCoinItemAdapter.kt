@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.MyassetItemBinding
 
-class MyPageCoinItemAdapter(val myAssetList: ArrayList<MyAsset>) : RecyclerView.Adapter<MyPageCoinItemAdapter.CustomViewHolder>() {
+class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetModel>) : RecyclerView.Adapter<MyPageCoinItemAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPageCoinItemAdapter.CustomViewHolder {
         val binding = MyassetItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -14,11 +14,11 @@ class MyPageCoinItemAdapter(val myAssetList: ArrayList<MyAsset>) : RecyclerView.
     }
 
     override fun getItemCount(): Int {
-        return myAssetList.size
+        return myassetItemList.size
     }
 
     override fun onBindViewHolder(holder: MyPageCoinItemAdapter.CustomViewHolder, position: Int) {
-        val myAsset = myAssetList[position]
+        val myAsset = myassetItemList[position]
         holder.bind(myAsset)
     }
 
@@ -26,12 +26,12 @@ class MyPageCoinItemAdapter(val myAssetList: ArrayList<MyAsset>) : RecyclerView.
 
     class CustomViewHolder(private val binding: MyassetItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(myAsset: MyAsset) {
+        fun bind(myAsset: MyAssetModel) {
             binding.ivInformationHorseImg.setImageResource(myAsset.horseImage)
-            binding.tvMyAssetCoinTitle.text = myAsset.coinTicker
-            binding.tvMyAssetCoinName.text = myAsset.coinName
-            binding.tvMyAssetValue.text = myAsset.value
-            binding.tvMyAssetRate.text = "${myAsset.rate}%"
+            binding.tvMyAssetCoinTitle.text = myAsset.name
+            binding.tvMyAssetCoinName.text = myAsset.code
+            binding.tvMyAssetValue.text = myAsset.profitOrLoss
+            binding.tvMyAssetRate.text = "${myAsset.returnRate}%"
 
 
         }

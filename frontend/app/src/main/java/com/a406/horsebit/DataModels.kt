@@ -95,10 +95,36 @@ data class CandleShow(
 )
 
 // 마이페이지 코인 component
-data class MyAsset(
+data class MyAssetModel(
     val horseImage: Int,
-    val coinTicker: String,
-    val coinName: String,
-    val value: String,
-    val rate: String
+    val tokenNo : Int,
+    val name: String,
+    val code: String,
+    val profitOrLoss: String,
+    val returnRate: String
+)
+
+// 마이페이지 총자산 component
+data class MyTotalAssetModel(
+    val totalAsset : Int,
+    val cashBalance: Int,
+    val totalPurchase: Int,
+    val totalEvaluation: Int,
+    val profitOrLoss: Int,
+    val returnRate: Int,
+)
+
+// 로그인
+data class LoginModel(
+    val id : Long,
+    val email: String,
+    val nickname: String,
+    val userName: String,
+    val accessToken: String,
+    val refreshToken: String,
+)
+
+// 회원가입
+data class SignUpModel(
+    val userName: String,
 )
