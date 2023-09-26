@@ -22,7 +22,7 @@ class MyPageFragment : Fragment() {
     private val api = APIS.create();
 
 //    var totalAssetList: MyTotalAssetModel = ArrayList()
-    var myassetList: ArrayList<MyAssetModel> = ArrayList()
+    var myassetList: ArrayList<MyAssetResponseBodyModel> = ArrayList()
 
 
 
@@ -41,7 +41,7 @@ class MyPageFragment : Fragment() {
 
 
         // 어댑터 설정 (여기서 dataList는 데이터 리스트로 대체해야 합니다)
-        val dataList = ArrayList<MyAssetModel>() // 실제 데이터 리스트로 대체
+        val dataList = ArrayList<MyAssetResponseBodyModel>() // 실제 데이터 리스트로 대체
         myPageCoinItemAdapter = MyPageCoinItemAdapter(dataList)
         recyclerView.adapter = myPageCoinItemAdapter
 
@@ -55,8 +55,8 @@ class MyPageFragment : Fragment() {
         //val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
         //val token = pref.getString("token", "1")
 
-        api.MyCoins(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<MyAssetModel>> {
-            override fun onResponse(call: Call<ArrayList<MyAssetModel>>, response: Response<ArrayList<MyAssetModel>>) {
+        api.MyCoins(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<MyAssetResponseBodyModel>> {
+            override fun onResponse(call: Call<ArrayList<MyAssetResponseBodyModel>>, response: Response<ArrayList<MyAssetResponseBodyModel>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "보유 마패 전체 조회: 200 Success")
 
@@ -91,14 +91,14 @@ class MyPageFragment : Fragment() {
                     Log.d("로그", "보유 마패 전체 조회: 404 Not Found")
                 }
             }
-            override fun onFailure(call: Call<ArrayList<MyAssetModel>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<MyAssetResponseBodyModel>>, t: Throwable) {
                 Log.d("로그", "보유 마패 전체 조회: onFailure")
                 Log.d("ddddd", t.toString())
             }
         })
 
-        api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object : Callback<MyTotalAssetModel> {
-            override fun onResponse(call: Call<MyTotalAssetModel>, response: Response<MyTotalAssetModel>) {
+        api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object : Callback<MyTotalAssetResponseBodyModel> {
+            override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
                 if (response.code() == 200) {    // 200 Success
                     Log.d("로그", "내 자산 전체 조회: 200 Success")
 
@@ -137,7 +137,7 @@ class MyPageFragment : Fragment() {
                     Log.d("로그", "내 자산 전체 조회: 404 Not Found")
                 }
             }
-            override fun onFailure(call: Call<MyTotalAssetModel>, t: Throwable) {
+            override fun onFailure(call: Call<MyTotalAssetResponseBodyModel>, t: Throwable) {
                 Log.d("로그", "내 자산 전체 조회: onFailure")
 
             }

@@ -124,8 +124,8 @@ class LoginMainActivity : AppCompatActivity() {
     private fun tryLoginToServer(loadedGoogleToken: String?, isAutoLogin: Boolean) {
         if (loadedGoogleToken != null) {
             // 서버에 로그인 시도
-            api.login("Bearer $loadedGoogleToken").enqueue(object : Callback<ArrayList<LoginModel>> {
-                override fun onResponse(call: Call<ArrayList<LoginModel>>, response: Response<ArrayList<LoginModel>>) {
+            api.login("Bearer $loadedGoogleToken").enqueue(object : Callback<ArrayList<LoginResponseBodyModel>> {
+                override fun onResponse(call: Call<ArrayList<LoginResponseBodyModel>>, response: Response<ArrayList<LoginResponseBodyModel>>) {
                     if (response.code() == 400) {
                         Log.d("로그", "로그인 400 Bad Request")
                         // 회원가입 페이지를 띄워주자
@@ -155,7 +155,7 @@ class LoginMainActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<ArrayList<LoginModel>>, t: Throwable) {
+                override fun onFailure(call: Call<ArrayList<LoginResponseBodyModel>>, t: Throwable) {
                     Log.d("로그", "로그인 onFailure")
 
                     // 로그인 실패 시 회원가입 페이지로 이동 (토큰은 발급받은 상태)
@@ -178,13 +178,13 @@ class LoginMainActivity : AppCompatActivity() {
                     val ib = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                     oneTapResult.launch(ib)
                 } catch (e: IntentSender.SendIntentException) {
-                    Log.e("google login btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                    Log.e("1111111 google login btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
                 }
             }
             ?.addOnFailureListener(this) { e ->
                 // No Google Accounts found. Just continue presenting the signed-out UI
                 displaySignUp()
-                Log.d("google login btn click", e.localizedMessage!!)
+                Log.d("2222222google login btn click", e.localizedMessage!!)
             }
     }
 
@@ -202,6 +202,7 @@ class LoginMainActivity : AppCompatActivity() {
                 // No Google Accounts found. Just continue presenting the signed-out UI
                 // displaySignUp()
                 Log.d("google login btn click", e.localizedMessage!!)
+                Log.d("333333333", e.toString())
             }
     }
 }

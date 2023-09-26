@@ -16,7 +16,7 @@ interface APIS {
     @POST("/api/auth/login")
     fun login(
         @Header("Authorization") authorization: String,
-    ):Call<ArrayList<LoginModel>>
+    ):Call<ArrayList<LoginResponseBodyModel>>
 //
 
     // 회원가입
@@ -32,14 +32,14 @@ interface APIS {
     @GET("/api/assets")
     fun MyTotalAsset(
         @Header("Authorization") authorization: String,
-    ):Call<MyTotalAssetModel>
+    ):Call<MyTotalAssetResponseBodyModel>
 
 
     // 마이페이지 코인 불러오기
     @GET("/api/assets/horses")
     fun MyCoins(
         @Header("Authorization") authorization: String,
-    ):Call<ArrayList<MyAssetModel>>
+    ):Call<ArrayList<MyAssetResponseBodyModel>>
 
 
     @GET("/api/exchange/orders/{tokenNo}")

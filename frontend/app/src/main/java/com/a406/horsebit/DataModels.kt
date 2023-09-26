@@ -95,7 +95,7 @@ data class CandleShow(
 )
 
 // 마이페이지 코인 component
-data class MyAssetModel(
+data class MyAssetResponseBodyModel(
     val horseImage: Int,
     val tokenNo : Int,
     val name: String,
@@ -105,7 +105,7 @@ data class MyAssetModel(
 )
 
 // 마이페이지 총자산 component
-data class MyTotalAssetModel(
+data class MyTotalAssetResponseBodyModel(
     val totalAsset : Double,
     val cashBalance: Double,
     val totalPurchase: Double,
@@ -115,7 +115,7 @@ data class MyTotalAssetModel(
 )
 
 // 로그인
-data class LoginModel(
+data class LoginResponseBodyModel(
     val user_no: Int,
     val accessToken: String,
     val refreshToken: String,
@@ -126,6 +126,6 @@ data class LoginModel(
 
 
 // 회원가입
-data class SignUpModel(
+data class SignUpRequestBodyModel(
     val userName: String,
 )

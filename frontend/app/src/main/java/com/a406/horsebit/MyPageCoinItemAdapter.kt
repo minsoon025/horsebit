@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.MyassetItemBinding
-class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetModel>) : RecyclerView.Adapter<MyPageCoinItemAdapter.CustomViewHolder>() {
+class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyModel>) : RecyclerView.Adapter<MyPageCoinItemAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPageCoinItemAdapter.CustomViewHolder {
         val binding = MyassetItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,7 +25,7 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetModel>) : Recy
 
     class CustomViewHolder(private val binding: MyassetItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(myAsset: MyAssetModel) {
+        fun bind(myAsset: MyAssetResponseBodyModel) {
             val num = myAsset.tokenNo // 이미지 선택에 사용할 값
             val resourceName = "pic_$num" // 이미지 리소스 이름 (확장자 제외)
 
