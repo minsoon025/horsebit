@@ -33,18 +33,33 @@ public class CandleRepository {
         return Math.min(listSize, index);
     }
 
-    public CandleDTO findOneByTokenNoAndIndexAndCandleType(Long tokenNo, Integer index, String candleType) {
+    public CandleDTO findOneByTokenNo(Long tokenNo, Integer index, String candleType, Long candleTime) {
         RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, candleType));
         Candle candle = candleRList.get(indexFinder(candleRList.size(), index));
+        if(candleRList.size() < index) {
+            return new CandleDTO(candle.getStartTime().plusMinutes(candleTime * (index - candleRList.size() + 1)), candle.getClose(), candle.getClose(), candle.getClose(), candle.getClose(), 0.0);
+        }
         return new CandleDTO(candle.getStartTime(), candle.getOpen(), candle.getClose(), candle.getHigh(), candle.getLow(), candle.getVolume());
     }
 
-    public List<CandleDTO> findRangeByTokenNoAndIndexAndQuantityAndCandleType(Long tokenNo, Integer startIndex, Integer quantity, String candleType) {
+    public List<CandleDTO> findRangeByTokenNo(Long tokenNo, Integer startIndex, Integer quantity, String candleType, Long candleTime) {
         RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, candleType));
         List<CandleDTO> candleDTOList = new ArrayList<CandleDTO>(quantity);
-        for (Integer index = startIndex; index < startIndex + quantity; ++index) {
-            Candle candle = candleRList.get(indexFinder(candleRList.size(), index));
+        if (candleRList.size() >= startIndex + quantity) {
+            for (int index = startIndex; index < startIndex + quantity; ++index) {
+                Candle candle = candleRList.get(index);
+                candleDTOList.add(new CandleDTO(candle.getStartTime(), candle.getOpen(), candle.getClose(), candle.getHigh(), candle.getLow(), candle.getVolume()));
+            }
+            return candleDTOList;
+        }
+        int midIndex = candleRList.size();
+        for (int index = startIndex; index < midIndex; ++index) {
+            Candle candle = candleRList.get(index);
             candleDTOList.add(new CandleDTO(candle.getStartTime(), candle.getOpen(), candle.getClose(), candle.getHigh(), candle.getLow(), candle.getVolume()));
+        }
+        Candle candle = candleRList.get(midIndex - 1);
+        for (int index = midIndex; index < startIndex + quantity; ++index) {
+            candleDTOList.add(new CandleDTO(candle.getStartTime().plusMinutes(candleTime * (index - midIndex + 1)), candle.getClose(), candle.getClose(), candle.getClose(), candle.getClose(), 0.0));
         }
         return candleDTOList;
     }
