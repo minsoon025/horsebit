@@ -37,15 +37,12 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
             binding.tvVolume.text = order.volume.toString()
 
             var chartBackColor = ContextCompat.getColor(binding.root.context, R.color.black)
-            var chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.black)
 
             if(binding.tvTrend.text.toString().toFloat() > 0) {
                 chartBackColor = ContextCompat.getColor(binding.root.context, R.color.order_back_red)
-                chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.order_front_red)
             }
             else if(binding.tvTrend.text.toString().toFloat() < 0) {
                 chartBackColor = ContextCompat.getColor(binding.root.context, R.color.order_back_blue)
-                chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.order_front_blue)
             }
 
             binding.llvOrderBack.setBackgroundColor(chartBackColor)
@@ -92,7 +89,7 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
 
                 ccOrderVolumeHorizontalBarChart.setFitBars(true)
                 ccOrderVolumeHorizontalBarChart.setExtraOffsets(0f, 0f, 0f, 0f) // 모든 여백을 0으로 설정
-                ccOrderVolumeHorizontalBarChart.setViewPortOffsets(0f, 0f, 0f, 0f) // 모든 여백을 0으로 설정
+                //ccOrderVolumeHorizontalBarChart.setViewPortOffsets(0f, 0f, 0f, 0f) // 모든 여백을 0으로 설정
 
 
                 ccOrderVolumeHorizontalBarChart.xAxis.apply {
