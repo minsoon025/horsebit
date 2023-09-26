@@ -15,12 +15,11 @@ import com.a406.horsebit.databinding.FragmentHomeBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Locale.filter
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    val api = APIS.create();
+    val api = APIS.create()
 
     var tokenShowList: ArrayList<TokenShow> = ArrayList()
 
@@ -181,7 +180,7 @@ class HomeFragment : Fragment() {
 
                             if(responseBody != null) {
                                 for(token in responseBody) {
-                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag, false)
+                                    val tokenShow = TokenShow(token.tokenNo, token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag, false)
                                     tokenShowList.add(tokenShow)
                                 }
                             }
@@ -214,7 +213,7 @@ class HomeFragment : Fragment() {
 
                             if(responseBody != null) {
                                 for(token in responseBody) {
-                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag, true)
+                                    val tokenShow = TokenShow(token.tokenNo, token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag, true)
                                     tokenShowList.add(tokenShow)
                                 }
                             }

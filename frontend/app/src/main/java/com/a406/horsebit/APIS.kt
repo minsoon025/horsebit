@@ -67,6 +67,12 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ): Call<ArrayList<Token>>
 
+    @POST("/api/exchange/favorites/{tokenNo}")
+    fun addFavorite(
+        @Path("tokenNo") tokenNo: Long,
+        @Header("Authorization") authorization: String,
+    ): Call<AddFavoriteResponseBodyModel>
+
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"
 

@@ -39,21 +39,23 @@ data class TransactionShow(
 
 // 코인 목록 조회 (SSE)
 data class Token(
-    val tokenNo: Long,  //토큰번호
+    val tokenNo: Long,  // 토큰 번호
     val name: String,  //토큰 이름
     val code: String,  // 토큰 코드
     val currentPrice: Double,  // 토큰 현재가
     val priceRateOfChange: Double, //변동추이
-    val volume: Double, //거래금액
+    val volume: Double, //거래 금액
     val newFlag: Boolean,   // 새로운 코인 여부
 )
 
+
 data class TokenShow(
+    val tokenNo: Long,  // 토큰 번호
     val name: String,   // 토큰 이름
     val code: String,   // 토큰 코드
     val currentPrice: Double,   // 토큰 현재가
     val priceRateOfChange: Double, // 변동추이
-    val volume: Double, // 거래금액
+    val volume: Double, // 거래 금액
     val newFlag: Boolean,   // 새로운 코인 여부
     val interest: Boolean,  // 즐겨찾기면 true, 아니면 false
 )
@@ -128,4 +130,8 @@ data class LoginResponseBodyModel(
 // 회원가입
 data class SignUpRequestBodyModel(
     val userName: String,
+)
+
+data class AddFavoriteResponseBodyModel(
+    val result: String,
 )

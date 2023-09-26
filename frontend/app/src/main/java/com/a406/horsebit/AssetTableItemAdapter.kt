@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -19,9 +20,13 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Collections
 
 class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
+
 
     var filteredTokenShowList = ArrayList<TokenShow>()
     var itemFilter = ItemFilter()
@@ -133,6 +138,47 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
             else{
                 binding.tvRemoveOrFavor.text = "즐겨찾기\n추가"
                 binding.tvRemoveOrFavor.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.yellow))
+            }
+            val api = APIS.create()
+            binding.llhAssetTableItemHide.setOnClickListener {
+                if(tokenShow.interest) {
+                    // 즐겨찾기 삭제
+                }
+                else{
+                    // 즐겨 찾기 추가
+                    api.addFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<AddFavoriteResponseBodyModel> {
+                        override fun onResponse(call: Call<AddFavoriteResponseBodyModel>, response: Response<AddFavoriteResponseBodyModel>) {
+                            if(response.code() == 200) {    // 200 Success
+                                Log.d("로그", "즐겨찾기 추가: 200 Success")
+                                Toast.makeText(binding.root.context,"${tokenShow.name}이 즐겨찾기에 추가되었습니다", Toast.LENGTH_SHORT).show()
+                            }
+                            else if(response.code() == 201) {   // 201 Created
+                                Log.d("로그", "즐겨찾기 추가: 201 Created")
+                            }
+                            else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
+                                Log.d("로그", "즐겨찾기 추가: 202 Accepted")
+                            }
+                            else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                                Log.d("로그", "즐겨찾기 추가: 400 Bad Request")
+                            }
+                            else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                                Log.d("로그", "즐겨찾기 추가: 401 Unauthorized")
+                            }
+                            else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                                Log.d("로그", "즐겨찾기 추가: 403 Forbidden")
+                            }
+                            else if(response.code() == 404) {   // 404 Not Found
+                                Log.d("로그", "즐겨찾기 추가: 404 Not Found")
+                            }
+                        }
+                        override fun onFailure(call: Call<AddFavoriteResponseBodyModel>, t: Throwable) {
+                            Log.d("로그", "즐겨찾기 추가: onFailure")
+                        }
+                    })
+                }
+
+
+
             }
         }
 
