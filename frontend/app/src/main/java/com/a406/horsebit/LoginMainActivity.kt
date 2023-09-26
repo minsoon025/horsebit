@@ -121,6 +121,7 @@ class LoginMainActivity : AppCompatActivity() {
         }
     }
 
+    // 백에 데이터를 보내는 부분 (토큰, 프로바이더 네임)
     private fun tryLoginToServer(loadedGoogleToken: String?, isAutoLogin: Boolean) {
         if (loadedGoogleToken != null) {
             // 서버에 로그인 시도
