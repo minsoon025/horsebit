@@ -36,18 +36,6 @@ public class UserServiceImpl implements UserService {
     private final TokenProvider tokenProvider;
     private final InMemoryProviderRepository inMemoryProviderRepository;
 
-    //토큰 유효시간
-    public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
-    public static final Duration ACCESS_TOKEN_DURATION = Duration.ofDays(1);
-
-    public Long save(AddUserRequest dto){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        return userRepository.save(User.builder()
-                .email(dto.getEmail())
-                .password(encoder.encode(dto.getPassword()))
-                .build()).getId();
-    }
     public User findById(Long userId){
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
@@ -131,6 +119,7 @@ public class UserServiceImpl implements UserService {
             SignedJWT signedJWT = (SignedJWT) tokenProvider.parseRefreshToken(refreshDTO.getRefreshToken());
             JWTClaimsSet claims = signedJWT.getJWTClaimsSet();
             User user = userRepository.findByEmail(claims.getStringClaim("email")).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다."));
+
             if (!user.getRefreshToken().equals(refreshDTO.getRefreshToken())) {
                 throw new IllegalArgumentException("유효하지 않은 Refresh Token 입니다.");
             }

@@ -14,7 +14,7 @@ public class InMemoryProviderRepository {
 
     public OAuthProvider findByProviderName(String name) {
         if (!providers.containsKey(name)) {
-//            throw new UnsupportedProviderException("지원하지 않는 provider 입니다.");
+            throw new IllegalArgumentException("지원하지 않는 provider 입니다.");
         }
 
         return providers.get(name);

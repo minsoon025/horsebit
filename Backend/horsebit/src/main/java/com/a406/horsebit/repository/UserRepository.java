@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByUserName(String UserName);
 
     Optional<User> findByProviderId(String providerId);
+
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.alarmPushFlag = :alarmOn, u.biometricLoginFlag = :biometricLogin where u.id = :userNo")
     void updateSettingByUserNo(Long userNo, boolean alarmOn, boolean biometricLogin);

@@ -13,8 +13,6 @@ import com.nimbusds.jose.JOSEException;
 import java.text.ParseException;
 
 public interface UserService {
-//    public Long save(AddUserRequest dto);
-
     public User findById(Long userId);
 
     public User findByEmail(String email);

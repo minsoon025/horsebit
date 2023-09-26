@@ -2,7 +2,6 @@ package com.a406.horsebit.config;
 
 import com.a406.horsebit.config.jwt.JwtAuthenticationEntryPoint;
 import com.a406.horsebit.config.jwt.TokenProvider;
-import com.a406.horsebit.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import com.a406.horsebit.config.oauth.OAuth2UserCustomService;
 import com.a406.horsebit.repository.RefreshTokenRepository;
 import com.a406.horsebit.service.UserService;
@@ -109,11 +108,6 @@ public class WebOAuthSecurityConfig {
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter(tokenProvider);
-    }
-
-    @Bean
-    public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
-        return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 
     @Bean
