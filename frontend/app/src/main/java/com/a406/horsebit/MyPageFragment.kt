@@ -32,18 +32,19 @@ class MyPageFragment : Fragment() {
         super.onCreate(savedInstanceState)
         // 데이터 바인딩 초기화
         val view = inflater.inflate(R.layout.fragment_my_page, container, false)
+        binding = FragmentMyPageBinding.bind(view)
 
         // 리사이클러뷰 초기화
         val recyclerView = binding.rvMyCoinCard
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
 
+
         // 어댑터 설정 (여기서 dataList는 데이터 리스트로 대체해야 합니다)
         val dataList = ArrayList<MyAssetModel>() // 실제 데이터 리스트로 대체
         myPageCoinItemAdapter = MyPageCoinItemAdapter(dataList)
         recyclerView.adapter = myPageCoinItemAdapter
 
-        binding = FragmentMyPageBinding.bind(view)
         myPageCoinItemAdapter = MyPageCoinItemAdapter(myassetList)
         binding.rvMyCoinCard.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvMyCoinCard.setHasFixedSize(true)

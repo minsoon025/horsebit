@@ -81,22 +81,21 @@
 
                             <TextView
                                 android:id="@+id/tv_MyAssetCoinTitle"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_weight="20"
                                 android:fontFamily="@font/line_seed_kr_bd"
                                 android:gravity="center_vertical"
                                 android:includeFontPadding="false"
+                                android:paddingRight="3dp"
                                 android:text="코인제목"
                                 android:textColor="@color/black"
-                                android:textSize="20sp" />
+                                android:textSize="18sp" />
 
 
                             <TextView
                                 android:id="@+id/tv_MyAssetCoinName"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:layout_weight="40"
                                 android:fontFamily="@font/line_seed_kr_rg"
                                 android:gravity="center_vertical"
                                 android:text="왜저래"
