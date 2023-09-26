@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.a406.horsebit.databinding.FragmentHomeBinding
 import com.a406.horsebit.databinding.FragmentStockOrderBinding
 
 class StockOrderFragment : Fragment() {

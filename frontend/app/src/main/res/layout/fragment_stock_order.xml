@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_Order"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="StockOrder">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/llh_Order"
@@ -17,9 +16,7 @@
             android:id="@+id/rv_Order"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_weight="4" />
 
         <LinearLayout
             android:id="@+id/llv_OrderTab"
