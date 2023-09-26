@@ -9,11 +9,11 @@ public class TradeDTO {
 	private String tokenCode;
 	private int price;
 	private double quantity;
+	private double fee;
 	private Timestamp timestamp;
 	private String sellOrBuy;
 
-	public TradeDTO(Long executionNo, Long tokenNo, String tokenCode, int price, double quantity, Timestamp timestamp,
-		String sellOrBuy) {
+	public TradeDTO(Long executionNo, Long tokenNo, String tokenCode, int price, double quantity, Timestamp timestamp, String sellOrBuy) {
 		this.executionNo = executionNo;
 		this.tokenNo = tokenNo;
 		this.tokenCode = tokenCode;
@@ -61,6 +61,14 @@ public class TradeDTO {
 
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
+	}
+
+	public double getFee() {
+		return fee;
+	}
+
+	public void setFee(double fee) {
+		this.fee = fee;
 	}
 
 	public Timestamp getTimestamp() {
