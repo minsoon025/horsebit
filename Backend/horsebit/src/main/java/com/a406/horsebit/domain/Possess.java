@@ -1,7 +1,5 @@
 package com.a406.horsebit.domain;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,19 +12,22 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-@Table(name = "ACCOUNT_HISTORY")
-public class Account {
+@Table(name = "TOKEN_STATUS")
+public class Possess {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "acc_history_no")
-	private Long accountHistoryNumber;
+	@Column(name = "share_no")
+	private Long shareNo;
+
+	@Column(name = "token_no")
+	private Long tokenNo;
 
 	@Column(name = "user_no")
 	private Long userNo;
 
-	@Column(name = "amount")
-	private Long amount;
+	@Column(name = "quantity")
+	private double quantity;
 
-	@Column(name = "timestamp")
-	private Timestamp datetime;
+	@Column(name = "total_amount_of_purchase")
+	private double totalAmountPurchase;
 }
