@@ -70,9 +70,9 @@ public class AssetsServiceImpl implements AssetsService {
 		}
 
 		for(Map.Entry<Long, Double> token : tokenMap.entrySet()) {
-			PriceDTO price = priceRepository.findOneByTokenNo(token.getKey());
-			log.info("CURRENT_PRICE IS FOUND" + price.getCurrentPrice());
-			amtEvaluation += price.getCurrentPrice() * token.getValue();
+			PriceDTO price = priceRepository .findOneCurrentPriceByTokenNo(token.getKey());
+			log.info("CURRENT_PRICE IS FOUND" + price.getPrice());
+			amtEvaluation += price.getPrice() * token.getValue();
 		}
 
 		result.setTotalAsset(amtKRW + amtEvaluation); //자산 총합
@@ -93,13 +93,13 @@ public class AssetsServiceImpl implements AssetsService {
 		for(Possess possess : possessList) {
 			HorseTokenDTO horseToken = new HorseTokenDTO();
 			TokenDTO token = tokenRepository.findTokenByTokenNo(possess.getTokenNo());
-			PriceDTO price = priceRepository.findOneByTokenNo(possess.getTokenNo());
+			PriceDTO price = priceRepository.findOneCurrentPriceByTokenNo(possess.getTokenNo());
 
 			horseToken.setTokenNo(possess.getTokenNo());
 			horseToken.setName(token.getName());
 			horseToken.setCode(token.getCode());
 
-			double profit = price.getCurrentPrice()*possess.getQuantity() - possess.getTotalAmountPurchase();
+			double profit = (price.getPrice() * possess.getQuantity()) - possess.getTotalAmountPurchase();
 			horseToken.setProfitOrLoss(profit); //평가손익 = 현재가*개수 - 총구매가
 			horseToken.setReturnRate(profit / possess.getTotalAmountPurchase()); //수익률 = (현재가*개수 - 총구매가) / 총구매가
 
