@@ -16,13 +16,9 @@ interface APIS {
     @POST("/api/auth/login")
     fun login(
         @Header("Authorization") authorization: String,
-    )
-//    :Call<ArrayList<>>
-    // 로그인
-    @POST("/login")
-    fun Login(
-    @Header("Authorization") authorization: String,
-    )
+    ):Call<ArrayList<LoginModel>>
+//
+
     // 회원가입
     @POST("/api/user/signup")
     fun SingUp(

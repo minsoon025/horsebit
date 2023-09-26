@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">HorseBit</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="your_web_client_id">423467642364-q3n9hrb9lqruu9qa58a29v9bbodd87hg.apps.googleusercontent.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

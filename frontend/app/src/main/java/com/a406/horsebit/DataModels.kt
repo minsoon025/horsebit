@@ -116,13 +116,14 @@ data class MyTotalAssetModel(
 
 // 로그인
 data class LoginModel(
-    val id : Long,
-    val email: String,
-    val nickname: String,
-    val userName: String,
+    val user_no: Int,
     val accessToken: String,
     val refreshToken: String,
+    val email: String,  // 이메일 필드 추가
+    val nickname: String,  // 닉네임 필드 추가
+    val userName: String  // 사용자 이름 필드 추가
 )
+
 
 // 회원가입
 data class SignUpModel(

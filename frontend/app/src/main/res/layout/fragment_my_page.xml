@@ -446,7 +446,7 @@
                     <LinearLayout
                         android:id="@+id/llv_MyCoidCard"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/semi_circle"
                         android:elevation="1dp"
                         android:orientation="vertical">
@@ -455,33 +455,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp" />
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/tv_MyCoinCardTitle"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
-                            android:layout_weight="100"
-                            android:orientation="horizontal">
-
-                            <Space
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="10" />
-
-                            <TextView
-                                android:id="@+id/tv_MyCoinCardTitle"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="90"
-                                android:fontFamily="@font/line_seed_kr_bd"
-                                android:outlineAmbientShadowColor="@color/font_gray"
-                                android:outlineSpotShadowColor="@color/font_gray"
-                                android:shadowColor="@color/font_gray"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:text="보유마패"
-                                android:textColor="@color/black"
-                                android:textSize="24sp" />
-                        </LinearLayout>
+                            android:fontFamily="@font/line_seed_kr_bd"
+                            android:outlineAmbientShadowColor="@color/font_gray"
+                            android:outlineSpotShadowColor="@color/font_gray"
+                            android:paddingLeft="30dp"
+                            android:shadowColor="@color/font_gray"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="0.3"
+                            android:text="보유마패"
+                            android:textColor="@color/black"
+                            android:textSize="24sp" />
 
                         <Space
                             android:layout_width="match_parent"
@@ -490,7 +478,13 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_MyCoinCard"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp" />
 
                     </LinearLayout>
                 </FrameLayout>
