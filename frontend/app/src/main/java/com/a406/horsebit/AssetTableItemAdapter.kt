@@ -15,7 +15,6 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.AssetTableItemBinding
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
@@ -24,6 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.Collections
+import java.util.ArrayList
 
 class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
 
@@ -97,7 +97,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
         holder.bind(assetItem)
     }
 
-    class CustomViewHolder(private val binding: AssetTableItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CustomViewHolder(private val binding: AssetTableItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tokenShow: TokenShow) {
             initChart()
             setChartData(CandleShow(0, 0f, if(tokenShow.priceRateOfChange.toFloat() > 20f) 20f else if(tokenShow.priceRateOfChange.toFloat() < -20f) -20f else tokenShow.priceRateOfChange.toFloat(), 20f, -20f))
@@ -148,6 +148,12 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
                             if(response.code() == 200) {    // 200 Success
                                 Log.d("로그", "즐겨찾기 삭제: 200 Success")
                                 Toast.makeText(binding.root.context,"${tokenShow.name}이 즐겨찾기에서 삭제되었습니다", Toast.LENGTH_SHORT).show()
+
+                                val position = filteredTokenShowList.indexOf(tokenShow)
+                                if (position != -1) {
+                                    removeData(position)
+                                }
+
                             }
                             else if(response.code() == 201) {   // 201 Created
                                 Log.d("로그", "즐겨찾기 삭제: 201 Created")
@@ -324,9 +330,10 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
 
     fun removeData(position: Int) {
         tokenShowList.removeAt(position)
+        filteredTokenShowList.removeAt(position) // filteredTokenShowList에서도 데이터 제거
         notifyItemRemoved(position)
-        notifyDataSetChanged() // 데이터 변경 후 새로고침
     }
+
 
     fun swapData(fromPos: Int, toPos: Int) {
         Collections.swap(tokenShowList, fromPos, toPos)
