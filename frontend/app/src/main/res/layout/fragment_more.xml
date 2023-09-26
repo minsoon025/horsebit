@@ -264,14 +264,14 @@
                     android:id="@+id/btn_bio_set"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="지문 인증 호출"
+                    android:text="지문 인증"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_default="spread"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_status"
-                    app:layout_constraintHeight_default="spread"
-                    app:layout_constraintWidth_default="spread"
-                    android:visibility="visible" />
+                    app:layout_constraintWidth_default="spread" />
 
                 <Switch
                     android:id="@+id/btn_body_switch"

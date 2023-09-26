@@ -67,22 +67,22 @@
                 android:orientation="horizontal">
 
                 <Space
-                    android:layout_width="0dp"
+                    android:layout_width="20sp"
                     android:layout_height="match_parent"
                     android:layout_weight="2" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView"
-                    android:layout_width="0dp"
+                    android:layout_width="120dp"
                     android:layout_height="80dp"
                     android:layout_weight="5"
                     android:elevation="2dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/happydog" />
 
-                <EditText
+                <TextView
                     android:id="@+id/tv_EditName"
-                    android:layout_width="0dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_weight="9"
                     android:gravity="center_vertical"
@@ -92,12 +92,12 @@
 
                 <Button
                     android:id="@+id/btn_EditName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="20dp"
                     android:layout_height="wrap_content"
-                    android:text="이름 수정"
-                    android:textSize="16sp"
-                    android:layout_gravity="center_horizontal" />
-
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:text="🔧"
+                    android:textSize="16sp" />
                 <Space
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
