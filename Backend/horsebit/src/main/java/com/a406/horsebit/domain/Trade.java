@@ -36,6 +36,9 @@ public class Trade {
 	@Column(name = "quantity", nullable = false)
 	private double quantity;
 
+	@Column(name = "fee")
+	private double fee;
+
 	@Column(name = "timestamp", nullable = false)
 	private Timestamp timestamp;
 
@@ -45,11 +48,17 @@ public class Trade {
 	@Column(name = "seller_user_no", nullable = false)
 	private Long sellerUserNo;
 
+	@Column(name = "seller_order_time", nullable = false)
+	private Timestamp sellerOrderTime;
+
 	@Column(name = "buyer_order_no", nullable = false)
 	private Long buyerOrderNo;
 
 	@Column(name = "buyer_user_no", nullable = false)
 	private Long buyerUserNo;
+
+	@Column(name = "buyer_order_time", nullable = false)
+	private Timestamp buyerOrderTime;
 
 	@Column(name = "sell_buy_flag")
 	private String sellBuyFlag;
