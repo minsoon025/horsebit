@@ -1,5 +1,6 @@
 package com.a406.horsebit.domain;
 
+import com.a406.horsebit.google.domain.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,6 +34,17 @@ public class User implements UserDetails {
 
     private String password; //TODO: 필요없어서 삭제필요
 
+    @Column(name = "user_name")
+    private String userName;
+
+    private String providerName; // 우리는 구글 로그인이라 google
+    private String providerId; // "google_" + Google, Naver, Kakao에서 로그인시 전달되는 id
+    private String refreshToken;    //TODO: 확인필요 - 성민
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
     @Column(name = "alarm_push_flag", nullable = false)
     private boolean alarmPushFlag;
 
@@ -40,8 +52,10 @@ public class User implements UserDetails {
     private boolean biometricLoginFlag;
 
     @Builder
-    public User(Long id, String nickname, String password, String email, boolean alarmPushFlag, boolean biometricLoginFlag) {
+    public User(Long id, String providerName, String providerId, String nickname, String password, String email, boolean alarmPushFlag, boolean biometricLoginFlag) {
         this.id = id;
+        this.providerName = providerName;
+        this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
@@ -95,5 +109,9 @@ public class User implements UserDetails {
         this.nickname = nickname;
 
         return this;
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
     }
 }
