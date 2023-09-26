@@ -24,7 +24,7 @@ public class OrderRepository {
     private static final String REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX = "SELL_VOLUME_BOOK:";
     private static final String REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX = "BUY_ORDER_SUMMARY_LIST:";
     private static final String REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX = "SELL_ORDER_SUMMARY_LIST:";
-    private static final String REDIS_USER_ORDER_BOOK_PREFIX = "USER_ORDER_BOOK:";
+    private static final String REDIS_USER_ORDER_LIST_PREFIX = "USER_ORDER_BOOK:";
 
     @Autowired
     public OrderRepository(RedissonClient redissonClient) {
@@ -32,7 +32,7 @@ public class OrderRepository {
     }
 
     public List<OrderDTO> findAllByUserNoAndTokenNoAndCode(Long userNo, Long tokenNo, String code) {
-        RMap<String, RMap<String, Order>>  userOrderBook = redissonClient.getMap(REDIS_USER_ORDER_BOOK_PREFIX + userNo);
+        RMap<Long, RMap<Long, Order>>  userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
 
         //test
 //        Order order = new Order();
@@ -48,10 +48,10 @@ public class OrderRepository {
 //        userOrderBook.fastPut(code, userOrderMapInput);
         //test
 
-        RMap<String, Order> userOrderMap = userOrderBook.get(Long.toString(tokenNo));
+        RMap<Long, Order> userOrderMap = userOrderList.get(tokenNo);
         List<OrderDTO> orderDTOList = new ArrayList<OrderDTO>();
         userOrderMap.forEach((orderKey, orderValue)->{
-            orderDTOList.add(new OrderDTO(Long.parseLong(orderKey), userNo, tokenNo, code, orderValue.getPrice(), orderValue.getQuantity(), orderValue.getRemain(), orderValue.getOrderTime(), orderValue.getSellBuyFlag()));
+            orderDTOList.add(new OrderDTO(orderKey, userNo, tokenNo, code, orderValue.getPrice(), orderValue.getQuantity(), orderValue.getRemain(), orderValue.getOrderTime(), orderValue.getSellBuyFlag()));
         });
         orderDTOList.sort(Comparator.comparingLong(OrderDTO::getOrderNo));
 
