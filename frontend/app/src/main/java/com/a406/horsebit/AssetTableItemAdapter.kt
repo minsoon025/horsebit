@@ -143,11 +143,40 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
             binding.llhAssetTableItemHide.setOnClickListener {
                 if(tokenShow.interest) {
                     // 즐겨찾기 삭제
+                    api.deleteFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<FavoriteResponseBodyModel> {
+                        override fun onResponse(call: Call<FavoriteResponseBodyModel>, response: Response<FavoriteResponseBodyModel>) {
+                            if(response.code() == 200) {    // 200 Success
+                                Log.d("로그", "즐겨찾기 삭제: 200 Success")
+                                Toast.makeText(binding.root.context,"${tokenShow.name}이 즐겨찾기에서 삭제되었습니다", Toast.LENGTH_SHORT).show()
+                            }
+                            else if(response.code() == 201) {   // 201 Created
+                                Log.d("로그", "즐겨찾기 삭제: 201 Created")
+                            }
+                            else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
+                                Log.d("로그", "즐겨찾기 삭제: 202 Accepted")
+                            }
+                            else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                                Log.d("로그", "즐겨찾기 삭제: 400 Bad Request")
+                            }
+                            else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                                Log.d("로그", "즐겨찾기 삭제: 401 Unauthorized")
+                            }
+                            else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                                Log.d("로그", "즐겨찾기 삭제: 403 Forbidden")
+                            }
+                            else if(response.code() == 404) {   // 404 Not Found
+                                Log.d("로그", "즐겨찾기 삭제: 404 Not Found")
+                            }
+                        }
+                        override fun onFailure(call: Call<FavoriteResponseBodyModel>, t: Throwable) {
+                            Log.d("로그", "즐겨찾기 삭제: onFailure")
+                        }
+                    })
                 }
                 else{
                     // 즐겨 찾기 추가
-                    api.addFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<AddFavoriteResponseBodyModel> {
-                        override fun onResponse(call: Call<AddFavoriteResponseBodyModel>, response: Response<AddFavoriteResponseBodyModel>) {
+                    api.addFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<FavoriteResponseBodyModel> {
+                        override fun onResponse(call: Call<FavoriteResponseBodyModel>, response: Response<FavoriteResponseBodyModel>) {
                             if(response.code() == 200) {    // 200 Success
                                 Log.d("로그", "즐겨찾기 추가: 200 Success")
                                 Toast.makeText(binding.root.context,"${tokenShow.name}이 즐겨찾기에 추가되었습니다", Toast.LENGTH_SHORT).show()
@@ -171,7 +200,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
                                 Log.d("로그", "즐겨찾기 추가: 404 Not Found")
                             }
                         }
-                        override fun onFailure(call: Call<AddFavoriteResponseBodyModel>, t: Throwable) {
+                        override fun onFailure(call: Call<FavoriteResponseBodyModel>, t: Throwable) {
                             Log.d("로그", "즐겨찾기 추가: onFailure")
                         }
                     })
@@ -296,10 +325,13 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
     fun removeData(position: Int) {
         tokenShowList.removeAt(position)
         notifyItemRemoved(position)
+        notifyDataSetChanged() // 데이터 변경 후 새로고침
     }
+
     fun swapData(fromPos: Int, toPos: Int) {
         Collections.swap(tokenShowList, fromPos, toPos)
         notifyItemMoved(fromPos, toPos)
+        notifyDataSetChanged() // 데이터 변경 후 새로고침
     }
 
 }

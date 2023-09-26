@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -71,7 +72,13 @@ interface APIS {
     fun addFavorite(
         @Path("tokenNo") tokenNo: Long,
         @Header("Authorization") authorization: String,
-    ): Call<AddFavoriteResponseBodyModel>
+    ): Call<FavoriteResponseBodyModel>
+
+    @DELETE("/api/exchange/favorites/{tokenNo}")
+    fun deleteFavorite(
+        @Path("tokenNo") tokenNo: Long,
+        @Header("Authorization") authorization: String,
+    ): Call<FavoriteResponseBodyModel>
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"

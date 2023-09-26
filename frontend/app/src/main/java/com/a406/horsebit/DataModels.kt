@@ -132,6 +132,6 @@ data class SignUpRequestBodyModel(
     val userName: String,
 )
 
-data class AddFavoriteResponseBodyModel(
+data class FavoriteResponseBodyModel(
     val result: String,
 )
