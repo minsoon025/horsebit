@@ -6,6 +6,7 @@ import java.util.List;
 import com.a406.horsebit.dto.CandleDTO;
 import com.a406.horsebit.service.CandleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import com.a406.horsebit.dto.TokenDTO;
@@ -39,7 +40,7 @@ public class TokenController {
 	// }
 
 	@GetMapping("/{tokenNo}/chart")
-	public List<CandleDTO> getCandles(@PathVariable("tokenNo") Long tokenNo, @RequestParam("quantity") Long quantity, @RequestParam("endTime") LocalDateTime endTime, @RequestParam("candleTypeIndex") Integer candleTypeIndex, @RequestParam("margin") Long margin) {
+	public List<CandleDTO> getCandles(@PathVariable("tokenNo") Long tokenNo, @RequestParam("quantity") Long quantity, @RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endTime, @RequestParam("candleTypeIndex") Integer candleTypeIndex, @RequestParam("margin") Long margin) {
 		return candleService.getCandle(tokenNo, endTime, candleTypeIndex, quantity, margin);
 	}
 }
