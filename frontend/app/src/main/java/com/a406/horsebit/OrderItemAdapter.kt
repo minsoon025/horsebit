@@ -7,6 +7,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.OrderItemBinding
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.CandleEntry
 
 class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<OrderItemAdapter.CustomViewHolder>() {
 
@@ -27,18 +32,85 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
 
     class CustomViewHolder(private val binding: OrderItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(order: Order) {
-            Log.d("asdfsaddsaffdsa", order.toString())
             binding.tvPrice.text = order.price.toString()
             binding.tvTrend.text = order.trend.toString()
             binding.tvVolume.text = order.volume.toString()
 
-            var color = ContextCompat.getColor(binding.root.context, R.color.black)
+            var chartBackColor = ContextCompat.getColor(binding.root.context, R.color.black)
+            var chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.black)
 
-            if(binding.tvTrend.text.toString().toFloat() > 0) {color = ContextCompat.getColor(binding.root.context, R.color.order_back_red)}
-            else if(binding.tvTrend.text.toString().toFloat() < 0) {color = ContextCompat.getColor(binding.root.context, R.color.order_back_blue)}
+            if(binding.tvTrend.text.toString().toFloat() > 0) {
+                chartBackColor = ContextCompat.getColor(binding.root.context, R.color.order_back_red)
+                chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.order_front_red)
+            }
+            else if(binding.tvTrend.text.toString().toFloat() < 0) {
+                chartBackColor = ContextCompat.getColor(binding.root.context, R.color.order_back_blue)
+                chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.order_front_blue)
+            }
 
-            binding.llvOrderBack.setBackgroundColor(color)
+            binding.llvOrderBack.setBackgroundColor(chartBackColor)
 
+            initChart()
+            setChartData(order.volume)
+
+        }
+
+        private fun setChartData(volume: Long) {
+            val volumeEntries = ArrayList<BarEntry>()
+
+            volumeEntries.add(
+                BarEntry(
+                    0f, volume.toFloat(),
+                )
+            )
+
+            val barDataSet = BarDataSet(volumeEntries, "").apply {
+                this.valueTextColor = Color.TRANSPARENT
+
+                var chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.black)
+
+                if(binding.tvTrend.text.toString().toFloat() > 0) {
+                    chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.order_front_red)
+                }
+                else if(binding.tvTrend.text.toString().toFloat() < 0) {
+                    chartFrontColor = ContextCompat.getColor(binding.root.context, R.color.order_front_blue)
+                }
+
+                this.color = chartFrontColor
+            }
+
+            binding.ccOrderVolumeHorizontalBarChart.apply {
+                this.data = BarData(barDataSet)
+                invalidate()
+            }
+        }
+
+        private fun initChart() {
+            binding.apply {
+                ccOrderVolumeHorizontalBarChart.description.isEnabled = false
+                ccOrderVolumeHorizontalBarChart.setTouchEnabled(false)
+
+                ccOrderVolumeHorizontalBarChart.setFitBars(true)
+                ccOrderVolumeHorizontalBarChart.setExtraOffsets(0f, 0f, 0f, 0f) // 모든 여백을 0으로 설정
+                ccOrderVolumeHorizontalBarChart.setViewPortOffsets(0f, 0f, 0f, 0f) // 모든 여백을 0으로 설정
+
+
+                ccOrderVolumeHorizontalBarChart.xAxis.apply {
+                    this.isEnabled = false
+                }
+
+                ccOrderVolumeHorizontalBarChart.axisLeft.apply {
+                    this.axisMinimum = 0f // 최소값을 0으로 고정
+                    this.axisMaximum = 1000f // 최대값을 100으로 고정
+                    this.isEnabled = false
+                }
+
+                ccOrderVolumeHorizontalBarChart.axisRight.apply {
+                    this.isEnabled = false
+                }
+
+                ccOrderVolumeHorizontalBarChart.legend.isEnabled = false
+            }
         }
     }
 

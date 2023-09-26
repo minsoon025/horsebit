@@ -55,6 +55,7 @@ data class TokenShow(
     val priceRateOfChange: Double, // 변동추이
     val volume: Double, // 거래금액
     val newFlag: Boolean,   // 새로운 코인 여부
+    val interest: Boolean,  // 즐겨찾기면 true, 아니면 false
 )
 
 data class Order(

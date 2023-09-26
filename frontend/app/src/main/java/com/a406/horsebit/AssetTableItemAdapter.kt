@@ -125,6 +125,15 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
             binding.tvItemCurrentPrice.text = tokenShow.currentPrice.toString()
             binding.tvItemYesterdayPrice.text = "${tokenShow.priceRateOfChange.toString()}%"
             binding.tvItemTransactionPrice.text = "${tokenShow.volume.toString()}만원"
+
+            if(tokenShow.interest) {
+                binding.tvRemoveOrFavor.text = "즐겨찾기\n삭제"
+                binding.tvRemoveOrFavor.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.red))
+            }
+            else{
+                binding.tvRemoveOrFavor.text = "즐겨찾기\n추가"
+                binding.tvRemoveOrFavor.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.yellow))
+            }
         }
 
         private fun setChartData(candle: CandleShow) {

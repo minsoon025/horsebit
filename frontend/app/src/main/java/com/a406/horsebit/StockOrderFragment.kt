@@ -15,7 +15,7 @@ class StockOrderFragment : Fragment() {
     private lateinit var binding: FragmentStockOrderBinding
 
     val orderList = arrayListOf(
-        Order(1343, 758, 0.03),
+        Order(1343, 1000, 0.03),
         Order(2723, 291, 0.07),
         Order(3091, 845, 0.18),
         Order(4558, 968, 0.27),
@@ -26,7 +26,7 @@ class StockOrderFragment : Fragment() {
         Order(8975, 687, 0.89),
         Order(9901, 797, 0.97),
         Order(2092, 633, -0.98),
-        Order(3894, 978, -0.92),
+        Order(3894, 9, -0.92),
         Order(4640, 419, -0.81),
         Order(5774, 679, -0.75),
         Order(6309, 489, -0.68),

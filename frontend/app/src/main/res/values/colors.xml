@@ -12,9 +12,13 @@
     <color name="font_gray">#FF9D9DA7</color>
     <color name="order_back_blue">#FFC8E1EC</color>
     <color name="order_back_red">#FFECC8C8</color>
+    <color name="order_front_blue">#FF9CCADD</color>
+    <color name="order_front_red">#FFD89191</color>
     <color name="light_active">#FFC8E1EC</color>
     <color name="blue_light">#FFEDF5F9</color>
     <color name="ok_green">#FF3CB371</color>
     <color name="orange_red">#FFFF4500</color>
+    <color name="yellow">#FFEDC70A</color>
+
 
 </resources>

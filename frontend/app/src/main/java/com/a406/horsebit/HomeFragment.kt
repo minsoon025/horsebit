@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
         binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
         changeShowType(0)
 
-        binding.llvWhole.setOnClickListener {
+        binding.llvWhole.setOnClickListener {   // 전체
             binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
             binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
             binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
@@ -61,7 +61,7 @@ class HomeFragment : Fragment() {
             changeShowType(0)
         }
 
-        binding.llvInterest.setOnClickListener {
+        binding.llvInterest.setOnClickListener {    // 즐겨찾기
             binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
             binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
             binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
             changeShowType(1)
         }
 
-        binding.llvHold.setOnClickListener {
+        binding.llvHold.setOnClickListener {    // 보유
             binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
             binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
             binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
@@ -77,11 +77,11 @@ class HomeFragment : Fragment() {
             changeShowType(2)
         }
 
-        val sotingFlag: ArrayList<Int> = arrayListOf(0, 0, 0, 0)
+        val sortingFlag: ArrayList<Int> = arrayListOf(0, 0, 0, 0)
 
-        binding.llhAssetName.setOnClickListener {
-            sotingFlag[0] = (sotingFlag[0] + 1) % 3
-            when(sotingFlag[0]){
+        binding.llhAssetName.setOnClickListener {   // 자산명
+            sortingFlag[0] = (sortingFlag[0] + 1) % 3
+            when(sortingFlag[0]){
                 0 -> {
                     binding.ivAssetNameSort.setImageResource(R.drawable.sort_not)
                 }
@@ -97,9 +97,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.llhCurrentPrice.setOnClickListener {
-            sotingFlag[1] = (sotingFlag[1] + 1) % 3
-            when(sotingFlag[1]) {
+        binding.llhCurrentPrice.setOnClickListener {    // 토큰 현재가
+            sortingFlag[1] = (sortingFlag[1] + 1) % 3
+            when(sortingFlag[1]) {
                 0 -> {
                     binding.ivCurrentPriceSort.setImageResource(R.drawable.sort_not)
                 }
@@ -115,9 +115,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.llhYesterdayPrice.setOnClickListener {
-            sotingFlag[2] = (sotingFlag[2] + 1) % 3
-            when(sotingFlag[2]) {
+        binding.llhYesterdayPrice.setOnClickListener {  // 변동 추이
+            sortingFlag[2] = (sortingFlag[2] + 1) % 3
+            when(sortingFlag[2]) {
                 0 -> {
                     binding.ivYesterdayPriceSort.setImageResource(R.drawable.sort_not)
                 }
@@ -132,10 +132,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.llhTransactionPrice.setOnClickListener {
-            sotingFlag[3] = (sotingFlag[3] + 1) % 3
-            Log.d("asdfasdf", sotingFlag.toString())
-            when(sotingFlag[3]) {
+        binding.llhTransactionPrice.setOnClickListener {    // 거래 금액
+            sortingFlag[3] = (sortingFlag[3] + 1) % 3
+            when(sortingFlag[3]) {
                 0 -> {
                     binding.ivTransactionPriceSort.setImageResource(R.drawable.sort_not)
                 }
@@ -150,6 +149,7 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // 임시
         binding.btnTmp.setOnClickListener {
             val intent = Intent(binding.root.context, LoginMainActivity::class.java)
             binding.root.context.startActivity(intent)
@@ -181,7 +181,7 @@ class HomeFragment : Fragment() {
 
                             if(responseBody != null) {
                                 for(token in responseBody) {
-                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag)
+                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag, false)
                                     tokenShowList.add(tokenShow)
                                 }
                             }
@@ -214,7 +214,7 @@ class HomeFragment : Fragment() {
 
                             if(responseBody != null) {
                                 for(token in responseBody) {
-                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag)
+                                    val tokenShow = TokenShow(token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag, true)
                                     tokenShowList.add(tokenShow)
                                 }
                             }

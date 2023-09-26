@@ -142,7 +142,6 @@ class SwipeHelperCallback(private val recyclerViewAdapter : AssetTableItemAdapte
     private fun setTag(viewHolder: RecyclerView.ViewHolder, isClamped: Boolean) { viewHolder.itemView.tag = isClamped }
     private fun getTag(viewHolder: RecyclerView.ViewHolder) : Boolean =  viewHolder.itemView.tag as? Boolean ?: false
 
-
     // view가 swipe 되었을 때 고정될 크기 설정
     fun setClamp(clamp: Float) { this.clamp = clamp }
 
@@ -158,7 +157,5 @@ class SwipeHelperCallback(private val recyclerViewAdapter : AssetTableItemAdapte
             setTag(viewHolder, false)
             previousPosition = null
         }
-
     }
-
 }

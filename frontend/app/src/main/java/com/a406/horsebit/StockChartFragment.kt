@@ -192,7 +192,6 @@ class StockChartFragment : Fragment() {
         val barDataSet = BarDataSet(volumeEntries, "").apply {
             this.valueTextColor = Color.TRANSPARENT
 
-            volumeEntries
             this.color = ContextCompat.getColor(binding.root.context, R.color.red)
 
         }
