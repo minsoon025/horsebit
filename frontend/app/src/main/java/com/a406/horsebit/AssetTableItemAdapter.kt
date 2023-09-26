@@ -37,19 +37,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AssetTableItemAdapter.CustomViewHolder {
         val binding = AssetTableItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CustomViewHolder(binding).apply {
-            itemView.setOnClickListener{
-                val curPos: Int = adapterPosition
-                val assetItem: TokenShow = filteredTokenShowList.get(curPos)
-
-                val intent = Intent(binding.root.context, OrderActivity::class.java)
-                intent.putExtra("assetName", assetItem.name)
-                intent.putExtra("assetTicker", assetItem.code)
-                intent.putExtra("currentPrice", assetItem.currentPrice.toString())
-                intent.putExtra("yesterdayPrice", assetItem.priceRateOfChange.toString())
-                binding.root.context.startActivity(intent)
-            }
-        }
+        return CustomViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -103,21 +91,20 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
             setChartData(CandleShow(0, 0f, if(tokenShow.priceRateOfChange.toFloat() > 20f) 20f else if(tokenShow.priceRateOfChange.toFloat() < -20f) -20f else tokenShow.priceRateOfChange.toFloat(), 20f, -20f))
 
             binding.tvItemAssetName.text = tokenShow.name
-            binding.hsvAssetTableItemName.isHorizontalScrollBarEnabled = false
             binding.tvItemAssetTicker.text = tokenShow.code
             binding.ivNew.setImageResource(R.drawable.baseline_fiber_new_24)
             binding.ivNew.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.orange_red))
             if(tokenShow.newFlag) {
                 binding.ivNew.isVisible = true
-                val params = binding.hsvAssetTableItemName.layoutParams as LinearLayout.LayoutParams
+                val params = binding.tvItemAssetName.layoutParams as LinearLayout.LayoutParams
                 params.weight = 4f
-                binding.hsvAssetTableItemName.layoutParams = params
+                binding.tvItemAssetName.layoutParams = params
             }
             else {
                 binding.ivNew.isInvisible = true
-                val params = binding.hsvAssetTableItemName.layoutParams as LinearLayout.LayoutParams
+                val params = binding.tvItemAssetName.layoutParams as LinearLayout.LayoutParams
                 params.weight = 5f
-                binding.hsvAssetTableItemName.layoutParams = params
+                binding.tvItemAssetName.layoutParams = params
             }
 
             var color = ContextCompat.getColor(binding.root.context, R.color.black)
