@@ -139,6 +139,19 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
                 binding.tvRemoveOrFavor.text = "즐겨찾기\n추가"
                 binding.tvRemoveOrFavor.setBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.yellow))
             }
+
+            binding.llhAssetTableItem.setOnClickListener {
+                val curPos: Int = adapterPosition
+                val assetItem: TokenShow = filteredTokenShowList.get(curPos)
+
+                val intent = Intent(binding.root.context, OrderActivity::class.java)
+                intent.putExtra("assetName", assetItem.name)
+                intent.putExtra("assetTicker", assetItem.code)
+                intent.putExtra("currentPrice", assetItem.currentPrice.toString())
+                intent.putExtra("yesterdayPrice", assetItem.priceRateOfChange.toString())
+                binding.root.context.startActivity(intent)
+            }
+
             val api = APIS.create()
             binding.llhAssetTableItemHide.setOnClickListener {
                 if(tokenShow.interest) {
@@ -211,9 +224,6 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
                         }
                     })
                 }
-
-
-
             }
         }
 
