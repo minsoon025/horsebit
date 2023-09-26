@@ -2,6 +2,7 @@ package com.a406.horsebit.dto;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * 미체결 내역 조회 응답 DTO
@@ -14,12 +15,12 @@ public class OrderDTO {
 	private int price;
 	private double quantity;
 	private double remainQuantity;
-	private Timestamp orderTime;
+	private LocalDateTime orderTime;
 	private String sellOrBuy;
 
 	public OrderDTO(Long orderNo, Long userNo, Long tokenNo, String tokenCode, int price, double quantity,
 		double remainQuantity,
-		Timestamp orderTime, String sellOrBuy) {
+		LocalDateTime orderTime, String sellOrBuy) {
 		this.orderNo = orderNo;
 		this.userNo = userNo;
 		this.tokenNo = tokenNo;
@@ -87,11 +88,11 @@ public class OrderDTO {
 		this.remainQuantity = remainQuantity;
 	}
 
-	public Timestamp getOrderTime() {
+	public LocalDateTime getOrderTime() {
 		return orderTime;
 	}
 
-	public void setOrderTime(Timestamp orderTime) {
+	public void setOrderTime(LocalDateTime orderTime) {
 		this.orderTime = orderTime;
 	}
 
