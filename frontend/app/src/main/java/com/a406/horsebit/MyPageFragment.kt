@@ -21,7 +21,7 @@ class MyPageFragment : Fragment() {
 
     private val api = APIS.create();
 
-    var totalAssetList: ArrayList<MyTotalAssetModel> = ArrayList()
+//    var totalAssetList: MyTotalAssetModel = ArrayList()
     var myassetList: ArrayList<MyAssetModel> = ArrayList()
 
 
@@ -50,7 +50,7 @@ class MyPageFragment : Fragment() {
         binding.rvMyCoinCard.setHasFixedSize(true)
 
         myassetList.clear()
-        totalAssetList.clear()
+
 
         //val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
         //val token = pref.getString("token", "1")
@@ -62,11 +62,12 @@ class MyPageFragment : Fragment() {
 
                     val responseBody = response.body()
 
-                    Log.d("dddd", responseBody.toString())
+
 
                     if (responseBody != null) {
                         for (coin in responseBody) {
                             myassetList.add(coin)
+
                         }
                     }
 
@@ -96,22 +97,32 @@ class MyPageFragment : Fragment() {
             }
         })
 
-        api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<MyTotalAssetModel>> {
-            override fun onResponse(call: Call<ArrayList<MyTotalAssetModel>>, response: Response<ArrayList<MyTotalAssetModel>>) {
-                if(response.code() == 200) {    // 200 Success
+        api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object : Callback<MyTotalAssetModel> {
+            override fun onResponse(call: Call<MyTotalAssetModel>, response: Response<MyTotalAssetModel>) {
+                if (response.code() == 200) {    // 200 Success
                     Log.d("로그", "내 자산 전체 조회: 200 Success")
 
                     val responseBody = response.body()
 
-                    Log.d("dddd", responseBody.toString())
+
 
                     if (responseBody != null) {
-                        for (total in responseBody) {
-                            totalAssetList.add(total)
-                        }
+                        // totalAssetList에서 총 자산 값 가져오기
+                        val totalAssetValue = responseBody.totalAsset
+                        val cashBalanceValue = responseBody.cashBalance
+                        val totalPurchaseValue = responseBody.totalPurchase
+                        val totalEvaluationValue = responseBody.totalEvaluation
+                        val profitOrLossValue = responseBody.profitOrLoss
+                        val returnRateValue = responseBody.returnRate
+
+                        // TextView에 총 자산 값 설정
+                        binding.tvMyTotalCoin.text = totalAssetValue.toString()
+                        binding.tvMyOwnKRW.text = cashBalanceValue.toString()
+                        binding.tvMyCoinTotalBuy.text = totalPurchaseValue.toString()
+                        binding.tvMyCoinTotalVal.text = totalEvaluationValue.toString()
+                        binding.tvMyPlusMinus.text = profitOrLossValue.toString()
+                        binding.tvMyCoinRate.text = returnRateValue.toString()
                     }
-
-
                 }
                 else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                     Log.d("로그", "내 자산 전체 조회: 400 Bad Request")
@@ -126,9 +137,9 @@ class MyPageFragment : Fragment() {
                     Log.d("로그", "내 자산 전체 조회: 404 Not Found")
                 }
             }
-            override fun onFailure(call: Call<ArrayList<MyTotalAssetModel>>, t: Throwable) {
+            override fun onFailure(call: Call<MyTotalAssetModel>, t: Throwable) {
                 Log.d("로그", "내 자산 전체 조회: onFailure")
-                Log.d("ddddd", t.toString())
+
             }
         })
 

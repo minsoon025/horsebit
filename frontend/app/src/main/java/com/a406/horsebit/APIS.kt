@@ -32,7 +32,7 @@ interface APIS {
     @GET("/api/assets")
     fun MyTotalAsset(
         @Header("Authorization") authorization: String,
-    ):Call<ArrayList<MyTotalAssetModel>>
+    ):Call<MyTotalAssetModel>
 
 
     // 마이페이지 코인 불러오기

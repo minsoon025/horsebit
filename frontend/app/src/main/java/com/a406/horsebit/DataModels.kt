@@ -106,12 +106,12 @@ data class MyAssetModel(
 
 // 마이페이지 총자산 component
 data class MyTotalAssetModel(
-    val totalAsset : Int,
-    val cashBalance: Int,
-    val totalPurchase: Int,
-    val totalEvaluation: Int,
-    val profitOrLoss: Int,
-    val returnRate: Int,
+    val totalAsset : Double,
+    val cashBalance: Double,
+    val totalPurchase: Double,
+    val totalEvaluation: Double,
+    val profitOrLoss: Double,
+    val returnRate: Double,
 )
 
 // 로그인
