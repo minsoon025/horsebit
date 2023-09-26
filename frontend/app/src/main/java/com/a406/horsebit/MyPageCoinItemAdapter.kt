@@ -32,6 +32,7 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetModel>) : Recy
             // 리소스 이름을 사용하여 리소스 ID를 가져옵니다.
             val imageResourceID = itemView.resources.getIdentifier(resourceName, "drawable", itemView.context.packageName)
 
+            // 이미지 리소스 ID를 확인하고 설정합니다.
 
                 binding.ivInformationHorseImg.setImageResource(imageResourceID)
 
