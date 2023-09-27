@@ -8,11 +8,16 @@ import com.a406.horsebit.dto.TokenDTO;
 
 public interface BookmarkService {
 	/**
+	 * 즐겨찾기 등록 여부 조회
+	 */
+	boolean findOne(Long userNo, Long tokenNo);
+
+	/**
 	 * 즐겨찾기 목록 전체 조회
 	 * @param userNo
 	 * @return
 	 */
-	List<TokenDTO> findAll(Long userNo);
+	List<Long> findAll(Long userNo);
 
 	/**
 	 * 즐겨찾기 항목 등록
