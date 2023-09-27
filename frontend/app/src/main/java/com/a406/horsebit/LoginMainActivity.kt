@@ -37,8 +37,10 @@ class LoginMainActivity : AppCompatActivity() {
                 val credential = oneTapClient?.getSignInCredentialFromIntent(result.data)
 
                 val idToken = credential?.googleIdToken
+                print("이것은 아이디토큰입니다!!!!!!!! "+ idToken)
                 when {
                     idToken != null -> {
+                        Log.d("이것은 아이디토큰입니다!!!!!!!! ", idToken)
                         // sharedPreference에 저장
                         val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
                         val editor = pref.edit()
@@ -125,17 +127,23 @@ class LoginMainActivity : AppCompatActivity() {
     private fun tryLoginToServer(loadedGoogleToken: String?, isAutoLogin: Boolean) {
         if (loadedGoogleToken != null) {
             // 서버에 로그인 시도
-            api.login("Bearer $loadedGoogleToken").enqueue(object : Callback<ArrayList<LoginResponseBodyModel>> {
+            Log.d("여기로 들어오나체크가아ㅣㅓㅇ니ㅏㅓ리너리", "tryLoginToServer오류노")
+            val data = LoginRequestBodyModel(
+                providerName = "google", // 이 부분은 실제로 사용하는 프로바이더 이름으로 변경하세요.
+                token = loadedGoogleToken
+            )
+            api.login("Bearer $loadedGoogleToken", data).enqueue(object : Callback<ArrayList<LoginResponseBodyModel>> {
                 override fun onResponse(call: Call<ArrayList<LoginResponseBodyModel>>, response: Response<ArrayList<LoginResponseBodyModel>>) {
+                    Log.d("로그", response.code().toString())
                     if (response.code() == 400) {
-                        Log.d("로그", "로그인 400 Bad Request")
+                        Log.d("로그11111", "로그인 400 Bad Request")
                         // 회원가입 페이지를 띄워주자
                         if (!isAutoLogin) {
                             val intent = Intent(applicationContext, LoginRegisterActivity::class.java)
                             binding.root.context.startActivity(intent)
                         }
                     } else if (response.code() == 200) {
-                        Log.d("로그", "로그인 200 OK")
+                        Log.d("로그2000000 서버에 보내졋다!!!", "로그인 200 OK")
 
                         val responseBody = response.body()
                         if (responseBody != null && responseBody.isNotEmpty()) {
@@ -145,9 +153,11 @@ class LoginMainActivity : AppCompatActivity() {
                             val editor = pref.edit()
                             editor.putString("SERVER_ACCESS_TOKEN", loginModel.accessToken)
                                 .putString("SERVER_REFRESH_TOKEN", loginModel.refreshToken)
-                                .putString("SERVER_USER_EMAIL", loginModel.email)
-                                .putString("NICK_NAME", loginModel.nickname)
-                                .putString("USER_NAME", loginModel.userName)
+                                .putString("SERVER_USER_EMAIL", loginModel.userDTO.email)
+                                .putString("NICK_NAME", loginModel.userDTO.nickname)
+                                .putString("USER_NAME", loginModel.userDTO.userName)
+                                .putString("ID", loginModel.userDTO.id)
+                                .putString("SERVER_REFRESH_TOKEN", loginModel.userDTO.refreshToken)
                                 .apply()
 
                             val intent = Intent(binding.root.context, MainActivity::class.java)
@@ -157,7 +167,7 @@ class LoginMainActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<ArrayList<LoginResponseBodyModel>>, t: Throwable) {
-                    Log.d("로그", "로그인 onFailure")
+                    Log.d("로그???????????", "로그인 onFailure")
 
                     // 로그인 실패 시 회원가입 페이지로 이동 (토큰은 발급받은 상태)
                     // 거기서 회원가입 정보를 입력 받고 회원가입 진행

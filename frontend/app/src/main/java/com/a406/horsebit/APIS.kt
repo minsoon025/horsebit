@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -18,6 +19,7 @@ interface APIS {
     @POST("/api/auth/login")
     fun login(
         @Header("Authorization") authorization: String,
+        @Body params: LoginRequestBodyModel
     ):Call<ArrayList<LoginResponseBodyModel>>
 //
 

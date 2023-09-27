@@ -1,13 +1,17 @@
 package com.a406.horsebit
 
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.MyassetItemBinding
 class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyModel>) : RecyclerView.Adapter<MyPageCoinItemAdapter.CustomViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPageCoinItemAdapter.CustomViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyPageCoinItemAdapter.CustomViewHolder {
         val binding = MyassetItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CustomViewHolder(binding)
     }
@@ -22,20 +26,35 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
     }
 
 
+    class CustomViewHolder(private val binding: MyassetItemBinding) :
 
-    class CustomViewHolder(private val binding: MyassetItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(myAsset: MyAssetResponseBodyModel) {
+
+
             val num = myAsset.tokenNo // 이미지 선택에 사용할 값
             val resourceName = "pic_$num" // 이미지 리소스 이름 (확장자 제외)
 
             // 리소스 이름을 사용하여 리소스 ID를 가져옵니다.
-            val imageResourceID = itemView.resources.getIdentifier(resourceName, "drawable", itemView.context.packageName)
+            val imageResourceID = itemView.resources.getIdentifier(
+                resourceName,
+                "drawable",
+                itemView.context.packageName
+            )
 
             // 이미지 리소스 ID를 확인하고 설정합니다.
+            binding.ivInformationHorseImg.setImageResource(imageResourceID)
 
-                binding.ivInformationHorseImg.setImageResource(imageResourceID)
+            binding.llvMyAssetItem.setOnClickListener {
+                val intent = Intent(binding.root.context, OrderActivity::class.java)
 
+                intent.putExtra("name", myAsset.name) // 변경: myAsset.name 대신 coinItem.name 사용
+                intent.putExtra("code", myAsset.code) // 변경: myAsset.code 대신 coinItem.code 사용
+                intent.putExtra("profitOrLoss", myAsset.profitOrLoss)
+                intent.putExtra("returnRate", "${myAsset.returnRate}%")
+                binding.root.context.startActivity(intent)
+            }
 
             // 나머지 데이터 설정
             binding.tvMyAssetCoinTitle.text = myAsset.name
@@ -43,7 +62,6 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
             binding.tvMyAssetValue.text = myAsset.profitOrLoss
             binding.tvMyAssetRate.text = "${myAsset.returnRate}%"
         }
-
     }
 }
 

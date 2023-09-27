@@ -132,15 +132,31 @@ data class MyTotalAssetResponseBodyModel(
     val returnRate: Double,
 )
 
-// 로그인
+// 로그인, 내가 받는 모델
 data class LoginResponseBodyModel(
-    val user_no: Int,
     val accessToken: String,
     val refreshToken: String,
-    val email: String,  // 이메일 필드 추가
-    val nickname: String,  // 닉네임 필드 추가
-    val userName: String  // 사용자 이름 필드 추가
+    val userDTO: UserDTO
 )
+
+data class UserDTO(
+
+    val id : String,  //유저번호
+    val refreshToken: String,  //리프레시토큰
+    val email: String,  //유저 이메일
+    val nickname: String,  //유저 닉네임(구글계정 닉네임)
+    val userName: String  //유저 이름(앱에서 사용해야함)
+
+)
+
+// 로그인, 백서버에 넘겨줘야하는 모델
+data class LoginRequestBodyModel(
+    val providerName: String,
+    val token: String,
+
+)
+
+
 
 
 // 회원가입
