@@ -33,7 +33,7 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
     class CustomViewHolder(private val binding: OrderItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(order: Order) {
             binding.tvPrice.text = order.price.toString()
-            binding.tvTrend.text = order.trend.toString()
+            binding.tvTrend.text = order.priceRateOfChange.toString()
             binding.tvVolume.text = order.volume.toString()
 
             var chartBackColor = ContextCompat.getColor(binding.root.context, R.color.black)

@@ -52,7 +52,7 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ):Call<ArrayList<MyAssetResponseBodyModel>>
 
-
+    // 미체결 내역 조회
     @GET("/api/exchange/orders/{tokenNo}")
     fun notConcluded(
         @Path("tokenNo") tokenNo: Long,
@@ -107,6 +107,14 @@ interface APIS {
         @Query("candleTypeIndex") candleTypeIndex: Int,
         @Query("margin") margin: Long
     ): Call<ArrayList<CandleChartDataResponseBodyBodyModel>>
+
+    // 코인 상세 조회 (SSE)
+    @GET("/api/exchange/tokens/{tokenNo}")
+    fun tokenListDetail(
+        @Path("tokenNo") tokenNo: Long,
+        @Header("Authorization") authorization: String,
+    ): Call<TokenListDetailResponseBodyModel>
+
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"

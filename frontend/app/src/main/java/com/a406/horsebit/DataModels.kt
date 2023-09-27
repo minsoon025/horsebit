@@ -62,9 +62,9 @@ data class TokenShow(
 )
 
 data class Order(
-    val price: Long,
-    val volume: Long,
-    val trend: Double,
+    val price: Long,    // 호가 가격
+    val volume: Long,   // 주문량
+    val priceRateOfChange: Double,  // 변동추이
 )
 
 // ExchangeData.kt
@@ -167,6 +167,18 @@ data class SignUpRequestBodyModel(
     val userName: String,
 )
 
+// 즐겨찾기 추가 / 삭제의 응답을 담을 ResponseBodyModel
 data class FavoriteResponseBodyModel(
     val result: String,
+)
+
+// 코인 상세 조회 (SSE)
+data class TokenListDetailResponseBodyModel(
+    val availableDeposit: Double, //유저 잔여금액
+    val tokenNo: Long, //토큰번호
+    val name: String, //토큰명
+    val code: String, //토큰코드명
+    val currentPrice: String, //현재가
+    val priceRateOfChange: String, //변동추이
+    val orderBook: ArrayList<Order> //SSE
 )

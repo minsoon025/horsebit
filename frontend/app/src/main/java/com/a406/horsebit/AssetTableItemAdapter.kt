@@ -132,10 +132,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
                 val assetItem: TokenShow = filteredTokenShowList.get(curPos)
 
                 val intent = Intent(binding.root.context, OrderActivity::class.java)
-                intent.putExtra("assetName", assetItem.name)
-                intent.putExtra("assetTicker", assetItem.code)
-                intent.putExtra("currentPrice", assetItem.currentPrice.toString())
-                intent.putExtra("yesterdayPrice", assetItem.priceRateOfChange.toString())
+                intent.putExtra("tokenNo", assetItem.tokenNo)   // 토큰 번호 넘겨 주기
                 binding.root.context.startActivity(intent)
             }
 
