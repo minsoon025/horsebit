@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,16 +19,24 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.a406.horsebit.ExchangeData
+import com.a406.horsebit.APIS
+import com.a406.horsebit.ExchangeDataResponseBodyModel
+import com.a406.horsebit.ExchangeTableAdapter
 import com.a406.horsebit.R
 import com.a406.horsebit.databinding.FragmentExchangeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ExchangeFragment : Fragment() {
 
     private lateinit var binding: FragmentExchangeBinding
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ExchangeTableAdapter
-    private lateinit var exchangeDataList: List<ExchangeData>
+    private lateinit var exchangeTableAdapter: ExchangeTableAdapter
+
+    private val api = APIS.create();
+    var exchangeList: ArrayList<ExchangeDataResponseBodyModel> = ArrayList()
+
 
     private fun showTransactionPopup() {
         // 팝업창을 위한 레이아웃을 가져옵니다.
@@ -70,8 +79,7 @@ class ExchangeFragment : Fragment() {
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentExchangeBinding.inflate(inflater, container, false)
@@ -79,41 +87,57 @@ class ExchangeFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.rv_ExchangeTable)
 
+        // 어댑터 설정 (여기서 dataList는 데이터 리스트로 대체해야 합니다)
+        val dataList = ArrayList<ExchangeDataResponseBodyModel>() // 실제 데이터 리스트로 대체
+        exchangeTableAdapter = ExchangeTableAdapter(dataList)
+        recyclerView.adapter = exchangeTableAdapter
+
+        exchangeTableAdapter = ExchangeTableAdapter(exchangeList)
+        binding.rvExchangeTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.rvExchangeTable.setHasFixedSize(true)
+
+        exchangeList.clear()
+
+        // 어뎁터 불러와서 값 돌리기
+        api.ExchangeDataModel(authorization = "Bearer ${1}").enqueue(object:
+        Callback<ArrayList<ExchangeDataResponseBodyModel>> {
+                override fun onResponse(call: Call<ArrayList<ExchangeDataResponseBodyModel>>,
+                                    response: Response<ArrayList<ExchangeDataResponseBodyModel>>) {
+                if(response.code() == 200) {    // 200 Success
+                    Log.d("로그", "입출금 조회 조회: 200 Success")
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        for (coin in responseBody) {
+                            exchangeList.add(coin)
+                        }
+                    }
+                    exchangeTableAdapter = ExchangeTableAdapter(exchangeList)
+                    binding.rvExchangeTable.adapter = exchangeTableAdapter
+                }
+                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                    Log.d("로그", "입출금 조회 조회: 400 Bad Request")
+                }
+                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                    Log.d("로그", "입출금 조회 조회: 401 Unauthorized")
+                }
+                else if(response.code() == 403) {
+                    Log.d("로그", "입출금 조회 조회: 403 Forbidden")
+                }
+                else if(response.code() == 404) {   // 404 Not Found
+                    Log.d("로그", "입출금 조회 조회: 404 Not Found")
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<ExchangeDataResponseBodyModel>>, t: Throwable) {
+                Log.d("로그", "입출금 조회 조회: onFailure")
+                Log.d("ddddd", t.toString())
+            }
+        })
 
 
         // 입출금 팝업 뜨는 곳
         binding.btnExchange.setOnClickListener {
             authenticateToEncrypt() // 지문인식
         }
-        // RecyclerView의 레이아웃 매니저를 수평 방향으로 설정합니다.
-        recyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-
-        // 더미 데이터 생성 (실제 데이터로 대체해야 함)
-        exchangeDataList = listOf(
-            ExchangeData("체결시간", "코인명", "종류", "거래수량", "거래단가", "거래금액", "수수료", "정산금액", "주문시간"),
-            ExchangeData("2023-09-15 10:30:00", "Bitcoin", "매수", "2.5 BTC", "$45,000", "$112,500", "$10", "$112,490", "2023-09-15 10:29:55"),
-            ExchangeData("2023-09-14 15:20:00", "Ethereum", "매도", "10 ETH", "$3,500", "$35,000", "$5", "$34,995", "2023-09-14 15:19:55"),
-            ExchangeData("2023-09-13 09:45:00", "Ripple", "매수", "100 XRP", "$1.25", "$125", "$2", "$123", "2023-09-13 09:44:55"),
-            ExchangeData("2023-09-12 14:15:00", "Litecoin", "매도", "5 LTC", "$150", "$750", "$3", "$747", "2023-09-12 14:14:55"),
-            ExchangeData("2023-09-11 11:10:00", "Cardano", "매수", "50 ADA", "$2", "$100", "$1", "$99", "2023-09-11 11:09:55"),
-            ExchangeData("2023-09-10 16:40:00", "Polkadot", "매도", "20 DOT", "$30", "$600", "$4", "$596", "2023-09-10 16:39:55"),
-            ExchangeData("2023-09-09 12:05:00", "Chainlink", "매수", "30 LINK", "$25", "$750", "$5", "$745", "2023-09-09 12:04:55"),
-            ExchangeData("2023-09-08 14:50:00", "Stellar", "매도", "200 XLM", "$0.5", "$100", "$1", "$99", "2023-09-08 14:49:55"),
-            ExchangeData("2023-09-07 17:55:00", "Tezos", "매수", "15 XTZ", "$6", "$90", "$2", "$88", "2023-09-07 17:54:55"),
-            ExchangeData("2023-09-06 11:25:00", "VeChain", "매도", "1000 VET", "$0.1", "$100", "$3", "$97", "2023-09-06 11:24:55"),
-            ExchangeData("2023-09-15 10:30:00", "Bitcoin", "매수", "2.5 BTC", "$45,000", "$112,500", "$10", "$112,490", "2023-09-15 10:29:55"),
-            ExchangeData("2023-09-14 15:20:00", "Ethereum", "매도", "10 ETH", "$3,500", "$35,000", "$5", "$34,995", "2023-09-14 15:19:55"),
-            ExchangeData("2023-09-13 09:45:00", "Ripple", "매수", "100 XRP", "$1.25", "$125", "$2", "$123", "2023-09-13 09:44:55"),
-            ExchangeData("2023-09-12 14:15:00", "Litecoin", "매도", "5 LTC", "$150", "$750", "$3", "$747", "2023-09-12 14:14:55"),
-            ExchangeData("2023-09-11 11:10:00", "Cardano", "매수", "50 ADA", "$2", "$100", "$1", "$99", "2023-09-11 11:09:55"),
-            ExchangeData("2023-09-10 16:40:00", "Polkadot", "매도", "20 DOT", "$30", "$600", "$4", "$596", "2023-09-10 16:39:55"),
-            ExchangeData("2023-09-09 12:05:00", "Chainlink", "매수", "30 LINK", "$25", "$750", "$5", "$745", "2023-09-09 12:04:55"),
-            ExchangeData("2023-09-08 14:50:00", "Stellar", "매도", "200 XLM", "$0.5", "$100", "$1", "$99", "2023-09-08 14:49:55"),
-            ExchangeData("2023-09-07 17:55:00", "Tezos", "매수", "15 XTZ", "$6", "$90", "$2", "$88", "2023-09-07 17:54:55"),
-            ExchangeData("2023-09-06 11:25:00", "VeChain", "매도", "1000 VET", "$0.1", "$100", "$3", "$97", "2023-09-06 11:24:55")
-        )
-        adapter = ExchangeTableAdapter(requireActivity(), exchangeDataList)
-        recyclerView.adapter = adapter
 
         return view
     }

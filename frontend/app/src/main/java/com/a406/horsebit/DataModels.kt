@@ -66,19 +66,7 @@ data class Order(
     val trend: Double,
 )
 
-// ExchangeData.kt
 
-data class ExchangeData(
-    val orderTime: String,
-    val coinName: String,
-    val type: String,
-    val seep: String,
-    val one: String,
-    val money: String,
-    val fee: String,
-    val realMoney: String,
-    val orderTime2: String
-)
 
 // 입출금 토큰 만들기
 data class ExchangeDataResponseBodyModel(
