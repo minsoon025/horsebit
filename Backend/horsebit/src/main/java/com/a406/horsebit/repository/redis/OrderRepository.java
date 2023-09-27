@@ -1,5 +1,6 @@
 package com.a406.horsebit.repository.redis;
 
+import com.a406.horsebit.constant.PriceConstant;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderPage;
 import com.a406.horsebit.domain.redis.OrderSummary;
@@ -31,73 +32,160 @@ public class OrderRepository {
         this.redissonClient = redissonClient;
     }
 
-    public List<OrderDTO> findAllByUserNoAndTokenNoAndCode(Long userNo, Long tokenNo, String code) {
-        RMap<Long, RMap<Long, Order>>  userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
+    /////////////////////////////////////
+    /* --- User Order List Methods --- */
+    /////////////////////////////////////
 
-        //test
-//        Order order = new Order();
-////        order.setHrNo(1L);
-////        order.setTokenNo(2L);
-//        order.setPrice(3);
-//        order.setQuantity(4.0);
-//        order.setRemain(5.0);
-//        order.setOrderTime(new Timestamp(1234, 5, 6, 7, 8, 9, 10));
-//        order.setSellBuyFlag("B");
-//        RMap<String, Order> userOrderMapInput = redissonClient.getMap(Long.toString(tokenNo));
-//        userOrderMapInput.fastPut("1", order);
-//        userOrderBook.fastPut(code, userOrderMapInput);
-        //test
-
+    public List<OrderDTO> findAllOrder(Long userNo, Long tokenNo, String code) {
+        RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
         RMap<Long, Order> userOrderMap = userOrderList.get(tokenNo);
-        List<OrderDTO> orderDTOList = new ArrayList<OrderDTO>();
+        List<OrderDTO> orderDTOList = new ArrayList<>();
         userOrderMap.forEach((orderKey, orderValue)->{
             orderDTOList.add(new OrderDTO(orderKey, userNo, tokenNo, code, orderValue.getPrice(), orderValue.getQuantity(), orderValue.getRemain(), orderValue.getOrderTime(), orderValue.getSellBuyFlag()));
         });
         orderDTOList.sort(Comparator.comparingLong(OrderDTO::getOrderNo));
-
-        log.info("orderDTO: " + orderDTOList.toString());
-
         return orderDTOList;
     }
 
-    public Boolean saveTokenBuyOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary) {
-        return saveTokenOrderSummary(tokenNo, price, orderSummary, REDIS_TOKEN_BUY_TOTAL_VOLUME_PREFIX, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX, REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX, REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX);
+    public Order findOrder(Long userNo, Long tokenNo, Long orderNo) {
+        RMap<Long, Order> userOrderMap = getUserOrderMap(userNo, tokenNo);
+        return userOrderMap.get(orderNo);
     }
 
-    public Boolean saveTokenSellOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary) {
-        return saveTokenOrderSummary(tokenNo, price, orderSummary, REDIS_TOKEN_SELL_TOTAL_VOLUME_PREFIX, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX, REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX, REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX);
+    public void saveOrder(Long userNo, Long tokenNo, Long orderNo, Order order) {
+        RMap<Long, Order> userOrderMap = getUserOrderMap(userNo, tokenNo);
+        userOrderMap.fastPut(orderNo, order);
     }
 
-    private Boolean saveTokenOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary, String TOTAL_VOLUME_PREFIX, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX, String VOLUME_BOOK_PREFIX) {
-        // Update total volume.
-        RBucket<Double> totalVolume = redissonClient.getBucket(TOTAL_VOLUME_PREFIX + tokenNo);
-        if(!totalVolume.setIfAbsent(orderSummary.getRemain())) {
-            totalVolume.set(totalVolume.get() + orderSummary.getRemain());
-        }
+    public Order deleteOrder(Long userNo, Long tokenNo, Long orderNo) {
+        RMap<Long, Order> userOrderMap = getUserOrderMap(userNo, tokenNo);
+        return userOrderMap.remove(orderNo);
+    }
 
-        // Update order book.
-        RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
-        OrderPage orderPage;
-        // Price has empty list. Create order list first.
-        if(tokenOrderBook.containsKey(price)) {
-            orderPage = new OrderPage();
-            orderPage.setVolume(0.0);
-            orderPage.setOrderSummaryRList(redissonClient.getList(ORDER_SUMMARY_LIST_PREFIX + tokenNo));
+    private RMap<Long, Order> getUserOrderMap(Long userNo, Long tokenNo) {
+        RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
+        return userOrderList.get(tokenNo);
+    }
+
+    ////////////////////////////////
+    /* --- Order Book Methods --- */
+    ////////////////////////////////
+
+    public OrderSummary findBuyOrderSummary(Long tokenNo, Long price) {
+        return findOrderSummary(tokenNo, price, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX, REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    public OrderSummary findSellOrderSummary(Long tokenNo, Long price) {
+        return findOrderSummary(tokenNo, price, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX, REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    private OrderSummary findOrderSummary(Long tokenNo, Long price, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
+        // Get order page.
+        OrderPage orderPage = getOrderPage(tokenNo, price, ORDER_BOOK_PREFIX, ORDER_SUMMARY_LIST_PREFIX);
+        // Get order summary list.
+        RList<OrderSummary> orderSummaryRList = orderPage.getOrderSummaryRList();
+        // Get order summary.
+        if (orderSummaryRList.isEmpty()) {
+            return null;
         }
-        // Get existing order page.
-        else {
-            orderPage = tokenOrderBook.get(price);
-        }
+        int FIRST_INDEX = 0;
+        return orderSummaryRList.get(FIRST_INDEX);
+    }
+
+    public Boolean saveBuyOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary) {
+        return saveOrderSummary(tokenNo, price, orderSummary, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX, REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    public Boolean saveSellOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary) {
+        return saveOrderSummary(tokenNo, price, orderSummary, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX, REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    private Boolean saveOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
+        // Get order page.
+        OrderPage orderPage = getOrderPage(tokenNo, price, ORDER_BOOK_PREFIX, ORDER_SUMMARY_LIST_PREFIX);
         // Update volume of page.
         orderPage.setVolume(orderPage.getVolume() + orderSummary.getRemain());
         // Update order summary list of page.
-        orderPage.getOrderSummaryRList().add(orderSummary);
+        return orderPage.getOrderSummaryRList().add(orderSummary);
+    }
 
-        // Update volume book.
-        RScoredSortedSet<VolumePage> tokenVolumeBook = redissonClient.getScoredSortedSet(VOLUME_BOOK_PREFIX + tokenNo);
-        VolumePage volumePage = new VolumePage();
-        volumePage.setVolume(orderPage.getVolume());
-        volumePage.setPrice(price);
-        return tokenVolumeBook.add(price, volumePage);
+    private OrderPage getOrderPage(Long tokenNo, Long price, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
+        // Get order book.
+        RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
+        // Get existing order page.
+        if(tokenOrderBook.containsKey(price)) {
+            return tokenOrderBook.get(price);
+        }
+        // Price has empty list. Create order list first.
+        OrderPage orderPage = new OrderPage();
+        orderPage.setVolume(0.0);
+        orderPage.setOrderSummaryRList(redissonClient.getList(ORDER_SUMMARY_LIST_PREFIX + tokenNo + ":" + price));
+        return orderPage;
+    }
+
+    //////////////////////////////////
+    /* --- Total Volume Methods --- */
+    //////////////////////////////////
+
+    public Double findBuyTotalVolume(Long tokenNo) {
+        RBucket<Double> buyTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_BUY_TOTAL_VOLUME_PREFIX + tokenNo);
+        return buyTotalVolumeRBucket.get();
+    }
+
+    public Double findSellTotalVolume(Long tokenNo) {
+        RBucket<Double> sellTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_SELL_TOTAL_VOLUME_PREFIX + tokenNo);
+        return sellTotalVolumeRBucket.get();
+    }
+
+    public void changeBuyTotalVolume(Long tokenNo, Double changedVolume) {
+        RBucket<Double> buyTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_BUY_TOTAL_VOLUME_PREFIX + tokenNo);
+        buyTotalVolumeRBucket.set(buyTotalVolumeRBucket.get() + changedVolume);
+    }
+
+    public void changeSellTotalVolume(Long tokenNo, Double changedVolume) {
+        RBucket<Double> sellTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_SELL_TOTAL_VOLUME_PREFIX + tokenNo);
+        sellTotalVolumeRBucket.set(sellTotalVolumeRBucket.get() + changedVolume);
+    }
+
+    //////////////////////////////////
+    /* --- Volume Book Methods --- */
+    //////////////////////////////////
+
+    public VolumePage findMaxBuyVolumePage(Long tokenNo) {
+        RScoredSortedSet<VolumePage> tokenBuyVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX + tokenNo);
+        // Sell price must be bigger than this buy price.
+        if (tokenBuyVolumeBook.isEmpty()) {
+            return new VolumePage(PriceConstant.MIN_PRICE, 0.0);
+        }
+        return tokenBuyVolumeBook.last();
+    }
+
+    public VolumePage findMinSellVolumePage(Long tokenNo) {
+        RScoredSortedSet<VolumePage> tokenSellVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX + tokenNo);
+        // Buy price must be smaller than this sell price.
+        if (tokenSellVolumeBook.isEmpty()) {
+            return new VolumePage(PriceConstant.MAX_PRICE, 0.0);
+        }
+        return tokenSellVolumeBook.first();
+    }
+
+    public Boolean saveBuyVolumePage(Long tokenNo, VolumePage volumePage) {
+        RScoredSortedSet<VolumePage> tokenBuyVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX + tokenNo);
+        return tokenBuyVolumeBook.add(volumePage.getPrice().doubleValue(), volumePage);
+    }
+
+    public Boolean saveSellVolumePage(Long tokenNo, VolumePage volumePage) {
+        RScoredSortedSet<VolumePage> tokenSellVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX + tokenNo);
+        return tokenSellVolumeBook.add(volumePage.getPrice().doubleValue(), volumePage);
+    }
+
+    public VolumePage deleteBuyVolumePage(Long tokenNo) {
+        RScoredSortedSet<VolumePage> tokenBuyVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX + tokenNo);
+        return tokenBuyVolumeBook.pollLast();
+    }
+
+    public VolumePage deleteSellVolumePage(Long tokenNo) {
+        RScoredSortedSet<VolumePage> tokenSellVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX + tokenNo);
+        return tokenSellVolumeBook.pollFirst();
     }
 }
