@@ -22,9 +22,26 @@ public class PriceRepository {
         this.redissonClient = redissonClient;
     }
 
+    ///////////////////////////////////
+    /* --- Redis Initiate Method --- */
+    ///////////////////////////////////
+
+    public Boolean newCurrentPrice(Long tokenNo) {
+        RBucket<Long> currentPriceRBucket = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
+        return currentPriceRBucket.setIfAbsent(1L);
+    }
+
+    public Boolean newStartPrice(Long tokenNo) {
+        RBucket<Long> startPriceRBucket = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
+        return startPriceRBucket.setIfAbsent(1L);
+    }
+
+    //////////////////////////
+    /* --- Price Method --- */
+    //////////////////////////
+
     public PriceDTO findCurrentPrice(Long tokenNo) {
         RBucket<Long> currentPriceRBucket = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
-        currentPriceRBucket.setIfAbsent(1L);
         return new PriceDTO(currentPriceRBucket.get());
     }
 
@@ -39,7 +56,6 @@ public class PriceRepository {
 
     public PriceDTO findStartPrice(Long tokenNo) {
         RBucket<Long> startPriceRBucket = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
-        startPriceRBucket.setIfAbsent(1L);
         return new PriceDTO(startPriceRBucket.get());
     }
 
