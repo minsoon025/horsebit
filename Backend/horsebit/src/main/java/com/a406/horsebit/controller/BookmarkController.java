@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,9 @@ public class BookmarkController {
 
 	//TODO: OAuth 개발 후 아래의 userNo는 삭제 필요
 	@GetMapping("")
-	public List<TokenDTO> findAll() {
-		Long userNo = 1L;
+	public List<TokenDTO> findAll(Long userNo, Long tokenNo) {
+		bookmarkService.findOne(userNo, tokenNo);
+
 		return bookmarkService.findAll(userNo);
 	}
 
@@ -43,14 +45,21 @@ public class BookmarkController {
 	public String addBookmark(@PathVariable("tokenNo") Long tokenNo) {
 		log.info("BookmarkController::addBookmark() START");
 		JsonObject obj = new JsonObject();
-
 		Long userNo = 1L;
-		Bookmark bookmark = new Bookmark();
-		bookmark.setUserNo(userNo);
-		bookmark.setTokenNo(tokenNo);
-		bookmarkService.save(bookmark);
 
-		obj.addProperty("result", "SUCCESS");
+		//동일한 즐겨찾기 목록 존재시 true 반환 -> 즉, 신규 등록 불가
+		if(bookmarkService.findOne(userNo, tokenNo)) {
+			obj.addProperty("result", "FAIL");
+		}
+		else {
+			Bookmark bookmark = new Bookmark();
+			bookmark.setUserNo(userNo);
+			bookmark.setTokenNo(tokenNo);
+			bookmarkService.save(bookmark);
+
+			obj.addProperty("result", "SUCCESS");
+		}
+
 		return obj.toString();
 	}
 
@@ -62,12 +71,18 @@ public class BookmarkController {
 		JsonObject obj = new JsonObject();
 
 		Long userNo = 1L;
-		BookmarkPK bookmarkPK = new BookmarkPK();
-		bookmarkPK.setUserNo(userNo);
-		bookmarkPK.setTokenNo(tokenNo);
-		bookmarkService.remove(bookmarkPK);
 
-		obj.addProperty("result", "SUCCESS");
+		if(!bookmarkService.findOne(userNo, tokenNo)) {
+			obj.addProperty("result", "FAIL");
+		}
+		else {
+			BookmarkPK bookmarkPK = new BookmarkPK();
+			bookmarkPK.setUserNo(userNo);
+			bookmarkPK.setTokenNo(tokenNo);
+			bookmarkService.remove(bookmarkPK);
+
+			obj.addProperty("result", "SUCCESS");
+		}
 		return obj.toString();
 	}
 }
