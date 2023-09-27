@@ -27,7 +27,16 @@ public class BookmarkServiceImpl implements BookmarkService{
 		this.bookmarkRepository = bookmarkRepository;
 		this.tokenRepository = tokenRepository;
 	}
-	
+
+	@Override
+	public boolean findOne(Long userNo, Long tokenNo) {
+		Bookmark bookmark = bookmarkRepository.findByUserNoAndTokenNo(userNo, tokenNo);
+		log.info("BookmarkServiceImpl::findOne() bookmark isNull: " + (bookmark == null));
+
+		if(bookmark == null) return false;
+		return true;
+	}
+
 	@Override
 	public List<TokenDTO> findAll(Long userNo) {
 		log.info("BookmarkServiceImpl::findAll() START");
