@@ -129,7 +129,7 @@ class LoginMainActivity : AppCompatActivity() {
             // 서버에 로그인 시도
             Log.d("여기로 들어오나체크가아ㅣㅓㅇ니ㅏㅓ리너리", "tryLoginToServer오류노")
             val data = LoginRequestBodyModel(
-                providerName = "google", // 이 부분은 실제로 사용하는 프로바이더 이름으로 변경하세요.
+             //   providerName = "google", // 이 부분은 실제로 사용하는 프로바이더 이름으로 변경하세요.
                 token = loadedGoogleToken
             )
             api.login("Bearer $loadedGoogleToken", data).enqueue(object : Callback<ArrayList<LoginResponseBodyModel>> {

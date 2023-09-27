@@ -155,7 +155,7 @@ data class UserDTO(
 
 // 로그인, 백서버에 넘겨줘야하는 모델
 data class LoginRequestBodyModel(
-    val providerName: String,
+    //val providerName: String,
     val token: String,
 
 )
