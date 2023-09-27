@@ -80,7 +80,8 @@ public class WebOAuthSecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/*/*/auth/**").permitAll()
-                                .requestMatchers("/api/**").authenticated()
+                                //.requestMatchers("/api/**").authenticated()
+                                .requestMatchers("/api/**").permitAll()
                                 .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
