@@ -3,7 +3,9 @@ package com.a406.horsebit.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.a406.horsebit.domain.Token;
 import com.a406.horsebit.dto.CandleDTO;
+import com.a406.horsebit.dto.VolumeDTO;
 import com.a406.horsebit.service.CandleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,10 +44,36 @@ public class TokenController {
 	/**
 	 * [거래소] 전체 토큰 조회
 	 */
+	/**
+	 * 전체 토큰 조회
+	 * @return
+	 */
 	@GetMapping("")
 	public List<TokenDTO> getTokens() {
 		log.info("TokenController::getTokens() START");
 		return tokenService.findAllTokens();
+	}
+
+	/**
+	 * 토큰 상세 조회
+	 * @param tokenNo
+	 * @return
+	 */
+	@GetMapping("/{tokenNo}")
+	public TokenDTO getTokenDetail(@PathVariable("tokenNo") Long tokenNo) {
+		log.info("TokenController::getTokenDetail() START");
+		return tokenService.findTokenDetail(tokenNo);
+	}
+
+	/**
+	 * 토큰 주문 현황 상세 조회
+	 * @param tokenNo
+	 * @return
+	 */
+	@GetMapping("/{tokenNo}/volumes")
+	public List<VolumeDTO> getTokenVolumes(@PathVariable("tokenNo") Long tokenNo) {
+		log.info("TokenController::getTokenVolumes() START");
+		return tokenService.findTokenVolumes(tokenNo);
 	}
 
 	/**
