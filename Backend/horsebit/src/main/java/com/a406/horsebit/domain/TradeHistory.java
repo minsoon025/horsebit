@@ -11,10 +11,11 @@ public class TradeHistory {
 	private Timestamp sellerOrderTime;
 	private Long buyerUserNo;
 	private Timestamp buyerOrderTime;
+	private Long tokenNo;
 	private String tokenCode;
 
 	public TradeHistory(int price, double quantity, double fee, Timestamp timestamp, Long sellerUserNo, Timestamp sellerOrderTime,
-		Long buyerUserNo, Timestamp buyerOrderTime, String tokenCode) {
+		Long buyerUserNo, Timestamp buyerOrderTime, Long tokenNo, String tokenCode) {
 		this.price = price;
 		this.quantity = quantity;
 		this.fee = fee;
@@ -23,6 +24,7 @@ public class TradeHistory {
 		this.sellerOrderTime = sellerOrderTime;
 		this.buyerUserNo = buyerUserNo;
 		this.buyerOrderTime = buyerOrderTime;
+		this.tokenNo = tokenNo;
 		this.tokenCode = tokenCode;
 	}
 
@@ -88,6 +90,14 @@ public class TradeHistory {
 
 	public void setBuyerOrderTime(Timestamp buyerOrderTime) {
 		this.buyerOrderTime = buyerOrderTime;
+	}
+
+	public Long getTokenNo() {
+		return tokenNo;
+	}
+
+	public void setTokenNo(Long tokenNo) {
+		this.tokenNo = tokenNo;
 	}
 
 	public String getTokenCode() {
