@@ -25,7 +25,7 @@ public class OrderRepository {
     private static final String REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX = "SELL_VOLUME_BOOK:";
     private static final String REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX = "BUY_ORDER_SUMMARY_LIST:";
     private static final String REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX = "SELL_ORDER_SUMMARY_LIST:";
-    private static final String REDIS_USER_ORDER_LIST_PREFIX = "USER_ORDER_BOOK:";
+    private static final String REDIS_USER_ORDER_LIST_PREFIX = "USER_ORDER_LIST:";
 
     @Autowired
     public OrderRepository(RedissonClient redissonClient) {
@@ -36,15 +36,42 @@ public class OrderRepository {
     /* --- Token Redis Structure Initiate Methods --- */
     ////////////////////////////////////////////////////
 
-    
+    // Total volume, user order list should be generated at token launch.
+    // Volume book and order book are managed dynamically.
+
+    public void newTotalVolume(Long tokenNo) {
+        // Generate total volume RBucket.
+        final Double INITIAL_VOLUME = 0.0;
+        RBucket<Double> buyTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_BUY_TOTAL_VOLUME_PREFIX + tokenNo);
+        buyTotalVolumeRBucket.setIfAbsent(INITIAL_VOLUME);
+        RBucket<Double> sellTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_SELL_TOTAL_VOLUME_PREFIX + tokenNo);
+        sellTotalVolumeRBucket.setIfAbsent(INITIAL_VOLUME);
+    }
+
+    public void newUserOrderList(Long userNo, Long tokenNo) {
+        // Get order book RMap.
+        RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
+        // Generate user token order map RMap.
+        RMap<Long, Order> userOrderMap = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo + ":" + tokenNo);
+        userOrderList.fastPut(tokenNo, userOrderMap);
+    }
+
+    public void newUserOrderList(Long userNo, List<Long> tokenNoList) {
+        // Get order book RMap.
+        RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
+        // Generate user token order map RMap.
+        for (long tokenNo: tokenNoList) {
+            RMap<Long, Order> userOrderMap = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo + ":" + tokenNo);
+            userOrderList.fastPut(tokenNo, userOrderMap);
+        }
+    }
 
     /////////////////////////////////////
     /* --- User Order List Methods --- */
     /////////////////////////////////////
 
     public List<OrderDTO> findAllOrder(Long userNo, Long tokenNo, String code) {
-        RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
-        RMap<Long, Order> userOrderMap = userOrderList.get(tokenNo);
+        RMap<Long, Order> userOrderMap = getUserOrderMap(userNo, tokenNo);
         List<OrderDTO> orderDTOList = new ArrayList<>();
         userOrderMap.forEach((orderKey, orderValue)->{
             orderDTOList.add(new OrderDTO(orderKey, userNo, tokenNo, code, orderValue.getPrice(), orderValue.getQuantity(), orderValue.getRemain(), orderValue.getOrderTime(), orderValue.getSellBuyFlag()));
