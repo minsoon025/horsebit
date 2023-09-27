@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.a406.horsebit.domain.Bookmark;
 import com.a406.horsebit.domain.Possess;
+import com.a406.horsebit.domain.redis.Price;
 import com.a406.horsebit.dto.PriceDTO;
 import com.a406.horsebit.dto.PriceRateOfChangeDTO;
 import com.a406.horsebit.dto.TokenDTO;
+import com.a406.horsebit.dto.VolumeDTO;
 import com.a406.horsebit.repository.PossessRepository;
 import com.a406.horsebit.repository.TokenRepository;
+import com.a406.horsebit.repository.redis.PriceRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,14 +24,16 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenServiceImpl implements TokenService {
 	private final TokenRepository tokenRepository;
 	private final PossessRepository possessRepository;
+	private final PriceRepository priceRepository;
 	private final PriceService priceService;
 
 	private final Long KRW_NO = 11L;
 
 	@Autowired
-	public TokenServiceImpl(TokenRepository tokenRepository, PossessRepository possessRepository, PriceService priceService) {
+	public TokenServiceImpl(TokenRepository tokenRepository, PossessRepository possessRepository, PriceRepository priceRepository, PriceService priceService) {
 		this.tokenRepository = tokenRepository;
 		this.possessRepository = possessRepository;
+		this.priceRepository = priceRepository;
 		this.priceService = priceService;
 	}
 
@@ -82,5 +87,26 @@ public class TokenServiceImpl implements TokenService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public TokenDTO findTokenDetail(Long tokenNo) {
+		TokenDTO token = findOneToken(tokenNo);
+		double rPrice = priceService.getCurrentPrice(tokenNo).getPrice();
+		double rRate = priceService.getPriceOfRate(tokenNo).getPriceRateOfChange();
+		rRate = Math.round(rRate * 1000) / 1000.0;
+		double sPrice = priceRepository.findStartPrice(tokenNo).getPrice();
+
+		token.setCurrentPrice(rPrice);
+		token.setPriceRateOfChange(rRate);
+		token.setPriceOfChange(rPrice-sPrice);
+
+		return token;
+	}
+
+	@Override
+	public List<VolumeDTO> findTokenVolumes(Long tokenNo) {
+		//TODO: redis 완료 후 호출 예정
+		return null;
 	}
 }
