@@ -72,8 +72,14 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ): Call<ArrayList<Token>>
 
+    // 보유 코인 목록 조회
+    @GET("/api/exchange/tokens/possess")
+    fun holding(
+        @Header("Authorization") authorization: String,
+    ): Call<ArrayList<Token>>
+
     // 즐겨찾기 코인 목록 조회
-    @GET("/api/exchange/favorites")
+    @GET("/api/exchange/tokens/favorites")
     fun favorites(
         @Header("Authorization") authorization: String,
     ): Call<ArrayList<Token>>

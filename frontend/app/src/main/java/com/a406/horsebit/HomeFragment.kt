@@ -239,7 +239,40 @@ class HomeFragment : Fragment() {
                 })
             }
             2 -> {
+                api.holding(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+                    override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
+                        if(response.code() == 200) {    // 200 Success
+                            Log.d("로그", "보유 코인 목록 조회: 200 Success")
 
+                            val responseBody = response.body()
+
+                            if(responseBody != null) {
+                                for(token in responseBody) {
+                                    val tokenShow = TokenShow(token.tokenNo, token.name, token.code, token.currentPrice, token.priceRateOfChange, token.volume, token.newFlag, false)
+                                    tokenShowList.add(tokenShow)
+                                }
+                            }
+                            // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+                            binding.rvAssetTable.adapter = assetTableItemAdapter
+                        }
+                        else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                            Log.d("로그", "보유 코인 목록 조회: 400 Bad Request")
+                        }
+                        else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                            Log.d("로그", "보유 코인 목록 조회: 401 Unauthorized")
+                        }
+                        else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                            Log.d("로그", "보유 코인 목록 조회: 403 Forbidden")
+                        }
+                        else if(response.code() == 404) {   // 404 Not Found
+                            Log.d("로그", "보유 코인 목록 조회: 404 Not Found")
+                        }
+                    }
+                    override fun onFailure(call: Call<ArrayList<Token>>, t: Throwable) {
+                        Log.d("로그", "보유 코인 목록 조회: onFailure")
+                    }
+                })
             }
         }
     }
