@@ -66,11 +66,15 @@ public class TokenServiceImpl implements TokenService {
 			return null;
 		}
 
+		//TODO: 소수점 3자리 Common으로 빼기
 		int ind = 0;
 		for(Long tokenNo : tokensNo) {
 			TokenDTO token = findOneToken(tokenNo);
 			token.setCurrentPrice(rPrices.get(ind).getPrice());
-			token.setPriceRateOfChange(rRates.get(ind).getPriceRateOfChange());
+
+			double rRate = rRates.get(ind).getPriceRateOfChange();
+			rRate = Math.round(rRate * 1000) / 1000.0;
+			token.setPriceRateOfChange(rRate);
 			token.setVolume(orderRepository.findTradeTotalVolume(tokenNo));
 			ind++;
 
@@ -96,10 +100,10 @@ public class TokenServiceImpl implements TokenService {
 	@Override
 	public TokenDTO findTokenDetail(Long tokenNo) {
 		TokenDTO token = findOneToken(tokenNo);
-		double rPrice = priceService.getCurrentPrice(tokenNo).getPrice();
+		long rPrice = priceService.getCurrentPrice(tokenNo).getPrice();
 		double rRate = priceService.getPriceOfRate(tokenNo).getPriceRateOfChange();
 		rRate = Math.round(rRate * 1000) / 1000.0;
-		double sPrice = priceRepository.findStartPrice(tokenNo).getPrice();
+		long sPrice = priceRepository.findStartPrice(tokenNo).getPrice();
 
 		token.setCurrentPrice(rPrice);
 		token.setPriceRateOfChange(rRate);

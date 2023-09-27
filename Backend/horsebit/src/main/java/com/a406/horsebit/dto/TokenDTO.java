@@ -4,10 +4,10 @@ public class TokenDTO {
 	private Long tokenNo;
 	private String name;
 	private String code;
-	private double currentPrice;
+	private long currentPrice;
 	private double priceRateOfChange;
 	private double volume;
-	private double priceOfChange;
+	private long priceOfChange;
 	private Boolean newFlag;
 
 	public TokenDTO(Long tokenNo, String name, String code, Boolean newFlag) {
@@ -41,11 +41,11 @@ public class TokenDTO {
 		this.code = code;
 	}
 
-	public double getCurrentPrice() {
+	public long getCurrentPrice() {
 		return currentPrice;
 	}
 
-	public void setCurrentPrice(double currentPrice) {
+	public void setCurrentPrice(long currentPrice) {
 		this.currentPrice = currentPrice;
 	}
 
@@ -65,11 +65,11 @@ public class TokenDTO {
 		this.volume = volume;
 	}
 
-	public double getPriceOfChange() {
+	public long getPriceOfChange() {
 		return priceOfChange;
 	}
 
-	public void setPriceOfChange(double priceOfChange) {
+	public void setPriceOfChange(long priceOfChange) {
 		this.priceOfChange = priceOfChange;
 	}
 
