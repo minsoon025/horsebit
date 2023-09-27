@@ -1,5 +1,6 @@
 package com.a406.horsebit
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -43,6 +44,18 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
             binding.tvIExFee.text = exchange.fee
             binding.tvIExRealMoney.text = exchange.amount
             binding.tvIExOrderTime2.text = exchange.orderTime ?: "-"
+            binding.lihIExBar2.setOnClickListener {
+
+                val intent = Intent(binding.root.context, OrderActivity::class.java)
+//                intent.putExtra("assetName", assetItem.name)
+//                intent.putExtra("assetTicker", assetItem.code)
+//                intent.putExtra("currentPrice", assetItem.currentPrice.toString())
+//                intent.putExtra("yesterdayPrice", assetItem.priceRateOfChange.toString())
+                binding.root.context.startActivity(intent)
+            }
+
+
+
         }
 
         // 볼드 텍스트를 적용하는 함수
