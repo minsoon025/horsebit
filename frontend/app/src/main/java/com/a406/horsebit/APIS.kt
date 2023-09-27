@@ -10,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
+import java.util.Date
 
 interface APIS {
 
@@ -26,8 +27,6 @@ interface APIS {
         @Header("Authorization") authorization: String,
     )
     // 닉네임 중복체크
-
-    // 미체결 내역 조회
 
     // 마이페이지 총 자산 불러오기
     @GET("/api/assets")
@@ -74,17 +73,29 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ): Call<ArrayList<Token>>
 
-    @POST("/api/exchange/favorites/{tokenNo}")
+    // 즐겨찾기 추가
+    @POST("/api/exchange/tokens/favorites/{tokenNo}")
     fun addFavorite(
         @Path("tokenNo") tokenNo: Long,
         @Header("Authorization") authorization: String,
     ): Call<FavoriteResponseBodyModel>
 
-    @DELETE("/api/exchange/favorites/{tokenNo}")
+    // 즐겨찾기 삭제
+    @DELETE("/api/exchange/tokens/favorites/{tokenNo}")
     fun deleteFavorite(
         @Path("tokenNo") tokenNo: Long,
         @Header("Authorization") authorization: String,
     ): Call<FavoriteResponseBodyModel>
+
+    // 캔들 차트 조회
+    @GET("/api/exchange/tokens/{tokenNo}/chart?quantity={quantity}&endTime={endTime}&candleTypeIndex={candleTypeIndex}&margin={margin}")
+    fun candleChartData(
+        @Path("tokenNo") tokenNo: Long,
+        @Path("quantity") quantity: Long,
+        @Path("endTime") endTime: Date,
+        @Path("candleTypeIndex") candleTypeIndex: Int,
+        @Path("margin") margin: Long
+    ): Call<ArrayList<CandleChartDataResponseBodyBodyModel>>
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"

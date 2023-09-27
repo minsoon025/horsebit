@@ -85,7 +85,6 @@ class OrderTransactionHistoryTabFragment : Fragment() {
                     }
                     override fun onFailure(call: Call<ArrayList<NotConcludedResponseBodyOrderModel>>, t: Throwable) {
                         Log.d("로그", "미체결 내역 조회: onFailure")
-                        Log.d("로그", t.toString())
                     }
                 })
             }

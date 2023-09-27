@@ -66,7 +66,18 @@ data class Order(
     val trend: Double,
 )
 
-
+// ExchangeData.kt
+data class ExchangeData(
+    val orderTime: String,
+    val coinName: String,
+    val type: String,
+    val seep: String,
+    val one: String,
+    val money: String,
+    val fee: String,
+    val realMoney: String,
+    val orderTime2: String
+)
 
 // 입출금 토큰 만들기
 data class ExchangeDataResponseBodyModel(
@@ -82,7 +93,14 @@ data class ExchangeDataResponseBodyModel(
 
 )
 
-
+data class CandleChartDataResponseBodyBodyModel(
+    val startTime: Date, // 시간
+    val open: Long, // 시가
+    val close: Long, // 종가
+    val high: Long, // 고가
+    val low: Long, // 저가
+    val volume: Double, // 거래량
+)
 
 
 

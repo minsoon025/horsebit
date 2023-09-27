@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Half.toFloat
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +21,15 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.Date
 
 class StockChartFragment : Fragment() {
 
     private lateinit var binding: FragmentStockChartBinding
+    val api = APIS.create()
 
     val candleChartData = arrayListOf(
         CandleShow(0, 1.2f, 1.8f, 1.1f, 1.9f),
@@ -56,6 +62,36 @@ class StockChartFragment : Fragment() {
         binding = FragmentStockChartBinding.bind(view)
 
         initChart()
+
+
+
+        api.candleChartData(tokenNo = 1L, quantity = 1L, endTime = Date(), candleTypeIndex = 2, margin = 3L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
+            override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
+                if(response.code() == 200) {    // 200 Success
+                    Log.d("로그", "차트 캔들 조회: 200 Success")
+
+                    val responseBody = response.body()
+
+                    Log.d("fsadfdasfads", responseBody.toString())
+
+                }
+                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                    Log.d("로그", "차트 캔들 조회: 400 Bad Request")
+                }
+                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                    Log.d("로그", "차트 캔들 조회: 401 Unauthorized")
+                }
+                else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                    Log.d("로그", "차트 캔들 조회: 404 Not Found")
+                }
+                else if(response.code() == 404) {   // 404 Not Found
+                    Log.d("로그", "차트 캔들 조회: 404 Not Found")
+                }
+            }
+            override fun onFailure(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, t: Throwable) {
+                Log.d("로그", "차트 캔들 조회: onFailure")
+            }
+        })
 
         setChartData(candleChartData, valueListData)
 
