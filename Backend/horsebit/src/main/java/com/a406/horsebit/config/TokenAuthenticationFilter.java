@@ -20,7 +20,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
     private final static String HEADER_AUTHORIZATION = "Authorization";
-    private final static String TOKEN_PREFIX = "Bearer";
+    private final static String TOKEN_PREFIX = "Bearer ";
 
 //    @Override
 //    protected void doFilterInternal(HttpServletRequest request,
@@ -45,7 +45,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Authentication authentication = null;
 
         try {
-            log.debug("authenticationHeaderValue: {}", request.getHeader(HEADER_AUTHORIZATION));
+            log.info("필터 시작");
+//            log.debug("authenticationHeaderValue: {}", request.getHeader(HEADER_AUTHORIZATION));
             String token = resolveToken(request.getHeader(HEADER_AUTHORIZATION));
             authentication = tokenProvider.getAuthentication(token);
 
@@ -60,11 +61,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String resolveToken(String authorizationHeaderValue) {
-        if (!authorizationHeaderValue.startsWith(HEADER_AUTHORIZATION)) {
+        log.info(authorizationHeaderValue);
+        if (!authorizationHeaderValue.startsWith(TOKEN_PREFIX)) {
             throw new IllegalArgumentException("유효하지 않은 Authorization header value 입니다.");
         }
 
-        return authorizationHeaderValue.substring(HEADER_AUTHORIZATION.length());
+        return authorizationHeaderValue.substring(TOKEN_PREFIX.length());
     }
 
     private String getAccessToken(String authorizationHeader){

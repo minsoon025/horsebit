@@ -2,6 +2,8 @@ package com.a406.horsebit.config.jwt;
 
 import com.a406.horsebit.domain.User;
 import com.a406.horsebit.repository.UserRepository;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -26,6 +28,7 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -140,10 +143,10 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String token) throws ParseException, JOSEException {
         SignedJWT signedJWT = (SignedJWT) parseAccessToken(token);
-        Long id = signedJWT.getJWTClaimsSet().getLongClaim("id");
+        String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
 
         // AuthenticationManager 거치지 않고 Authentication 진행
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("토큰에 맞는 사용자정보가 없습니다."));
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("토큰에 맞는 사용자정보가 없습니다."));
 
         // 현재 권한은 하나만 부여가능
         Collection<? extends GrantedAuthority> authorities = List.of(
@@ -198,26 +201,63 @@ public class TokenProvider {
     }
 
 
-    public void validateJwtWithJwk(String token, String jwkStr) throws JOSEException, ParseException {
+//    public void validateJwtWithJwk(String token, String jwkStr) throws JOSEException, ParseException {
+////        try {
+////            log.debug("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token, jwkStr);
+////
+////            SignedJWT signedJWT = SignedJWT.parse(token);
+////            log.debug("검증 대상 토큰의 Calims signedJWT: {}", signedJWT.getJWTClaimsSet().toString());
+////            JWKSelector jwkSelector = new JWKSelector(JWKMatcher.forJWSHeader(signedJWT.getHeader()));
+////
+////            log.debug("JWK String을 파싱...");
+////            JWKSet jwkSet = JWKSet.parse(jwkStr);
+////            log.debug("JWK String 파싱 결과 jwkSet: {}", jwkSet.getKeys());
+////            JWK jwk = jwkSelector.select(jwkSet).get(0);
+////
+////            PublicKey publicKey = jwk.toRSAKey().toPublicKey();
+////
+////            RSASSAVerifier verifier = new RSASSAVerifier((RSAPublicKey) publicKey);
+////
+////            if (!signedJWT.verify(verifier)) {
+////                throw new IllegalArgumentException("ID Token이 유효하지 않습니다.");
+////            }
+////
+////            JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
+////            if (!(jwtClaimsSet.getStringClaim("iss").equals("https://accounts.google.com") || jwtClaimsSet.getStringClaim("aud").equals("423467642364-p8mlbskkjht9t5dptd2odmosrb2g47ta.apps.googleusercontent.com"))) {
+////                throw new IllegalArgumentException(("idToken의 iss 혹은 aud가 일치하지 않습니다."));
+////            }
+////
+////            if (jwtClaimsSet.getExpirationTime().before(new Date())) {
+////                log.info("만료시각을 검증중... now: {}, exp: {}", new Date(), jwtClaimsSet.getExpirationTime());
+////                throw new IllegalArgumentException("idToken이 만료되었습니다.");
+////            }
+////        } catch (JOSEException | ParseException e) {
+////            throw new IllegalArgumentException("id Token이 유효하지 않습니다. " + e.getMessage());
+////        }
+////
+////    }
+
+
+    public void validateJwtWithJwk(String token) throws JOSEException, ParseException {
         try {
-            log.debug("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token, jwkStr);
+            log.info("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token);
 
             SignedJWT signedJWT = SignedJWT.parse(token);
             log.debug("검증 대상 토큰의 Calims signedJWT: {}", signedJWT.getJWTClaimsSet().toString());
             JWKSelector jwkSelector = new JWKSelector(JWKMatcher.forJWSHeader(signedJWT.getHeader()));
 
-            log.debug("JWK String을 파싱...");
-            JWKSet jwkSet = JWKSet.parse(jwkStr);
-            log.debug("JWK String 파싱 결과 jwkSet: {}", jwkSet.getKeys());
-            JWK jwk = jwkSelector.select(jwkSet).get(0);
+//            log.debug("JWK String을 파싱...");
+//            JWKSet jwkSet = JWKSet.parse(jwkStr);
+//            log.debug("JWK String 파싱 결과 jwkSet: {}", jwkSet.getKeys());
+//            JWK jwk = jwkSelector.select(jwkSet).get(0);
 
-            PublicKey publicKey = jwk.toRSAKey().toPublicKey();
+//            PublicKey publicKey = jwk.toRSAKey().toPublicKey();
 
-            RSASSAVerifier verifier = new RSASSAVerifier((RSAPublicKey) publicKey);
-
-            if (!signedJWT.verify(verifier)) {
-                throw new IllegalArgumentException("ID Token이 유효하지 않습니다.");
-            }
+//            RSASSAVerifier verifier = new RSASSAVerifier((RSAPublicKey) publicKey);
+//
+//            if (!signedJWT.verify(verifier)) {
+//                throw new IllegalArgumentException("ID Token이 유효하지 않습니다.");
+//            }
 
             JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
             if (!(jwtClaimsSet.getStringClaim("iss").equals("https://accounts.google.com") || jwtClaimsSet.getStringClaim("aud").equals("423467642364-p8mlbskkjht9t5dptd2odmosrb2g47ta.apps.googleusercontent.com"))) {
@@ -228,29 +268,32 @@ public class TokenProvider {
                 log.info("만료시각을 검증중... now: {}, exp: {}", new Date(), jwtClaimsSet.getExpirationTime());
                 throw new IllegalArgumentException("idToken이 만료되었습니다.");
             }
-        } catch (JOSEException | ParseException e) {
+        } catch (ParseException e) {
             throw new IllegalArgumentException("id Token이 유효하지 않습니다. " + e.getMessage());
         }
 
     }
-
 
     public Object parseAccessToken(String token) {
         SignedJWT signedJWT = null;
         try {
             signedJWT = SignedJWT.parse(token);
             JWSVerifier verifier = new MACVerifier(sharedSecret);
+//            RSVerifier verifier = new RSVerifier(publicKey);
+            log.info(signedJWT.toString());
+            log.info(verifier.supportedJWSAlgorithms().toString());
 
             if (!signedJWT.verify(verifier)) {
                 throw new IllegalArgumentException("Access 토큰이 유효하지 않습니다.");
             }
-
+            log.info(signedJWT.toString());
+;
             if (signedJWT.getJWTClaimsSet().getExpirationTime().before(new Date())) {
                 throw new IllegalArgumentException("Access 토큰이 만료되었습니다.");
             }
 
         } catch (ParseException | JOSEException e) {
-            throw new IllegalArgumentException("Refresh 토큰이 유효하지 않습니다.");
+            throw new IllegalArgumentException("Refresh 토큰이 유효하지 않습니다." + e.getMessage());
         }
 
         return signedJWT;
@@ -275,6 +318,25 @@ public class TokenProvider {
 
 
         return signedJWT;
+    }
+
+
+    //성민 테스트 메서드 제작
+    public String extractEmailTest(String token) {
+        String[] parts = token.split("\\.");
+
+        if (parts.length == 3) {
+            try {
+                String payload = new String(Base64.getDecoder().decode(parts[1]));
+                JsonObject payloadJson = new JsonParser().parse(payload).getAsJsonObject();
+                String email = payloadJson.get("email").getAsString();
+                return email;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
 
 }
