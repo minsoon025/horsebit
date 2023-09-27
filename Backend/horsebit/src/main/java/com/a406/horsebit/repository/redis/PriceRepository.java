@@ -14,41 +14,67 @@ import java.util.List;
 @Repository
 public class PriceRepository {
     private final RedissonClient redissonClient;
-    private String CURRENT_PRICE_PREFIX = "CURRENT_PRICE:";
-    private String START_PRICE_PREFIX = "START_PRICE:";
+    private static final String CURRENT_PRICE_PREFIX = "CURRENT_PRICE:";
+    private static final String START_PRICE_PREFIX = "START_PRICE:";
 
     @Autowired
     public PriceRepository(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 
-    public PriceDTO findOneCurrentPriceByTokenNo(Long tokenNo) {
-        RBucket<Long> currentPrice = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
-        currentPrice.setIfAbsent(1L);
-        return new PriceDTO(currentPrice.get());
+    ////////////////////////////////////////////////////
+    /* --- Token Redis Structure Initiate Methods --- */
+    ////////////////////////////////////////////////////
+
+    public Boolean newCurrentPrice(Long tokenNo) {
+        RBucket<Long> currentPriceRBucket = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
+        return currentPriceRBucket.setIfAbsent(1L);
     }
 
-    public List<PriceDTO> findAllCurrentPriceByTokenNo(List<Long> tokenNoList) {
+    public Boolean newStartPrice(Long tokenNo) {
+        RBucket<Long> startPriceRBucket = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
+        return startPriceRBucket.setIfAbsent(1L);
+    }
+
+    ///////////////////////////
+    /* --- Price Methods --- */
+    ///////////////////////////
+
+    public PriceDTO findCurrentPrice(Long tokenNo) {
+        RBucket<Long> currentPriceRBucket = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
+        return new PriceDTO(currentPriceRBucket.get());
+    }
+
+    public List<PriceDTO> findCurrentPrice(List<Long> tokenNoList) {
         List<PriceDTO> priceDTOList = new ArrayList<>(tokenNoList.size());
         int index = 0;
         for (Long tokenNo: tokenNoList) {
-            priceDTOList.add(findOneCurrentPriceByTokenNo(tokenNo));
+            priceDTOList.add(findCurrentPrice(tokenNo));
         }
         return priceDTOList;
     }
 
-    public PriceDTO findOneStartPriceByTokenNo(Long tokenNo) {
-        RBucket<Long> startPrice = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
-        startPrice.setIfAbsent(1L);
-        return new PriceDTO(startPrice.get());
+    public PriceDTO findStartPrice(Long tokenNo) {
+        RBucket<Long> startPriceRBucket = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
+        return new PriceDTO(startPriceRBucket.get());
     }
 
-    public List<PriceDTO> findAllStartPriceByTokenNo(List<Long> tokenNoList) {
+    public List<PriceDTO> findStartPrice(List<Long> tokenNoList) {
         List<PriceDTO> priceDTOList = new ArrayList<>(tokenNoList.size());
         int index = 0;
         for (Long tokenNo: tokenNoList) {
-            priceDTOList.add(findOneStartPriceByTokenNo(tokenNo));
+            priceDTOList.add(findStartPrice(tokenNo));
         }
         return priceDTOList;
+    }
+
+    public void saveCurrentPrice(Long tokenNo, Long currentPrice) {
+        RBucket<Long> currentPriceRBucket = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
+        currentPriceRBucket.set(currentPrice);
+    }
+
+    public void saveStartPrice(Long tokenNo, Long startPrice) {
+        RBucket<Long> startPriceRBucket = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
+        startPriceRBucket.set(startPrice);
     }
 }

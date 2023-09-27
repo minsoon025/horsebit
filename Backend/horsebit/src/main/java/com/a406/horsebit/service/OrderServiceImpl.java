@@ -24,6 +24,6 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderDTO> getOrders(Long userNo, Long tokenNo) {
 		log.info("OrderServiceImpl::getOrders() START");
-		return orderRepository.findAllByUserNoAndTokenNoAndCode(userNo, tokenNo, "A");
+		return orderRepository.findAllOrder(userNo, tokenNo, "A");
 	}
 }
