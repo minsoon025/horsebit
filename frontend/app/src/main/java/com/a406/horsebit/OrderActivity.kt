@@ -26,7 +26,7 @@ class OrderActivity : AppCompatActivity() {
         binding.hsvTitle.isHorizontalScrollBarEnabled = false
 
         tokenNo = intent.getLongExtra("tokenNo", 0)
-        Log.d("dddddd", tokenNo.toString())
+        Log.d("!!!!!!!!!", tokenNo.toString())
 
         api.tokenListDetail(tokenNo = tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<TokenListDetailResponseBodyModel> {
             override fun onResponse(call: Call<TokenListDetailResponseBodyModel>, response: Response<TokenListDetailResponseBodyModel>) {

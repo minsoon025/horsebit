@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.APIS
 import com.a406.horsebit.ExchangeDataResponseBodyModel
 import com.a406.horsebit.ExchangeTableAdapter
+import com.a406.horsebit.MyTotalAssetResponseBodyModel
 import com.a406.horsebit.R
 import com.a406.horsebit.databinding.FragmentExchangeBinding
 import retrofit2.Call
@@ -92,6 +93,7 @@ class ExchangeFragment : Fragment() {
         // 데이터 생성
         val newData = ExchangeDataResponseBodyModel(
             executionTime = "채결시간",
+            tokenNo = 1,
             code = "코인명",
             transactionType = "종류",
             volume = "거래수량",
@@ -151,6 +153,43 @@ class ExchangeFragment : Fragment() {
                 Log.d("ddddd", t.toString())
             }
         })
+
+        //보유 krw API
+        api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object : Callback<MyTotalAssetResponseBodyModel> {
+            override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
+                if (response.code() == 200) {    // 200 Success
+                    Log.d("로그", "내 자산 전체 조회: 200 Success")
+
+                    val responseBody = response.body()
+
+                    if (responseBody != null) {
+                        // totalAssetList에서 총 자산 값 가져오기
+                        val cashBalanceValue = responseBody.cashBalance
+
+
+                        // TextView에 총 자산 값 설정
+                        binding.tvMyKrw.text = cashBalanceValue.toString()
+                    }
+                }
+                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                    Log.d("로그", "내 자산 전체 조회: 400 Bad Request")
+                }
+                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                    Log.d("로그", "내 자산 전체 조회: 401 Unauthorized")
+                }
+                else if(response.code() == 403) {
+                    Log.d("로그", "내 자산 전체 조회: 403 Forbidden")
+                }
+                else if(response.code() == 404) {   // 404 Not Found
+                    Log.d("로그", "내 자산 전체 조회: 404 Not Found")
+                }
+            }
+            override fun onFailure(call: Call<MyTotalAssetResponseBodyModel>, t: Throwable) {
+                Log.d("로그", "내 자산 전체 조회: onFailure")
+
+            }
+        })
+
 
 
         // 입출금 팝업 뜨는 곳

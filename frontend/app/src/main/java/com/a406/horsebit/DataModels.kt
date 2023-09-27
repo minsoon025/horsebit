@@ -83,6 +83,7 @@ data class ExchangeData(
 // 입출금 토큰 만들기
 data class ExchangeDataResponseBodyModel(
     val executionTime: String, //체결시간
+    val tokenNo: Long, //토큰번호
     val code: String, //토큰코드
     val transactionType: String, //종류
     val volume: String, //거래수량

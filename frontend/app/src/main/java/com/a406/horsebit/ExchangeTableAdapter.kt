@@ -11,6 +11,7 @@ import com.a406.horsebit.databinding.ExchangeItemBinding
 
 class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBodyModel>) : RecyclerView.Adapter<ExchangeTableAdapter.CustomViewHolder>() {
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExchangeTableAdapter.CustomViewHolder {
         val binding = ExchangeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CustomViewHolder(binding)
@@ -32,7 +33,7 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
         }
     }
 
-    class CustomViewHolder(private val binding: ExchangeItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CustomViewHolder(private val binding: ExchangeItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(exchange: ExchangeDataResponseBodyModel) {
             binding.tvIExOrderTime.text = exchange.executionTime ?: "-"
@@ -44,14 +45,16 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
             binding.tvIExFee.text = exchange.fee
             binding.tvIExRealMoney.text = exchange.amount
             binding.tvIExOrderTime2.text = exchange.orderTime ?: "-"
-            binding.lihIExBar2.setOnClickListener {
 
-                val intent = Intent(binding.root.context, OrderActivity::class.java)
-//                intent.putExtra("assetName", assetItem.name)
-//                intent.putExtra("assetTicker", assetItem.code)
-//                intent.putExtra("currentPrice", assetItem.currentPrice.toString())
-//                intent.putExtra("yesterdayPrice", assetItem.priceRateOfChange.toString())
-                binding.root.context.startActivity(intent)
+
+            binding.lihIExBar2.setOnClickListener {
+                    val curPos: Int = adapterPosition
+                val exchangeList: ExchangeDataResponseBodyModel = exchangItemList.get(curPos)
+                if (exchangeList.tokenNo.toInt() != 0) {
+                    val intent = Intent(binding.root.context, OrderActivity::class.java)
+                    intent.putExtra("tokenNo", exchangeList.tokenNo)
+                    binding.root.context.startActivity(intent)
+                }
             }
 
 

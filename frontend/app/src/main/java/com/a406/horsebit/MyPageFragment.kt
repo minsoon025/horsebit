@@ -25,9 +25,6 @@ class MyPageFragment : Fragment() {
     var myassetList: ArrayList<MyAssetResponseBodyModel> = ArrayList()
 
 
-
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
         // 데이터 바인딩 초기화
