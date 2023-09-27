@@ -1,5 +1,6 @@
 package com.a406.horsebit
 
+import java.time.LocalDateTime
 import java.util.Date
 
 // 미체결 내역 조회
@@ -90,11 +91,10 @@ data class ExchangeDataResponseBodyModel(
     val fee: String, //수수료
     val amount: String, //정산금액
     val orderTime: String, //주문시간
-
 )
 
 data class CandleChartDataResponseBodyBodyModel(
-    val startTime: Date, // 시간
+    val startTime: String, // 시간
     val open: Long, // 시가
     val close: Long, // 종가
     val high: Long, // 고가
@@ -102,14 +102,17 @@ data class CandleChartDataResponseBodyBodyModel(
     val volume: Double, // 거래량
 )
 
-
-
 data class CandleShow(
-    val createdAt: Long,
+    val x: Float,
+    val shadowH: Float,
+    val shadowL: Float,
     val open: Float,
     val close: Float,
-    val shadowHigh: Float,
-    val shadowLow: Float
+)
+
+data class BarShow(
+    val x: Float,
+    val value: Float,
 )
 
 // 마이페이지 코인 component

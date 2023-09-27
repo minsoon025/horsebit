@@ -88,7 +88,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
     inner class CustomViewHolder(private val binding: AssetTableItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tokenShow: TokenShow) {
             initChart()
-            setChartData(CandleShow(0, 0f, if(tokenShow.priceRateOfChange.toFloat() > 20f) 20f else if(tokenShow.priceRateOfChange.toFloat() < -20f) -20f else tokenShow.priceRateOfChange.toFloat(), 20f, -20f))
+            setChartData(CandleShow(0F, 20F, -20F,0F, if(tokenShow.priceRateOfChange.toFloat() > 20F) 20F else if(tokenShow.priceRateOfChange.toFloat() < -20F) -20F else tokenShow.priceRateOfChange.toFloat(),))
 
             binding.tvItemAssetName.text = tokenShow.name
             binding.tvItemAssetTicker.text = tokenShow.code
@@ -220,9 +220,9 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
 
             priceEntries.add(
                 CandleEntry(
-                    candle.createdAt.toFloat(),
-                    candle.shadowHigh,
-                    candle.shadowLow,
+                    candle.x,
+                    candle.shadowH,
+                    candle.shadowL,
                     candle.open,
                     candle.close
                 )
