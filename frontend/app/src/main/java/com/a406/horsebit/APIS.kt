@@ -10,7 +10,10 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 import java.util.Date
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 interface APIS {
 
@@ -88,13 +91,13 @@ interface APIS {
     ): Call<FavoriteResponseBodyModel>
 
     // 캔들 차트 조회
-    @GET("/api/exchange/tokens/{tokenNo}/chart?quantity={quantity}&endTime={endTime}&candleTypeIndex={candleTypeIndex}&margin={margin}")
+    @GET("/api/exchange/tokens/{tokenNo}/chart")
     fun candleChartData(
         @Path("tokenNo") tokenNo: Long,
-        @Path("quantity") quantity: Long,
-        @Path("endTime") endTime: Date,
-        @Path("candleTypeIndex") candleTypeIndex: Int,
-        @Path("margin") margin: Long
+        @Query("quantity") quantity: Long,
+        @Query("endTime") endTime: LocalDateTime,
+        @Query("candleTypeIndex") candleTypeIndex: Int,
+        @Query("margin") margin: Long
     ): Call<ArrayList<CandleChartDataResponseBodyBodyModel>>
 
     companion object {

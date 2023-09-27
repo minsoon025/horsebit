@@ -24,37 +24,18 @@ import com.github.mikephil.charting.data.CandleEntry
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Date
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class StockChartFragment : Fragment() {
 
     private lateinit var binding: FragmentStockChartBinding
     val api = APIS.create()
 
-    val candleChartData = arrayListOf(
-        CandleShow(0, 1.2f, 1.8f, 1.1f, 1.9f),
-        CandleShow(1, 1.8f, 2.2f, 1.6f, 2.1f),
-        CandleShow(2, 2.2f, 1.2f, 1.1f, 2.9f),
-        CandleShow(3, 1.3f, 1.7f, 1.2f, 1.8f),
-        CandleShow(4, 1.7f, 2.0f, 1.6f, 2.1f),
-        CandleShow(5, 2.1f, 1.5f, 1.4f, 2.2f),
-        CandleShow(6, 1.4f, 1.9f, 1.3f, 2.0f),
-        CandleShow(7, 1.9f, 2.1f, 1.8f, 2.2f),
-        CandleShow(8, 2.1f, 1.7f, 1.6f, 2.3f),
-        CandleShow(9, 1.7f, 2.0f, 1.6f, 2.2f),
-    )
+    var candleChartData = arrayListOf<CandleShow>()
 
-    val valueListData = arrayListOf(
-        1,
-        5,
-        10,
-        15,
-        12,
-        13,
-        1,
-        2,
-        5,
-    )
+    val barChartData = arrayListOf<BarShow>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_stock_chart, container, false)
@@ -63,16 +44,31 @@ class StockChartFragment : Fragment() {
 
         initChart()
 
+        Log.d("fsadfadsfads",LocalDateTime.now().toString() )
+        val customDateTime = LocalDateTime.of(2023, 9, 26, 16, 0,0, 0)
 
-
-        api.candleChartData(tokenNo = 1L, quantity = 1L, endTime = Date(), candleTypeIndex = 2, margin = 3L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
+        api.candleChartData(tokenNo = 1L, quantity = 100L, endTime = customDateTime, candleTypeIndex = 0, margin = 3L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
             override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
+
+                Log.d("리스빤스", response.code().toString())
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "차트 캔들 조회: 200 Success")
 
                     val responseBody = response.body()
 
-                    Log.d("fsadfdasfads", responseBody.toString())
+                    if(responseBody != null) {
+                        var idx : Float = 0F;
+                        candleChartData = arrayListOf()
+                        for(candleChart in responseBody) {
+                            val candleShow = CandleShow(idx, candleChart.high.toFloat(), candleChart.low.toFloat(), candleChart.open.toFloat(), candleChart.close.toFloat())
+                            val barShow = BarShow(idx, candleChart.volume.toFloat())
+
+                            candleChartData.add(candleShow)
+                            barChartData.add(barShow)
+                            ++idx
+                        }
+                    }
+                    setChartData(candleChartData, barChartData)
 
                 }
                 else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
@@ -92,8 +88,6 @@ class StockChartFragment : Fragment() {
                 Log.d("로그", "차트 캔들 조회: onFailure")
             }
         })
-
-        setChartData(candleChartData, valueListData)
 
         return view
     }
@@ -175,7 +169,7 @@ class StockChartFragment : Fragment() {
         }
     }
 
-    private fun setChartData(candles: ArrayList<CandleShow>, volumes: ArrayList<Int>) {
+    private fun setChartData(candles: ArrayList<CandleShow>, bars: ArrayList<BarShow>) {
 
         // 캔들차트
         val priceEntries = ArrayList<CandleEntry>()
@@ -183,9 +177,9 @@ class StockChartFragment : Fragment() {
             // 캔들 차트 entry 생성
             priceEntries.add(
                 CandleEntry(
-                    candle.createdAt.toFloat(),
-                    candle.shadowHigh,
-                    candle.shadowLow,
+                    candle.x,
+                    candle.shadowH,
+                    candle.shadowL,
                     candle.open,
                     candle.close
                 )
@@ -218,10 +212,12 @@ class StockChartFragment : Fragment() {
 
         // 바 차트
         val volumeEntries = ArrayList<BarEntry>()
-        for(i in 0 until volumes.size) {
+        for (bar in bars) {
+            // 캔들 차트 entry 생성
             volumeEntries.add(
                 BarEntry(
-                    i.toFloat(), volumes[i].toFloat()
+                    bar.x,
+                    bar.value
                 )
             )
         }
