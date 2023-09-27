@@ -21,10 +21,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 @EnableWebSecurity
 public class WebOAuthSecurityConfig {
-    private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
-    private final RefreshTokenRepository refreshTokenRepository;
-    private final UserService userService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -96,20 +93,20 @@ public class WebOAuthSecurityConfig {
     }
 
 
-    @Bean
-    public AuthenticationSuccessHandler oAuth2SuccessHandler() {
-//        return new OAuth2SuccessHandler(tokenProvider,
-//                refreshTokenRepository,
-//                oAuth2AuthorizationRequestBasedOnCookieRepository(),
-//                userService
-//        );
-        return null;
-    }
-
-    @Bean
-    public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter(tokenProvider);
-    }
+//    @Bean
+//    public AuthenticationSuccessHandler oAuth2SuccessHandler() {
+////        return new OAuth2SuccessHandler(tokenProvider,
+////                refreshTokenRepository,
+////                oAuth2AuthorizationRequestBasedOnCookieRepository(),
+////                userService
+////        );
+//        return null;
+//    }
+//
+//    @Bean
+//    public TokenAuthenticationFilter tokenAuthenticationFilter() {
+//        return new TokenAuthenticationFilter(tokenProvider);
+//    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

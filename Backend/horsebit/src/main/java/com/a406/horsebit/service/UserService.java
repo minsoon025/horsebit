@@ -26,6 +26,8 @@ public interface UserService {
     //토큰 정보 전달
     RefreshResponseDTO issueAccessTokenByRefreshToken(RefreshDTO refreshDto);
 
+    //사용자이름(어플에서 사용하는 이름) 중복확인
+    boolean isDuplicatedUserName(String userName);
 
     /**
      * 개인 설정 조회
