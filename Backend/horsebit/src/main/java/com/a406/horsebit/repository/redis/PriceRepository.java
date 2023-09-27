@@ -51,4 +51,14 @@ public class PriceRepository {
         }
         return priceDTOList;
     }
+
+    public void saveCurrentPrice(Long tokenNo, Long currentPrice) {
+        RBucket<Long> currentPriceRBucket = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
+        currentPriceRBucket.set(currentPrice);
+    }
+
+    public void saveStartPrice(Long tokenNo, Long startPrice) {
+        RBucket<Long> startPriceRBucket = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
+        startPriceRBucket.set(startPrice);
+    }
 }
