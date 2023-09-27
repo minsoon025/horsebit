@@ -124,10 +124,9 @@ public class TokenController {
 
 		Long userNo = 1L;
 
-		if(!bookmarkService.findOne(userNo, tokenNo)) {
+		if (!bookmarkService.findOne(userNo, tokenNo)) {
 			obj.addProperty("result", "FAIL");
-		}
-		else {
+		} else {
 			BookmarkPK bookmarkPK = new BookmarkPK();
 			bookmarkPK.setUserNo(userNo);
 			bookmarkPK.setTokenNo(tokenNo);
@@ -136,12 +135,7 @@ public class TokenController {
 			obj.addProperty("result", "SUCCESS");
 		}
 		return obj.toString();
-	
-	// @GetMapping("/{tokenNo}")
-	// public TokenDTO getTokenDetail(@PathVariable Long tokenNo) {
-	// 	log.info("TokenController::getTokenDetail() START");
-	// 	return tokenService.getTokenByTokenNo();
-	// }
+	}
 
 	@GetMapping("/{tokenNo}/chart")
 	public List<CandleDTO> getCandles(@PathVariable("tokenNo") Long tokenNo, @RequestParam("quantity") Long quantity, @RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endTime, @RequestParam("candleTypeIndex") Integer candleTypeIndex, @RequestParam("margin") Long margin) {

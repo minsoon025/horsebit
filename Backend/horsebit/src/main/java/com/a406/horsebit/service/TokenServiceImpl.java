@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.a406.horsebit.domain.Bookmark;
+import com.a406.horsebit.domain.Possess;
 import com.a406.horsebit.dto.PriceDTO;
+import com.a406.horsebit.dto.PriceRateOfChangeDTO;
 import com.a406.horsebit.dto.TokenDTO;
+import com.a406.horsebit.repository.PossessRepository;
 import com.a406.horsebit.repository.TokenRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,41 +20,22 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class TokenServiceImpl implements TokenService {
 	private final TokenRepository tokenRepository;
+	private final PossessRepository possessRepository;
 	private final PriceService priceService;
 
+	private final Long KRW_NO = 11L;
+
 	@Autowired
-	public TokenServiceImpl(TokenRepository tokenRepository, PriceService priceService) {
+	public TokenServiceImpl(TokenRepository tokenRepository, PossessRepository possessRepository, PriceService priceService) {
 		this.tokenRepository = tokenRepository;
+		this.possessRepository = possessRepository;
 		this.priceService = priceService;
-	}
-
-	public List<TokenDTO> setTokenRedisInfos(List<Long> tokens) {
-		log.info("BookmarkServiceImpl::findAll() START");
-		List<TokenDTO> result = new ArrayList<>();
-
-		//
-		// for(TokenDTO token : tokens) {
-		// 	Long tokenNo = token.getTokenNo();
-		// 	TokenDTO cToken = tokenRepository.findTokenByTokenNo(tokenNo);
-		//
-		// 	//2-1)각 token의 실시간 정보 조회(redis)
-		// 	token.setCurrentPrice(priceService.getCurrentPrice(tokenNo).getPrice());
-		// 	token.setPriceRateOfChange(priceService.getPriceOfRate(tokenNo).getPriceRateOfChange());
-		// 	//TODO: redis-api merge 받아와서 repository 함수 활용하여 set하기
-		// 	token.setVolume(2.3);
-		//
-		// 	result.add(token);
-		// }
-
-		log.info("BookmarkServiceImpl::findAll() result : " + result.toString());
-		return result;
 	}
 
 	@Override
 	public List<TokenDTO> findAllTokens() {
-		List<TokenDTO> result = tokenRepository.findAllTokens();
-		List<PriceDTO> prices = priceService.getCurrentPrice();
-		//result = setTokenRedisInfos(result); //TODO: 검토 필요. result를 보내서 다시 result를 받아도 되나?
+		List<Long> tokensNo = tokenRepository.findAllTokenNos();
+		List<TokenDTO> result = findTokens(tokensNo);
 
 		log.debug("TokenServiceImpl::getAllTokens() START" + result.toString());
 		return result;
@@ -65,13 +49,21 @@ public class TokenServiceImpl implements TokenService {
 	public List<TokenDTO> findTokens(List<Long> tokensNo) {
 		log.info("TokenServiceImpl::findTokens() START");
 		List<TokenDTO> result = new ArrayList<>();
-		List<PriceDTO> prices = priceService.getCurrentPrice(tokensNo);
-		//List<>
+		List<PriceDTO> rPrices = priceService.getCurrentPrice(tokensNo);
+		List<PriceRateOfChangeDTO> rRates = priceService.getPriceOfRate(tokensNo);
 
+		if(!(tokensNo.size() == rPrices.size() && tokensNo.size() == rRates.size())) {
+			//TODO: 반환값 바꾸기
+			return null;
+		}
+
+		int ind = 0;
 		for(Long tokenNo : tokensNo) {
 			TokenDTO token = findOneToken(tokenNo);
-
-			//token.set~ (prices[i]);
+			token.setCurrentPrice(rPrices.get(ind).getPrice());
+			token.setPriceRateOfChange(rRates.get(ind).getPriceRateOfChange());
+			token.setVolume(0); //TODO: volume redis 접근 및 반환
+			ind++;
 
 			result.add(token);
 		}
@@ -79,15 +71,16 @@ public class TokenServiceImpl implements TokenService {
 		return result;
 	}
 
-	//TODO: assetService로 뺄지 검토 필요
 	@Override
 	public List<Long> findPossessTokens(Long userNo) {
 		log.info("TokenServiceImpl::findPossessTokens() START");
 		List<Long> result = new ArrayList<>();
-
-		//TODO: asset에서 받아오기
-
-
+		List<Possess> possesses = possessRepository.findPossessesByUserNo(userNo);
+		for(Possess possess : possesses) {
+			if(possess.getTokenNo() == KRW_NO) continue;
+			result.add(possess.getTokenNo());
+		}
+		
 		return result;
 	}
 }
