@@ -37,9 +37,6 @@ class ExchangeFragment : Fragment() {
     private val api = APIS.create();
     var exchangeList: ArrayList<ExchangeDataResponseBodyModel> = ArrayList()
 
-
-
-
     private fun showTransactionPopup() {
         // 팝업창을 위한 레이아웃을 가져옵니다.
         val popupView = LayoutInflater.from(requireContext()).inflate(R.layout.popup_transaction, null)
@@ -81,25 +78,44 @@ class ExchangeFragment : Fragment() {
     }
 
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView( inflater: LayoutInflater,  container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
+
 
         binding = FragmentExchangeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         recyclerView = view.findViewById(R.id.rv_ExchangeTable)
+        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.setHasFixedSize(true)
+        // 데이터 생성
+        val newData = ExchangeDataResponseBodyModel(
+            executionTime = "채결시간",
+            code = "코인명",
+            transactionType = "종류",
+            volume = "거래수량",
+            price = "거래단가",
+            transactionAmount = "거래금액",
+            fee = "수수료",
+            amount = "정산금액",
+            orderTime = "주문시간",
+        )
+
+        // 데이터 리스트에 추가
+        exchangeList.add(0, newData) // 0 인덱스에 추가하면 맨 위에 추가됩니다.
+        exchangeTableAdapter = ExchangeTableAdapter(exchangeList)
 
         // 어댑터 설정 (여기서 dataList는 데이터 리스트로 대체해야 합니다)
         val dataList = ArrayList<ExchangeDataResponseBodyModel>() // 실제 데이터 리스트로 대체
-        exchangeTableAdapter = ExchangeTableAdapter(dataList)
+        exchangeTableAdapter = ExchangeTableAdapter(exchangeList)
         recyclerView.adapter = exchangeTableAdapter
 
-        exchangeTableAdapter = ExchangeTableAdapter(exchangeList)
+
         binding.rvExchangeTable.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.rvExchangeTable.setHasFixedSize(true)
 
-        exchangeList.clear()
+        //exchangeList.clear()
 
         // 어뎁터 불러와서 값 돌리기
         api.ExchangeDataModel(authorization = "Bearer ${1}").enqueue(object:
