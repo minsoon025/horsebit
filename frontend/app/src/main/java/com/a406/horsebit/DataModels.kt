@@ -180,6 +180,6 @@ data class TokenListDetailResponseBodyModel(
     val name: String, //토큰명
     val code: String, //토큰코드명
     val currentPrice: String, //현재가
-    val priceRateOfChange: String, //변동추이
+    val priceRateOfChange: Double, //변동추이
     val priceOfChange: Long,    //변동금액
 )

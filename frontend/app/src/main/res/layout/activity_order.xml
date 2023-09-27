@@ -57,22 +57,24 @@
 
     <ImageView
         android:id="@+id/iv_UpOrDown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_PercntageYesterday"
+        android:layout_marginTop="-18dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toEndOf="@+id/tv_PercntageYesterday"
+        app:layout_constraintTop_toTopOf="@+id/tv_PercntageYesterday"
         app:srcCompat="@drawable/baseline_arrow_drop_up_24" />
 
     <TextView
         android:id="@+id/tv_RisePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="-10dp"
         android:fontFamily="@font/line_seed_kr_rg"
         android:text="TextView"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_UpOrDown"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_PercntageYesterday"
         app:layout_constraintStart_toEndOf="@+id/iv_UpOrDown" />
 
     <ImageView

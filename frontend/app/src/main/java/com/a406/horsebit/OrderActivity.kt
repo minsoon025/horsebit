@@ -40,6 +40,25 @@ class OrderActivity : AppCompatActivity() {
                         binding.tvCurrPrice.text = responseBody.currentPrice
                         binding.tvPercntageYesterday.text = "${responseBody.priceRateOfChange}%"
                         binding.tvRisePrice.text = responseBody.priceOfChange.toString()
+
+                        binding.tvCurrPrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                        binding.tvPercntageYesterday.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                        binding.ivUpOrDown.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
+                        binding.tvRisePrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+
+                        if(responseBody.priceRateOfChange < 0) {
+                            binding.tvCurrPrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
+                            binding.tvPercntageYesterday.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
+                            binding.ivUpOrDown.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.blue))
+                            binding.tvRisePrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
+
+                        }
+                        else if(responseBody.priceRateOfChange > 0) {
+                            binding.tvCurrPrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
+                            binding.tvPercntageYesterday.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
+                            binding.ivUpOrDown.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.red))
+                            binding.tvRisePrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
+                        }
                     }
 
                 }
