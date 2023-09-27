@@ -8,4 +8,5 @@ import com.a406.horsebit.domain.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 	List<Account> findAccountsByUserNo(Long userNo);
+
 }
