@@ -22,29 +22,29 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public PriceDTO getCurrentPrice(Long tokenNo) {
-        return priceRepository.findOneCurrentPriceByTokenNo(tokenNo);
+        return priceRepository.findCurrentPrice(tokenNo);
     }
 
     @Override
     public List<PriceDTO> getCurrentPrice(List<Long> tokenNoList) {
-        return priceRepository.findAllCurrentPriceByTokenNo(tokenNoList);
+        return priceRepository.findCurrentPrice(tokenNoList);
     }
 
     @Override
     public PriceRateOfChangeDTO getPriceOfRate(Long tokenNo, Long currentPrice) {
-        double doubleStartPrice = priceRepository.findOneStartPriceByTokenNo(tokenNo).getPrice().doubleValue();
+        double doubleStartPrice = priceRepository.findStartPrice(tokenNo).getPrice().doubleValue();
         return new PriceRateOfChangeDTO((currentPrice.doubleValue() - doubleStartPrice) / doubleStartPrice);
     }
 
     @Override
     public PriceRateOfChangeDTO getPriceOfRate(Long tokenNo) {
-        Long currentPrice = priceRepository.findOneCurrentPriceByTokenNo(tokenNo).getPrice();
+        Long currentPrice = priceRepository.findCurrentPrice(tokenNo).getPrice();
         return getPriceOfRate(tokenNo, currentPrice);
     }
 
     @Override
     public List<PriceRateOfChangeDTO> getPriceOfRate(List<Long> tokenNoList, List<PriceDTO> currentPriceDTOList) {
-        List<PriceDTO> startPriceDTOList = priceRepository.findAllStartPriceByTokenNo(tokenNoList);
+        List<PriceDTO> startPriceDTOList = priceRepository.findStartPrice(tokenNoList);
         List<PriceRateOfChangeDTO> doublePriceRateOfChangeList = new ArrayList<PriceRateOfChangeDTO>(currentPriceDTOList.size());
         int index = 0;
         for (PriceDTO currentPriceDTO: currentPriceDTOList) {
@@ -57,7 +57,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public List<PriceRateOfChangeDTO> getPriceOfRate(List<Long> tokenNoList) {
-        List<PriceDTO> currentPriceDTOList = priceRepository.findAllCurrentPriceByTokenNo(tokenNoList);
+        List<PriceDTO> currentPriceDTOList = priceRepository.findCurrentPrice(tokenNoList);
         return getPriceOfRate(tokenNoList, currentPriceDTOList);
     }
 }

@@ -70,7 +70,7 @@ public class AssetsServiceImpl implements AssetsService {
 		}
 
 		for(Map.Entry<Long, Double> token : tokenMap.entrySet()) {
-			PriceDTO price = priceRepository .findOneCurrentPriceByTokenNo(token.getKey());
+			PriceDTO price = priceRepository .findCurrentPrice(token.getKey());
 			log.info("CURRENT_PRICE IS FOUND" + price.getPrice());
 			amtEvaluation += price.getPrice() * token.getValue();
 		}
@@ -93,7 +93,7 @@ public class AssetsServiceImpl implements AssetsService {
 		for(Possess possess : possessList) {
 			HorseTokenDTO horseToken = new HorseTokenDTO();
 			TokenDTO token = tokenRepository.findTokenByTokenNo(possess.getTokenNo());
-			PriceDTO price = priceRepository.findOneCurrentPriceByTokenNo(possess.getTokenNo());
+			PriceDTO price = priceRepository.findCurrentPrice(possess.getTokenNo());
 
 			horseToken.setTokenNo(possess.getTokenNo());
 			horseToken.setName(token.getName());
