@@ -159,6 +159,7 @@ public class AssetsServiceImpl implements AssetsService {
 			UserTradeDTO userTrade = new UserTradeDTO();
 			userTrade.setExeTime(trade.getTimestamp());
 			userTrade.setExecutionTime(getDateTimeFormat(trade.getTimestamp()));
+			userTrade.setTokenNo(trade.getTokenNo());
 			userTrade.setCode(trade.getTokenCode());
 			userTrade.setVolume(trade.getQuantity());
 			userTrade.setPrice(trade.getPrice());

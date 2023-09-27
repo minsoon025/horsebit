@@ -23,6 +23,6 @@ public interface TradeRepository extends JpaRepository<Trade, Long> {
 	@Query("select NEW com.a406.horsebit.dto.TradeDTO(tr.executionNo, tr.token.tokenNo, tr.token.code, tr.price, tr.quantity, tr.timestamp, tr.sellBuyFlag) from Trade tr left join tr.token where tr.token.tokenNo = :tokenNo and ((tr.sellerUserNo = :userNo and tr.sellBuyFlag = 'S') or (tr.buyerUserNo = :userNo and tr.sellBuyFlag = 'B'))")
 	List<TradeDTO> findAllByUserNoAndTokenNo(Long userNo, Long tokenNo);
 
-	@Query("select NEW com.a406.horsebit.domain.TradeHistory(tr.price, tr.quantity, tr.fee, tr.timestamp, tr.sellerUserNo, tr.sellerOrderTime, tr.buyerUserNo, tr.buyerOrderTime, tr.token.code) from Trade tr left join tr.token where tr.sellerUserNo = :userNo or tr.buyerUserNo = :userNo")
+	@Query("select NEW com.a406.horsebit.domain.TradeHistory(tr.price, tr.quantity, tr.fee, tr.timestamp, tr.sellerUserNo, tr.sellerOrderTime, tr.buyerUserNo, tr.buyerOrderTime, tr.token.tokenNo, tr.token.code) from Trade tr left join tr.token where tr.sellerUserNo = :userNo or tr.buyerUserNo = :userNo")
 	List<TradeHistory> findAllByUserNo(Long userNo);
 }

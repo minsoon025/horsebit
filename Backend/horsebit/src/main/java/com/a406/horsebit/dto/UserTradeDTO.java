@@ -7,6 +7,7 @@ public class UserTradeDTO implements Comparable<UserTradeDTO> {
 	private Timestamp exeTime;
 	private String executionTime;
 	private String code;
+	private Long tokenNo;
 	private String transactionType;
 	private double volume;
 	private long price;
@@ -17,10 +18,11 @@ public class UserTradeDTO implements Comparable<UserTradeDTO> {
 
 	public UserTradeDTO() {}
 
-	public UserTradeDTO(Timestamp exeTime, String executionTime, String code, String transactionType, double volume,
+	public UserTradeDTO(Timestamp exeTime, String executionTime, Long tokenNo, String code, String transactionType, double volume,
 		long price, double transactionAmount, double fee, double amount, String orderTime) {
 		this.exeTime = exeTime;
 		this.executionTime = executionTime;
+		this.tokenNo = tokenNo;
 		this.code = code;
 		this.transactionType = transactionType;
 		this.volume = volume;
@@ -45,6 +47,14 @@ public class UserTradeDTO implements Comparable<UserTradeDTO> {
 
 	public void setExecutionTime(String executionTime) {
 		this.executionTime = executionTime;
+	}
+
+	public Long getTokenNo() {
+		return tokenNo;
+	}
+
+	public void setTokenNo(Long tokenNo) {
+		this.tokenNo = tokenNo;
 	}
 
 	public String getCode() {
