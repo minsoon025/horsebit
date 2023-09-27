@@ -119,8 +119,10 @@ public class OrderRepository {
     }
 
     private OrderSummary findOrderSummary(Long tokenNo, Long price, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
+        // Get order book.
+        RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
         // Get order page.
-        OrderPage orderPage = getOrderPage(tokenNo, price, ORDER_BOOK_PREFIX, ORDER_SUMMARY_LIST_PREFIX);
+        OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
         // Get order summary list.
         RList<OrderSummary> orderSummaryRList = orderPage.getOrderSummaryRList();
         // Get order summary.
@@ -140,26 +142,131 @@ public class OrderRepository {
     }
 
     private Boolean saveOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
+        // Get order book.
+        RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
         // Get order page.
-        OrderPage orderPage = getOrderPage(tokenNo, price, ORDER_BOOK_PREFIX, ORDER_SUMMARY_LIST_PREFIX);
+        OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
         // Update volume of page.
         orderPage.setVolume(orderPage.getVolume() + orderSummary.getRemain());
+        putOrderPage(price, orderPage, tokenOrderBook);
         // Update order summary list of page.
         return orderPage.getOrderSummaryRList().add(orderSummary);
     }
 
-    private OrderPage getOrderPage(Long tokenNo, Long price, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
+    public OrderSummary changeBuyOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary) {
+        return changeOrderSummary(tokenNo, price, orderSummary, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX, REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    public OrderSummary changeSellOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary) {
+        return changeOrderSummary(tokenNo, price, orderSummary, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX, REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    private OrderSummary changeOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
         // Get order book.
         RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
+        // Get order page.
+        OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
+        // Get order summary list.
+        RList<OrderSummary> orderSummaryRList = orderPage.getOrderSummaryRList();
+        // Get order summary.
+        int FIRST_INDEX = 0;
+        OrderSummary unchangedOrderSummary = orderSummaryRList.get(FIRST_INDEX);
+        // Update volume of page.
+        orderPage.setVolume(orderPage.getVolume() - unchangedOrderSummary.getRemain() + orderSummary.getRemain());
+        putOrderPage(price, orderPage, tokenOrderBook);
+        // Update order summary list of page.
+        return orderSummaryRList.set(FIRST_INDEX, orderSummary);
+    }
+
+    public void deleteBuyOrderSummary(Long tokenNo, Long price) {
+        deleteOrderSummary(tokenNo, price, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX, REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    public void deleteSellOrderSummary(Long tokenNo, Long price) {
+        deleteOrderSummary(tokenNo, price, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX, REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX);
+    }
+
+    private void deleteOrderSummary(Long tokenNo, Long price, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
+        // Get order book.
+        RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
+        // Get order page.
+        OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
+        // Get order summary list.
+        RList<OrderSummary> orderSummaryRList = orderPage.getOrderSummaryRList();
+        // Get order summary.
+        int FIRST_INDEX = 0;
+        OrderSummary orderSummary = orderSummaryRList.get(FIRST_INDEX);
+        // Update volume of page.
+        orderPage.setVolume(orderPage.getVolume() - orderSummary.getRemain());
+        // Delete order summary.
+        orderSummaryRList.fastRemove(FIRST_INDEX);
+        // Check if order summary list is empty.
+        if (orderSummaryRList.isEmpty()) {
+            Double INITIAL_VOLUME = 0.0;
+            orderPage.setVolume(INITIAL_VOLUME);
+        }
+        putOrderPage(price, orderPage, tokenOrderBook);
+    }
+
+    private OrderPage getOrderPage(Long tokenNo, Long price, RMap<Long, OrderPage> tokenOrderBook, String ORDER_SUMMARY_LIST_PREFIX) {
         // Get existing order page.
         if(tokenOrderBook.containsKey(price)) {
             return tokenOrderBook.get(price);
         }
         // Price has empty list. Create order list first.
         OrderPage orderPage = new OrderPage();
-        orderPage.setVolume(0.0);
+        Double INITIAL_VOLUME = 0.0;
+        orderPage.setVolume(INITIAL_VOLUME);
         orderPage.setOrderSummaryRList(redissonClient.getList(ORDER_SUMMARY_LIST_PREFIX + tokenNo + ":" + price));
         return orderPage;
+    }
+
+    private void putOrderPage(Long price, OrderPage orderPage, RMap<Long, OrderPage> tokenOrderBook) {
+        // Put order page.
+        tokenOrderBook.fastPut(price, orderPage);
+    }
+
+    public Double findBuyVolumeByPriceAtOrderBook(Long tokenNo, Long price) {
+        return findVolumeByPriceAtOrderBook(tokenNo, price, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX);
+    }
+
+    public Double findSellVolumeByPriceAtOrderBook(Long tokenNo, Long price) {
+        return findVolumeByPriceAtOrderBook(tokenNo, price, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX);
+    }
+
+    private Double findVolumeByPriceAtOrderBook(Long tokenNo, Long price, String ORDER_BOOK_PREFIX) {
+        // Get order book.
+        RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
+        // Get existing order page.
+        if(tokenOrderBook.containsKey(price)) {
+            return tokenOrderBook.get(price).getVolume();
+        }
+        // There is no volume.
+        return 0.0;
+    }
+
+    public List<Double> findBuyVolumeByPriceAtOrderBook(Long tokenNo, List<Long> priceList) {
+        return findVolumeByPriceAtOrderBook(tokenNo, priceList, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX);
+    }
+
+    public List<Double> findSellVolumeByPriceAtOrderBook(Long tokenNo, List<Long> priceList) {
+        return findVolumeByPriceAtOrderBook(tokenNo, priceList, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX);
+    }
+
+    private List<Double> findVolumeByPriceAtOrderBook(Long tokenNo, List<Long> priceList, String ORDER_BOOK_PREFIX) {
+        // Get order book.
+        RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
+        // Generate return list.
+        List<Double> volumeList = new ArrayList<>(priceList.size());
+        for (long price: priceList) {
+            // Get existing order page.
+            if (tokenOrderBook.containsKey(price)) {
+                volumeList.add(tokenOrderBook.get(price).getVolume());
+            }
+            // There is no volume.
+            volumeList.add(0.0);
+        }
+        return volumeList;
     }
 
     //////////////////////////////////
