@@ -19,6 +19,7 @@ public class OrderRepository {
     private final RedissonClient redissonClient;
     private static final String REDIS_TOKEN_BUY_TOTAL_VOLUME_PREFIX = "BUY_TOTAL_VOLUME:";
     private static final String REDIS_TOKEN_SELL_TOTAL_VOLUME_PREFIX = "SELL_TOTAL_VOLUME:";
+    private static final String REDIS_TOKEN_TRADE_TOTAL_VOLUME_PREFIX = "TRADE_TOTAL_VOLUME:";
     private static final String REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX = "BUY_ORDER_BOOK:";
     private static final String REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX = "SELL_ORDER_BOOK:";
     private static final String REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX = "BUY_VOLUME_BOOK:";
@@ -46,6 +47,8 @@ public class OrderRepository {
         buyTotalVolumeRBucket.setIfAbsent(INITIAL_VOLUME);
         RBucket<Double> sellTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_SELL_TOTAL_VOLUME_PREFIX + tokenNo);
         sellTotalVolumeRBucket.setIfAbsent(INITIAL_VOLUME);
+        RBucket<Double> tradeTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_TRADE_TOTAL_VOLUME_PREFIX + tokenNo);
+        tradeTotalVolumeRBucket.setIfAbsent(INITIAL_VOLUME);
     }
 
     public void newUserOrderList(Long userNo, Long tokenNo) {
@@ -173,6 +176,11 @@ public class OrderRepository {
         return sellTotalVolumeRBucket.get();
     }
 
+    public Double findTradeTotalVolume(Long tokenNo) {
+        RBucket<Double> tradeTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_TRADE_TOTAL_VOLUME_PREFIX + tokenNo);
+        return tradeTotalVolumeRBucket.get();
+    }
+
     public void changeBuyTotalVolume(Long tokenNo, Double changedVolume) {
         RBucket<Double> buyTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_BUY_TOTAL_VOLUME_PREFIX + tokenNo);
         buyTotalVolumeRBucket.set(buyTotalVolumeRBucket.get() + changedVolume);
@@ -183,9 +191,14 @@ public class OrderRepository {
         sellTotalVolumeRBucket.set(sellTotalVolumeRBucket.get() + changedVolume);
     }
 
-    //////////////////////////////////
+    public void changeTradeTotalVolume(Long tokenNo, Double changedVolume) {
+        RBucket<Double> tradeTotalVolumeRBucket = redissonClient.getBucket(REDIS_TOKEN_TRADE_TOTAL_VOLUME_PREFIX + tokenNo);
+        tradeTotalVolumeRBucket.set(tradeTotalVolumeRBucket.get() + changedVolume);
+    }
+
+    /////////////////////////////////
     /* --- Volume Book Methods --- */
-    //////////////////////////////////
+    /////////////////////////////////
 
     public VolumePage findMaxBuyVolumePage(Long tokenNo) {
         RScoredSortedSet<VolumePage> tokenBuyVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX + tokenNo);
