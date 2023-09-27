@@ -15,6 +15,7 @@ import com.a406.horsebit.dto.TokenDTO;
 import com.a406.horsebit.dto.VolumeDTO;
 import com.a406.horsebit.repository.PossessRepository;
 import com.a406.horsebit.repository.TokenRepository;
+import com.a406.horsebit.repository.redis.OrderRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,15 +26,18 @@ public class TokenServiceImpl implements TokenService {
 	private final TokenRepository tokenRepository;
 	private final PossessRepository possessRepository;
 	private final PriceRepository priceRepository;
+	private final OrderRepository orderRepository;
 	private final PriceService priceService;
 
 	private final Long KRW_NO = 11L;
 
 	@Autowired
-	public TokenServiceImpl(TokenRepository tokenRepository, PossessRepository possessRepository, PriceRepository priceRepository, PriceService priceService) {
+	public TokenServiceImpl(TokenRepository tokenRepository, PossessRepository possessRepository, PriceRepository priceRepository,
+		OrderRepository orderRepository, PriceService priceService) {
 		this.tokenRepository = tokenRepository;
 		this.possessRepository = possessRepository;
 		this.priceRepository = priceRepository;
+		this.orderRepository = orderRepository;
 		this.priceService = priceService;
 	}
 
@@ -67,7 +71,7 @@ public class TokenServiceImpl implements TokenService {
 			TokenDTO token = findOneToken(tokenNo);
 			token.setCurrentPrice(rPrices.get(ind).getPrice());
 			token.setPriceRateOfChange(rRates.get(ind).getPriceRateOfChange());
-			token.setVolume(0); //TODO: volume redis 접근 및 반환
+			token.setVolume(orderRepository.findTradeTotalVolume(tokenNo));
 			ind++;
 
 			result.add(token);
