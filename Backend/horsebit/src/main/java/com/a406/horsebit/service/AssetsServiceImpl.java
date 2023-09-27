@@ -112,6 +112,8 @@ public class AssetsServiceImpl implements AssetsService {
 		for(Possess possess : possessList) {
 			HorseTokenDTO horseToken = new HorseTokenDTO();
 			TokenDTO token = tokenRepository.findTokenByTokenNo(possess.getTokenNo());
+			if(token.getCode().equals(CODE_KRW)) continue; //KRW는 전달 X
+
 			PriceDTO price = priceRepository.findOneCurrentPriceByTokenNo(possess.getTokenNo());
 
 			horseToken.setTokenNo(possess.getTokenNo());
