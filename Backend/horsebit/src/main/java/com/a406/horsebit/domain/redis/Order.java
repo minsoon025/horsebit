@@ -13,7 +13,7 @@ public class Order {
     userNo as name of map
     tokenNo, orderNo as score in map
      */
-    private int price;
+    private long price;
     private double quantity;
     private double remain;
     private LocalDateTime orderTime;
