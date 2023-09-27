@@ -1,7 +1,10 @@
 package com.a406.horsebit.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.a406.horsebit.dto.CandleDTO;
+import com.a406.horsebit.service.CandleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
 
 import com.a406.horsebit.domain.Bookmark;
 import com.a406.horsebit.domain.BookmarkPK;
@@ -25,11 +30,13 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenController {
 	private final TokenService tokenService;
 	private final BookmarkService bookmarkService;
+	private final CandleService candleService;
 
 	@Autowired
-	public TokenController(TokenService tokenService, BookmarkService bookmarkService) {
+	public TokenController(TokenService tokenService, BookmarkService bookmarkService, CandleService candleService) {
 		this.tokenService = tokenService;
 		this.bookmarkService = bookmarkService;
+		this.candleService = candleService;
 	}
 
 	/**
@@ -129,5 +136,15 @@ public class TokenController {
 			obj.addProperty("result", "SUCCESS");
 		}
 		return obj.toString();
+	
+	// @GetMapping("/{tokenNo}")
+	// public TokenDTO getTokenDetail(@PathVariable Long tokenNo) {
+	// 	log.info("TokenController::getTokenDetail() START");
+	// 	return tokenService.getTokenByTokenNo();
+	// }
+
+	@GetMapping("/{tokenNo}/chart")
+	public List<CandleDTO> getCandles(@PathVariable("tokenNo") Long tokenNo, @RequestParam("quantity") Long quantity, @RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endTime, @RequestParam("candleTypeIndex") Integer candleTypeIndex, @RequestParam("margin") Long margin) {
+		return candleService.getCandle(tokenNo, endTime, candleTypeIndex, quantity, margin);
 	}
 }

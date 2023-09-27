@@ -31,9 +31,6 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
     private User saveOrUpdate(OAuth2User oAuth2User) {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String email = (String) attributes.get("email");
-
-//        //이메일 암호화 필요했지만 미사용
-//        String enEmail = hashString(email);
         String name = (String) attributes.get("name");
         User user = userRepository.findByEmail(email)
                 .map(entity -> entity.update(name))
