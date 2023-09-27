@@ -35,6 +35,12 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ):Call<MyTotalAssetResponseBodyModel>
 
+    // 입출금 페이지 조회
+    @GET("/api/assets/investments")
+    fun ExchangeDataModel(
+        @Header("Authorization") authorization: String,
+    ):Call<ArrayList<ExchangeDataResponseBodyModel>>
+
 
     // 마이페이지 코인 불러오기
     @GET("/api/assets/horses")

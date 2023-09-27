@@ -80,11 +80,21 @@ data class ExchangeData(
     val orderTime2: String
 )
 
-data class Exchange(
-    val data1: Int,
-    val data2: Int,
-    val data3: Int,
+// 입출금 토큰 만들기
+data class ExchangeDataResponseBodyModel(
+    val executionTime: Date, //체결시간
+    val code: String, //토큰코드
+    val transactionType: String, //종류
+    val volume: Double, //거래수량
+    val price: Long, //거래단가
+    val transactionAmount: Double, //거래금액
+    val fee: Double, //수수료
+    val amount: Double, //정산금액
+    val orderTime: Date, //주문시간
+
 )
+
+
 
 
 
