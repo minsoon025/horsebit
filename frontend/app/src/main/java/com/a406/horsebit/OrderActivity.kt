@@ -39,6 +39,7 @@ class OrderActivity : AppCompatActivity() {
                         binding.tvTitle.text = "${responseBody.name}(${responseBody.code})"
                         binding.tvCurrPrice.text = responseBody.currentPrice
                         binding.tvPercntageYesterday.text = "${responseBody.priceRateOfChange}%"
+                        binding.tvRisePrice.text = responseBody.priceOfChange.toString()
                     }
 
                 }
