@@ -14,7 +14,4 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
 
 	@Query("select NEW com.a406.horsebit.dto.TokenDTO(t.tokenNo, t.name, t.code, t.newFlag) from Token t where t.tokenNo = :tokenNo")
 	TokenDTO findTokenByTokenNo(Long tokenNo);
-
-	// @Query("select NEW com.a406.horsebit.dto.TokenDTO() from Token t where t.tokenNo = :tokenNo")
-	// TokenDTO findTokenByTokenNo(Long tokenNo);
 }
