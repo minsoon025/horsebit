@@ -19,12 +19,11 @@ import java.time.LocalDateTime
 interface APIS {
 
     // 로그인
-    @POST("/api/auth/login")
+    @POST("/api/login/auth/signIn")
     fun login(
-        @Header("Authorization") authorization: String,
-        @Body params: LoginRequestBodyModel
-    ):Call<ArrayList<LoginResponseBodyModel>>
-//
+        @Body token: String,
+    ):Call<LoginResponseBodyModel>
+
 
     // 회원가입
     @POST("/api/user/signup")

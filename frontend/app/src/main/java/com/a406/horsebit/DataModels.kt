@@ -145,10 +145,10 @@ data class LoginResponseBodyModel(
 
 data class UserDTO(
 
-    val id : String,  //유저번호
+    val id : Long,  //유저번호
     val refreshToken: String,  //리프레시토큰
-    val email: String,  //유저 이메일
     val nickname: String,  //유저 닉네임(구글계정 닉네임)
+    val email: String,  //유저 이메일
     val userName: String  //유저 이름(앱에서 사용해야함)
 
 )
