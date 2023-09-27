@@ -53,7 +53,7 @@ public class OrderRepository {
         RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
         // Generate user token order map RMap.
         RMap<Long, Order> userOrderMap = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo + ":" + tokenNo);
-        userOrderList.fastPut(tokenNo, userOrderMap);
+        userOrderList.fastPutIfAbsent(tokenNo, userOrderMap);
     }
 
     public void newUserOrderList(Long userNo, List<Long> tokenNoList) {
@@ -62,7 +62,7 @@ public class OrderRepository {
         // Generate user token order map RMap.
         for (long tokenNo: tokenNoList) {
             RMap<Long, Order> userOrderMap = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo + ":" + tokenNo);
-            userOrderList.fastPut(tokenNo, userOrderMap);
+            userOrderList.fastPutIfAbsent(tokenNo, userOrderMap);
         }
     }
 
@@ -73,6 +73,9 @@ public class OrderRepository {
     public List<OrderDTO> findAllOrder(Long userNo, Long tokenNo, String code) {
         RMap<Long, Order> userOrderMap = getUserOrderMap(userNo, tokenNo);
         List<OrderDTO> orderDTOList = new ArrayList<>();
+        if(userOrderMap.isEmpty()) {
+            return orderDTOList;
+        }
         userOrderMap.forEach((orderKey, orderValue)->{
             orderDTOList.add(new OrderDTO(orderKey, userNo, tokenNo, code, orderValue.getPrice(), orderValue.getQuantity(), orderValue.getRemain(), orderValue.getOrderTime(), orderValue.getSellBuyFlag()));
         });
