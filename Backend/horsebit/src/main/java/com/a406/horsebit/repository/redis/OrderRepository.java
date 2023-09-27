@@ -80,7 +80,7 @@ public class OrderRepository {
             return orderDTOList;
         }
         userOrderMap.forEach((orderKey, orderValue)->{
-            orderDTOList.add(new OrderDTO(orderKey, userNo, tokenNo, code, orderValue.getPrice(), orderValue.getQuantity(), orderValue.getRemain(), orderValue.getOrderTime(), orderValue.getSellBuyFlag()));
+            orderDTOList.add(new OrderDTO(orderKey, userNo, tokenNo, code, ((int) orderValue.getPrice()), orderValue.getQuantity(), orderValue.getRemain(), orderValue.getOrderTime(), orderValue.getSellBuyFlag()));
         });
         orderDTOList.sort(Comparator.comparingLong(OrderDTO::getOrderNo));
         return orderDTOList;
