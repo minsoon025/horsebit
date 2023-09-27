@@ -26,17 +26,18 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
 
     class CustomViewHolder(private val binding: ExchangeItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
+
         fun bind(exchange: ExchangeDataResponseBodyModel) {
 
-            binding.tvIExOrderTime.text = exchange.executionTime.toString()
+            binding.tvIExOrderTime.text = exchange.executionTime
             binding.tvIExCoin.text = exchange.code
             binding.tvIExType.text = exchange.transactionType
-            binding.tvIExSeep.text = exchange.volume.toString()
-            binding.tvIExOne.text = exchange.price.toString()
-            binding.tvIExMoney.text = exchange.transactionAmount.toString()
-            binding.tvIExFee.text = exchange.fee.toString()
-            binding.tvIExRealMoney.text = exchange.amount.toString()
-            binding.tvIExOrderTime2.text = exchange.orderTime.toString()
+            binding.tvIExSeep.text = exchange.volume
+            binding.tvIExOne.text = exchange.price
+            binding.tvIExMoney.text = exchange.transactionAmount
+            binding.tvIExFee.text = exchange.fee
+            binding.tvIExRealMoney.text = exchange.amount 
+            binding.tvIExOrderTime2.text = exchange.orderTime
 
 
         }

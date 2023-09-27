@@ -70,15 +70,15 @@ data class Order(
 
 // 입출금 토큰 만들기
 data class ExchangeDataResponseBodyModel(
-    val executionTime: Date, //체결시간
+    val executionTime: String, //체결시간
     val code: String, //토큰코드
     val transactionType: String, //종류
-    val volume: Double, //거래수량
-    val price: Long, //거래단가
-    val transactionAmount: Double, //거래금액
-    val fee: Double, //수수료
-    val amount: Double, //정산금액
-    val orderTime: Date, //주문시간
+    val volume: String, //거래수량
+    val price: String, //거래단가
+    val transactionAmount: String, //거래금액
+    val fee: String, //수수료
+    val amount: String, //정산금액
+    val orderTime: String, //주문시간
 
 )
 

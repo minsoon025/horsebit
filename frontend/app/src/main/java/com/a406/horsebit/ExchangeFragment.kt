@@ -38,6 +38,8 @@ class ExchangeFragment : Fragment() {
     var exchangeList: ArrayList<ExchangeDataResponseBodyModel> = ArrayList()
 
 
+
+
     private fun showTransactionPopup() {
         // 팝업창을 위한 레이아웃을 가져옵니다.
         val popupView = LayoutInflater.from(requireContext()).inflate(R.layout.popup_transaction, null)
@@ -82,6 +84,7 @@ class ExchangeFragment : Fragment() {
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentExchangeBinding.inflate(inflater, container, false)
         val view = binding.root
 
