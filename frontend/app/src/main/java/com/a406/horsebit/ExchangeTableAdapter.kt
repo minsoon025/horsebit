@@ -49,6 +49,26 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
             binding.tvIExRealMoney.text = exchange.amount
             binding.tvIExOrderTime2.text = exchange.orderTime ?: "-"
 
+            when (exchange.transactionType) {
+                "BID" -> {
+                    binding.tvIExType.text = "매수"
+                    binding.tvIExType.setTextColor(Color.RED)
+                }
+                "OFFER" -> {
+                    binding.tvIExType.text = "매도"
+                    binding.tvIExType.setTextColor(Color.BLUE)
+                }
+                "DEPOSIT" -> {
+                    binding.tvIExType.text = "입금"
+                    binding.tvIExType.setTextColor(Color.RED)
+                }
+                "WITHDRAW" -> {
+                    binding.tvIExType.text = "출금"
+                    binding.tvIExType.setTextColor(Color.BLUE)
+                }
+
+            }
+
 
             binding.lihIExBar2.setOnClickListener {
                     val curPos: Int = adapterPosition

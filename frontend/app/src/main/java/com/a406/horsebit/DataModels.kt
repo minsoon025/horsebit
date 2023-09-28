@@ -172,6 +172,10 @@ data class SignUpRequestBodyModel(
 data class FavoriteResponseBodyModel(
     val result: String,
 )
+// 입출금 요청
+data class KrwInOutResponseBodyModel(
+    val reqAmount: Long //금액
+)
 
 // 코인 상세 조회 (SSE)
 data class TokenListDetailResponseBodyModel(

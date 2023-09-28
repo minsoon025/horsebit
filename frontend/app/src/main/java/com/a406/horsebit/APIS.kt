@@ -114,6 +114,12 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ): Call<TokenListDetailResponseBodyModel>
 
+    // 현금 입출금 요청
+    @POST("/api/assets/depositwithdraw")
+    fun krwInOut(
+        @Header("Authorization") authorization: String,
+    ): Call<KrwInOutResponseBodyModel>
+
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"
