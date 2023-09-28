@@ -52,13 +52,14 @@ public class User implements UserDetails {
     private boolean biometricLoginFlag;
 
     @Builder
-    public User(Long id, String nickname, String password, String email, boolean alarmPushFlag, boolean biometricLoginFlag) {
+    public User(Long id, String nickname, String password, String email, String userName, boolean alarmPushFlag, boolean biometricLoginFlag) {
         this.id = id;
 //        this.providerName = providerName;
 //        this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
+        this.userName = userName;
         this.alarmPushFlag = alarmPushFlag;
         this.biometricLoginFlag = biometricLoginFlag;
     }

@@ -5,10 +5,7 @@ import com.a406.horsebit.domain.User;
 import com.a406.horsebit.dto.UserSettingDTO;
 import com.a406.horsebit.google.domain.OAuthProvider;
 import com.a406.horsebit.google.domain.Role;
-import com.a406.horsebit.google.dto.request.RefreshDTO;
-import com.a406.horsebit.google.dto.request.SignInDTO;
-import com.a406.horsebit.google.dto.request.SignUpDTO;
-import com.a406.horsebit.google.dto.request.UserDTO;
+import com.a406.horsebit.google.dto.request.*;
 import com.a406.horsebit.google.dto.response.RefreshResponseDTO;
 import com.a406.horsebit.google.dto.response.SignInResponseDTO;
 import com.a406.horsebit.google.repository.InMemoryProviderRepository;
@@ -100,13 +97,11 @@ public class UserServiceImpl implements UserService {
 //        String sub = jwtClaimsSet.getStringClaim("sub");
 //        String providerId = signUpDTO.getProviderName() + "_" + sub;
 
-        String email = tokenProvider.extractEmailTest(idToken);
-        userRepository.findByEmail(email).ifPresent(member -> {
-            throw new IllegalArgumentException("이미 가입된 사용자입니다.");
-        });
+        String email = signUpDTO.getEmail();
+        User user = userRepository.findByEmail(email).orElseThrow();
 
-        User user = signUpDTO.toEntity();
 //        user.setProviderId(providerId);
+        user.setUserName(signUpDTO.getUserName());
         user.setRole(Role.USER);
 
         log.info("회원가입 완료");
@@ -150,6 +145,13 @@ public class UserServiceImpl implements UserService {
 //    private OAuthProvider findProvider(String providerName) {
 //        return inMemoryProviderRepository.findByProviderName(providerName);
 //    }
+
+    //회원탈퇴
+    @Override
+    public void deleteUser(Long userId){
+        System.out.println("여긴 왔니");
+        userRepository.deleteById(userId);
+    }
 
     @Override
     public UserSettingDTO findSettingsByUserNo(Long userNo) {

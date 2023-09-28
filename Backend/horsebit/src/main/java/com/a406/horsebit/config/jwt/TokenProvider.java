@@ -158,7 +158,7 @@ public class TokenProvider {
 
 
 
-
+    //AccessToken 생성 메서드
     public String bulidAccessToken(User user) throws JOSEException, ParseException {
         JWSSigner signer = new MACSigner(sharedSecret);
 
@@ -177,6 +177,7 @@ public class TokenProvider {
         return s;
     }
 
+    //Refresh Token 생성 메서드
     public String buildRefreshToken(User user) throws JOSEException {
         JWSSigner signer = new MACSigner(sharedSecret);
 
@@ -195,12 +196,12 @@ public class TokenProvider {
         return s;
     }
 
-
+    //검증 없이 토큰 파싱 ( idToken 파싱 시 사용)
     public Object parseTokenWithoutValidation(String token) throws ParseException, JOSEException {
         return SignedJWT.parse(token);
     }
 
-
+        //TODO: 아래 주석처리한 코드는 providerName 사용 했을 때 -> 프론트와 이야기 후 삭제 예정
 //    public void validateJwtWithJwk(String token, String jwkStr) throws JOSEException, ParseException {
 ////        try {
 ////            log.debug("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token, jwkStr);
@@ -240,7 +241,7 @@ public class TokenProvider {
 
     public void validateJwtWithJwk(String token) throws JOSEException, ParseException {
         try {
-            log.info("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token);
+            log.info("JWK를 이용하여 JWT 검증 시작... token: {}", token);
 
             SignedJWT signedJWT = SignedJWT.parse(token);
             log.debug("검증 대상 토큰의 Calims signedJWT: {}", signedJWT.getJWTClaimsSet().toString());
@@ -321,7 +322,7 @@ public class TokenProvider {
     }
 
 
-    //성민 테스트 메서드 제작
+    //성민 이메일 유효 테스트 메서드 제작
     public String extractEmailTest(String token) {
         String[] parts = token.split("\\.");
 
