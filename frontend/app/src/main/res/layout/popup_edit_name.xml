@@ -32,17 +32,16 @@
                 android:id="@+id/confirmButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="확인"
-                android:background="#3384a7"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:elevation="4dp"
                 android:layout_weight="1"
+                android:background="#3384a7"
+                android:elevation="4dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"
                 android:paddingTop="12dp"
+                android:paddingEnd="16dp"
                 android:paddingBottom="12dp"
-                />
+                android:text="확인"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="1dp"

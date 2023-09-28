@@ -1,13 +1,16 @@
 package com.a406.horsebit
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.ExchangeItemBinding
+
 
 class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBodyModel>) : RecyclerView.Adapter<ExchangeTableAdapter.CustomViewHolder>() {
 
@@ -54,6 +57,10 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
                     val intent = Intent(binding.root.context, OrderActivity::class.java)
                     intent.putExtra("tokenNo", exchangeList.tokenNo)
                     binding.root.context.startActivity(intent)
+                }
+                else{
+                    // 현금 거래의 값이 들어오게 되면
+                    Toast.makeText(binding.root.context,"현금 입출금내역입니다.", Toast.LENGTH_SHORT).show()
                 }
             }
 
