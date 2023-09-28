@@ -173,8 +173,8 @@ data class FavoriteResponseBodyModel(
     val result: String,
 )
 // 입출금 요청
-data class KrwInOutResponseBodyModel(
-    val reqAmount: Long //금액
+data class KrwInOutRequestBodyModel(
+    val reqAmount: Long
 )
 
 // 코인 상세 조회 (SSE)

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.APIS
 import com.a406.horsebit.ExchangeDataResponseBodyModel
 import com.a406.horsebit.ExchangeTableAdapter
+import com.a406.horsebit.KrwInOutRequestBodyModel
 import com.a406.horsebit.MyTotalAssetResponseBodyModel
 import com.a406.horsebit.R
 import com.a406.horsebit.databinding.FragmentExchangeBinding
@@ -37,7 +38,10 @@ class ExchangeFragment : Fragment() {
 
     private val api = APIS.create();
     var exchangeList: ArrayList<ExchangeDataResponseBodyModel> = ArrayList()
-
+    private fun refreshFragment() {
+        // RecyclerView 어댑터에 변경 사항을 알립니다.
+        exchangeTableAdapter.notifyDataSetChanged()
+    }
     private fun showTransactionPopup() {
         // 팝업창을 위한 레이아웃을 가져옵니다.
         val popupView = LayoutInflater.from(requireContext()).inflate(R.layout.popup_transaction, null)
@@ -63,11 +67,51 @@ class ExchangeFragment : Fragment() {
                 else -> "선택 안 함"
             }
 
-            // TODO: 입력된 금액과 입출금 유형을 처리하거나 전달합니다.
-            // 여기에 데이터 처리 로직을 추가하세요.
+            // TODO: 입력된 금액과 입출금 유형을 기반으로 API 요청을 보냅니다.
+            // Retrofit을 사용하여 API 요청을 보내는 예제 코드를 아래에 작성합니다.
+
+            val authorizationHeader = "Bearer YourAccessTokenHere" // 실제 액세스 토큰 사용
+
+            if (transactionType == "입금" || transactionType == "출금") {
+                // 입금 버튼을 눌렀을 때는 그대로, 출금 버튼을 눌렀을 때는 "-"를 붙여서 reqAmount 설정
+                val reqAmount = if (transactionType == "출금") -amount.toLong() else amount.toLong()
+                val requestBody = KrwInOutRequestBodyModel(reqAmount) // 요청 데이터 생성
+                val call = api.krwInOut(authorizationHeader, requestBody) // API 호출
+
+                call.enqueue(/* callback = */ object : Callback<KrwInOutRequestBodyModel> {
+                    override fun onResponse(
+                        call: Call<KrwInOutRequestBodyModel>,
+                        response: Response<KrwInOutRequestBodyModel>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d("ExchangeFragment", "reqAmount: $reqAmount") // reqAmount 로그 출력
+                            Log.d("ExchangeFragment", "API Call: $call") // API 요청 로그 출력
+                            Log.d("입출금 api 통신이", "succes 200 ")
+                            Toast.makeText(binding.root.context,"입출금을 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                            // API 요청이 성공적으로 처리됨
+                            // 여기아래 프래그먼트를 새로고침하는 키를 작성해줘
+
+
+                        } else {
+                            Log.d("입출금 api 통신이", "실패하였습니다. ")
+
+                            // API 요청이 실패한 경우
+                            // 오류 처리 코드를 작성하세요
+                        }
+                    }
+
+                    override fun onFailure(call: Call<KrwInOutRequestBodyModel>, t: Throwable) {
+                        Log.d("입출금 api 통신이", "실패하였습니다. 예외처리 구간입니다. ")
+
+                        // API 요청 실패 시 예외 처리 코드를 작성하세요
+                    }
+                })
+            }
 
             alertDialog.dismiss() // 팝업창을 닫습니다.
         }
+
+
 
         // "닫기" 버튼 클릭 이벤트 처리
         closeButton.setOnClickListener {

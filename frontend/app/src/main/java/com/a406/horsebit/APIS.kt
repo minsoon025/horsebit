@@ -12,7 +12,6 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.util.Date
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -118,7 +117,8 @@ interface APIS {
     @POST("/api/assets/depositwithdraw")
     fun krwInOut(
         @Header("Authorization") authorization: String,
-    ): Call<KrwInOutResponseBodyModel>
+        @Body request: KrwInOutRequestBodyModel // 요청 데이터를 Body로 전달
+    ): Call<KrwInOutRequestBodyModel>
 
 
     companion object {
