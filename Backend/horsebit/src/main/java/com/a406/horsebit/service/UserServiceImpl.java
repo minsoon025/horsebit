@@ -147,9 +147,9 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private OAuthProvider findProvider(String providerName) {
-        return inMemoryProviderRepository.findByProviderName(providerName);
-    }
+//    private OAuthProvider findProvider(String providerName) {
+//        return inMemoryProviderRepository.findByProviderName(providerName);
+//    }
 
     @Override
     public UserSettingDTO findSettingsByUserNo(Long userNo) {

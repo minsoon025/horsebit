@@ -33,7 +33,7 @@ public class OAuthController {
     }
 
     //회원가입
-    @PostMapping("/signup")
+    @PostMapping("/signUp")
     public ResponseEntity<User> signUp(@RequestBody SignUpDTO signUpDTO) throws ParseException, JOSEException {
         log.debug("signUp()");
 
