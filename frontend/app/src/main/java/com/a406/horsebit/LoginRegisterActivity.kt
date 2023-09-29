@@ -58,7 +58,7 @@ class LoginRegisterActivity : AppCompatActivity() {
             }
         })
         // tvLookingText1의 클릭 리스너를 먼저 설정합니다.
-        binding.tvLookingText1.setOnClickListener {
+        binding.llhRegisterWord1.setOnClickListener {
             // LinearLayout의 visibility를 visible로 변경합니다.
             if (binding.llhRegisterGone1.visibility == View.VISIBLE) {
                 binding.llhRegisterGone1.visibility = View.GONE
@@ -69,19 +69,6 @@ class LoginRegisterActivity : AppCompatActivity() {
         }
 
 
-
-        binding.tvUnderAgree1.setOnClickListener {
-            // LinearLayout의 visibility를 visible로 변경합니다.
-
-            if (binding.llhRegisterGone1.visibility == View.VISIBLE) {
-                binding.llhRegisterGone1.visibility = View.GONE
-            }
-            else {
-                binding.llhRegisterGone1.visibility = View.VISIBLE
-                Toast.makeText(getApplicationContext(), "모든 약관을 확인하세요!", Toast.LENGTH_LONG).show();
-            }
-
-        }
 
 
         // ScrollView의 스크롤 리스너를 설정합니다.
@@ -110,7 +97,7 @@ class LoginRegisterActivity : AppCompatActivity() {
             }
         }
 
-        binding.tvLookingText2.setOnClickListener {
+        binding.llhRegisterWord2.setOnClickListener {
             // LinearLayout의 visibility를 visible로 변경합니다.
             if (binding.llhRegisterGone2.visibility == View.VISIBLE) {
                 binding.llhRegisterGone2.visibility = View.GONE
@@ -120,15 +107,6 @@ class LoginRegisterActivity : AppCompatActivity() {
             }
         }
 
-        binding.tvUnderAgree2.setOnClickListener {
-            // LinearLayout의 visibility를 visible로 변경합니다.
-            if (binding.llhRegisterGone2.visibility == View.VISIBLE) {
-                binding.llhRegisterGone2.visibility = View.GONE
-            } else {
-                binding.llhRegisterGone2.visibility = View.VISIBLE
-                Toast.makeText(applicationContext, "모든 약관을 확인하세요!", Toast.LENGTH_LONG).show()
-            }
-        }
 
 // ScrollView의 스크롤 리스너를 설정합니다.
         binding.svGone2.setOnScrollChangeListener { _, _, scrollY2, _, _ ->
@@ -159,7 +137,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
 
 
-        binding.tvLookingText4.setOnClickListener {
+        binding.llhRegisterWord4.setOnClickListener {
             if (binding.llhRegisterGone4.visibility == View.VISIBLE) {
                 binding.llhRegisterGone4.visibility = View.GONE
             }
@@ -169,17 +147,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
         }
 
-        binding.tvUnderAgree4.setOnClickListener {
-            if (binding.llhRegisterGone4.visibility == View.VISIBLE) {
-                binding.llhRegisterGone4.visibility = View.GONE
-            }
-            else {
-                binding.llhRegisterGone4.visibility = View.VISIBLE
-                binding.ivGreyCheck4.setImageResource(R.drawable.ok_green)
-            }
-
-        }
-
+   
         // ScrollView의 스크롤 리스너를 설정합니다.
         binding.svGone3.setOnScrollChangeListener { _, _, scrollY3, _, _ ->
             val totalHeight = binding.svGone3.getChildAt(0).height - binding.svGone3.height
