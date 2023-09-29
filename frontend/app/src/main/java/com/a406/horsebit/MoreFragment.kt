@@ -1,4 +1,5 @@
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
@@ -9,6 +10,8 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -30,6 +33,7 @@ class MoreFragment : Fragment() {
 
 
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +54,30 @@ class MoreFragment : Fragment() {
             //ft.addToBackStack(null) // 뒤로 가기 버튼을 누를 때 이전 Fragment로 이동할 수 있도록 스택에 추가
             ft.commit()
         }
+        val expandAnimation = AnimationUtils.loadAnimation(context, R.drawable.slide_up)
+        val collapseAnimation = AnimationUtils.loadAnimation(context, R.drawable.slide_down)
+        // gone slide 적용
+        binding.llhMoreGone2.setOnClickListener {
+        val llMoreGone2 = view.findViewById<LinearLayout>(R.id.llh_MoreGone2)
+        // llMoreGone2 펼치기
+        llMoreGone2.visibility = View.VISIBLE
+        llMoreGone2.startAnimation(expandAnimation)
+        llMoreGone2.startAnimation(collapseAnimation)
+        llMoreGone2.visibility = View.GONE}
+
+        binding.llhMoreGone1.setOnClickListener {
+
+            val llMoreGone1 = view.findViewById<LinearLayout>(R.id.llh_MoreGone1)
+
+            // llMoreGone1 펼치기
+            llMoreGone1.visibility = View.VISIBLE
+            llMoreGone1.startAnimation(expandAnimation)
+
+            llMoreGone1.startAnimation(collapseAnimation)
+            llMoreGone1.visibility = View.GONE
+        }
+
+
 
 
         binding.lihMy.setOnClickListener {
