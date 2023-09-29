@@ -25,7 +25,7 @@ public class OAuthController {
 
     //로그인
     @PostMapping("/signIn")
-    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInDTO signInDTO) throws ParseException, JOSEException {
+    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInDTO signInDTO) throws Exception {
         log.debug("signIn()");
 
         SignInResponseDTO signInResponseDTO = userService.signIn(signInDTO);

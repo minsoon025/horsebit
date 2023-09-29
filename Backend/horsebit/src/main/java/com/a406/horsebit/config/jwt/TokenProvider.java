@@ -322,8 +322,8 @@ public class TokenProvider {
     }
 
 
-    //성민 이메일 유효 테스트 메서드 제작
-    public String extractEmailTest(String token) {
+    //idToken으로부터 이메일 추출 메서드 제작
+    public String extractEmail(String token) {
         String[] parts = token.split("\\.");
 
         if (parts.length == 3) {
@@ -332,6 +332,24 @@ public class TokenProvider {
                 JsonObject payloadJson = new JsonParser().parse(payload).getAsJsonObject();
                 String email = payloadJson.get("email").getAsString();
                 return email;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
+
+    //idToken으로부터 닉네임 추출 메서드 제작
+    public String extractNickname(String token) {
+        String[] parts = token.split("\\.");
+
+        if (parts.length == 3) {
+            try {
+                String payload = new String(Base64.getDecoder().decode(parts[1]));
+                JsonObject payloadJson = new JsonParser().parse(payload).getAsJsonObject();
+                String nickname = payloadJson.get("name").getAsString();
+                return nickname;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
