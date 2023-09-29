@@ -17,6 +17,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.APIS
@@ -90,6 +91,12 @@ class ExchangeFragment : Fragment() {
                             Toast.makeText(binding.root.context,"입출금을 성공하였습니다.", Toast.LENGTH_SHORT).show()
                             // API 요청이 성공적으로 처리됨
                             // 여기아래 프래그먼트를 새로고침하는 키를 작성해줘
+
+                            val changeFragment = ExchangeFragment()
+                            val transaction = fragmentManager?.beginTransaction()
+                            transaction?.replace(R.id.fl_MainFrameLayout, changeFragment)
+                            transaction?.commit()
+
 
 
                         } else {
