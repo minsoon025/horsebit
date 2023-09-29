@@ -1,7 +1,8 @@
-
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -26,12 +27,11 @@ import com.a406.horsebit.databinding.FragmentMoreBinding
 class MoreFragment : Fragment() {
 
     private lateinit var binding: FragmentMoreBinding
-
-
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: PromptInfo
 
-
+    // SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     @SuppressLint("ResourceType")
     override fun onCreateView(
@@ -40,13 +40,41 @@ class MoreFragment : Fragment() {
     ): View? {
         binding = FragmentMoreBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        // SharedPreferences 초기화
+        sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+        // 버튼 상태 로드
+        val isButtonEnabled = loadButtonState()
+
+        // 버튼 초기 상태 설정
+        binding.btnBodySwitch.isChecked = isButtonEnabled
+
+        // 버튼 상태 변경 시 SharedPreferences에 저장
+        binding.btnBodySwitch.setOnCheckedChangeListener { _, isChecked ->
+            saveButtonState(isChecked)
+        }
+
+        // 버튼 활성화 여부에 따라 지문 인증 버튼 표시 여부 설정
+        if (isButtonEnabled) {
+            binding.btnBioSet.visibility = View.INVISIBLE
+            binding.tvTradePossible.text = "가능"
+            binding.tvTradePossible.setTextColor(Color.BLUE)
+            binding.tvDepositDrawalPossible.text = "가능"
+            binding.tvDepositDrawalPossible.setTextColor(Color.BLUE)
+            binding.tvDepositDrawalPossible2.text = "가능"
+            binding.tvDepositDrawalPossible2.setTextColor(Color.BLUE)
+        } else {
+            binding.btnBioSet.visibility = View.VISIBLE
+        }
+
+        // 나머지 코드는 여기에 추가하면 됩니다.
+
         // lih_EditMe LinearLayout에 클릭 리스너를 추가
         binding.lihEditMe.setOnClickListener {
-
             // FragmentTransaction을 시작하여 화면 전환
             val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
             val ft = requireActivity().supportFragmentManager.beginTransaction()
-
             val myEditFragment = MyEditFragment()
 
             // FragmentTransaction을 시작하여 화면 전환
@@ -54,57 +82,46 @@ class MoreFragment : Fragment() {
             //ft.addToBackStack(null) // 뒤로 가기 버튼을 누를 때 이전 Fragment로 이동할 수 있도록 스택에 추가
             ft.commit()
         }
+
         val expandAnimation = AnimationUtils.loadAnimation(context, R.drawable.slide_up)
         val collapseAnimation = AnimationUtils.loadAnimation(context, R.drawable.slide_down)
         // gone slide 적용
         binding.llhMoreGone2.setOnClickListener {
-        val llMoreGone2 = view.findViewById<LinearLayout>(R.id.llh_MoreGone2)
-        // llMoreGone2 펼치기
-        llMoreGone2.visibility = View.VISIBLE
-        llMoreGone2.startAnimation(expandAnimation)
-        llMoreGone2.startAnimation(collapseAnimation)
-        llMoreGone2.visibility = View.GONE}
+            val llMoreGone2 = view.findViewById<LinearLayout>(R.id.llh_MoreGone2)
+            // llMoreGone2 펼치기
+            llMoreGone2.visibility = View.VISIBLE
+            llMoreGone2.startAnimation(expandAnimation)
+            llMoreGone2.startAnimation(collapseAnimation)
+            llMoreGone2.visibility = View.GONE
+        }
 
         binding.llhMoreGone1.setOnClickListener {
-
             val llMoreGone1 = view.findViewById<LinearLayout>(R.id.llh_MoreGone1)
 
             // llMoreGone1 펼치기
             llMoreGone1.visibility = View.VISIBLE
             llMoreGone1.startAnimation(expandAnimation)
-
             llMoreGone1.startAnimation(collapseAnimation)
             llMoreGone1.visibility = View.GONE
         }
 
-
-
-
         binding.lihMy.setOnClickListener {
             // LinearLayout의 visibility를 visible로 변경합니다.
-
             if (binding.llhMoreGone2.visibility == View.VISIBLE) {
                 binding.llhMoreGone2.visibility = View.GONE
-            }
-            else {
+            } else {
                 binding.llhMoreGone2.visibility = View.VISIBLE
             }
-
         }
 
         binding.lihPromise.setOnClickListener {
             // LinearLayout의 visibility를 visible로 변경합니다.
-
             if (binding.llhMoreGone1.visibility == View.VISIBLE) {
                 binding.llhMoreGone1.visibility = View.GONE
-            }
-            else {
+            } else {
                 binding.llhMoreGone1.visibility = View.VISIBLE
             }
-
         }
-
-
 
         // lih_Notice LinearLayout에 클릭 리스너를 추가
         binding.lihNotice.setOnClickListener {
@@ -116,24 +133,17 @@ class MoreFragment : Fragment() {
 
             // 액티비티를 실행하여 웹 페이지로 이동
             startActivity(intent)
+        }
 
-            // lih_InOut LinearLayout에 클릭 리스너를 추가
-            binding.lihInOut.setOnClickListener {
-
-                // FragmentTransaction을 시작하여 화면 전환
-                val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-                val ft = requireActivity().supportFragmentManager.beginTransaction()
-
-                val exchangeFragment = ExchangeFragment()
-
-                ft.replace(R.id.fl_MainFrameLayout, exchangeFragment)
-                ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
-                ft.commit()
-
-
-
-
-            }
+        // lih_InOut LinearLayout에 클릭 리스너를 추가
+        binding.lihInOut.setOnClickListener {
+            // FragmentTransaction을 시작하여 화면 전환
+            val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val ft = requireActivity().supportFragmentManager.beginTransaction()
+            val exchangeFragment = ExchangeFragment()
+            ft.replace(R.id.fl_MainFrameLayout, exchangeFragment)
+            ft.addToBackStack(null) // 백 스택에 추가하면 뒤로 가기 버튼으로 이전 프래그먼트로 이동 가능
+            ft.commit()
         }
 
         // 초기 상태에서 "불가능" 텍스트의 색상을 빨간색으로 설정
@@ -151,6 +161,16 @@ class MoreFragment : Fragment() {
         return view
     }
 
+    private fun saveButtonState(isEnabled: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("buttonEnabled", isEnabled)
+        editor.apply()
+    }
+
+    private fun loadButtonState(): Boolean {
+        return sharedPreferences.getBoolean("buttonEnabled", false)
+    }
+
     private fun setPromptInfo(): PromptInfo {
         val promptBuilder = PromptInfo.Builder()
 
@@ -165,11 +185,8 @@ class MoreFragment : Fragment() {
         return promptBuilder.build()
     }
 
-
-
     private fun setBiometricPrompt(): BiometricPrompt {
         val executor = ContextCompat.getMainExecutor(requireContext())
-
 
         return BiometricPrompt(requireActivity(), executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -177,7 +194,6 @@ class MoreFragment : Fragment() {
                 Toast.makeText(requireContext(), "Biometric authentication error: $errString", Toast.LENGTH_SHORT).show()
             }
 
-            // onAuthenticationSucceeded 메서드 내에서 버튼 가시성을 숨깁니다.
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 Toast.makeText(requireContext(), "Biometric authentication succeeded", Toast.LENGTH_SHORT).show()
@@ -215,7 +231,6 @@ class MoreFragment : Fragment() {
             }
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
                 Toast.makeText(requireContext(), "Biometric hardware unavailable", Toast.LENGTH_SHORT).show()
-
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 showEnrollmentDialog()
