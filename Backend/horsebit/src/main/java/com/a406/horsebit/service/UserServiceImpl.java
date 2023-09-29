@@ -154,7 +154,6 @@ public class UserServiceImpl implements UserService {
     //회원탈퇴
     @Override
     public void deleteUser(Long userId){
-        System.out.println("여긴 왔니");
         userRepository.deleteById(userId);
     }
 
