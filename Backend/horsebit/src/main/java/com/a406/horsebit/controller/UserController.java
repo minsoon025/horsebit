@@ -19,11 +19,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,27 +29,6 @@ public class UserController {
     private final UserService userService;
     private final OAuth2UserCustomService oAuth2UserCustomService;
 
-////    @GetMapping("/login")
-////    public String login(@RequestBody UserLogDto userResponseDto) throws Exception{
-////        oAuth2UserCustomService.loadUser(userResponseDto);
-////        return "로그인 성공";
-////    }
-//
-//    @GetMapping("/login")
-//    public String login(){
-//        return "oauthLogin";
-//    }
-//
-////    @GetMapping("/signup")
-////    public String signup(){
-////        return "signup";
-////    }
-//
-//    @PostMapping("/user")
-//    public String signup(AddUserRequest request){
-//        userService.save(request);  //회원가입 메서드 호출
-//        return "redirect:/login";   //회원가입 완료 후 로그인 페이지로 이동
-//    }
 
     // 로그아웃
     @GetMapping("/logout")
@@ -68,6 +43,17 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    //회원 탈퇴
+    @DeleteMapping("/api/user/delete")
+    public ResponseEntity deleteUser(@RequestParam Long userId){
+        log.info("delete user id : {}", userId);
+
+        userService.deleteUser(userId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
 
     //TODO: mapping url 공통으로 묶기
     //TODO: OAuth 개발하여 userNo 삭제 필요

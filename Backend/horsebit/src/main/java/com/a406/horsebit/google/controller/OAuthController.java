@@ -4,6 +4,7 @@ import com.a406.horsebit.domain.User;
 import com.a406.horsebit.google.dto.request.SignInDTO;
 import com.a406.horsebit.google.dto.request.SignUpDTO;
 import com.a406.horsebit.google.dto.response.SignInResponseDTO;
+import com.a406.horsebit.google.dto.response.UserNameDuplicatedResponseDTO;
 import com.a406.horsebit.service.UserService;
 import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class OAuthController {
 
     //로그인
     @PostMapping("/signIn")
-    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInDTO signInDTO) throws ParseException, JOSEException {
+    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInDTO signInDTO) throws Exception {
         log.debug("signIn()");
 
         SignInResponseDTO signInResponseDTO = userService.signIn(signInDTO);
@@ -33,7 +34,7 @@ public class OAuthController {
     }
 
     //회원가입
-    @PostMapping("/signup")
+    @PutMapping("/signUp")
     public ResponseEntity<User> signUp(@RequestBody SignUpDTO signUpDTO) throws ParseException, JOSEException {
         log.debug("signUp()");
 
@@ -42,6 +43,15 @@ public class OAuthController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-//    @GetMapping("/duplication")
-//    public ResponseEntity<>
+    //사용자 이름 중복체크
+    @GetMapping("/duplication")
+    public ResponseEntity<UserNameDuplicatedResponseDTO> duplicationCheck(@RequestBody String userName){
+        log.info("userName 중복체크");
+
+        boolean duplicated = userService.isDuplicatedUserName(userName);
+
+        UserNameDuplicatedResponseDTO dto = new UserNameDuplicatedResponseDTO(duplicated);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 }

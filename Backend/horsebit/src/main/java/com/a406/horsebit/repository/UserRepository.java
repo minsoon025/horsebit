@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //사용자 이름(앱에서 이름) 중복체크
     boolean existsByUserName(String UserName);
 
-    Optional<User> findByProviderId(String providerId);
+//    Optional<User> findByProviderId(String providerId);
 
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.alarmPushFlag = :alarmOn, u.biometricLoginFlag = :biometricLogin where u.id = :userNo")
