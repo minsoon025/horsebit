@@ -147,7 +147,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
         }
 
-   
+
         // ScrollView의 스크롤 리스너를 설정합니다.
         binding.svGone3.setOnScrollChangeListener { _, _, scrollY3, _, _ ->
             val totalHeight = binding.svGone3.getChildAt(0).height - binding.svGone3.height

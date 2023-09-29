@@ -26,7 +26,7 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
     }
 
 
-    class CustomViewHolder(private val binding: MyassetItemBinding) :
+    inner class CustomViewHolder(private val binding: MyassetItemBinding) :
 
         RecyclerView.ViewHolder(binding.root) {
 
@@ -47,13 +47,20 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
             binding.ivInformationHorseImg.setImageResource(imageResourceID)
 
             binding.llvMyAssetItem.setOnClickListener {
-                val intent = Intent(binding.root.context, OrderActivity::class.java)
+                val curPos: Int = adapterPosition
+                val mycoinList: MyAssetResponseBodyModel = myassetItemList.get(curPos)
 
-                intent.putExtra("name", myAsset.name) // 변경: myAsset.name 대신 coinItem.name 사용
-                intent.putExtra("code", myAsset.code) // 변경: myAsset.code 대신 coinItem.code 사용
-                intent.putExtra("profitOrLoss", myAsset.profitOrLoss)
-                intent.putExtra("returnRate", "${myAsset.returnRate}%")
-                binding.root.context.startActivity(intent)
+                if (!mycoinList.name.isNullOrEmpty()) {
+                    val intent = Intent(binding.root.context, OrderActivity::class.java)
+                    intent.putExtra("name", myAsset.name)
+                    intent.putExtra("code", myAsset.code)
+                    intent.putExtra("profitOrLoss", myAsset.profitOrLoss)
+                    intent.putExtra("returnRate", "${myAsset.returnRate}%")
+                    binding.root.context.startActivity(intent)
+                }
+
+
+
             }
 
             // 나머지 데이터 설정
