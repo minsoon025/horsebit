@@ -120,6 +120,12 @@ interface APIS {
         @Body request: KrwInOutRequestBodyModel // 요청 데이터를 Body로 전달
     ): Call<KrwInOutRequestBodyModel>
 
+    // 회원탈퇴
+    @DELETE("/api/user/delete")
+    fun deleteUser(
+        @Header("Authorization") authorization: String,
+    ): Call<UserRequestBodyDelete>
+
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"

@@ -70,6 +70,11 @@ class MyEditFragment : Fragment() {
             showEditNamePopup()
         }
 
+        binding.tvSend.setOnClickListener {
+            Toast.makeText(binding.root.context,"계좌정보가 등록 되었습니다.", Toast.LENGTH_SHORT).show()
+
+        }
+
 
         // 회원탈퇴 - 팝업 추가
         binding.tvOut.setOnClickListener {
@@ -89,6 +94,8 @@ class MyEditFragment : Fragment() {
                 .setNeutralButton("후원하기", object : DialogInterface.OnClickListener {
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         Log.d("MyTag", "neutral")
+                        Toast.makeText(binding.root.context,"김민태 국민 517102-01-441818", Toast.LENGTH_SHORT).show()
+
                     }
                 })
                 .create()

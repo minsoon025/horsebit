@@ -177,6 +177,11 @@ data class KrwInOutRequestBodyModel(
     val reqAmount: Long
 )
 
+// 회원탈퇴
+data class UserRequestBodyDelete(
+    val userId: Long
+)
+
 // 코인 상세 조회 (SSE)
 data class TokenListDetailResponseBodyModel(
     val availableDeposit: Double, //유저 잔여금액
