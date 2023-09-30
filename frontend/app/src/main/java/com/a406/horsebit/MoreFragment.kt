@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.biometric.BiometricManager
@@ -53,20 +54,12 @@ class MoreFragment : Fragment() {
         // 버튼 상태 변경 시 SharedPreferences에 저장
         binding.btnBodySwitch.setOnCheckedChangeListener { _, isChecked ->
             saveButtonState(isChecked)
+            updateUIBasedOnButtonState(isChecked)
         }
 
         // 버튼 활성화 여부에 따라 지문 인증 버튼 표시 여부 설정
-        if (isButtonEnabled) {
             binding.btnBioSet.visibility = View.INVISIBLE
-            binding.tvTradePossible.text = "가능"
-            binding.tvTradePossible.setTextColor(Color.BLUE)
-            binding.tvDepositDrawalPossible.text = "가능"
-            binding.tvDepositDrawalPossible.setTextColor(Color.BLUE)
-            binding.tvDepositDrawalPossible2.text = "가능"
-            binding.tvDepositDrawalPossible2.setTextColor(Color.BLUE)
-        } else {
-            binding.btnBioSet.visibility = View.VISIBLE
-        }
+
 
         // 나머지 코드는 여기에 추가하면 됩니다.
 
@@ -147,12 +140,7 @@ class MoreFragment : Fragment() {
         }
 
         // 초기 상태에서 "불가능" 텍스트의 색상을 빨간색으로 설정
-        binding.tvTradePossible.text = "불가"
-        binding.tvTradePossible.setTextColor(Color.RED)
-        binding.tvDepositDrawalPossible.text = "불가"
-        binding.tvDepositDrawalPossible.setTextColor(Color.RED)
-        binding.tvDepositDrawalPossible2.text = "불가"
-        binding.tvDepositDrawalPossible2.setTextColor(Color.RED)
+        updateUIBasedOnButtonState(isButtonEnabled)
 
         binding.btnBioSet.setOnClickListener {
             authenticateToEncrypt()
@@ -169,6 +157,26 @@ class MoreFragment : Fragment() {
 
     private fun loadButtonState(): Boolean {
         return sharedPreferences.getBoolean("buttonEnabled", false)
+    }
+
+    private fun updateUIBasedOnButtonState(isEnabled: Boolean) {
+        if (isEnabled) {
+            binding.tvTradePossible.text = "가능"
+            binding.tvTradePossible.setTextColor(Color.BLUE)
+            binding.tvDepositDrawalPossible.text = "가능"
+            binding.tvDepositDrawalPossible.setTextColor(Color.BLUE)
+            binding.tvDepositDrawalPossible2.text = "가능"
+            binding.tvDepositDrawalPossible2.setTextColor(Color.BLUE)
+            binding.btnBioSet.visibility = View.INVISIBLE
+        } else {
+            binding.tvTradePossible.text = "불가"
+            binding.tvTradePossible.setTextColor(Color.RED)
+            binding.tvDepositDrawalPossible.text = "불가"
+            binding.tvDepositDrawalPossible.setTextColor(Color.RED)
+            binding.tvDepositDrawalPossible2.text = "불가"
+            binding.tvDepositDrawalPossible2.setTextColor(Color.RED)
+            binding.btnBioSet.visibility = View.INVISIBLE
+        }
     }
 
     private fun setPromptInfo(): PromptInfo {
@@ -198,16 +206,9 @@ class MoreFragment : Fragment() {
                 super.onAuthenticationSucceeded(result)
                 Toast.makeText(requireContext(), "Biometric authentication succeeded", Toast.LENGTH_SHORT).show()
 
-                // "가능" 텍스트로 변경
-                binding.tvTradePossible.text = "가능"
-                binding.tvTradePossible.setTextColor(Color.BLUE)
-                binding.tvDepositDrawalPossible.text = "가능"
-                binding.tvDepositDrawalPossible.setTextColor(Color.BLUE)
-                binding.tvDepositDrawalPossible2.text = "가능"
-                binding.tvDepositDrawalPossible2.setTextColor(Color.BLUE)
-
-                // 버튼의 가시성을 invisible로 변경합니다.
-                binding.btnBioSet.visibility = View.INVISIBLE
+                // 버튼 상태를 저장하고 UI를 업데이트합니다.
+                saveButtonState(true)
+                updateUIBasedOnButtonState(true)
             }
 
             override fun onAuthenticationFailed() {
