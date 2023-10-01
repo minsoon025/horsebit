@@ -51,6 +51,7 @@ class OrderActivity : AppCompatActivity() {
                             binding.tvPercntageYesterday.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
                             binding.ivUpOrDown.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.blue))
                             binding.tvRisePrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
+                            binding.ivUpOrDown.rotation = 180f
 
                         }
                         else if(responseBody.priceRateOfChange > 0) {
