@@ -68,7 +68,7 @@ public class TokenProvider {
 
     //인증 절차
     public Authentication getAuthentication(String token) throws ParseException, JOSEException {
-        SignedJWT signedJWT = (SignedJWT) parseAccessToken(token);
+        SignedJWT signedJWT = (SignedJWT) parseRefreshToken(token);
         String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
 
         // AuthenticationManager 거치지 않고 Authentication 진행
@@ -206,7 +206,7 @@ public class TokenProvider {
         try {
             signedJWT = SignedJWT.parse(token);
             JWSVerifier verifier = new MACVerifier(sharedSecret);
-//            RSVerifier verifier = new RSVerifier(publicKey);
+
             log.info(signedJWT.toString());
             log.info(verifier.supportedJWSAlgorithms().toString());
 
