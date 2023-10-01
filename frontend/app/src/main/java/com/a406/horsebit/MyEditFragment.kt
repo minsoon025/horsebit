@@ -3,6 +3,7 @@ package com.a406.horsebit
 import MoreFragment
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.FragmentMyEditBinding
 
 class MyEditFragment : Fragment() {
@@ -111,11 +113,8 @@ class MyEditFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            val ft = requireActivity().supportFragmentManager.beginTransaction()
-            val homeFragment = HomeFragment()
-            ft.replace(R.id.fl_MainFrameLayout, homeFragment)
-            ft.addToBackStack(null)
-            ft.commit()
+            val intent = Intent(binding.root.context, LoginMainActivity::class.java)
+            binding.root.context.startActivity(intent)
         }
 
         spinnerBankOrSecurities = view.findViewById(R.id.spinner_bank_or_securities)
