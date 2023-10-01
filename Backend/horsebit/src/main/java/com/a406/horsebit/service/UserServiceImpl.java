@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
         String refreshToken = tokenProvider.buildRefreshToken(user);
 
         user.setRefreshToken(refreshToken);
+        user.setUserName(user.getUserName());
 
         return SignInResponseDTO.builder()
                 .accessToken(accessToken)
