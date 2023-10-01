@@ -51,16 +51,13 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
 
             binding.llvMyAssetItem.setOnClickListener {
                 val curPos: Int = adapterPosition
-                val mycoinList: MyAssetResponseBodyModel = myassetList[curPos]
+                val mycoinList: MyAssetResponseBodyModel = myassetItemList[curPos] // myassetItemList로 수정
                 Log.d("토큰넘버 입니다ddddddddddddddddddd", mycoinList.tokenNo.toString())
                 if (mycoinList.tokenNo != 0) {
                     val intent = Intent(binding.root.context, OrderActivity::class.java)
                     intent.putExtra("tokenNo", mycoinList.tokenNo)
                     binding.root.context.startActivity(intent)
                 }
-
-
-
             }
 
             // 나머지 데이터 설정
