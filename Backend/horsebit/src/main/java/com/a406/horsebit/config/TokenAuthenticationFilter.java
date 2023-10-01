@@ -50,7 +50,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             String token = resolveToken(request.getHeader(HEADER_AUTHORIZATION));
             authentication = tokenProvider.getAuthentication(token);
 
-            log.debug("authentication.isAuthenticated(): {}", authentication.isAuthenticated());
+            log.info("authentication.isAuthenticated(): {}", authentication.isAuthenticated());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.info("Security Context에 '{}' 인증 정보를 저장했습니다.", ((User) authentication.getPrincipal()).getNickname());
         } catch (Exception e) {
@@ -62,11 +62,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private String resolveToken(String authorizationHeaderValue) {
         log.info(authorizationHeaderValue);
-        if (!authorizationHeaderValue.startsWith(HEADER_AUTHORIZATION)) {
+        if (!authorizationHeaderValue.startsWith(TOKEN_PREFIX)) {
             throw new IllegalArgumentException("유효하지 않은 Authorization header value 입니다.");
         }
 
-        return authorizationHeaderValue.substring(HEADER_AUTHORIZATION.length());
+        return authorizationHeaderValue.substring(TOKEN_PREFIX.length());
     }
 
     private String getAccessToken(String authorizationHeader){
