@@ -4,12 +4,9 @@ import com.a406.horsebit.dto.UserSettingDTO;
 
 import com.a406.horsebit.config.oauth.OAuth2UserCustomService;
 
-import com.a406.horsebit.dto.request.AddUserRequest;
 import com.a406.horsebit.service.UserService;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -30,13 +25,6 @@ public class UserController {
     private final OAuth2UserCustomService oAuth2UserCustomService;
 
 
-    // 로그아웃
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
-        new SecurityContextLogoutHandler().logout(request, response,
-                SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/login";
-    }
 
     @GetMapping
     public ResponseEntity<?> getUser(@RequestHeader(required = true, name = "Authorization") String token){

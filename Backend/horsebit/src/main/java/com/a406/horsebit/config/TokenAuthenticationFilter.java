@@ -62,11 +62,11 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private String resolveToken(String authorizationHeaderValue) {
         log.info(authorizationHeaderValue);
-        if (!authorizationHeaderValue.startsWith(TOKEN_PREFIX)) {
+        if (!authorizationHeaderValue.startsWith(HEADER_AUTHORIZATION)) {
             throw new IllegalArgumentException("유효하지 않은 Authorization header value 입니다.");
         }
 
-        return authorizationHeaderValue.substring(TOKEN_PREFIX.length());
+        return authorizationHeaderValue.substring(HEADER_AUTHORIZATION.length());
     }
 
     private String getAccessToken(String authorizationHeader){
