@@ -37,7 +37,11 @@ public class User implements UserDetails {
     @Column(name = "user_name")
     private String userName;
 
-//    private String providerName; // 우리는 구글 로그인이라 google
+    public String getUserName() {
+        return userName;
+    }
+
+    //    private String providerName; // 우리는 구글 로그인이라 google
 //    private String providerId; // "google_" + Google, Naver, Kakao에서 로그인시 전달되는 id
     private String refreshToken;    //TODO: 확인필요 - 성민
 
