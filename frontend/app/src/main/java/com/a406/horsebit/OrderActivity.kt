@@ -51,14 +51,15 @@ class OrderActivity : AppCompatActivity() {
                         if(responseBody.priceRateOfChange < 0) {
                             binding.tvCurrPrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
                             binding.tvPercntageYesterday.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
+                            binding.ivUpOrDown.setImageResource(R.drawable.baseline_arrow_drop_down_24)
                             binding.ivUpOrDown.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.blue))
                             binding.tvRisePrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
-                            binding.ivUpOrDown.rotation = 180f
 
                         }
                         else if(responseBody.priceRateOfChange > 0) {
                             binding.tvCurrPrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
                             binding.tvPercntageYesterday.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
+                            binding.ivUpOrDown.setImageResource(R.drawable.baseline_arrow_drop_up_24)
                             binding.ivUpOrDown.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.red))
                             binding.tvRisePrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
                         }
