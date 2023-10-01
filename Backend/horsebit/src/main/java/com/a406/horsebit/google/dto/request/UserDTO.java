@@ -30,7 +30,7 @@ public class UserDTO {
                 .refreshToken(user.getRefreshToken())
                 .nickname(user.getNickname())
                 .email(user.getEmail())
-                .userName(user.getUsername())
+                .userName(user.getUserName())
                 .build();
     }
 }

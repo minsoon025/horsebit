@@ -26,9 +26,13 @@ public class WebOAuthSecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/*/*/auth/**").permitAll()
-                                .requestMatchers("/api/**").authenticated()
+                                .requestMatchers("/api/exchange/tokens").permitAll()
+                                .requestMatchers("/api/exchange/tokens/{tokenNo}/**").permitAll()
+                                .requestMatchers("/api/trends/*").permitAll()
 //                                .requestMatchers("/api/**").permitAll()
-                                .anyRequest().permitAll()
+//                                .requestMatchers("/api/**").authenticated()
+//                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)

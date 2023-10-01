@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
     private final OAuth2UserCustomService oAuth2UserCustomService;
-
-
 
     @GetMapping
     public ResponseEntity<?> getUser(@RequestHeader(required = true, name = "Authorization") String token){
@@ -33,7 +32,7 @@ public class UserController {
     }
 
     //회원 탈퇴
-    @DeleteMapping("/api/user/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity deleteUser(@RequestParam Long userId){
         log.info("delete user id : {}", userId);
 
@@ -41,14 +40,11 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
-
-    //TODO: mapping url 공통으로 묶기
     //TODO: OAuth 개발하여 userNo 삭제 필요
     /**
      * 개인 설정 조회
      */
-    @GetMapping("/api/user/setting")
+    @GetMapping("/setting")
     public UserSettingDTO findSettings() {
         Long userNo = 1L;
         log.info("UserController::findSettings() START");
@@ -61,7 +57,7 @@ public class UserController {
     /**
      * 개인 설정 변경
      */
-    @PostMapping("/api/user/setting")
+    @PostMapping("/setting")
     public String updateSetting(@RequestBody UserSettingDTO userSetting) {
         Long userNo = 1L;
         log.info("UserController::updateSetting() START");
