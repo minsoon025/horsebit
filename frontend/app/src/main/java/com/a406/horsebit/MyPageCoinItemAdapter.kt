@@ -2,11 +2,14 @@ package com.a406.horsebit
 
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.MyassetItemBinding
 class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyModel>) : RecyclerView.Adapter<MyPageCoinItemAdapter.CustomViewHolder>() {
+
+    var myassetList = ArrayList<MyAssetResponseBodyModel>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -48,14 +51,11 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
 
             binding.llvMyAssetItem.setOnClickListener {
                 val curPos: Int = adapterPosition
-                val mycoinList: MyAssetResponseBodyModel = myassetItemList.get(curPos)
-
-                if (!mycoinList.name.isNullOrEmpty()) {
+                val mycoinList: MyAssetResponseBodyModel = myassetList[curPos]
+                Log.d("토큰넘버 입니다ddddddddddddddddddd", mycoinList.tokenNo.toString())
+                if (mycoinList.tokenNo != 0) {
                     val intent = Intent(binding.root.context, OrderActivity::class.java)
-                    intent.putExtra("name", myAsset.name)
-                    intent.putExtra("code", myAsset.code)
-                    intent.putExtra("profitOrLoss", myAsset.profitOrLoss)
-                    intent.putExtra("returnRate", "${myAsset.returnRate}%")
+                    intent.putExtra("tokenNo", mycoinList.tokenNo)
                     binding.root.context.startActivity(intent)
                 }
 
