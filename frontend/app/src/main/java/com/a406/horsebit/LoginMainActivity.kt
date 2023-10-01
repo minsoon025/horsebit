@@ -89,7 +89,16 @@ class LoginMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val edit = pref.edit()
+
+        binding.tvLoginPass.setOnClickListener {
+            edit.putBoolean("firstLoginChk", false)
+            edit.apply()
+
+            val intent = Intent(binding.root.context, MainActivity::class.java)
+            binding.root.context.startActivity(intent)
+        }
 
         oneTapClient = Identity.getSignInClient(this)
         signUpRequest = BeginSignInRequest.builder()
