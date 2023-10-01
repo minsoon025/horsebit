@@ -1,5 +1,7 @@
 package com.a406.horsebit
 
+
+import androidx.compose.ui.semantics.Role
 import java.util.Date
 
 // 미체결 내역 조회
@@ -162,6 +164,7 @@ data class LoginRequestBodyModel(
 
 
 
+
 //-----------------------------
 
 // 회원가입
@@ -182,7 +185,14 @@ data class User(
 data class SignUpRequestBodyModel(
     val token: String,
     val userName: String
+
 )
+
+
+
+
+
+
 
 // 즐겨찾기 추가 / 삭제의 응답을 담을 ResponseBodyModel
 data class FavoriteResponseBodyModel(

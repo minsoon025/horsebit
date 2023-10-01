@@ -25,7 +25,7 @@
 //    private val binding by lazy {
 //        ActivityLoginBinding.inflate(layoutInflater)
 //    }
-//
+//3
 //    private val api = EyakService.create()
 //
 //    private var oneTapClient: SignInClient? = null
