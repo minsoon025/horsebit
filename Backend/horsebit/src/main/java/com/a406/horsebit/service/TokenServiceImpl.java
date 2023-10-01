@@ -86,7 +86,14 @@ public class TokenServiceImpl implements TokenService {
 		int ind = 0;
 		for(Long tokenNo : tokensNo) {
 			TokenDTO token = findOneToken(tokenNo); //특정 토큰의 정적데이터 조회
-			token.setCurrentPrice(rPrices.get(ind).getPrice()); //현재가 셋팅
+
+			//현재가 데이터가 없다면 오류 - 0으로 셋팅
+			if(rPrices.get(ind) == null) {
+				token.setCurrentPrice(0L);
+			}
+			else {
+				token.setCurrentPrice(rPrices.get(ind).getPrice()); //현재가 셋팅
+			}
 
 			//변동률 셋팅 - 소수점 3자리까지 표기
 			double rRate = rRates.get(ind).getPriceRateOfChange();
