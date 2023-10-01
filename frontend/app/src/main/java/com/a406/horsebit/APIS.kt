@@ -67,7 +67,6 @@ interface APIS {
     // 코인 목록 조회 (SSE)
     @GET("/api/exchange/tokens")
     fun tokenList(
-        @Header("Authorization") authorization: String,
     ): Call<ArrayList<Token>>
 
     // 보유 코인 목록 조회
@@ -125,6 +124,12 @@ interface APIS {
     fun deleteUser(
         @Header("Authorization") authorization: String,
     ): Call<UserRequestBodyDelete>
+
+    // 코인 주문 현황 상세 조회 (SSE)
+    @GET("/api/exchange/tokens/{tokenNo}/volumes")
+    fun coinOrderSituation(
+        @Header("tokenNo") tokenNo: Long,
+    ): Call<ArrayList<Order>>
 
 
     companion object {

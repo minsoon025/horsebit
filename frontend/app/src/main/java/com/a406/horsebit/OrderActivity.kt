@@ -26,7 +26,6 @@ class OrderActivity : AppCompatActivity() {
         binding.hsvTitle.isHorizontalScrollBarEnabled = false
 
         tokenNo = intent.getLongExtra("tokenNo", 0)
-        Log.d("!!!!!!!!!", tokenNo.toString())
 
         api.tokenListDetail(tokenNo = tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<TokenListDetailResponseBodyModel> {
             override fun onResponse(call: Call<TokenListDetailResponseBodyModel>, response: Response<TokenListDetailResponseBodyModel>) {
@@ -130,11 +129,11 @@ class OrderActivity : AppCompatActivity() {
 
         when(fragNum) {
             0 -> {
-                //val bundle = Bundle()
-                //bundle.putString("ticker", intent.getStringExtra("assetTicker").toString())
+                val bundle = Bundle()
+                bundle.putLong("tokenNo", tokenNo)
 
                 val changeFragment = StockOrderFragment()
-                //changeFragment.arguments = bundle
+                changeFragment.arguments = bundle
                 ft.replace(R.id.fl_Order, changeFragment)
                 ft.commit()
             }

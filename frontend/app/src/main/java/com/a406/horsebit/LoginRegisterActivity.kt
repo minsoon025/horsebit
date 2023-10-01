@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.ActivityLoginRegisterBinding
 import retrofit2.Call
@@ -31,7 +32,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
         loadData()
 
-        api.tokenList(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+        api.tokenList().enqueue(object: Callback<ArrayList<Token>> {
             override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "토큰 조회: 200 Success")

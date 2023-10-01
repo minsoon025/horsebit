@@ -171,7 +171,7 @@ class HomeFragment : Fragment() {
     private fun changeShowType(showType: Int) {
         when(showType) {
             0 -> {
-                api.tokenList(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+                api.tokenList().enqueue(object: Callback<ArrayList<Token>> {
                     override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "코인 목록 조회 (SSE): 200 Success")
@@ -184,7 +184,6 @@ class HomeFragment : Fragment() {
                                     tokenShowList.add(tokenShow)
                                 }
                             }
-                            // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
                             assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
