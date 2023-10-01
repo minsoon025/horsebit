@@ -11,34 +11,29 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.ExchangeItemBinding
 
+class ExchangeTableAdapter(val exchangeItemList: ArrayList<ExchangeDataResponseBodyModel>) : RecyclerView.Adapter<ExchangeTableAdapter.CustomViewHolder>() {
 
-class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBodyModel>) : RecyclerView.Adapter<ExchangeTableAdapter.CustomViewHolder>() {
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExchangeTableAdapter.CustomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val binding = ExchangeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CustomViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return exchangItemList.size
+        return exchangeItemList.size
     }
 
-    override fun onBindViewHolder(holder: ExchangeTableAdapter.CustomViewHolder, position: Int) {
-        val exchange = exchangItemList[position]
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+        val exchange = exchangeItemList[position]
         holder.bind(exchange)
-
-        // 첫 번째 항목에만 볼드 텍스트와 배경색 적용
-        if (position == 0) {
-            val context = holder.itemView.context
-            holder.applyBoldText()
-            holder.applyBackgroundColor(ContextCompat.getColor(context, R.color.main_color))
-        }
     }
 
     inner class CustomViewHolder(private val binding: ExchangeItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(exchange: ExchangeDataResponseBodyModel) {
+            // 아이템이 바인딩될 때 볼드체와 배경색 초기화
+            resetBoldText()
+            resetBackgroundColor()
+
             binding.tvIExOrderTime.text = exchange.executionTime ?: "-"
             binding.tvIExCoin.text = exchange.code
             binding.tvIExType.text = exchange.transactionType
@@ -48,6 +43,13 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
             binding.tvIExFee.text = exchange.fee
             binding.tvIExRealMoney.text = exchange.amount
             binding.tvIExOrderTime2.text = exchange.orderTime ?: "-"
+
+            // "executionTime"이 "채결시간"인 경우에만 볼드체와 배경색 적용
+            if (exchange.executionTime == "채결시간") {
+                applyBoldText()
+                val context = binding.root.context
+                applyBackgroundColor(ContextCompat.getColor(context, R.color.main_color))
+            }
 
             when (exchange.transactionType) {
                 "BID" -> {
@@ -66,26 +68,24 @@ class ExchangeTableAdapter(val exchangItemList: ArrayList<ExchangeDataResponseBo
                     binding.tvIExType.text = "출금"
                     binding.tvIExType.setTextColor(Color.BLUE)
                 }
-
+                "종류" -> {
+                    binding.tvIExType.text = "종류"
+                    binding.tvIExType.setTextColor(Color.BLACK)
+                }
             }
 
-
             binding.lihIExBar2.setOnClickListener {
-                    val curPos: Int = adapterPosition
-                val exchangeList: ExchangeDataResponseBodyModel = exchangItemList.get(curPos)
+                val curPos: Int = adapterPosition
+                val exchangeList: ExchangeDataResponseBodyModel = exchangeItemList[curPos]
                 if (exchangeList.tokenNo.toInt() != 0) {
                     val intent = Intent(binding.root.context, OrderActivity::class.java)
                     intent.putExtra("tokenNo", exchangeList.tokenNo)
                     binding.root.context.startActivity(intent)
-                }
-                else{
+                } else {
                     // 현금 거래의 값이 들어오게 되면
-                    Toast.makeText(binding.root.context,"현금 입출금내역입니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(binding.root.context, "현금 입출금내역입니다.", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
-
         }
 
         // 볼드 텍스트를 적용하는 함수
