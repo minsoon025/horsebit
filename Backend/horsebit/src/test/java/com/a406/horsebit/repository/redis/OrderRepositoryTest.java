@@ -23,7 +23,7 @@ class OrderRepositoryTest {
         this.redissonClient = redissonClient;
     }
 
-    @Test
+    //@Test
     void generateUser() {
         for (long tokenNo = 1L; tokenNo <= 25; ++tokenNo) {
 //            orderRepository.newUserOrderList(4L, tokenNo);
@@ -41,6 +41,13 @@ class OrderRepositoryTest {
     void checkUser() {
         for (long tokenNo = 1L; tokenNo <= 25; ++tokenNo) {
             log.info(redissonClient.getMap("USER_ORDER_LIST:1").get(1L).toString());
+        }
+    }
+
+    @Test
+    void generateTotalValue() {
+        for (long tokenNo = 1L; tokenNo <= 25; ++tokenNo) {
+            orderRepository.newTotalVolume(tokenNo);
         }
     }
 }
