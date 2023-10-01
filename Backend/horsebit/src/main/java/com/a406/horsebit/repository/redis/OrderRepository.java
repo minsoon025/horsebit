@@ -27,6 +27,7 @@ public class OrderRepository {
     private static final String REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX = "BUY_ORDER_SUMMARY_LIST:";
     private static final String REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX = "SELL_ORDER_SUMMARY_LIST:";
     private static final String REDIS_USER_ORDER_LIST_PREFIX = "USER_ORDER_LIST:";
+    private static final String REDIS_ORDER_NO_NAME = "ORDER_NO";
 
     @Autowired
     public OrderRepository(RedissonClient redissonClient) {
@@ -67,6 +68,22 @@ public class OrderRepository {
             RMap<Long, Order> userOrderMap = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo + ":" + tokenNo);
             userOrderList.fastPutIfAbsent(tokenNo, userOrderMap);
         }
+    }
+
+    public void newOrderNo() {
+        RBucket<Long> orderNoRBucket = redissonClient.getBucket(REDIS_ORDER_NO_NAME);
+        Long INITIAL_VALUE = 0L;
+        orderNoRBucket.set(INITIAL_VALUE);
+    }
+
+    //////////////////////////////
+    /* --- Order No Methods --- */
+    //////////////////////////////
+    public Long increaseOrderNo() {
+        RBucket<Long> orderNoRBucket = redissonClient.getBucket(REDIS_ORDER_NO_NAME);
+        Long orderNo = orderNoRBucket.get() + 1L;
+        orderNoRBucket.set(orderNo);
+        return orderNo;
     }
 
     /////////////////////////////////////
@@ -121,7 +138,7 @@ public class OrderRepository {
     private OrderSummary findOrderSummary(Long tokenNo, Long price, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
         // Get order book.
         RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
-        // Get order page.
+        // Get order page. Generate if there is no Page.
         OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
         // Get order summary list.
         RList<OrderSummary> orderSummaryRList = orderPage.getOrderSummaryRList();
@@ -144,7 +161,7 @@ public class OrderRepository {
     private Boolean saveOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
         // Get order book.
         RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
-        // Get order page.
+        // Get order page. Generate if there is no Page.
         OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
         // Update volume of page.
         orderPage.setVolume(orderPage.getVolume() + orderSummary.getRemain());
@@ -164,7 +181,7 @@ public class OrderRepository {
     private OrderSummary changeOrderSummary(Long tokenNo, Long price, OrderSummary orderSummary, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
         // Get order book.
         RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
-        // Get order page.
+        // Get order page. Generate if there is no Page.
         OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
         // Get order summary list.
         RList<OrderSummary> orderSummaryRList = orderPage.getOrderSummaryRList();
@@ -189,7 +206,7 @@ public class OrderRepository {
     private void deleteOrderSummary(Long tokenNo, Long price, String ORDER_BOOK_PREFIX, String ORDER_SUMMARY_LIST_PREFIX) {
         // Get order book.
         RMap<Long, OrderPage> tokenOrderBook = redissonClient.getMap(ORDER_BOOK_PREFIX + tokenNo);
-        // Get order page.
+        // Get order page. Generate if there is no Page.
         OrderPage orderPage = getOrderPage(tokenNo, price, tokenOrderBook, ORDER_SUMMARY_LIST_PREFIX);
         // Get order summary list.
         RList<OrderSummary> orderSummaryRList = orderPage.getOrderSummaryRList();
