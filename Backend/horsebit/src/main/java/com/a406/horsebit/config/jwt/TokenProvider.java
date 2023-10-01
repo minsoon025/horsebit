@@ -66,81 +66,7 @@ public class TokenProvider {
         random.nextBytes(sharedSecret);
     }
 
-//    public String generateToken(User user, Duration expiredAt){
-//        Date now = new Date();
-//        return makeToken(new Date(now.getTime() + expiredAt.toMillis()), user);
-//    }
-//
-//    //JWT 토큰 생성 메서드
-//    private String makeToken(Date expiry, User user) {
-//        Date now = new Date();
-//        String jwtToken = Jwts.builder()
-//                .setHeaderParam(Header.TYPE, Header.JWT_TYPE)   //헤더 TYP : JWT
-//                // 내용 iss : ajufresh@gmail.com (propertise 파일에서 설정한 값)
-//                .setIssuer(jwtProperties.getIssuer())
-//                .setIssuedAt(now)       // 내용 iat : 현재 시간
-//                .setExpiration(expiry)  // 내용 exp : expiry 멤버 변숫값
-//                .setSubject(user.getEmail())    //내용 sub : 유저의 이메일
-//                .claim("id", user.getId())  // 클레임 id : 유저 ID
-//                // 서명 : 비밀값과 함께 해시값을 HS256 방식으로 암호화
-//                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretkey())
-//                .compact();
-//        System.out.println("jwt토큰 : "+jwtToken);
-//        return jwtToken;
-//    }
-//
-//    //JWT 토큰 유효성 검증 메서드
-//    public boolean validToken(String token){
-//        try{
-//            Jwts.parser()
-//                    .setSigningKey(jwtProperties.getSecretkey())    //비밀값으로 복호화
-//                    .parseClaimsJws(token);
-//            return true;
-//        } catch (Exception e) { //복호화 과정에서 에러가 나면 유효하지 않은 토큰
-//            return false;
-//        }
-//    }
-//
-//    //토큰 기반으로 인증 정보를 가져오는 메서드
-//    public Authentication getAuthentication(String token){
-//        Claims claims = getClaims(token);
-//        Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
-//
-//        return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User(claims.getSubject(), "", authorities), token, authorities);
-//    }
-//
-//    //토큰 기반으로 유저 ID를 가져오는 메서드
-//    public Long getUserId(String token) {
-//        Claims claims = getClaims(token);
-//        return claims.get("id", Long.class);
-//    }
-//
-//    //클레임 조회
-//    private Claims getClaims(String token){
-//        return Jwts.parser().setSigningKey(jwtProperties.getSecretkey())
-//                .parseClaimsJws(token)
-//                .getBody();
-//    }
-//
-//
-//    private void setRefreshTokenHeader(HttpServletResponse response, String refreshToken) {
-//        response.setHeader(refreshHeader, refreshToken);
-//    }
-//
-//    private void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
-//        response.setHeader(accessHeader, accessToken);
-//    }
-//
-//
-//    public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
-//        response.setStatus(HttpServletResponse.SC_OK);
-//
-//        setAccessTokenHeader(response, accessToken);
-//        setRefreshTokenHeader(response, refreshToken);
-//        log.info("Access Token, Refresh Token 헤더 설정 완료");
-//    }
-
-
+    //인증 절차
     public Authentication getAuthentication(String token) throws ParseException, JOSEException {
         SignedJWT signedJWT = (SignedJWT) parseAccessToken(token);
         String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
@@ -158,7 +84,7 @@ public class TokenProvider {
 
 
 
-
+    //AccessToken 생성 메서드
     public String bulidAccessToken(User user) throws JOSEException, ParseException {
         JWSSigner signer = new MACSigner(sharedSecret);
 
@@ -177,6 +103,7 @@ public class TokenProvider {
         return s;
     }
 
+    //Refresh Token 생성 메서드
     public String buildRefreshToken(User user) throws JOSEException {
         JWSSigner signer = new MACSigner(sharedSecret);
 
@@ -195,12 +122,12 @@ public class TokenProvider {
         return s;
     }
 
-
+    //검증 없이 토큰 파싱 ( idToken 파싱 시 사용)
     public Object parseTokenWithoutValidation(String token) throws ParseException, JOSEException {
         return SignedJWT.parse(token);
     }
 
-
+        //TODO: 아래 주석처리한 코드는 providerName 사용 했을 때 -> 프론트와 이야기 후 삭제 예정
 //    public void validateJwtWithJwk(String token, String jwkStr) throws JOSEException, ParseException {
 ////        try {
 ////            log.debug("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token, jwkStr);
@@ -240,7 +167,7 @@ public class TokenProvider {
 
     public void validateJwtWithJwk(String token) throws JOSEException, ParseException {
         try {
-            log.info("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token);
+            log.info("JWK를 이용하여 JWT 검증 시작... token: {}", token);
 
             SignedJWT signedJWT = SignedJWT.parse(token);
             log.debug("검증 대상 토큰의 Calims signedJWT: {}", signedJWT.getJWTClaimsSet().toString());
@@ -321,8 +248,8 @@ public class TokenProvider {
     }
 
 
-    //성민 테스트 메서드 제작
-    public String extractEmailTest(String token) {
+    //idToken으로부터 이메일 추출 메서드 제작
+    public String extractEmail(String token) {
         String[] parts = token.split("\\.");
 
         if (parts.length == 3) {
@@ -331,6 +258,24 @@ public class TokenProvider {
                 JsonObject payloadJson = new JsonParser().parse(payload).getAsJsonObject();
                 String email = payloadJson.get("email").getAsString();
                 return email;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
+    }
+
+    //idToken으로부터 닉네임 추출 메서드 제작
+    public String extractNickname(String token) {
+        String[] parts = token.split("\\.");
+
+        if (parts.length == 3) {
+            try {
+                String payload = new String(Base64.getDecoder().decode(parts[1]));
+                JsonObject payloadJson = new JsonParser().parse(payload).getAsJsonObject();
+                String nickname = payloadJson.get("name").getAsString();
+                return nickname;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
