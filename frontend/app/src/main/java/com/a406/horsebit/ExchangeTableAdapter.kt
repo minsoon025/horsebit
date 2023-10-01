@@ -30,9 +30,32 @@ class ExchangeTableAdapter(val exchangeItemList: ArrayList<ExchangeDataResponseB
     inner class CustomViewHolder(private val binding: ExchangeItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(exchange: ExchangeDataResponseBodyModel) {
-            // 아이템이 바인딩될 때 볼드체와 배경색 초기화
-            resetBoldText()
-            resetBackgroundColor()
+
+
+            binding.tvIExOrderTime.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExCoin.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExType.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExSeep.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExOne.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExMoney.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExFee.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExRealMoney.setBackgroundResource(R.drawable.gray_border_background)
+            binding.tvIExOrderTime2.setBackgroundResource(R.drawable.gray_border_background)
+
+            binding.tvIExOrderTime.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExCoin.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExType.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExSeep.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExOne.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExMoney.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExFee.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExRealMoney.setTypeface(null, Typeface.NORMAL)
+            binding.tvIExOrderTime2.setTypeface(null, Typeface.NORMAL)
+
+
+
+
+
 
             binding.tvIExOrderTime.text = exchange.executionTime ?: "-"
             binding.tvIExCoin.text = exchange.code
@@ -48,8 +71,12 @@ class ExchangeTableAdapter(val exchangeItemList: ArrayList<ExchangeDataResponseB
             if (exchange.executionTime == "채결시간") {
                 applyBoldText()
                 val context = binding.root.context
-                applyBackgroundColor(ContextCompat.getColor(context, R.color.main_color))
+                applyBackgroundColor(ContextCompat.getColor(context, R.color.main_color ))
+            }else{
+                binding.tvIExOrderTime.setTypeface(null, Typeface.NORMAL)
+
             }
+
 
             when (exchange.transactionType) {
                 "BID" -> {
@@ -125,6 +152,9 @@ class ExchangeTableAdapter(val exchangeItemList: ArrayList<ExchangeDataResponseB
             binding.tvIExFee.setBackgroundColor(color)
             binding.tvIExRealMoney.setBackgroundColor(color)
             binding.tvIExOrderTime2.setBackgroundColor(color)
+        }
+        fun applyBackgroundColor2(color: Int) {
+            binding.root.setBackgroundResource(color)
         }
 
         // 배경색을 초기화하는 함수

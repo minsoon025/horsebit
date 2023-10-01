@@ -114,17 +114,13 @@ class ExchangeFragment : Fragment() {
                     }
                 })
             }
-
             alertDialog.dismiss() // 팝업창을 닫습니다.
         }
-
-
 
         // "닫기" 버튼 클릭 이벤트 처리
         closeButton.setOnClickListener {
             alertDialog.dismiss() // 팝업창을 닫습니다.
         }
-
         // 팝업창을 표시합니다.
         alertDialog.show()
     }
@@ -132,8 +128,6 @@ class ExchangeFragment : Fragment() {
 
     override fun onCreateView( inflater: LayoutInflater,  container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
-
 
         binding = FragmentExchangeBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -144,7 +138,7 @@ class ExchangeFragment : Fragment() {
         // 데이터 생성
         val newData = ExchangeDataResponseBodyModel(
             executionTime = "채결시간",
-            tokenNo = 1,
+            tokenNo = 0,
             code = "코인명",
             transactionType = "종류",
             volume = "거래수량",
