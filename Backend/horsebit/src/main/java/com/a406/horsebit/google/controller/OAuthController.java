@@ -17,7 +17,7 @@ import java.text.ParseException;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/login/auth")
 public class OAuthController {
 
     private final UserService userService;
