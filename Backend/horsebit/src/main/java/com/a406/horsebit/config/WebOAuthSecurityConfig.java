@@ -2,9 +2,6 @@ package com.a406.horsebit.config;
 
 import com.a406.horsebit.config.jwt.JwtAuthenticationEntryPoint;
 import com.a406.horsebit.config.jwt.TokenProvider;
-import com.a406.horsebit.config.oauth.OAuth2UserCustomService;
-import com.a406.horsebit.repository.RefreshTokenRepository;
-import com.a406.horsebit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @RequiredArgsConstructor
 @Configuration
@@ -30,8 +26,8 @@ public class WebOAuthSecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/*/*/auth/**").permitAll()
-                                //.requestMatchers("/api/**").authenticated()
-                                .requestMatchers("/api/**").permitAll()
+                                .requestMatchers("/api/**").authenticated()
+//                                .requestMatchers("/api/**").permitAll()
                                 .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

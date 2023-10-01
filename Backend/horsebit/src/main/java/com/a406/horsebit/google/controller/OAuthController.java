@@ -7,10 +7,14 @@ import com.a406.horsebit.google.dto.response.SignInResponseDTO;
 import com.a406.horsebit.google.dto.response.UserNameDuplicatedResponseDTO;
 import com.a406.horsebit.service.UserService;
 import com.nimbusds.jose.JOSEException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -42,6 +46,15 @@ public class OAuthController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    //로그아웃
+    @GetMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response){
+        new SecurityContextLogoutHandler().logout(request, response,
+                SecurityContextHolder.getContext().getAuthentication());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
     //사용자 이름 중복체크
     @GetMapping("/duplication")
