@@ -1,6 +1,5 @@
 package com.a406.horsebit
 
-import java.time.LocalDateTime
 import java.util.Date
 
 // 미체결 내역 조회
@@ -158,14 +157,31 @@ data class LoginRequestBodyModel(
     //val providerName: String,
     val token: String,
 
+
 )
 
 
 
+//-----------------------------
 
 // 회원가입
+data class SignUpResponseBodyModel(
+    val user: User
+)
+
+data class User(
+    val email : String, //유저 이메일
+    val nickname : String, // 유저 구글 이름
+    val userName: String, // 유저 홀스빗 이름
+    val role: String
+)
+
+
+// 회원가입 요청 모델
+
 data class SignUpRequestBodyModel(
-    val userName: String,
+    val token: String,
+    val userName: String
 )
 
 // 즐겨찾기 추가 / 삭제의 응답을 담을 ResponseBodyModel

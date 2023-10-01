@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.ActivityLoginRegisterBinding
 import retrofit2.Call
@@ -30,34 +29,9 @@ class LoginRegisterActivity : AppCompatActivity() {
         binding = ActivityLoginRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadData()
-
-        api.tokenList().enqueue(object: Callback<ArrayList<Token>> {
-            override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
-                if(response.code() == 200) {    // 200 Success
-                    Log.d("로그", "토큰 조회: 200 Success")
-
-                    val responseBody = response.body()
-
-                    Log.d("dddd", responseBody.toString())
+        loadData()  // loadData()에서 토큰을 반환하도록 수정
 
 
-                }
-                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
-                    Log.d("로그", "토큰 조회: 400 Bad Request")
-                }
-                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
-                    Log.d("로그", "토큰 조회: 401 Unauthorized")
-                }
-                else if(response.code() == 404) {   // 404 Not Found
-                    Log.d("로그", "토큰 조회: 404 Not Found")
-                }
-            }
-            override fun onFailure(call: Call<ArrayList<Token>>, t: Throwable) {
-                Log.d("로그", "토큰 조회: onFailure")
-                Log.d("ddddd", t.toString())
-            }
-        })
         // tvLookingText1의 클릭 리스너를 먼저 설정합니다.
         binding.llhRegisterWord1.setOnClickListener {
             // LinearLayout의 visibility를 visible로 변경합니다.
@@ -87,13 +61,13 @@ class LoginRegisterActivity : AppCompatActivity() {
                     checkflag[0] = true
                     checkflag[0] = !checkflag[0]
                     registerPossible ()
-                    saveData() // 데이터 저장
+
                 }
                 binding.tvUnderAgree1.setOnClickListener {
                     binding.ivGreyCheck1.setImageResource(R.drawable.ok_green)
                     checkflag[0] = true
                     registerPossible ()
-                    saveData() // 데이터 저장
+
                 }
             }
         }
@@ -115,20 +89,20 @@ class LoginRegisterActivity : AppCompatActivity() {
 
             if (scrollY2 >=  totalHeight) {
                 flag[1] = true
-                     }
-                if (flag[1]) {
-                    binding.tvLookingText2.setOnClickListener {
-                        binding.ivGreyCheck2.setImageResource(R.drawable.ok_green)
-                        checkflag[1] = true
-                        registerPossible ()
-                        saveData() // 데이터 저장
-                    }
-                    binding.tvUnderAgree2.setOnClickListener {
-                        binding.ivGreyCheck2.setImageResource(R.drawable.ok_green)
-                        checkflag[1] = true
-                        registerPossible ()
-                        saveData() // 데이터 저장
-                    }
+            }
+            if (flag[1]) {
+                binding.tvLookingText2.setOnClickListener {
+                    binding.ivGreyCheck2.setImageResource(R.drawable.ok_green)
+                    checkflag[1] = true
+                    registerPossible ()
+
+                }
+                binding.tvUnderAgree2.setOnClickListener {
+                    binding.ivGreyCheck2.setImageResource(R.drawable.ok_green)
+                    checkflag[1] = true
+                    registerPossible ()
+
+                }
             }
         }
 
@@ -163,13 +137,13 @@ class LoginRegisterActivity : AppCompatActivity() {
                     binding.ivGreyCheck4.setImageResource(R.drawable.ok_green)
                     checkflag[2] = true
                     registerPossible ()
-                    saveData() // 데이터 저장
+
                 }
                 binding.tvUnderAgree4.setOnClickListener {
                     binding.ivGreyCheck4.setImageResource(R.drawable.ok_green)
                     checkflag[2] = true
                     registerPossible ()
-                    saveData() // 데이터 저장
+
                 }
             }
 
@@ -180,49 +154,113 @@ class LoginRegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun loadData() {
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)  // import androidx.preference.PreferenceManager 인지 확인
-        val token = pref.getString("token", "")
-        // binding.[데이터를 쓸 곳].setText(pref.getString("[키]", "[키가 없을 경우의 값]"))
+    private fun loadData(): String {
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        return pref.getString("token", "") ?: ""
     }
 
-    private fun saveData() {
+    private fun saveData(nickname: String) {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
         val edit = pref.edit()
 
-        // 토큰 정보를 저장
-        val token = "your_token_here" // 실제 토큰 정보로 대체
-        edit.putString("[키]", "[데이터]")
+        // nickname 매개 변수를 제대로 사용하도록 수정:
+        edit.putString("userName", nickname)
+        edit.apply()
 
-
-        // 닉네임 정보도 동일하게 저장할 수 있습니다.
-        val nickname = "your_nickname_here" // 실제 닉네임 정보로 대체
-        edit.putString("[키]", "[데이터]")
-
-
-        edit.apply()    // 적용
-
+        val intent = Intent(this@LoginRegisterActivity, LoginMainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun registerPossible() {
         if (checkflag[0] && checkflag[1]) {
             binding.vRegisterFinal.setBackgroundResource(R.drawable.rounded_shape_green_ractangle)
             binding.flRegisterFinal.setOnClickListener {
+
+                val pref = PreferenceManager.getDefaultSharedPreferences(this)
+                val token: String = pref.getString("GOOGLE_TOKEN", "") ?: ""
+                val userName = binding.etNicknameMake.text.toString() // 실제 userName 값을 할당해야 합니다.
+
+                val signUpRequest = SignUpRequestBodyModel(token = token, userName = userName)
+
+
+                api.SingUp(authorization = "Bearer ${1}", request = signUpRequest).enqueue(object:
+                    Callback<SignUpResponseBodyModel> {
+                    override fun onResponse(call: Call<SignUpResponseBodyModel>, response: Response<SignUpResponseBodyModel>) {
+                        if(response.code() == 200) {    // 200 Success
+                            Log.d("로그", "회원 가입: 200 Success")
+
+                            val responseBody = response.body()
+
+                            Log.d("dddd", responseBody.toString())
+
+
+                        }
+                        else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                            Log.d("로그", "회원 가입: 400 Bad Request")
+                        }
+                        else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                            Log.d("로그", "회원 가입: 401 Unauthorized")
+                        }
+                        else if(response.code() == 404) {   // 404 Not Found
+                            Log.d("로그", "회원 가입: 404 Not Found")
+                        }
+                    }
+                    override fun onFailure(call: Call<SignUpResponseBodyModel>, t: Throwable) {
+                        Log.d("로그", "회원 가입: onFailure")
+                        Log.d("ddddd", t.toString())
+                    }
+                })
+
                 val intent = Intent(this@LoginRegisterActivity, MainActivity::class.java)
                 startActivity(intent)
-                saveData() // 데이터 저장
+
             }
             if (checkflag[2]) {
                 binding.ivCircleCheck.setBackgroundResource(R.drawable.rounded_shape_green_ractangle)
                 binding.flRegisterFinal.setOnClickListener {
+
+                    val pref = PreferenceManager.getDefaultSharedPreferences(this)
+                    val token: String = pref.getString("GOOGLE_TOKEN", "") ?: ""
+                    val userName = binding.etNicknameMake.text.toString() // 실제 userName 값을 할당해야 합니다.
+
+                    val signUpRequest = SignUpRequestBodyModel(token = token, userName = userName)
+
+
+                    api.SingUp(authorization = "Bearer ${1}", request = signUpRequest).enqueue(object: Callback<SignUpResponseBodyModel> {
+                        override fun onResponse(call: Call<SignUpResponseBodyModel>, response: Response<SignUpResponseBodyModel>) {
+                            if (response.isSuccessful) {
+                                val responseBody = response.body()
+                                if (responseBody != null) {
+                                    Log.d("로그", "회원 가입: 200 Success")
+
+                                    val responseBody = response.body()
+
+                                    Log.d("dddd", responseBody.toString())
+
+
+                                } else if (response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                                    Log.d("로그", "회원 가입: 400 Bad Request")
+                                } else if (response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                                    Log.d("로그", "회원 가입: 401 Unauthorized")
+                                } else if (response.code() == 404) {   // 404 Not Found
+                                    Log.d("로그", "회원 가입: 404 Not Found")
+                                }
+                            }
+                        }
+                        override fun onFailure(call: Call<SignUpResponseBodyModel>, t: Throwable) {
+                            Log.d("로그", "회원 가입: onFailure")
+                            Log.d("ddddd", t.toString())
+                        }
+                    })
+
                     val intent = Intent(this@LoginRegisterActivity, MainActivity::class.java)
                     startActivity(intent)
-                    saveData() // 데이터 저장
+
+                }
             }
         }
+
+
+
     }
-
-
-
-}
 }

@@ -122,9 +122,9 @@ class LoginMainActivity : AppCompatActivity() {
                     .build())
             .build()
 
-        // 이미 구글 토큰을 발급 받았을 경우 자동 로그인 시도
-        val loadedGoogleToken = pref.getString("GOOGLE_TOKEN", null)
-        tryLoginToServer(loadedGoogleToken, isAutoLogin = true)
+//        // 이미 구글 토큰을 발급 받았을 경우 자동 로그인 시도
+//        val loadedGoogleToken = pref.getString("GOOGLE_TOKEN", null)
+//        tryLoginToServer(loadedGoogleToken, isAutoLogin = true)
 
         // 구글 토큰이 없다면 로그인 버튼 눌러서 진행하도록
         binding.ivGoogleLogin.setOnClickListener {
@@ -136,17 +136,26 @@ class LoginMainActivity : AppCompatActivity() {
     private fun tryLoginToServer(loadedGoogleToken: String?, isAutoLogin: Boolean) {
         if (loadedGoogleToken != null) {
             // 서버에 로그인 시도
-            Log.d("여기로 들어오나체크가아ㅣㅓㅇ니ㅏㅓ리너리", "tryLoginToServer오류노")
-//            val data = LoginRequestBodyModel(
-//             //   providerName = "google", // 이 부분은 실제로 사용하는 프로바이더 이름으로 변경하세요.
-//                token = loadedGoogleToken
-//            )
-            api.login(token = loadedGoogleToken).enqueue(object : Callback<LoginResponseBodyModel> {
+
+//            val pref = PreferenceManager.getDefaultSharedPreferences(this)
+//            val edit = pref.edit()
+//            edit.putBoolean("firstLoginChk", false).apply()
+
+
+            val loginRequestData = LoginRequestBodyModel(token = loadedGoogleToken)
+
+
+            api.login(request = loginRequestData).enqueue(object : Callback<LoginResponseBodyModel> {
                 override fun onResponse(call: Call<LoginResponseBodyModel>, response: Response<LoginResponseBodyModel>) {
                     Log.d("로그 응답 코드를 확인합니다", response.code().toString())
+
                     if (response.code() == 400) {
                         Log.d("로그11111", "로그인 400 Bad Request")
-                        // 회원가입 페이지를 띄워주자
+
+                        // 오류 메시지를 좀 더 자세히 출력
+                        val errorBodyStr = response.errorBody()?.string()
+                        Log.d("로그 400 오류 상세", errorBodyStr ?: "오류 응답 본문이 없습니다")
+
                         if (!isAutoLogin) {
                             val intent = Intent(applicationContext, LoginRegisterActivity::class.java)
                             binding.root.context.startActivity(intent)
@@ -167,7 +176,9 @@ class LoginMainActivity : AppCompatActivity() {
                                 .putString("USER_NAME", loginModel.userDTO.userName)
                                 .putString("ID", loginModel.userDTO.id.toString())
                                 .putString("SERVER_REFRESH_TOKEN", loginModel.userDTO.refreshToken)
+                                .putBoolean("firstLoginChk", false)
                                 .apply()
+
 
                             val intent = Intent(binding.root.context, MainActivity::class.java)
                             binding.root.context.startActivity(intent)
@@ -181,7 +192,7 @@ class LoginMainActivity : AppCompatActivity() {
                     // 로그인 실패 시 회원가입 페이지로 이동 (토큰은 발급받은 상태)
                     // 거기서 회원가입 정보를 입력 받고 회원가입 진행
                     // 자동 로그인 때는 이 작업을 강제시키지 말자
-                    // 네트워크 에러인 경우, 저 주소를 찾을 수 없다고 나온다
+                    // 네트워크 에러인 경우, 저 주소를 찾을 수 없다고 나온다s
 
                     val intent = Intent(binding.root.context, LoginMainActivity::class.java)
                     binding.root.context.startActivity(intent)

@@ -10,9 +10,9 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 interface APIS {
@@ -20,15 +20,17 @@ interface APIS {
     // 로그인
     @POST("/api/login/auth/signIn")
     fun login(
-        @Body token: String,
+        @Body request: LoginRequestBodyModel
     ):Call<LoginResponseBodyModel>
 
-
+    // ----------------------------------
     // 회원가입
-    @POST("/api/user/signup")
+    @PUT("/api/login/auth/signUp")
     fun SingUp(
         @Header("Authorization") authorization: String,
-    )
+        @Body request: SignUpRequestBodyModel
+    ):Call<SignUpResponseBodyModel>
+
     // 닉네임 중복체크
 
     // 마이페이지 총 자산 불러오기
