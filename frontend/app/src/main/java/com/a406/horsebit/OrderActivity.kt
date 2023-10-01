@@ -43,8 +43,10 @@ class OrderActivity : AppCompatActivity() {
 
                         binding.tvCurrPrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
                         binding.tvPercntageYesterday.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+                        binding.ivUpOrDown.setImageResource(R.drawable.baseline_horizontal_rule_24)
                         binding.ivUpOrDown.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
                         binding.tvRisePrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.black))
+
 
                         if(responseBody.priceRateOfChange < 0) {
                             binding.tvCurrPrice.setTextColor(ContextCompat.getColor(binding.root.context, R.color.blue))
