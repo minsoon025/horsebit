@@ -68,7 +68,7 @@ public class TokenProvider {
 
     //인증 절차
     public Authentication getAuthentication(String token) throws ParseException, JOSEException {
-        SignedJWT signedJWT = (SignedJWT) parseRefreshToken(token);
+        SignedJWT signedJWT = (SignedJWT) parseAccessToken(token);
         String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
 
         // AuthenticationManager 거치지 않고 Authentication 진행
@@ -79,7 +79,7 @@ public class TokenProvider {
                 new SimpleGrantedAuthority(user.getRole().getKey())
         );
 
-        return new UsernamePasswordAuthenticationToken(user.getId(), token, authorities);
+        return new UsernamePasswordAuthenticationToken(user, token, authorities);
     }
 
 
@@ -208,7 +208,7 @@ public class TokenProvider {
             JWSVerifier verifier = new MACVerifier(sharedSecret);
 
             log.info(signedJWT.toString());
-            log.info(verifier.supportedJWSAlgorithms().toString());
+            log.info(verifier.toString());
 
             if (!signedJWT.verify(verifier)) {
                 throw new IllegalArgumentException("Access 토큰이 유효하지 않습니다.");

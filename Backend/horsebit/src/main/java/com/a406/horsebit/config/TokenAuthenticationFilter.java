@@ -49,8 +49,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 //            log.debug("authenticationHeaderValue: {}", request.getHeader(HEADER_AUTHORIZATION));
             String token = resolveToken(request.getHeader(HEADER_AUTHORIZATION));
             authentication = tokenProvider.getAuthentication(token);
-
+            log.info(token);
             log.info("authentication.isAuthenticated(): {}", authentication.isAuthenticated());
+            log.info(authentication.toString());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.info("Security Context에 '{}' 인증 정보를 저장했습니다.", ((User) authentication.getPrincipal()).getNickname());
         } catch (Exception e) {
