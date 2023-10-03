@@ -177,11 +177,8 @@ public class OrderRepository {
         Double volume = getOrderVolume(price, tokenOrderBookVolume) + orderSummary.getRemain();
         tokenOrderBookVolume.fastPut(price, volume);
         // Get order summary list.
-        RList<OrderSummary> orderSummaryRList = tokenOrderBookList.get(price);
+        RList<OrderSummary> orderSummaryRList = redissonClient.getList(ORDER_BOOK_PREFIX + ORDER_BOOK_ORDER_SUMMARY_LIST_PREFIX + tokenNo + ":" + price);
         // Update order summary list.
-        if (orderSummaryRList == null) {
-            orderSummaryRList = redissonClient.getList(ORDER_BOOK_PREFIX + ORDER_BOOK_ORDER_SUMMARY_LIST_PREFIX + tokenNo + ":" + price);
-        }
         orderSummaryRList.add(orderSummary);
         // Update order book order summary list map.
         tokenOrderBookList.fastPut(price, orderSummaryRList);
@@ -236,11 +233,6 @@ public class OrderRepository {
         tokenOrderBookVolume.fastPut(price, volume);
         // Delete order summary.
         orderSummaryRList.fastRemove(FIRST_INDEX);
-        // Check if order summary list is empty.
-        if (orderSummaryRList.isEmpty()) {
-            Double INITIAL_VOLUME = 0.0;
-            tokenOrderBookVolume.fastPut(price, INITIAL_VOLUME);
-        }
     }
 
     private Double getOrderVolume(Long price, RMap<Long, Double> tokenOrderBookVolume) {
