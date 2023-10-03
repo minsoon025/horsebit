@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.a406.horsebit.aop.DistributedLock;
+import com.a406.horsebit.domain.Token;
 import com.a406.horsebit.domain.Trade;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderSummary;
 import com.a406.horsebit.domain.redis.VolumePage;
+import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.TradeRepository;
 import com.a406.horsebit.repository.redis.OrderRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
@@ -27,14 +29,16 @@ public class OrderServiceImpl implements OrderService {
 	private final OrderRepository orderRepository;
 	private final PriceRepository priceRepository;
 	private final TradeRepository tradeRepository;
+	private final TokenRepository tokenRepository;
 
 	private final double TENTH_MINIMUM_ORDER_QUANTITY = 0.0001;
 
 	@Autowired
-	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, TradeRepository tradeRepository) {
+	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, TradeRepository tradeRepository, TokenRepository tokenRepository) {
 		this.orderRepository = orderRepository;
 		this.priceRepository = priceRepository;
 		this.tradeRepository = tradeRepository;
+		this.tokenRepository = tokenRepository;
 	}
 
 	@Override
@@ -66,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
 				orderRepository.deleteSellVolumePage(tokenNo);
 			}
 			// Sell order remain is less than order remain.
-			else if (orderSummary.getRemain() < remain) {
+			else if (orderSummary.getRemain() < remain - TENTH_MINIMUM_ORDER_QUANTITY) {
 				double orderSummaryRemain = orderSummary.getRemain();
 				// Update order page at order book.
 				orderRepository.deleteSellOrderSummary(tokenNo, minSellVolumePage.getPrice());
@@ -138,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
 				orderRepository.deleteBuyVolumePage(tokenNo);
 			}
 			// Sell order remain is less than order remain.
-			else if (orderSummary.getRemain() < remain) {
+			else if (orderSummary.getRemain() < remain  - TENTH_MINIMUM_ORDER_QUANTITY) {
 				double orderSummaryRemain = orderSummary.getRemain();
 				// Update order page at order book.
 				orderRepository.deleteBuyOrderSummary(tokenNo, maxBuyVolumePage.getPrice());
@@ -192,9 +196,11 @@ public class OrderServiceImpl implements OrderService {
 	private void addBuyOrder(Long userNo, Long tokenNo, Order order, Long orderNo, double quantity, double remain, long price) {
 		// Add order summary to order book.
 		OrderSummary orderSummary = new OrderSummary(orderNo, userNo, quantity, remain);
+//		double buyVolume = orderRepository.findBuyVolumeByPriceAtOrderBook(tokenNo, price) + remain;
 		orderRepository.saveBuyOrderSummary(tokenNo, price, orderSummary);
 		// Update volume page at volume book.
-		VolumePage volumePage = new VolumePage(price, orderRepository.findBuyVolumeByPriceAtOrderBook(tokenNo, price));
+		double buyVolume = orderRepository.findBuyVolumeByPriceAtOrderBook(tokenNo, price);
+		VolumePage volumePage = new VolumePage(price, buyVolume);
 		orderRepository.saveBuyVolumePage(tokenNo, volumePage);
 		// Update total volume.
 		orderRepository.changeBuyTotalVolume(tokenNo, quantity);
@@ -207,7 +213,8 @@ public class OrderServiceImpl implements OrderService {
 		OrderSummary orderSummary = new OrderSummary(orderNo, userNo, quantity, remain);
 		orderRepository.saveSellOrderSummary(tokenNo, price, orderSummary);
 		// Update volume page at volume book.
-		VolumePage volumePage = new VolumePage(price, orderRepository.findSellVolumeByPriceAtOrderBook(tokenNo, price));
+		double sellVolume = orderRepository.findSellVolumeByPriceAtOrderBook(tokenNo, price);
+		VolumePage volumePage = new VolumePage(price, sellVolume);
 		orderRepository.saveSellVolumePage(tokenNo, volumePage);
 		// Update total volume.
 		orderRepository.changeSellTotalVolume(tokenNo, quantity);
@@ -234,15 +241,20 @@ public class OrderServiceImpl implements OrderService {
 	public void sellExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, long sellOrderNo, long sellUserNo, LocalDateTime tradeTime) {
 		Order buyOrder = orderRepository.findOrder(buyUserNo,tokenNo, buyOrderNo);
 		Trade trade = new Trade();
+//		trade.setToken(tokenRepository.findById(tokenNo).get());
 		trade.setPrice(((int) price));
 		trade.setQuantity(quantity);
+		trade.setTimestamp(Timestamp.valueOf(tradeTime));
 		trade.setBuyerOrderNo(buyOrderNo);
 		trade.setBuyerUserNo(buyUserNo);
 		trade.setBuyerOrderTime(Timestamp.valueOf(buyOrder.getOrderTime()));
 		trade.setSellerOrderNo(sellOrderNo);
 		trade.setSellerUserNo(sellUserNo);
 		trade.setSellerOrderTime(Timestamp.valueOf(tradeTime));
-		tradeRepository.save(trade);
+		trade.setSellBuyFlag("B");
+//		tradeRepository.save(trade);
+		trade.setSellBuyFlag("S");
+//		tradeRepository.save(trade);
 	}
 
 	@DistributedLock(key = "'ORDER_NO_LOCK'")
