@@ -26,8 +26,6 @@ public class OrderRepository {
     private static final String ORDER_BOOK_ORDER_SUMMARY_LIST_PREFIX = "LIST:";
     private static final String REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX = "BUY_VOLUME_BOOK:";
     private static final String REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX = "SELL_VOLUME_BOOK:";
-    private static final String REDIS_TOKEN_BUY_ORDER_SUMMARY_LIST_PREFIX = "BUY_ORDER_SUMMARY_LIST:";
-    private static final String REDIS_TOKEN_SELL_ORDER_SUMMARY_LIST_PREFIX = "SELL_ORDER_SUMMARY_LIST:";
     private static final String REDIS_USER_ORDER_LIST_PREFIX = "USER_ORDER_LIST:";
     private static final String REDIS_ORDER_NO_NAME = "ORDER_NO";
 
