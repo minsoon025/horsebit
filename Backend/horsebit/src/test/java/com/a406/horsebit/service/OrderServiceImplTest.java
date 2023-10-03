@@ -1,6 +1,7 @@
 package com.a406.horsebit.service;
 
 import com.a406.horsebit.domain.redis.Order;
+import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.TradeRepository;
 import com.a406.horsebit.repository.redis.OrderRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
@@ -15,12 +16,12 @@ class OrderServiceImplTest {
     OrderService orderService;
 
     @Autowired
-    OrderServiceImplTest(OrderRepository orderRepository, PriceRepository priceRepository, TradeRepository tradeRepository) {
-        this.orderService = new OrderServiceImpl(orderRepository, priceRepository, tradeRepository);
+    OrderServiceImplTest(OrderRepository orderRepository, PriceRepository priceRepository, TradeRepository tradeRepository, TokenRepository tokenRepository) {
+        this.orderService = new OrderServiceImpl(orderRepository, priceRepository, tradeRepository, tokenRepository);
     }
 
     @Test
-    void getOrders() {
+    void newOrders() {
     }
 
     @Test
@@ -28,9 +29,63 @@ class OrderServiceImplTest {
         orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
         orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
         orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
         orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
         orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
         orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
+        orderService.processBuyOrder(1L, 1L, new Order(10L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(20L, 20.0, 20.0, "B"));
+        orderService.processBuyOrder(1L, 1L, new Order(30L, 20.0, 20.0, "B"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 10.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(10L, 20.0, 20.0, "S"));
+        orderService.processSellOrder(2L, 1L, new Order(40L, 20.0, 20.0, "S"));
     }
 
     @Test

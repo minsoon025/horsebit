@@ -21,7 +21,7 @@ class PriceRepositoryTest {
 
     @Test
     void saveData() {
-        for(long tokenNo = 1L; tokenNo <= 25; tokenNo++) {
+        for(long tokenNo = 1L; tokenNo <= 2L; tokenNo++) {
             RBucket<Long> currentPrice = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
             currentPrice.set(((tokenNo * 3L) % 25L) * 1000L);
             RBucket<Long> startPrice = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
