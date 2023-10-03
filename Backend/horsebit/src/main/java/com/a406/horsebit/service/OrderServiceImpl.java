@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.a406.horsebit.aop.DistributedLock;
-import com.a406.horsebit.domain.Token;
+import com.a406.horsebit.constant.OrderConstant;
 import com.a406.horsebit.domain.Trade;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderSummary;
@@ -49,7 +49,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@DistributedLock(key = "'TOKEN_ORDER_LOCK:' + #tokenNo.toString()")
-	public void processBuyOrder(Long userNo, Long tokenNo, Order order) {
+	public String processBuyOrder(Long userNo, Long tokenNo, Order order) {
+		String orderStatus = OrderConstant.RESPONSE_EXECUTED;
 		// Capture order time.
 		LocalDateTime orderCaptureTime = LocalDateTime.now();
 		order.setOrderTime(orderCaptureTime);
@@ -115,13 +116,16 @@ public class OrderServiceImpl implements OrderService {
 		// Add order volume to volume book and order summary to order book.
 		if (TENTH_MINIMUM_ORDER_QUANTITY < remain) {
 			addBuyOrder(userNo, tokenNo, order, orderNo, quantity, remain, price);
+			orderStatus = OrderConstant.RESPONSE_ORDERED;
 		}
 		// Update current price.
 		priceRepository.saveCurrentPrice(tokenNo, lastPrice);
+		return orderStatus;
 	}
 
 	@Override
-	public void processSellOrder(Long userNo, Long tokenNo, Order order) {
+	public String processSellOrder(Long userNo, Long tokenNo, Order order) {
+		String orderStatus = OrderConstant.RESPONSE_EXECUTED;
 		// Capture order time.
 		LocalDateTime orderCaptureTime = LocalDateTime.now();
 		order.setOrderTime(orderCaptureTime);
@@ -188,9 +192,11 @@ public class OrderServiceImpl implements OrderService {
 		// Add order volume to volume book and order summary to order book.
 		if (TENTH_MINIMUM_ORDER_QUANTITY < remain) {
 			addSellOrder(userNo, tokenNo, order, orderNo, quantity, remain, price);
+			orderStatus = OrderConstant.RESPONSE_ORDERED;
 		}
 		// Update current price.
 		priceRepository.saveCurrentPrice(tokenNo, lastPrice);
+		return orderStatus;
 	}
 
 	private void addBuyOrder(Long userNo, Long tokenNo, Order order, Long orderNo, double quantity, double remain, long price) {
