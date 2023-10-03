@@ -38,6 +38,7 @@ public class AssetsController {
 	 */
 	@GetMapping("")
 	public AssetsDTO getUserAssets() {
+
 		Long userNo = 1L;
 
 		return assetsService.findAssetsByUserNo(userNo);
