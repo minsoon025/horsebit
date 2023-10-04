@@ -1,21 +1,16 @@
 package com.a406.horsebit.service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import com.a406.horsebit.aop.DistributedLock;
 import com.a406.horsebit.constant.OrderConstant;
-import com.a406.horsebit.domain.Trade;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderSummary;
 import com.a406.horsebit.domain.redis.VolumePage;
-import com.a406.horsebit.repository.TokenRepository;
-import com.a406.horsebit.repository.TradeRepository;
 import com.a406.horsebit.repository.redis.OrderRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.a406.horsebit.dto.OrderDTO;
@@ -28,17 +23,15 @@ public class OrderServiceImpl implements OrderService {
 
 	private final OrderRepository orderRepository;
 	private final PriceRepository priceRepository;
-	private final TradeRepository tradeRepository;
-	private final TokenRepository tokenRepository;
+	private final OrderAsyncService orderAsyncService;
 
 	private final double TENTH_MINIMUM_ORDER_QUANTITY = 0.0001;
 
 	@Autowired
-	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, TradeRepository tradeRepository, TokenRepository tokenRepository) {
+	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, OrderAsyncService orderAsyncService) {
 		this.orderRepository = orderRepository;
 		this.priceRepository = priceRepository;
-		this.tradeRepository = tradeRepository;
-		this.tokenRepository = tokenRepository;
+		this.orderAsyncService = orderAsyncService;
 	}
 
 	@Override
@@ -81,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeSellTotalVolume(tokenNo, orderRepository.findSellTotalVolume(tokenNo) - orderSummaryRemain);
 				// Save trade execution.
-				buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderCaptureTime);
+				orderAsyncService.buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderCaptureTime);
 				// Delete buy order.
 				orderRepository.deleteOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
 				// Update current price.
@@ -100,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeSellTotalVolume(tokenNo, orderRepository.findSellTotalVolume(tokenNo) - remain);
 				// Save trade execution.
-				buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderCaptureTime);
+				orderAsyncService.buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderCaptureTime);
 				// Change sell order.
 				Order sellOrder = orderRepository.findOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
 				sellOrder.setRemain(orderSummary.getRemain());
@@ -156,7 +149,7 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeBuyTotalVolume(tokenNo, orderRepository.findBuyTotalVolume(tokenNo) - orderSummaryRemain);
 				// Save trade execution.
-				sellExecuteTrade(maxBuyVolumePage.getPrice(), orderSummaryRemain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderNo, userNo, orderCaptureTime);
+				orderAsyncService.sellExecuteTrade(maxBuyVolumePage.getPrice(), orderSummaryRemain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderNo, userNo, orderCaptureTime);
 				// Delete buy order.
 				orderRepository.deleteOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
 				// Update current price.
@@ -175,7 +168,7 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeBuyTotalVolume(tokenNo, orderRepository.findBuyTotalVolume(tokenNo) - remain);
 				// Save trade execution.
-				sellExecuteTrade(maxBuyVolumePage.getPrice(), remain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderNo, userNo, orderCaptureTime);
+				orderAsyncService.sellExecuteTrade(maxBuyVolumePage.getPrice(), remain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderNo, userNo, orderCaptureTime);
 				// Change buy order.
 				Order buyOrder = orderRepository.findOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
 				buyOrder.setRemain(orderSummary.getRemain());
@@ -226,41 +219,6 @@ public class OrderServiceImpl implements OrderService {
 		orderRepository.changeSellTotalVolume(tokenNo, quantity);
 		// Update user order list.
 		orderRepository.saveOrder(userNo, tokenNo, orderNo, order);
-	}
-
-	@Async
-	public void buyExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, long sellOrderNo, long sellUserNo, LocalDateTime tradeTime) {
-		Order sellOrder = orderRepository.findOrder(sellUserNo,tokenNo, sellOrderNo);
-		Trade trade = new Trade();
-		trade.setPrice(((int) price));
-		trade.setQuantity(quantity);
-		trade.setBuyerOrderNo(buyOrderNo);
-		trade.setBuyerUserNo(buyUserNo);
-		trade.setBuyerOrderTime(Timestamp.valueOf(tradeTime));
-		trade.setSellerOrderNo(sellOrderNo);
-		trade.setSellerUserNo(sellUserNo);
-		trade.setSellerOrderTime(Timestamp.valueOf(sellOrder.getOrderTime()));
-		tradeRepository.save(trade);
-	}
-
-	@Async
-	public void sellExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, long sellOrderNo, long sellUserNo, LocalDateTime tradeTime) {
-		Order buyOrder = orderRepository.findOrder(buyUserNo,tokenNo, buyOrderNo);
-		Trade trade = new Trade();
-//		trade.setToken(tokenRepository.findById(tokenNo).get());
-		trade.setPrice(((int) price));
-		trade.setQuantity(quantity);
-		trade.setTimestamp(Timestamp.valueOf(tradeTime));
-		trade.setBuyerOrderNo(buyOrderNo);
-		trade.setBuyerUserNo(buyUserNo);
-		trade.setBuyerOrderTime(Timestamp.valueOf(buyOrder.getOrderTime()));
-		trade.setSellerOrderNo(sellOrderNo);
-		trade.setSellerUserNo(sellUserNo);
-		trade.setSellerOrderTime(Timestamp.valueOf(tradeTime));
-		trade.setSellBuyFlag("B");
-//		tradeRepository.save(trade);
-		trade.setSellBuyFlag("S");
-//		tradeRepository.save(trade);
 	}
 
 	@DistributedLock(key = "'ORDER_NO_LOCK'")
