@@ -1,7 +1,12 @@
 package com.a406.horsebit.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
+import com.a406.horsebit.domain.User;
+import com.a406.horsebit.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,17 +23,22 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class TradeController {
 	private final TradeService tradeService;
+	private final UserService userService;
 
 	@Autowired
-	public TradeController(TradeService tradeService) {
+	public TradeController(TradeService tradeService, UserService userService) {
 		this.tradeService = tradeService;
+		this.userService = userService;
 	}
 
-	//TODO: userNo는 GET요청의 헤더의 유효성 검사하는 AOP 개발 후 제거 예정
 	@GetMapping("/executions/{tokenNo}")
-	public List<TradeDTO> getTokenTrades(@PathVariable("tokenNo") Long tokenNo) {
+	public List<TradeDTO> getTokenTrades(HttpServletRequest request, HttpServletResponse response, @PathVariable("tokenNo") Long tokenNo) throws ParseException {
+		String token = (request.getHeader("Authorization")).substring("Bearer ".length());
+		User user = userService.userInfoFromToken(token);
+		Long userNo = user.getId();
+		log.info("user id : {}", userNo);
 		log.info("TradeController::getTokenTrades() START");
-		Long userNo = 1L;
+
 		return tradeService.getTrades(userNo, tokenNo);
 	}
 }

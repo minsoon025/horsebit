@@ -10,6 +10,7 @@ import com.a406.horsebit.google.dto.response.SignInResponseDTO;
 import com.nimbusds.jose.JOSEException;
 
 import java.text.ParseException;
+import java.util.Optional;
 
 public interface UserService {
     public User findById(Long userId);
@@ -30,6 +31,9 @@ public interface UserService {
 
     //회원탈퇴
     void deleteUser(Long userId);
+
+    //헤더에 담긴 액세스 토큰에서 유저 정보 조회
+    User userInfoFromToken(String accessToken) throws ParseException;
 
     /**
      * 개인 설정 조회

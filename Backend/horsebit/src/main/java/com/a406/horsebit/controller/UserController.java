@@ -1,16 +1,13 @@
 package com.a406.horsebit.controller;
 
-import com.a406.horsebit.config.jwt.TokenProvider;
 import com.a406.horsebit.domain.User;
 import com.a406.horsebit.dto.UserSettingDTO;
 
 import com.a406.horsebit.config.oauth.OAuth2UserCustomService;
 
-import com.a406.horsebit.repository.UserRepository;
 import com.a406.horsebit.service.UserService;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 
-import com.nimbusds.jwt.SignedJWT;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +29,6 @@ public class UserController {
 
     private final UserService userService;
     private final OAuth2UserCustomService oAuth2UserCustomService;
-    private final TokenProvider tokenProvider;
-    private final UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<?> getUser(@RequestHeader(required = true, name = "Authorization") String token){
@@ -44,12 +39,8 @@ public class UserController {
     //회원 탈퇴
     @DeleteMapping("/delete")
     public ResponseEntity deleteUser(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-        String token = (request.getHeader("Authorization")).substring("Bearer ".length());
-        SignedJWT signedJWT = (SignedJWT) tokenProvider.parseAccessToken(token);
-        String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
-        log.info("사용자 이메일 : "+email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("토큰에 맞는 사용자정보가 없습니다."));
-
+        String accessToken = (request.getHeader("Authorization")).substring("Bearer ".length());
+        User user = userService.userInfoFromToken(accessToken);
         Long userId = user.getId();
         log.info("delete user id : {}", userId);
 
@@ -57,13 +48,15 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //TODO: OAuth 개발하여 userNo 삭제 필요
     /**
      * 개인 설정 조회
      */
     @GetMapping("/setting")
-    public UserSettingDTO findSettings() {
-        Long userNo = 1L;
+    public UserSettingDTO findSettings(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+        String accessToken = (request.getHeader("Authorization")).substring("Bearer ".length());
+        User user = userService.userInfoFromToken(accessToken);
+        Long userNo = user.getId();
+        log.info("delete user id : {}", userNo);
         log.info("UserController::findSettings() START");
 
         UserSettingDTO result = userService.findSettingsByUserNo(userNo);
@@ -75,8 +68,12 @@ public class UserController {
      * 개인 설정 변경
      */
     @PostMapping("/setting")
-    public String updateSetting(@RequestBody UserSettingDTO userSetting) {
-        Long userNo = 1L;
+    public String updateSetting(HttpServletRequest request, HttpServletResponse response, @RequestBody UserSettingDTO userSetting) throws ParseException {
+        String accessToken = (request.getHeader("Authorization")).substring("Bearer ".length());
+        User user = userService.userInfoFromToken(accessToken);
+        Long userNo = user.getId();
+        log.info("delete user id : {}", userNo);
+
         log.info("UserController::updateSetting() START");
         JsonObject obj = new JsonObject();
 

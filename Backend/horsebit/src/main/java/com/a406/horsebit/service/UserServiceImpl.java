@@ -16,7 +16,6 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,9 +57,6 @@ public class UserServiceImpl implements UserService {
         }
 
         // 사용자 조회
-//        JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
-//        String sub = jwtClaimsSet.getStringClaim("sub");
-//        String providerId = signInDto.getProviderName() + "_" + sub;
         String email = tokenProvider.extractEmail(idToken);
         log.info("이메일 : " + email);
         User user = userRepository.findByEmail(email).orElseThrow(() -> new NoSuchUserException("회원 가입을 먼저 진행하십시오."));
@@ -156,6 +152,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long userId){
         userRepository.deleteById(userId);
+    }
+
+    //헤더에 담긴 액세스 토큰에서 유저 정보 조회
+    @Override
+    public User userInfoFromToken(String accessToken) throws ParseException {
+        SignedJWT signedJWT = (SignedJWT) tokenProvider.parseAccessToken(accessToken);
+        String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
+        log.info("사용자 이메일 : "+email);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("토큰에 맞는 사용자정보가 없습니다."));
+
+        return user;
     }
 
     @Override
