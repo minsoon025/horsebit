@@ -191,6 +191,7 @@ class LoginRegisterActivity : AppCompatActivity() {
 
                             val responseBody = response.body()
 
+
                             Log.d("dddd", responseBody.toString())
 
 
