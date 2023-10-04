@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class CandleServiceImpl implements CandleService {
         int endIndex = getIndex(tokenNo, endTime, candleTypeIndex) + 1;
         int startIndex = endIndex - quantity.intValue() - margin.intValue();
         startIndex = Math.max(startIndex, 0);
-        endIndex = Math.min(getIndex(tokenNo, LocalDateTime.now(), candleTypeIndex) + 1, endIndex + margin.intValue());
+        endIndex = Math.min(getIndex(tokenNo, LocalDateTime.now(ZoneId.of("Asia/Seoul")), candleTypeIndex) + 1, endIndex + margin.intValue());
         endIndex = Math.max(endIndex, startIndex);
         CandleType candleType = CandleConstant.CANDLE_TYPE_LIST.get(candleTypeIndex);
         log.info("tokenNo: " + tokenNo + "   startIndex: " + startIndex + "   endIndex: " + endIndex + "   candleType: " + candleType.getCandleType());

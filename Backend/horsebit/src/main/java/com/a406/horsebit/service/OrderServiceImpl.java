@@ -1,6 +1,7 @@
 package com.a406.horsebit.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import com.a406.horsebit.aop.DistributedLock;
@@ -45,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
 	public String processBuyOrder(Long userNo, Long tokenNo, Order order) {
 		String orderStatus = OrderConstant.RESPONSE_EXECUTED;
 		// Capture order time.
-		LocalDateTime orderCaptureTime = LocalDateTime.now();
+		LocalDateTime orderCaptureTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		order.setOrderTime(orderCaptureTime);
 		// Generate new orderNo.
 		Long orderNo = generateOrderNo();
@@ -121,7 +122,7 @@ public class OrderServiceImpl implements OrderService {
 	public String processSellOrder(Long userNo, Long tokenNo, Order order) {
 		String orderStatus = OrderConstant.RESPONSE_EXECUTED;
 		// Capture order time.
-		LocalDateTime orderCaptureTime = LocalDateTime.now();
+		LocalDateTime orderCaptureTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		order.setOrderTime(orderCaptureTime);
 		// Generate new orderNo.
 		Long orderNo = generateOrderNo();
