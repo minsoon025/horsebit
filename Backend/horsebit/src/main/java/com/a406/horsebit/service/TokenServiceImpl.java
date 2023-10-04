@@ -226,11 +226,19 @@ public class TokenServiceImpl implements TokenService {
 			result.setRaceRank("-");
 		}
 
-		String fatherHrName = tokenRepository.findHrNameByTokenNo(result.getFatherHrNo());
-		String motherHrName = tokenRepository.findHrNameByTokenNo(result.getMotherHrNo());
+		if(result.getFatherHrNo() != null) {
+			String fatherHrName = tokenRepository.findHrNameByTokenNo(result.getFatherHrNo());
+			result.setFatherHrName(fatherHrName);
+		} else {
+			result.setFatherHrName("-");
+		}
 
-		result.setFatherHrName(fatherHrName);
-		result.setMotherHrName(motherHrName);
+		if(result.getMotherHrNo() != null) {
+			String motherHrName = tokenRepository.findHrNameByTokenNo(result.getMotherHrNo());
+			result.setMotherHrName(motherHrName);
+		} else {
+			result.setMotherHrName("-");
+		}
 
 		TokenDTO tInfo = tokenRepository.findTokenInfoByTokenNo(tokenNo);
 		result.setCode(tInfo.getCode());
