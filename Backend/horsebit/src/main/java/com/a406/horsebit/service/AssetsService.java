@@ -10,4 +10,6 @@ public interface AssetsService {
 	AssetsDTO findAssetsByUserNo(Long userNo);
 	List<HorseTokenDTO> findTokensByUserNo(Long userNo);
 	List<UserTradeDTO> findTradeHistoryByUserNo(Long userNo);
+	Long saveDepositWithdraw(Long userNo, Long amount);
+	Long saveNewAsset(Long userNo, Long amount);
 }

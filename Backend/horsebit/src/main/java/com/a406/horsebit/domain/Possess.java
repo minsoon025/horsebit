@@ -26,8 +26,8 @@ public class Possess {
 	private Long userNo;
 
 	@Column(name = "quantity")
-	private double quantity;
+	private Long quantity;
 
 	@Column(name = "total_amount_of_purchase")
-	private double totalAmountPurchase;
+	private Long totalAmountPurchase;
 }

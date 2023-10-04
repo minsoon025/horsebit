@@ -17,7 +17,7 @@ public interface BookmarkService {
 	 * @param userNo
 	 * @return
 	 */
-	List<TokenDTO> findAll(Long userNo);
+	List<Long> findAll(Long userNo);
 
 	/**
 	 * 즐겨찾기 항목 등록

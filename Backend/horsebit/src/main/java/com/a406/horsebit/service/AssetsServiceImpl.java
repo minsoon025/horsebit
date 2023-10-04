@@ -1,17 +1,22 @@
 package com.a406.horsebit.service;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import com.a406.horsebit.domain.Account;
 import com.a406.horsebit.domain.Possess;
-import com.a406.horsebit.domain.Trade;
 import com.a406.horsebit.domain.TradeHistory;
 import com.a406.horsebit.dto.AssetsDTO;
 import com.a406.horsebit.dto.HorseTokenDTO;
@@ -24,6 +29,8 @@ import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.TradeRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
 
+import jakarta.persistence.Column;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -55,6 +62,14 @@ public class AssetsServiceImpl implements AssetsService {
 		this.accountRepository = accountRepository;
 	}
 
+	//TODO: CommonUtil 파일로 빼기
+	public String getDateTimeFormat(Timestamp timestamp) {
+		SimpleDateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+		Date date = new Date(Long.parseLong(String.valueOf(timestamp.getTime())));
+
+		return String.valueOf(dtFormat.format(date));
+	}
+
 	@Override
 	public AssetsDTO findAssetsByUserNo(Long userNo) {
 		AssetsDTO result = new AssetsDTO();
@@ -64,7 +79,7 @@ public class AssetsServiceImpl implements AssetsService {
 		double amtKRW = 0L; //잔여 현금
 		double amtToken = 0L; //총 매수 금액
 		Double amtEvaluation = 0.0; //총 평가
-		Map<Long, Double> tokenMap = new HashMap<>(); // Key:tokenNo, Value:count
+		Map<Long, Long> tokenMap = new HashMap<>(); // Key:tokenNo, Value:count
 
 		//TODO: KRW의 tokenNo = 0 상수로 공통으로 빼기
 		for(Possess possess : possessesList) {
@@ -76,9 +91,9 @@ public class AssetsServiceImpl implements AssetsService {
 				amtToken += possess.getTotalAmountPurchase();
 
 				Long curToken = possess.getTokenNo();
-				Double curQuantity = possess.getQuantity();
+				Long curQuantity = possess.getQuantity();
 				if(tokenMap.containsKey(curToken)) {
-					Double cnt = tokenMap.get(curToken);
+					Long cnt = tokenMap.get(curToken);
 					cnt += curQuantity;
 					tokenMap.replace(curToken, cnt);
 				}
@@ -88,7 +103,7 @@ public class AssetsServiceImpl implements AssetsService {
 			}
 		}
 
-		for(Map.Entry<Long, Double> token : tokenMap.entrySet()) {
+		for(Map.Entry<Long, Long> token : tokenMap.entrySet()) {
 			PriceDTO price = priceRepository .findCurrentPrice(token.getKey());
 			log.info("CURRENT_PRICE IS FOUND" + price.getPrice());
 			amtEvaluation += price.getPrice() * token.getValue();
@@ -148,7 +163,9 @@ public class AssetsServiceImpl implements AssetsService {
 
 		for(TradeHistory trade : tradeResult) {
 			UserTradeDTO userTrade = new UserTradeDTO();
-			userTrade.setExecutionTime(trade.getTimestamp());
+			userTrade.setExeTime(trade.getTimestamp());
+			userTrade.setExecutionTime(getDateTimeFormat(trade.getTimestamp()));
+			userTrade.setTokenNo(trade.getTokenNo());
 			userTrade.setCode(trade.getTokenCode());
 			userTrade.setVolume(trade.getQuantity());
 			userTrade.setPrice(trade.getPrice());
@@ -158,12 +175,12 @@ public class AssetsServiceImpl implements AssetsService {
 			if(trade.getSellerUserNo().equals(userNo)) { //판매자의 경우
 				userTrade.setTransactionType(TYPE_OFFER);
 				userTrade.setAmount(trade.getQuantity() * trade.getPrice() - trade.getFee()); //정산금액 = 거래금액 - 수수료 (매도)
-				userTrade.setOrderTime(trade.getSellerOrderTime());
+				userTrade.setOrderTime(getDateTimeFormat(trade.getSellerOrderTime()));
 			}
 			else if(trade.getBuyerUserNo().equals(userNo)) { //구매자의 경우
 				userTrade.setTransactionType(TYPE_BID);
 				userTrade.setAmount(trade.getQuantity() * trade.getPrice() + trade.getFee()); //정산금액 = 거래금액 + 수수료 (매수)
-				userTrade.setOrderTime(trade.getBuyerOrderTime());
+				userTrade.setOrderTime(getDateTimeFormat(trade.getBuyerOrderTime()));
 			}
 
 			result.add(userTrade);
@@ -171,7 +188,8 @@ public class AssetsServiceImpl implements AssetsService {
 
 		for(Account account : accontResult) {
 			UserTradeDTO userTrade = new UserTradeDTO();
-			userTrade.setExecutionTime(account.getDatetime());
+			userTrade.setExeTime(account.getDatetime());
+			userTrade.setExecutionTime(getDateTimeFormat(account.getDatetime()));
 			userTrade.setCode(CODE_KRW);
 			userTrade.setVolume(account.getAmount());
 			userTrade.setTransactionAmount(account.getAmount());
@@ -190,5 +208,50 @@ public class AssetsServiceImpl implements AssetsService {
 		Collections.sort(result);
 
 		return result;
+	}
+
+	@Transactional
+	public int updatePossessKRW(Long userNo, Long amount) {
+		Possess curr = possessRepository.findByUserNoAndTokenNo(userNo, KRW);
+		if(curr == null) {
+			//TODO: 반환값 바꾸기
+			return 0;
+		}
+
+		Long currAmount = curr.getTotalAmountPurchase();
+		curr.setQuantity(currAmount + amount);
+		curr.setTotalAmountPurchase(currAmount + amount);
+		possessRepository.save(curr);
+
+		return 1;
+	}
+
+	@Override
+	public Long saveDepositWithdraw(Long userNo, Long amount) {
+		// 현재 날짜/시간
+		LocalDateTime now = LocalDateTime.now();
+		String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss"));
+
+		if(updatePossessKRW(userNo, amount) == 0) return 0L;
+
+		Account account = new Account();
+		account.setUserNo(userNo);
+		account.setAmount(amount);
+		account.setDatetime(Timestamp.valueOf(formatedNow));
+		accountRepository.save(account);
+
+		return possessRepository.findByUserNoAndTokenNo(userNo, KRW).getTotalAmountPurchase();
+	}
+
+	@Transactional
+	@Override
+	public Long saveNewAsset(Long userNo, Long amount) {
+		Possess nPossess = new Possess();
+		nPossess.setTokenNo(KRW);
+		nPossess.setUserNo(userNo);
+		nPossess.setQuantity(0L);
+		nPossess.setTotalAmountPurchase(0L);
+
+		return possessRepository.save(nPossess).getShareNo();
 	}
 }

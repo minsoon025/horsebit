@@ -37,8 +37,12 @@ public class User implements UserDetails {
     @Column(name = "user_name")
     private String userName;
 
-    private String providerName; // 우리는 구글 로그인이라 google
-    private String providerId; // "google_" + Google, Naver, Kakao에서 로그인시 전달되는 id
+    public String getUserName() {
+        return userName;
+    }
+
+    //    private String providerName; // 우리는 구글 로그인이라 google
+//    private String providerId; // "google_" + Google, Naver, Kakao에서 로그인시 전달되는 id
     private String refreshToken;    //TODO: 확인필요 - 성민
 
     @Enumerated(EnumType.STRING)
@@ -52,13 +56,14 @@ public class User implements UserDetails {
     private boolean biometricLoginFlag;
 
     @Builder
-    public User(Long id, String providerName, String providerId, String nickname, String password, String email, boolean alarmPushFlag, boolean biometricLoginFlag) {
+    public User(Long id, String nickname, String password, String email, String userName, boolean alarmPushFlag, boolean biometricLoginFlag) {
         this.id = id;
-        this.providerName = providerName;
-        this.providerId = providerId;
+//        this.providerName = providerName;
+//        this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
+        this.userName = userName;
         this.alarmPushFlag = alarmPushFlag;
         this.biometricLoginFlag = biometricLoginFlag;
     }

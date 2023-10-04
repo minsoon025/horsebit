@@ -4,30 +4,17 @@ public class TokenDTO {
 	private Long tokenNo;
 	private String name;
 	private String code;
-	private double currentPrice;
+	private long currentPrice;
 	private double priceRateOfChange;
 	private double volume;
+	private long priceOfChange;
 	private Boolean newFlag;
 
-	public TokenDTO(Long tokenNo, String name, String code, double currentPrice, double priceRateOfChange, double volume, Boolean newFlag) {
-		this.tokenNo = tokenNo;
-		this.name = name;
-		this.code = code;
-		this.currentPrice = currentPrice;
-		this.priceRateOfChange = priceRateOfChange;
-		this.volume = volume;
-		this.newFlag = newFlag;
-	}
-
-	//TODO: Redis 거래 데이터 로직 추가 후 아래의 필드 3개 삭제 필요
 	public TokenDTO(Long tokenNo, String name, String code, Boolean newFlag) {
 		this.tokenNo = tokenNo;
 		this.name = name;
 		this.code = code;
 		this.newFlag = newFlag;
-		this.currentPrice = 203400;
-		this.priceRateOfChange = 4.3;
-		this.volume = 3;
 	}
 
 	public Long getTokenNo() {
@@ -54,11 +41,11 @@ public class TokenDTO {
 		this.code = code;
 	}
 
-	public double getCurrentPrice() {
+	public long getCurrentPrice() {
 		return currentPrice;
 	}
 
-	public void setCurrentPrice(double currentPrice) {
+	public void setCurrentPrice(long currentPrice) {
 		this.currentPrice = currentPrice;
 	}
 
@@ -76,6 +63,14 @@ public class TokenDTO {
 
 	public void setVolume(double volume) {
 		this.volume = volume;
+	}
+
+	public long getPriceOfChange() {
+		return priceOfChange;
+	}
+
+	public void setPriceOfChange(long priceOfChange) {
+		this.priceOfChange = priceOfChange;
 	}
 
 	public Boolean getNewFlag() {

@@ -2,7 +2,6 @@ package com.a406.horsebit.service;
 
 import com.a406.horsebit.domain.User;
 import com.a406.horsebit.dto.UserSettingDTO;
-import com.a406.horsebit.dto.request.AddUserRequest;
 import com.a406.horsebit.google.dto.request.RefreshDTO;
 import com.a406.horsebit.google.dto.request.SignInDTO;
 import com.a406.horsebit.google.dto.request.SignUpDTO;
@@ -21,11 +20,16 @@ public interface UserService {
     SignInResponseDTO signIn(SignInDTO signInDto) throws ParseException, JOSEException;
 
     //회원가입
-    User signUp(SignUpDTO signUpDto) throws ParseException, JOSEException;
-
+//    User signUp(SignUpDTO signUpDto) throws ParseException, JOSEException;
+    User signUp(SignUpDTO signUpDTO) throws ParseException, JOSEException;
     //토큰 정보 전달
     RefreshResponseDTO issueAccessTokenByRefreshToken(RefreshDTO refreshDto);
 
+    //사용자이름(어플에서 사용하는 이름) 중복확인
+    boolean isDuplicatedUserName(String userName);
+
+    //회원탈퇴
+    void deleteUser(Long userId);
 
     /**
      * 개인 설정 조회
