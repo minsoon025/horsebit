@@ -183,7 +183,9 @@ class LoginRegisterActivity : AppCompatActivity() {
                 val signUpRequest = SignUpRequestBodyModel(token = token, userName = userName)
 
 
-                api.SingUp(authorization = "Bearer ${1}", request = signUpRequest).enqueue(object:
+                val accesstoken = pref.getString("SERVER_ACCESS_TOKEN", "1")
+
+                api.SingUp(authorization = "Bearer ${accesstoken}", request = signUpRequest).enqueue(object:
                     Callback<SignUpResponseBodyModel> {
                     override fun onResponse(call: Call<SignUpResponseBodyModel>, response: Response<SignUpResponseBodyModel>) {
                         if(response.code() == 200) {    // 200 Success
@@ -222,12 +224,13 @@ class LoginRegisterActivity : AppCompatActivity() {
 
                     val pref = PreferenceManager.getDefaultSharedPreferences(this)
                     val token: String = pref.getString("GOOGLE_TOKEN", "") ?: ""
+                    val accesstoken = pref.getString("SERVER_ACCESS_TOKEN", "1")
                     val userName = binding.etNicknameMake.text.toString() // 실제 userName 값을 할당해야 합니다.
 
                     val signUpRequest = SignUpRequestBodyModel(token = token, userName = userName)
 
 
-                    api.SingUp(authorization = "Bearer ${1}", request = signUpRequest).enqueue(object: Callback<SignUpResponseBodyModel> {
+                    api.SingUp(authorization = "Bearer ${accesstoken}", request = signUpRequest).enqueue(object: Callback<SignUpResponseBodyModel> {
                         override fun onResponse(call: Call<SignUpResponseBodyModel>, response: Response<SignUpResponseBodyModel>) {
                             if (response.isSuccessful) {
                                 val responseBody = response.body()
