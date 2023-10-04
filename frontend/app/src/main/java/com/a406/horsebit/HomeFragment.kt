@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
 
         binding = FragmentHomeBinding.bind(view)
 
-        assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+        assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
 
         var searchViewTextListener: SearchView.OnQueryTextListener = object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
@@ -188,7 +188,7 @@ class HomeFragment : Fragment() {
                                     tokenShowList.add(tokenShow)
                                 }
                             }
-                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
@@ -207,7 +207,10 @@ class HomeFragment : Fragment() {
                 })
             }
             1 -> {
-                api.favorites(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+                val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+                val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
+
+                api.favorites(authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<Token>> {
                     override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "즐겨찾기 코인 목록 조회: 200 Success")
@@ -220,7 +223,7 @@ class HomeFragment : Fragment() {
                                     tokenShowList.add(tokenShow)
                                 }
                             }
-                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
@@ -242,7 +245,11 @@ class HomeFragment : Fragment() {
                 })
             }
             2 -> {
-                api.holding(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<Token>> {
+
+                val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+                val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
+
+                api.holding(authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<Token>> {
                     override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "보유 코인 목록 조회: 200 Success")
@@ -256,7 +263,7 @@ class HomeFragment : Fragment() {
                                 }
                             }
                             // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
-                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입

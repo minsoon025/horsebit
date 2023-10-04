@@ -149,6 +149,13 @@ interface APIS {
         @Body request: SellRequestRequestBodyModel,
     ): Call<SellRequestResponseBodyModel>
 
+    // 보유 마패 특정 조회
+    @GET("/api/assets/horses/{tokenNo}")
+    fun specificSearch(
+        @Path("tokenNo") tokenNo: Long,
+        @Header("Authorization") authorization: String,
+    ): Call<SpecificSearchResponseBodyModel>
+
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"

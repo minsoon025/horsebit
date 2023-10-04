@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.a406.horsebit.databinding.ActivityOrderBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import androidx.preference.PreferenceManager
 
 class OrderActivity : AppCompatActivity() {
 
@@ -29,8 +31,10 @@ class OrderActivity : AppCompatActivity() {
         tokenNo = intent.getLongExtra("tokenNo", 0)
         code = intent.getStringExtra("code") ?: ""
 
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)  // import androidx.preference.PreferenceManager 인지 확인
+        val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
 
-        api.tokenListDetail(tokenNo = tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<TokenListDetailResponseBodyModel> {
+        api.tokenListDetail(tokenNo = tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<TokenListDetailResponseBodyModel> {
             override fun onResponse(call: Call<TokenListDetailResponseBodyModel>, response: Response<TokenListDetailResponseBodyModel>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "코인 상세 조회 (SSE): 200 Success")

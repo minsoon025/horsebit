@@ -1,5 +1,6 @@
 package com.a406.horsebit
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
@@ -10,9 +11,11 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.AssetTableItemBinding
 import com.github.mikephil.charting.components.YAxis
@@ -25,7 +28,7 @@ import retrofit2.Response
 import java.util.Collections
 import java.util.ArrayList
 
-class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
+class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>, private val context: Context) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
 
 
     var filteredTokenShowList = ArrayList<TokenShow>()
@@ -141,7 +144,10 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
             binding.llhAssetTableItemHide.setOnClickListener {
                 if(tokenShow.interest) {
                     // 즐겨찾기 삭제
-                    api.deleteFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<FavoriteResponseBodyModel> {
+                    val pref = PreferenceManager.getDefaultSharedPreferences(context)  // import androidx.preference.PreferenceManager 인지 확인
+                    val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
+                    api.deleteFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<FavoriteResponseBodyModel> {
                         override fun onResponse(call: Call<FavoriteResponseBodyModel>, response: Response<FavoriteResponseBodyModel>) {
                             if(response.code() == 200) {    // 200 Success
                                 Log.d("로그", "즐겨찾기 삭제: 200 Success")
@@ -179,7 +185,10 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
                 }
                 else{
                     // 즐겨 찾기 추가
-                    api.addFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<FavoriteResponseBodyModel> {
+                    val pref = PreferenceManager.getDefaultSharedPreferences(context)  // import androidx.preference.PreferenceManager 인지 확인
+                    val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
+                    api.addFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<FavoriteResponseBodyModel> {
                         override fun onResponse(call: Call<FavoriteResponseBodyModel>, response: Response<FavoriteResponseBodyModel>) {
                             if(response.code() == 200) {    // 200 Success
                                 Log.d("로그", "즐겨찾기 추가: 200 Success")

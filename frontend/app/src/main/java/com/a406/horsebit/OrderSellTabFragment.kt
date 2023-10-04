@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.FragmentOrderSellTabBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,9 +30,42 @@ class OrderSellTabFragment : Fragment() {
         tokenNo = arguments?.getLong("tokenNo") ?: 0
         code = arguments?.getString("code") ?: ""
 
-        Log.d("afsdsafdfdas", code)
         binding.tvOrderCanSellPrice.text = "0 ${code}"
         binding.tvOrderSellNumType.text = code
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+        val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
+        api.specificSearch(tokenNo = tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<SpecificSearchResponseBodyModel> {
+            override fun onResponse(call: Call<SpecificSearchResponseBodyModel>, response: Response<SpecificSearchResponseBodyModel>) {
+                if(response.code() == 200) {    // 200 Success
+                    Log.d("로그", "보유 마패 특정 조회: 200 Success")
+
+                    val responseBody = response.body()
+
+                    if(responseBody != null) {
+                        binding.tvOrderCanSellPrice.text = "${responseBody.possessQuantity} ${code}"
+                        binding.tvOrderCanSellPriceKRW.text = "${responseBody.possessQuantity * responseBody.currentPrice} KRW"
+                    }
+
+                }
+                else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                    Log.d("로그", "보유 마패 특정 조회: 400 Bad Request")
+                }
+                else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                    Log.d("로그", "보유 마패 특정 조회: 401 Unauthorized")
+                }
+                else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                    Log.d("로그", "보유 마패 특정 조회: 400 Bad Request")
+                }
+                else if(response.code() == 404) {   // 404 Not Found
+                    Log.d("로그", "보유 마패 특정 조회: 404 Not Found")
+                }
+            }
+            override fun onFailure(call: Call<SpecificSearchResponseBodyModel>, t: Throwable) {
+                Log.d("로그", "보유 마패 특정 조회: onFailure")
+            }
+        })
 
         binding.etOrderSellNum.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -61,7 +95,7 @@ class OrderSellTabFragment : Fragment() {
                 binding.etOrderSellPrice.text.toString().toLong()
             )
 
-            api.sellRequest(authorization = "Bearer ${1}" , requestData).enqueue(object: Callback<SellRequestResponseBodyModel> {
+            api.sellRequest(authorization = "Bearer ${token}" , requestData).enqueue(object: Callback<SellRequestResponseBodyModel> {
                 override fun onResponse(call: Call<SellRequestResponseBodyModel>, response: Response<SellRequestResponseBodyModel>) {
                     if(response.code() == 200) {    // 200 Success
                         Log.d("로그", "매도 주문 요청: 200 Success")

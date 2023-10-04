@@ -10,6 +10,7 @@
     import android.view.ViewGroup
     import android.widget.ArrayAdapter
     import android.widget.Spinner
+    import androidx.preference.PreferenceManager
     import com.a406.horsebit.databinding.FragmentOrderBuyTabBinding
     import com.a406.horsebit.databinding.FragmentStockOrderBinding
     import retrofit2.Call
@@ -37,7 +38,10 @@
             binding.tvOrderBuyNumType.text = code
             binding.tvOrderCanBuyPrice.text = "0 KRW"
 
-            api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object: Callback<MyTotalAssetResponseBodyModel> {
+            val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+            val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
+            api.MyTotalAsset(authorization = "Bearer ${token}").enqueue(object: Callback<MyTotalAssetResponseBodyModel> {
                 override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
                     if(response.code() == 200) {    // 200 Success
                         Log.d("로그", "매수 주문 요청: 200 Success")
@@ -72,8 +76,6 @@
                 }
             })
 
-
-
             binding.etOrderBuyNum.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -102,7 +104,7 @@
                     binding.etOrderBuyPrice.text.toString().toLong()
                 )
 
-                api.orderRequest(authorization = "Bearer ${1}" , requestData).enqueue(object: Callback<OrderRequestResponseBodyModel> {
+                api.orderRequest(authorization = "Bearer ${token}" , requestData).enqueue(object: Callback<OrderRequestResponseBodyModel> {
                     override fun onResponse(call: Call<OrderRequestResponseBodyModel>, response: Response<OrderRequestResponseBodyModel>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "매수 주문 요청: 200 Success")

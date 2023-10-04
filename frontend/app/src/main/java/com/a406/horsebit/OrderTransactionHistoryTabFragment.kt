@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentOrderTransactionHistoryTabBinding
 import java.util.Date
@@ -55,7 +56,10 @@ class OrderTransactionHistoryTabFragment : Fragment() {
 
         when(type){
             0 -> {
-                api.notConcluded(tokenNo = 1, authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<NotConcludedResponseBodyOrderModel>> {
+                val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+                val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
+                api.notConcluded(tokenNo = 1, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<NotConcludedResponseBodyOrderModel>> {
                     override fun onResponse(call: Call<ArrayList<NotConcludedResponseBodyOrderModel>>, response: Response<ArrayList<NotConcludedResponseBodyOrderModel>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "미체결 내역 조회: 200 Success")
@@ -89,7 +93,10 @@ class OrderTransactionHistoryTabFragment : Fragment() {
                 })
             }
             1 -> {
-                api.concluded(tokenNo = 1, authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<ConcludedResponseBodyOrderModel>> {
+                val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+                val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
+                api.concluded(tokenNo = 1, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<ConcludedResponseBodyOrderModel>> {
                     override fun onResponse(call: Call<ArrayList<ConcludedResponseBodyOrderModel>>, response: Response<ArrayList<ConcludedResponseBodyOrderModel>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "체결 내역 조회: 200 Success")

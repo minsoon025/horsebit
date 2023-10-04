@@ -240,3 +240,10 @@ data class SellRequestRequestBodyModel(
 data class SellRequestResponseBodyModel(
     val result: String, // 결과 코드
 )
+
+// 보유 마패 특정 조회
+data class SpecificSearchResponseBodyModel(
+    val tokenNo: Long, //토큰번호
+    val possessQuantity: Double, //보유개수
+    val currentPrice: Long, //단위 현재가
+)
