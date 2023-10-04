@@ -43,8 +43,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignInResponseDTO signIn(SignInDTO signInDto) throws ParseException, JOSEException {
         log.info("로그인");
-//        OAuthProvider provider = findProvider(signInDto.getProviderName());
-//        String jwksStr = provider.getJwks();
         String idToken =signInDto.getToken();
         log.info("토큰입니다." + idToken);
         SignedJWT signedJWT = (SignedJWT) tokenProvider.parseTokenWithoutValidation(idToken);
@@ -76,8 +74,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User signUp(SignUpDTO signUpDTO) throws ParseException, JOSEException {
         log.info("회원가입 중");
-//        OAuthProvider provider = findProvider(signUpDTO.getProviderName());
-//        String jwksStr = provider.getJwks();
         String idToken = signUpDTO.getToken();
 
         SignedJWT signedJWT = (SignedJWT) tokenProvider.parseTokenWithoutValidation(idToken);
@@ -88,11 +84,6 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new IllegalArgumentException("Id Token이 유효하지 않습니다. " + e.getMessage());
         }
-
-        // 사용자 정보를 저장
-//        JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
-//        String sub = jwtClaimsSet.getStringClaim("sub");
-//        String providerId = signUpDTO.getProviderName() + "_" + sub;
 
         String email = tokenProvider.extractEmail(idToken);
         log.info("이메일 : " + email);
@@ -142,11 +133,6 @@ public class UserServiceImpl implements UserService {
     public boolean isDuplicatedUserName(String userName) {
         return userRepository.existsByUserName(userName);
     }
-
-
-//    private OAuthProvider findProvider(String providerName) {
-//        return inMemoryProviderRepository.findByProviderName(providerName);
-//    }
 
     //회원탈퇴
     @Override
