@@ -24,8 +24,7 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
         this.tokenRepository = tokenRepository;
     }
 
-    public void buyExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, long sellOrderNo, long sellUserNo, LocalDateTime tradeTime) {
-        Order sellOrder = orderRepository.findOrder(sellUserNo,tokenNo, sellOrderNo);
+    public void buyExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, long sellOrderNo, long sellUserNo, Order sellOrder, LocalDateTime tradeTime) {
         Trade trade = new Trade();
         trade.setToken(tokenRepository.findById(tokenNo).get());
         trade.setPrice(((int) price));
@@ -42,8 +41,7 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
         tradeRepository.save(trade);
     }
 
-    public void sellExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, long sellOrderNo, long sellUserNo, LocalDateTime tradeTime) {
-        Order buyOrder = orderRepository.findOrder(buyUserNo,tokenNo, buyOrderNo);
+    public void sellExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, Order buyOrder, long sellOrderNo, long sellUserNo, LocalDateTime tradeTime) {
         Trade trade = new Trade();
 		trade.setToken(tokenRepository.findById(tokenNo).get());
         trade.setPrice(((int) price));
