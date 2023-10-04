@@ -1,6 +1,7 @@
 package com.a406.horsebit.service;
 
 import com.a406.horsebit.config.jwt.TokenProvider;
+import com.a406.horsebit.domain.Possess;
 import com.a406.horsebit.domain.User;
 import com.a406.horsebit.dto.UserSettingDTO;
 import com.a406.horsebit.google.domain.Role;
@@ -94,12 +95,13 @@ public class UserServiceImpl implements UserService {
         String email = tokenProvider.extractEmail(idToken);
         log.info("이메일 : " + email);
         String nickname = tokenProvider.extractNickname(idToken);
+        log.info("닉네임 : "+nickname);
         User user = User.builder()
                 .email(email)
                 .nickname(nickname)
                 .userName(signUpDTO.getUserName())
-//                .bankAccount(signUpDTO.getBankAccount())    //TODO: 계좌 추가
                 .build();
+//                .bankAccount(signUpDTO.getBankAccount())    //TODO: 계좌 추가
 
         user.setRole(Role.USER);
         userRepository.save(user);
@@ -107,8 +109,8 @@ public class UserServiceImpl implements UserService {
         log.info("1차 회원정보 입력 완료, userId : "+userId);
 
         //assets 처음 KRW = 0으로 설정
-        assetsService.saveNewAsset(userId, 0L);
-        log.info("saveNewAsset 완료");
+        Possess possess = assetsService.saveNewAsset(userId, 0L);
+        log.info("saveNewAsset 완료 : "+ possess.getShareNo());
         //전체 코인 리스트 담아넣을 수 있게
         List<Long> tokenNoList = new ArrayList<>();
         tokenNoList = tokenRepository.findAllTokenNos();

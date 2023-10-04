@@ -17,7 +17,7 @@ public class SignUpDTO {
     public User toEntity(){
         return User.builder()
                 .userName(userName)
-//                .bankAccount(bankAccount)
                 .build();
+//                .bankAccount(bankAccount)
     }
 }
