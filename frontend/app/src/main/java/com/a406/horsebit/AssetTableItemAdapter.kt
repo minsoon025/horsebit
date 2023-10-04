@@ -133,6 +133,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerV
 
                 val intent = Intent(binding.root.context, OrderActivity::class.java)
                 intent.putExtra("tokenNo", assetItem.tokenNo)   // 토큰 번호 넘겨 주기
+                intent.putExtra("code", assetItem.code) // 토큰 코드 넘겨 주기
                 binding.root.context.startActivity(intent)
             }
 

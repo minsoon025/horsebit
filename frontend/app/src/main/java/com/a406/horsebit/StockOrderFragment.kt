@@ -42,6 +42,7 @@ class StockOrderFragment : Fragment() {
 //    )
 
     var tokenNo: Long = 0
+    var code: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_stock_order, container, false)
@@ -52,6 +53,7 @@ class StockOrderFragment : Fragment() {
         binding.rvOrder.setHasFixedSize(true)
 
         tokenNo = arguments?.getLong("tokenNo") ?: 0
+        code = arguments?.getString("code") ?: ""
 
         api.coinOrderSituation(tokenNo = tokenNo).enqueue(object: Callback<ArrayList<Order>> {
             override fun onResponse(call: Call<ArrayList<Order>>, response: Response<ArrayList<Order>>) {
@@ -132,7 +134,8 @@ class StockOrderFragment : Fragment() {
         when(fragNum){
             0->{
                 val bundle = Bundle()
-                bundle.putString("ticker", arguments?.getString("ticker").toString())
+                bundle.putLong("tokenNo", tokenNo)
+                bundle.putString("code",code)
 
                 val changeFragment = OrderBuyTabFragment()
                 changeFragment.arguments = bundle
@@ -141,7 +144,8 @@ class StockOrderFragment : Fragment() {
             }
             1->{
                 val bundle = Bundle()
-                bundle.putString("ticker", arguments?.getString("ticker").toString())
+                bundle.putLong("tokenNo", tokenNo)
+                bundle.putString("code",code)
 
                 val changeFragment = OrderSellTabFragment()
                 changeFragment.arguments = bundle

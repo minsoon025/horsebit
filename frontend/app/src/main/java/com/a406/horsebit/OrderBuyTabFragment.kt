@@ -12,19 +12,67 @@
     import android.widget.Spinner
     import com.a406.horsebit.databinding.FragmentOrderBuyTabBinding
     import com.a406.horsebit.databinding.FragmentStockOrderBinding
+    import retrofit2.Call
+    import retrofit2.Callback
+    import retrofit2.Response
     import java.util.Locale
 
     class OrderBuyTabFragment : Fragment() {
 
         private lateinit var binding : FragmentOrderBuyTabBinding
         private lateinit var orderNum: Spinner
+        val api = APIS.create()
+
+        var tokenNo: Long = 0L
+        var code: String = ""
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             val view = inflater.inflate(R.layout.fragment_order_buy_tab, container, false)
 
             binding = FragmentOrderBuyTabBinding.bind(view)
 
-            binding.tvOrderBuyNumType.text = arguments?.getString("ticker").toString()
+            tokenNo = arguments?.getLong("tokenNo") ?: 0
+            code = arguments?.getString("code") ?: ""
+
+            binding.tvOrderBuyNumType.text = code
+            binding.tvOrderCanBuyPrice.text = "0 KRW"
+
+            api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object: Callback<MyTotalAssetResponseBodyModel> {
+                override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
+                    if(response.code() == 200) {    // 200 Success
+                        Log.d("로그", "매수 주문 요청: 200 Success")
+
+                        val responseBody = response.body()
+
+                        if(responseBody != null) {
+                            binding.tvOrderCanBuyPrice.text = "${responseBody.cashBalance} KRW"
+                        }
+                    }
+                    else if(response.code() == 201) {   // 201 Created
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                        Log.d("로그", "매수 주문 요청: 401 Unauthorized")
+                    }
+                    else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 404) {   // 404 Not Found
+                        Log.d("로그", "매수 주문 요청: 404 Not Found")
+                    }
+                }
+                override fun onFailure(call: Call<MyTotalAssetResponseBodyModel>, t: Throwable) {
+                    Log.d("로그", "매수 주문 요청: onFailure")
+                }
+            })
+
+
 
             binding.etOrderBuyNum.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -45,6 +93,47 @@
                     calculateTotalPrice()
                 }
             })
+
+            binding.tvOrderBuyCommit.setOnClickListener {
+
+                val requestData = OrderRequestRequestBodyModel(
+                    tokenNo,
+                    binding.etOrderBuyNum.text.toString().toDouble(),
+                    binding.etOrderBuyPrice.text.toString().toLong()
+                )
+
+                api.orderRequest(authorization = "Bearer ${1}" , requestData).enqueue(object: Callback<OrderRequestResponseBodyModel> {
+                    override fun onResponse(call: Call<OrderRequestResponseBodyModel>, response: Response<OrderRequestResponseBodyModel>) {
+                        if(response.code() == 200) {    // 200 Success
+                            Log.d("로그", "매수 주문 요청: 200 Success")
+
+                            val responseBody = response.body()
+
+                        }
+                        else if(response.code() == 201) {   // 201 Created
+                            Log.d("로그", "매수 주문 요청: 201 Created")
+                        }
+                        else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
+                            Log.d("로그", "매수 주문 요청: 202 Accepted")
+                        }
+                        else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                            Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                        }
+                        else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                            Log.d("로그", "매수 주문 요청: 401 Unauthorized")
+                        }
+                        else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                            Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                        }
+                        else if(response.code() == 404) {   // 404 Not Found
+                            Log.d("로그", "매수 주문 요청: 404 Not Found")
+                        }
+                    }
+                    override fun onFailure(call: Call<OrderRequestResponseBodyModel>, t: Throwable) {
+                        Log.d("로그", "매수 주문 요청: onFailure")
+                    }
+                })
+            }
 
             return view
         }

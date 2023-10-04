@@ -218,3 +218,25 @@ data class TokenListDetailResponseBodyModel(
     val priceRateOfChange: Double, //변동추이
     val priceOfChange: Long,    //변동금액
 )
+
+// 매수 주문 요청
+data class OrderRequestRequestBodyModel(
+    val tokenNo: Long, //토큰번호
+    val volume: Double, //수량
+    val price: Long, //단위가격
+)
+
+data class OrderRequestResponseBodyModel(
+    val result: String, // 결과 코드
+)
+
+// 매도 주문 요청
+data class SellRequestRequestBodyModel(
+    val tokenNo: Long, //토큰번호
+    val volume: Double, //수량
+    val price: Long, //단위가격
+)
+
+data class SellRequestResponseBodyModel(
+    val result: String, // 결과 코드
+)
