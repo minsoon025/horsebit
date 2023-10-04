@@ -1,9 +1,11 @@
 package com.a406.horsebit.service;
 
+import com.a406.horsebit.domain.Token;
 import com.a406.horsebit.domain.Trade;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.TradeRepository;
+import com.a406.horsebit.repository.redis.CandleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,60 +24,76 @@ public class OrderAsyncServiceImpl implements OrderAsyncService{
     }
 
     public void buyExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, long sellOrderNo, long sellUserNo, Order sellOrder, LocalDateTime tradeTime) {
-        Trade buyTrade = new Trade();
-        buyTrade.setToken(tokenRepository.findById(tokenNo).get());
-        buyTrade.setPrice(((int) price));
-        buyTrade.setQuantity(quantity);
-        buyTrade.setBuyerOrderNo(buyOrderNo);
-        buyTrade.setBuyerUserNo(buyUserNo);
-        buyTrade.setBuyerOrderTime(Timestamp.valueOf(tradeTime));
-        buyTrade.setSellerOrderNo(sellOrderNo);
-        buyTrade.setSellerUserNo(sellUserNo);
-        buyTrade.setSellerOrderTime(Timestamp.valueOf(sellOrder.getOrderTime()));
-        buyTrade.setSellBuyFlag("B");
-        tradeRepository.save(buyTrade);
-
-        Trade sellTrade = new Trade();
-        sellTrade.setToken(tokenRepository.findById(tokenNo).get());
-        sellTrade.setPrice(((int) price));
-        sellTrade.setQuantity(quantity);
-        sellTrade.setBuyerOrderNo(buyOrderNo);
-        sellTrade.setBuyerUserNo(buyUserNo);
-        sellTrade.setBuyerOrderTime(Timestamp.valueOf(tradeTime));
-        sellTrade.setSellerOrderNo(sellOrderNo);
-        sellTrade.setSellerUserNo(sellUserNo);
-        sellTrade.setSellerOrderTime(Timestamp.valueOf(sellOrder.getOrderTime()));
-        sellTrade.setSellBuyFlag("S");
-        tradeRepository.save(sellTrade);
+        saveTrade(
+                tokenRepository.findById(tokenNo).get(),
+                (int) price,
+                quantity,
+                Timestamp.valueOf(tradeTime),
+                buyOrderNo,
+                buyUserNo,
+                Timestamp.valueOf(tradeTime),
+                sellOrderNo,
+                sellUserNo,
+                Timestamp.valueOf(sellOrder.getOrderTime()),
+                "B"
+        );
+        saveTrade(
+                tokenRepository.findById(tokenNo).get(),
+                (int) price,
+                quantity,
+                Timestamp.valueOf(tradeTime),
+                buyOrderNo,
+                buyUserNo,
+                Timestamp.valueOf(tradeTime),
+                sellOrderNo,
+                sellUserNo,
+                Timestamp.valueOf(sellOrder.getOrderTime()),
+                "S"
+        );
     }
 
     public void sellExecuteTrade(long price, double quantity, long tokenNo, long buyOrderNo, long buyUserNo, Order buyOrder, long sellOrderNo, long sellUserNo, LocalDateTime tradeTime) {
-        Trade buyTrade = new Trade();
-		buyTrade.setToken(tokenRepository.findById(tokenNo).get());
-        buyTrade.setPrice(((int) price));
-        buyTrade.setQuantity(quantity);
-        buyTrade.setTimestamp(Timestamp.valueOf(tradeTime));
-        buyTrade.setBuyerOrderNo(buyOrderNo);
-        buyTrade.setBuyerUserNo(buyUserNo);
-        buyTrade.setBuyerOrderTime(Timestamp.valueOf(buyOrder.getOrderTime()));
-        buyTrade.setSellerOrderNo(sellOrderNo);
-        buyTrade.setSellerUserNo(sellUserNo);
-        buyTrade.setSellerOrderTime(Timestamp.valueOf(tradeTime));
-        buyTrade.setSellBuyFlag("B");
-        tradeRepository.save(buyTrade);
+        saveTrade(
+                tokenRepository.findById(tokenNo).get(),
+                (int) price,
+                quantity,
+                Timestamp.valueOf(tradeTime),
+                buyOrderNo,
+                buyUserNo,
+                Timestamp.valueOf(buyOrder.getOrderTime()),
+                sellOrderNo,
+                sellUserNo,
+                Timestamp.valueOf(tradeTime),
+                "B"
+        );
+        saveTrade(
+                tokenRepository.findById(tokenNo).get(),
+                (int) price,
+                quantity,
+                Timestamp.valueOf(tradeTime),
+                buyOrderNo,
+                buyUserNo,
+                Timestamp.valueOf(buyOrder.getOrderTime()),
+                sellOrderNo,
+                sellUserNo,
+                Timestamp.valueOf(tradeTime),
+                "S"
+        );
+    }
 
-        Trade sellTrade = new Trade();
-        sellTrade.setToken(tokenRepository.findById(tokenNo).get());
-        sellTrade.setPrice(((int) price));
-        sellTrade.setQuantity(quantity);
-        sellTrade.setTimestamp(Timestamp.valueOf(tradeTime));
-        sellTrade.setBuyerOrderNo(buyOrderNo);
-        sellTrade.setBuyerUserNo(buyUserNo);
-        sellTrade.setBuyerOrderTime(Timestamp.valueOf(buyOrder.getOrderTime()));
-        sellTrade.setSellerOrderNo(sellOrderNo);
-        sellTrade.setSellerUserNo(sellUserNo);
-        sellTrade.setSellerOrderTime(Timestamp.valueOf(tradeTime));
-        sellTrade.setSellBuyFlag("S");
-        tradeRepository.save(sellTrade);
+    private void saveTrade(Token token, int price, Double quantity, Timestamp timestamp, Long buyerOrderNo, Long buyerUserNo, Timestamp buyerOrderTime, Long sellerOrderNo, Long sellerUserNo, Timestamp sellerOrderTime, String sellBuyFlag) {
+        Trade trade = new Trade();
+        trade.setToken(token);
+        trade.setPrice(price);
+        trade.setQuantity(quantity);
+        trade.setTimestamp(timestamp);
+        trade.setBuyerOrderNo(buyerOrderNo);
+        trade.setBuyerUserNo(buyerUserNo);
+        trade.setBuyerOrderTime(buyerOrderTime);
+        trade.setSellerOrderNo(sellerOrderNo);
+        trade.setSellerUserNo(sellerUserNo);
+        trade.setSellerOrderTime(sellerOrderTime);
+        trade.setSellBuyFlag(sellBuyFlag);
+        tradeRepository.save(trade);
     }
 }

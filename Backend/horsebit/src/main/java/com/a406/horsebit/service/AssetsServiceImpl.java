@@ -3,6 +3,7 @@ package com.a406.horsebit.service;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -229,7 +230,7 @@ public class AssetsServiceImpl implements AssetsService {
 	@Override
 	public Long saveDepositWithdraw(Long userNo, Long amount) {
 		// 현재 날짜/시간
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm:ss"));
 
 		if(updatePossessKRW(userNo, amount) == 0) return 0L;

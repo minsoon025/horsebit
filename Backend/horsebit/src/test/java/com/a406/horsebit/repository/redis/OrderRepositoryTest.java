@@ -8,6 +8,9 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 @Slf4j
 class OrderRepositoryTest {
@@ -61,5 +64,22 @@ class OrderRepositoryTest {
         orderRepository.newOrderNo();
         orderRepository.newTotalVolume(1L);
         orderRepository.newTotalVolume(2L);
+    }
+
+    @Test
+    void getOrderBookVolume() {
+
+        List<Long> prices = new ArrayList<>();
+        prices.add(10L);
+        prices.add(20L);
+        prices.add(30L);
+        prices.add(40L);
+        List<Double> volumesBuy;
+        List<Double> volumesSell;
+
+        volumesBuy = orderRepository.findBuyVolumeByPriceAtOrderBook(1L, prices);
+        volumesSell = orderRepository.findSellVolumeByPriceAtOrderBook(1L, prices);
+        volumesBuy.get(0);
+        volumesSell.get(0);
     }
 }

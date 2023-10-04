@@ -1,6 +1,7 @@
 package com.a406.horsebit.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import com.a406.horsebit.aop.DistributedLock;
@@ -8,6 +9,7 @@ import com.a406.horsebit.constant.OrderConstant;
 import com.a406.horsebit.domain.redis.Order;
 import com.a406.horsebit.domain.redis.OrderSummary;
 import com.a406.horsebit.domain.redis.VolumePage;
+import com.a406.horsebit.repository.redis.CandleRepository;
 import com.a406.horsebit.repository.redis.OrderRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,16 @@ public class OrderServiceImpl implements OrderService {
 
 	private final OrderRepository orderRepository;
 	private final PriceRepository priceRepository;
+	private final CandleRepository candleRepository;
 	private final OrderAsyncService orderAsyncService;
 
 	private final double TENTH_MINIMUM_ORDER_QUANTITY = 0.0001;
 
 	@Autowired
-	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, OrderAsyncService orderAsyncService) {
+	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, CandleRepository candleRepository, OrderAsyncService orderAsyncService) {
 		this.orderRepository = orderRepository;
 		this.priceRepository = priceRepository;
+		this.candleRepository = candleRepository;
 		this.orderAsyncService = orderAsyncService;
 	}
 
@@ -45,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
 	public String processBuyOrder(Long userNo, Long tokenNo, Order order) {
 		String orderStatus = OrderConstant.RESPONSE_EXECUTED;
 		// Capture order time.
-		LocalDateTime orderCaptureTime = LocalDateTime.now();
+		LocalDateTime orderCaptureTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		order.setOrderTime(orderCaptureTime);
 		// Generate new orderNo.
 		Long orderNo = generateOrderNo();
@@ -114,6 +118,8 @@ public class OrderServiceImpl implements OrderService {
 		}
 		// Update current price.
 		priceRepository.saveCurrentPrice(tokenNo, lastPrice);
+		// Update candle.
+		candleRepository.updateCandle(tokenNo, lastPrice);
 		return orderStatus;
 	}
 
@@ -121,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 	public String processSellOrder(Long userNo, Long tokenNo, Order order) {
 		String orderStatus = OrderConstant.RESPONSE_EXECUTED;
 		// Capture order time.
-		LocalDateTime orderCaptureTime = LocalDateTime.now();
+		LocalDateTime orderCaptureTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 		order.setOrderTime(orderCaptureTime);
 		// Generate new orderNo.
 		Long orderNo = generateOrderNo();
@@ -190,7 +196,9 @@ public class OrderServiceImpl implements OrderService {
 			orderStatus = OrderConstant.RESPONSE_ORDERED;
 		}
 		// Update current price.
-		priceRepository.saveCurrentPrice(tokenNo, lastPrice);
+		priceRepository.saveCurrentPrice(tokenNo, lastPrice);;
+		// Update candle.
+		candleRepository.updateCandle(tokenNo, lastPrice);
 		return orderStatus;
 	}
 
