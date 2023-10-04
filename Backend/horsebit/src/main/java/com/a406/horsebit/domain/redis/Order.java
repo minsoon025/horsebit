@@ -1,5 +1,6 @@
 package com.a406.horsebit.domain.redis;
 
+import com.a406.horsebit.dto.OrderRequestDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,13 @@ public class Order {
         this.price = price;
         this.quantity = quantity;
         this.remain = remain;
+        this.sellBuyFlag = sellBuyFlag;
+    }
+
+    public Order(OrderRequestDTO orderRequestDTO, String sellBuyFlag) {
+        this.price = orderRequestDTO.getPrice();
+        this.quantity = orderRequestDTO.getVolume();
+        this.remain = orderRequestDTO.getVolume();
         this.sellBuyFlag = sellBuyFlag;
     }
 }
