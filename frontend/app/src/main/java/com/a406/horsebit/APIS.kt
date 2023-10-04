@@ -132,7 +132,7 @@ interface APIS {
     // 코인 주문 현황 상세 조회 (SSE)
     @GET("/api/exchange/tokens/{tokenNo}/volumes")
     fun coinOrderSituation(
-        @Header("tokenNo") tokenNo: Long,
+        @Path("tokenNo") tokenNo: Long,
     ): Call<ArrayList<Order>>
 
     // 매수 주문 요청

@@ -11,7 +11,6 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -28,7 +27,7 @@ import retrofit2.Response
 import java.util.Collections
 import java.util.ArrayList
 
-class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>, private val context: Context) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
+class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>) : RecyclerView.Adapter<AssetTableItemAdapter.CustomViewHolder>(), Filterable {
 
 
     var filteredTokenShowList = ArrayList<TokenShow>()
@@ -144,7 +143,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>, private val
             binding.llhAssetTableItemHide.setOnClickListener {
                 if(tokenShow.interest) {
                     // 즐겨찾기 삭제
-                    val pref = PreferenceManager.getDefaultSharedPreferences(context)  // import androidx.preference.PreferenceManager 인지 확인
+                    val pref = PreferenceManager.getDefaultSharedPreferences(binding.root.context)  // import androidx.preference.PreferenceManager 인지 확인
                     val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
 
                     api.deleteFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<FavoriteResponseBodyModel> {
@@ -185,7 +184,7 @@ class AssetTableItemAdapter(val tokenShowList: ArrayList<TokenShow>, private val
                 }
                 else{
                     // 즐겨 찾기 추가
-                    val pref = PreferenceManager.getDefaultSharedPreferences(context)  // import androidx.preference.PreferenceManager 인지 확인
+                    val pref = PreferenceManager.getDefaultSharedPreferences(binding.root.context)  // import androidx.preference.PreferenceManager 인지 확인
                     val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
 
                     api.addFavorite(tokenNo = tokenShow.tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<FavoriteResponseBodyModel> {

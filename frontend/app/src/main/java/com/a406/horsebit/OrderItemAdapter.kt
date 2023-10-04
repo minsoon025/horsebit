@@ -52,7 +52,7 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
 
         }
 
-        private fun setChartData(volume: Long) {
+        private fun setChartData(volume: Double) {
             val volumeEntries = ArrayList<BarEntry>()
 
             volumeEntries.add(

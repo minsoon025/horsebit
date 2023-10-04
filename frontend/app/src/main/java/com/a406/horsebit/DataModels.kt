@@ -64,7 +64,7 @@ data class TokenShow(
 
 data class Order(
     val price: Long,    // 호가 가격
-    val volume: Long,   // 주문량
+    val volume: Double,   // 주문량
     val priceRateOfChange: Double,  // 변동추이
 )
 

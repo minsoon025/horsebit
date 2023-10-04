@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
 
         binding = FragmentHomeBinding.bind(view)
 
-        assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
+        assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
 
         var searchViewTextListener: SearchView.OnQueryTextListener = object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String?): Boolean {
@@ -188,7 +188,7 @@ class HomeFragment : Fragment() {
                                     tokenShowList.add(tokenShow)
                                 }
                             }
-                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
@@ -223,7 +223,7 @@ class HomeFragment : Fragment() {
                                     tokenShowList.add(tokenShow)
                                 }
                             }
-                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
@@ -263,7 +263,7 @@ class HomeFragment : Fragment() {
                                 }
                             }
                             // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
-                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList, requireContext())
+                            assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입

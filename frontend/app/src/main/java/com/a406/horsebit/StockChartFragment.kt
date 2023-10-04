@@ -41,7 +41,7 @@ class StockChartFragment : Fragment() {
         initChart()
 
 
-        val customDateTime = LocalDateTime.of(2023, 9, 26, 16, 0,0, 0)
+        val customDateTime = LocalDateTime.of(2023, 10, 4, 2, 30,0, 0)
 
         val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
         val token = pref.getString("token", "1")
