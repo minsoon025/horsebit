@@ -144,7 +144,8 @@ class StockOrderFragment : Fragment() {
             }
             1->{
                 val bundle = Bundle()
-                bundle.putString("ticker", arguments?.getString("ticker").toString())
+                bundle.putLong("tokenNo", tokenNo)
+                bundle.putString("code",code)
 
                 val changeFragment = OrderSellTabFragment()
                 changeFragment.arguments = bundle

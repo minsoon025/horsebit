@@ -138,7 +138,14 @@ interface APIS {
     fun orderRequest(
         @Header("Authorization") authorization: String,
         @Body request: OrderRequestRequestBodyModel,
-    ): Call<OderRequestResponseBodyModel>
+    ): Call<OrderRequestResponseBodyModel>
+
+    // 매도 주문 요청
+    @POST("/api/exchange/order/sell")
+    fun sellRequest(
+        @Header("Authorization") authorization: String,
+        @Body request: SellRequestRequestBodyModel,
+    ): Call<SellRequestResponseBodyModel>
 
 
     companion object {

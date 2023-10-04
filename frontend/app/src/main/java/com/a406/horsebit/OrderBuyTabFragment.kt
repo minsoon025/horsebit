@@ -102,8 +102,8 @@
                     binding.etOrderBuyPrice.text.toString().toLong()
                 )
 
-                api.orderRequest(authorization = "Bearer ${1}" , requestData).enqueue(object: Callback<OderRequestResponseBodyModel> {
-                    override fun onResponse(call: Call<OderRequestResponseBodyModel>, response: Response<OderRequestResponseBodyModel>) {
+                api.orderRequest(authorization = "Bearer ${1}" , requestData).enqueue(object: Callback<OrderRequestResponseBodyModel> {
+                    override fun onResponse(call: Call<OrderRequestResponseBodyModel>, response: Response<OrderRequestResponseBodyModel>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "매수 주문 요청: 200 Success")
 
@@ -111,10 +111,10 @@
 
                         }
                         else if(response.code() == 201) {   // 201 Created
-                            Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                            Log.d("로그", "매수 주문 요청: 201 Created")
                         }
                         else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
-                            Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                            Log.d("로그", "매수 주문 요청: 202 Accepted")
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                             Log.d("로그", "매수 주문 요청: 400 Bad Request")
@@ -129,7 +129,7 @@
                             Log.d("로그", "매수 주문 요청: 404 Not Found")
                         }
                     }
-                    override fun onFailure(call: Call<OderRequestResponseBodyModel>, t: Throwable) {
+                    override fun onFailure(call: Call<OrderRequestResponseBodyModel>, t: Throwable) {
                         Log.d("로그", "매수 주문 요청: onFailure")
                     }
                 })

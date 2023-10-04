@@ -143,7 +143,10 @@ class OrderActivity : AppCompatActivity() {
             }
 
             1 -> {
+                val bundle = Bundle()
+
                 val changeFragment = StockChartFragment()
+                changeFragment.arguments = bundle
                 ft.replace(R.id.fl_Order, changeFragment)
                 ft.commit()
             }
