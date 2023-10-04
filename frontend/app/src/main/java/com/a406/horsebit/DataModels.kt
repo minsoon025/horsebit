@@ -1,7 +1,6 @@
 package com.a406.horsebit
 
 
-import androidx.compose.ui.semantics.Role
 import java.util.Date
 
 // 미체결 내역 조회
@@ -120,7 +119,7 @@ data class BarShow(
 // 마이페이지 코인 component
 data class MyAssetResponseBodyModel(
     val horseImage: Int,
-    val tokenNo : Int,
+    val tokenNo : Long,
     val name: String,
     val code: String,
     val profitOrLoss: String,

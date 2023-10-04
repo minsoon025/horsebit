@@ -64,9 +64,14 @@ class MyPageFragment : Fragment() {
 
                     if (responseBody != null) {
                         for (coin in responseBody) {
+
+
                             myassetList.add(coin)
 
                         }
+                        myPageCoinItemAdapter.notifyDataSetChanged()
+                    } else {
+                        showNoDataMessage()
                     }
 
                     myPageCoinItemAdapter = MyPageCoinItemAdapter(myassetList)
@@ -81,7 +86,6 @@ class MyPageFragment : Fragment() {
                 }
                 else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
                     Log.d("로그", "보유 마패 전체 조회: 401 Unauthorized")
-
                 }
                 else if(response.code() == 403) {
                     Log.d("로그", "보유 마패 전체 조회: 403 Forbidden")
@@ -149,6 +153,15 @@ class MyPageFragment : Fragment() {
     }
 
 
+    private fun showNoDataMessage() {
+        // 데이터가 없을 때 특정 메시지를 표시하는 로직을 여기에 구현합니다.
+        // 예를 들어, TextView에 메시지를 설정하거나 다이얼로그를 표시할 수 있습니다.
+        // 예제로 TextView에 메시지 설정하는 방법을 보여드리겠습니다.
+
+        val noDataMessage = "보유한 마패가 없습니다." // 표시할 메시지를 지정
+//        binding.tvViewNoData.text = noDataMessage
+//        binding.tvViewNoData.visibility = View.VISIBLE // TextView를 화면에 표시
+    }
 
 
     private fun saveData() {

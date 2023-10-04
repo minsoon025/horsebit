@@ -1,16 +1,15 @@
 package com.a406.horsebit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.ActivityOrderBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import androidx.preference.PreferenceManager
 
 class OrderActivity : AppCompatActivity() {
 
@@ -31,6 +30,7 @@ class OrderActivity : AppCompatActivity() {
         tokenNo = intent.getLongExtra("tokenNo", 0)
         code = intent.getStringExtra("code") ?: ""
 
+        Log.d("오다에서 보는 토큰넘버입니다", tokenNo.toString())
         val pref = PreferenceManager.getDefaultSharedPreferences(this)  // import androidx.preference.PreferenceManager 인지 확인
         val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
 

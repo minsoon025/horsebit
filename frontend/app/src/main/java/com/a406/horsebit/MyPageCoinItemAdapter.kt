@@ -48,12 +48,12 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
 
             // 이미지 리소스 ID를 확인하고 설정합니다.
             binding.ivInformationHorseImg.setImageResource(imageResourceID)
-
+9
             binding.llvMyAssetItem.setOnClickListener {
                 val curPos: Int = adapterPosition
                 val mycoinList: MyAssetResponseBodyModel = myassetItemList[curPos] // myassetItemList로 수정
                 Log.d("토큰넘버 입니다ddddddddddddddddddd", mycoinList.tokenNo.toString())
-                if (mycoinList.tokenNo != 0) {
+                if (mycoinList.tokenNo.toLong() != 0L) {
                     val intent = Intent(binding.root.context, OrderActivity::class.java)
                     intent.putExtra("tokenNo", mycoinList.tokenNo)
                     binding.root.context.startActivity(intent)
