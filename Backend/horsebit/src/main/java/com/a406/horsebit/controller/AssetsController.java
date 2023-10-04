@@ -1,8 +1,15 @@
 package com.a406.horsebit.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
+import com.a406.horsebit.config.jwt.TokenProvider;
+import com.a406.horsebit.domain.User;
+import com.a406.horsebit.repository.UserRepository;
+import com.nimbusds.jwt.SignedJWT;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.a406.horsebit.domain.Account;
 import com.a406.horsebit.dto.AssetsDTO;
 import com.a406.horsebit.dto.HorseTokenDTO;
 import com.a406.horsebit.dto.UserTradeDTO;
@@ -24,10 +30,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/assets")
 public class AssetsController {
 	private final AssetsService assetsService;
+	private final TokenProvider tokenProvider;
+	private final UserRepository userRepository;
 
 	@Autowired
-	public AssetsController(AssetsService assetsService) {
+	public AssetsController(AssetsService assetsService, TokenProvider tokenProvider, UserRepository userRepository) {
 		this.assetsService = assetsService;
+		this.tokenProvider = tokenProvider;
+		this.userRepository = userRepository;
 	}
 
 	//TODO: OAuth 적용 후 userNo 삭제 필요
@@ -37,9 +47,14 @@ public class AssetsController {
 	 * @return
 	 */
 	@GetMapping("")
-	public AssetsDTO getUserAssets() {
+	public AssetsDTO getUserAssets(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+		String token = (request.getHeader("Authorization")).substring("Bearer ".length());
+		SignedJWT signedJWT = (SignedJWT) tokenProvider.parseAccessToken(token);
+		String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
+		log.info("사용자 이메일 : "+email);
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("토큰에 맞는 사용자정보가 없습니다."));
 
-		Long userNo = 1L;
+		Long userNo = user.getId();
 
 		return assetsService.findAssetsByUserNo(userNo);
 	}
@@ -50,8 +65,14 @@ public class AssetsController {
 	 * @return
 	 */
 	@GetMapping("/horses")
-	public List<HorseTokenDTO> getUserTokens() {
-		Long userNo = 1L;
+	public List<HorseTokenDTO> getUserTokens(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+		String token = (request.getHeader("Authorization")).substring("Bearer ".length());
+		SignedJWT signedJWT = (SignedJWT) tokenProvider.parseAccessToken(token);
+		String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
+		log.info("사용자 이메일 : "+email);
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("토큰에 맞는 사용자정보가 없습니다."));
+
+		Long userNo = user.getId();
 
 		return assetsService.findTokensByUserNo(userNo);
 	}
