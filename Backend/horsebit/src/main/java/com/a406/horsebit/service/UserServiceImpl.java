@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
     private final InMemoryProviderRepository inMemoryProviderRepository;
+    private final AssetsService assetsService;
 
     public User findById(Long userId){
         return userRepository.findById(userId)
@@ -94,11 +95,14 @@ public class UserServiceImpl implements UserService {
                         .userName(signUpDTO.getUserName())
                         .build();
 
-//        user.setProviderId(providerId);
         user.setRole(Role.USER);
+        userRepository.save(user);
+
+        //assets 처음 KRW = 0으로 설정
+        assetsService.saveNewAsset(user.getId(), 0L);
 
         log.info("회원가입 완료");
-        return userRepository.save(user);
+        return user;
     }
 
 
