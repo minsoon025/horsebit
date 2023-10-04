@@ -113,7 +113,7 @@
                                 android:shadowDx="2"
                                 android:shadowDy="2"
                                 android:shadowRadius="2"
-                                android:text="954,867"
+                                android:text="000,000"
                                 android:textColor="@color/white"
                                 android:textSize="30sp" />
 
@@ -195,7 +195,7 @@
                                 android:shadowDx="2"
                                 android:shadowDy="2"
                                 android:shadowRadius="2"
-                                android:text="122,543"
+                                android:text="000,000"
                                 android:textColor="@color/white"
                                 android:textSize="30sp" />
 
@@ -272,7 +272,7 @@
                                         android:layout_weight="25"
                                         android:fontFamily="@font/line_seed_kr_rg"
                                         android:gravity="center"
-                                        android:text="계산 결과" />
+                                        android:text="0" />
                                 </LinearLayout>
 
                                 <Space
@@ -305,7 +305,7 @@
                                         android:layout_weight="25"
                                         android:fontFamily="@font/line_seed_kr_rg"
                                         android:gravity="center"
-                                        android:text="계산 결과" />
+                                        android:text="0" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -360,7 +360,7 @@
                                         android:layout_weight="25"
                                         android:fontFamily="@font/line_seed_kr_rg"
                                         android:gravity="center"
-                                        android:text="계산 결과" />
+                                        android:text="0" />
                                 </LinearLayout>
 
                                 <Space
@@ -392,7 +392,7 @@
                                         android:layout_weight="25"
                                         android:fontFamily="@font/line_seed_kr_rg"
                                         android:gravity="center"
-                                        android:text="계산 결과" />
+                                        android:text="0" />
                                 </LinearLayout>
 
 

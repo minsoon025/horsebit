@@ -69,6 +69,7 @@ interface APIS {
     // 코인 목록 조회 (SSE)
     @GET("/api/exchange/tokens")
     fun tokenList(
+        @Header("Authorization") authorization: String,
     ): Call<ArrayList<Token>>
 
     // 보유 코인 목록 조회
@@ -100,6 +101,7 @@ interface APIS {
     // 캔들 차트 조회
     @GET("/api/exchange/tokens/{tokenNo}/chart")
     fun candleChartData(
+        @Header("Authorization") authorization: String,
         @Path("tokenNo") tokenNo: Long,
         @Query("quantity") quantity: Long,
         @Query("endTime") endTime: LocalDateTime,

@@ -3,16 +3,14 @@ package com.a406.horsebit
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Half.toFloat
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.FragmentStockChartBinding
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
@@ -24,9 +22,7 @@ import com.github.mikephil.charting.data.CandleEntry
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class StockChartFragment : Fragment() {
 
@@ -47,7 +43,10 @@ class StockChartFragment : Fragment() {
         Log.d("fsadfadsfads",LocalDateTime.now().toString() )
         val customDateTime = LocalDateTime.of(2023, 9, 26, 16, 0,0, 0)
 
-        api.candleChartData(tokenNo = 1L, quantity = 100L, endTime = customDateTime, candleTypeIndex = 0, margin = 3L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
+        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+        val token = pref.getString("token", "1")
+
+        api.candleChartData(tokenNo = 1L, quantity = 100L, endTime = customDateTime, candleTypeIndex = 0, margin = 3L, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
             override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
 
                 Log.d("리스빤스", response.code().toString())

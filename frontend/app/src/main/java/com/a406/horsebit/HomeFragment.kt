@@ -3,12 +3,13 @@ package com.a406.horsebit
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.a406.horsebit.databinding.FragmentHomeBinding
@@ -171,7 +172,10 @@ class HomeFragment : Fragment() {
     private fun changeShowType(showType: Int) {
         when(showType) {
             0 -> {
-                api.tokenList().enqueue(object: Callback<ArrayList<Token>> {
+                val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+                val token = pref.getString("token", "1")
+
+                api.tokenList(authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<Token>> {
                     override fun onResponse(call: Call<ArrayList<Token>>, response: Response<ArrayList<Token>>) {
                         if(response.code() == 200) {    // 200 Success
                             Log.d("로그", "코인 목록 조회 (SSE): 200 Success")

@@ -17,7 +17,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.APIS
@@ -70,14 +70,19 @@ class ExchangeFragment : Fragment() {
 
             // TODO: 입력된 금액과 입출금 유형을 기반으로 API 요청을 보냅니다.
             // Retrofit을 사용하여 API 요청을 보내는 예제 코드를 아래에 작성합니다.
+            val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+            val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
 
-            val authorizationHeader = "Bearer YourAccessTokenHere" // 실제 액세스 토큰 사용
+            val authorizationHeader = "Bearer ${token}" // 실제 액세스 토큰 사용
 
             if (transactionType == "입금" || transactionType == "출금") {
                 // 입금 버튼을 눌렀을 때는 그대로, 출금 버튼을 눌렀을 때는 "-"를 붙여서 reqAmount 설정
+
                 val reqAmount = if (transactionType == "출금") -amount.toLong() else amount.toLong()
                 val requestBody = KrwInOutRequestBodyModel(reqAmount) // 요청 데이터 생성
                 val call = api.krwInOut(authorizationHeader, requestBody) // API 호출
+
+
 
                 call.enqueue(/* callback = */ object : Callback<KrwInOutRequestBodyModel> {
                     override fun onResponse(
@@ -163,9 +168,10 @@ class ExchangeFragment : Fragment() {
         binding.rvExchangeTable.setHasFixedSize(true)
 
         //exchangeList.clear()
-
+        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+        val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
         // 어뎁터 불러와서 값 돌리기
-        api.ExchangeDataModel(authorization = "Bearer ${1}").enqueue(object:
+        api.ExchangeDataModel(authorization = "Bearer ${token}").enqueue(object:
         Callback<ArrayList<ExchangeDataResponseBodyModel>> {
                 override fun onResponse(call: Call<ArrayList<ExchangeDataResponseBodyModel>>,
                                     response: Response<ArrayList<ExchangeDataResponseBodyModel>>) {
@@ -200,7 +206,7 @@ class ExchangeFragment : Fragment() {
         })
 
         //보유 krw API
-        api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object : Callback<MyTotalAssetResponseBodyModel> {
+        api.MyTotalAsset(authorization = "Bearer ${token}").enqueue(object : Callback<MyTotalAssetResponseBodyModel> {
             override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
                 if (response.code() == 200) {    // 200 Success
                     Log.d("로그", "내 자산 전체 조회: 200 Success")

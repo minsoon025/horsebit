@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.a406.horsebit.databinding.MyassetItemBinding
 class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyModel>) : RecyclerView.Adapter<MyPageCoinItemAdapter.CustomViewHolder>() {
 
-    var myassetList = ArrayList<MyAssetResponseBodyModel>()
+//    var myassetList = ArrayList<MyAssetResponseBodyModel>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

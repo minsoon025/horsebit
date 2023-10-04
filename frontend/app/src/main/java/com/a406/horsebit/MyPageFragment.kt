@@ -49,10 +49,11 @@ class MyPageFragment : Fragment() {
         myassetList.clear()
 
 
-        //val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
-        //val token = pref.getString("token", "1")
+        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+        val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
 
-        api.MyCoins(authorization = "Bearer ${1}").enqueue(object: Callback<ArrayList<MyAssetResponseBodyModel>> {
+        Log.d("엑세스토큰입니다", token.toString())
+        api.MyCoins(authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<MyAssetResponseBodyModel>> {
             override fun onResponse(call: Call<ArrayList<MyAssetResponseBodyModel>>, response: Response<ArrayList<MyAssetResponseBodyModel>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "보유 마패 전체 조회: 200 Success")
@@ -80,6 +81,7 @@ class MyPageFragment : Fragment() {
                 }
                 else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
                     Log.d("로그", "보유 마패 전체 조회: 401 Unauthorized")
+
                 }
                 else if(response.code() == 403) {
                     Log.d("로그", "보유 마패 전체 조회: 403 Forbidden")
@@ -94,7 +96,7 @@ class MyPageFragment : Fragment() {
             }
         })
 
-        api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object : Callback<MyTotalAssetResponseBodyModel> {
+        api.MyTotalAsset(authorization = "Bearer ${token}").enqueue(object : Callback<MyTotalAssetResponseBodyModel> {
             override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
                 if (response.code() == 200) {    // 200 Success
                     Log.d("로그", "내 자산 전체 조회: 200 Success")
