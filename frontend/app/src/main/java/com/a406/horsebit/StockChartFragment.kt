@@ -44,13 +44,11 @@ class StockChartFragment : Fragment() {
 
         initChart()
 
-        Log.d("fsadfadsfads",LocalDateTime.now().toString() )
+
         val customDateTime = LocalDateTime.of(2023, 9, 26, 16, 0,0, 0)
 
         api.candleChartData(tokenNo = 1L, quantity = 100L, endTime = customDateTime, candleTypeIndex = 0, margin = 3L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
             override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
-
-                Log.d("리스빤스", response.code().toString())
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "차트 캔들 조회: 200 Success")
 

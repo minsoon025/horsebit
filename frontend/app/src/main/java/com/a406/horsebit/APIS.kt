@@ -133,6 +133,13 @@ interface APIS {
         @Header("tokenNo") tokenNo: Long,
     ): Call<ArrayList<Order>>
 
+    // 매수 주문 요청
+    @POST("/api/exchange/order/buy")
+    fun orderRequest(
+        @Header("Authorization") authorization: String,
+        @Body request: OrderRequestRequestBodyModel,
+    ): Call<OderRequestResponseBodyModel>
+
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"

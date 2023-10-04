@@ -18,6 +18,7 @@ class OrderActivity : AppCompatActivity() {
 
     val api = APIS.create()
     var tokenNo: Long = 0
+    var code: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,8 @@ class OrderActivity : AppCompatActivity() {
         binding.hsvTitle.isHorizontalScrollBarEnabled = false
 
         tokenNo = intent.getLongExtra("tokenNo", 0)
+        code = intent.getStringExtra("code") ?: ""
+
 
         api.tokenListDetail(tokenNo = tokenNo, authorization = "Bearer ${1}").enqueue(object: Callback<TokenListDetailResponseBodyModel> {
             override fun onResponse(call: Call<TokenListDetailResponseBodyModel>, response: Response<TokenListDetailResponseBodyModel>) {
@@ -131,6 +134,7 @@ class OrderActivity : AppCompatActivity() {
             0 -> {
                 val bundle = Bundle()
                 bundle.putLong("tokenNo", tokenNo)
+                bundle.putString("code", code)
 
                 val changeFragment = StockOrderFragment()
                 changeFragment.arguments = bundle
