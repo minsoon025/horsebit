@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.a406.horsebit.domain.User;
 import com.a406.horsebit.dto.CandleDTO;
+import com.a406.horsebit.dto.HorseDTO;
 import com.a406.horsebit.dto.VolumeDTO;
 import com.a406.horsebit.service.CandleService;
 import com.a406.horsebit.service.UserService;
@@ -183,5 +184,10 @@ public class TokenController {
 	@GetMapping("/{tokenNo}/chart")
 	public List<CandleDTO> getCandles(@PathVariable("tokenNo") Long tokenNo, @RequestParam("quantity") Long quantity, @RequestParam("endTime") LocalDateTime endTime, @RequestParam("candleTypeIndex") Integer candleTypeIndex, @RequestParam("margin") Long margin) {
 		return candleService.getCandle(tokenNo, endTime, candleTypeIndex, quantity, margin);
+	}
+
+	@GetMapping("/{tokenNo}/info")
+	public HorseDTO getHorseInfo(@PathVariable("tokenNo") Long tokenNo) {
+		return tokenService.findHorse(tokenNo);
 	}
 }
