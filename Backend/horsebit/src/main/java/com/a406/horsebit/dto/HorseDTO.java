@@ -18,8 +18,9 @@ public class HorseDTO {
 	private Long motherHrNo;
 	private String motherHrName;
 	private String raceRank;
+	private boolean raceHorseFlag;
 
-	public HorseDTO(Long hrNo, String hrName, String birthPlace, String owName, Long fatherHrNo, Long motherHrNo, String raceRank, String content) {
+	public HorseDTO(Long hrNo, String hrName, String birthPlace, String owName, Long fatherHrNo, Long motherHrNo, String raceRank, String content, boolean raceHorseFlag) {
 		this.hrNo = hrNo;
 		this.hrName = hrName;
 		this.birthPlace = birthPlace;
@@ -28,6 +29,7 @@ public class HorseDTO {
 		this.motherHrNo = motherHrNo;
 		this.raceRank = raceRank;
 		this.content = content;
+		this.raceHorseFlag = raceHorseFlag;
 	}
 
 	public Long getHrNo() {
@@ -142,5 +144,11 @@ public class HorseDTO {
 		this.raceRank = raceRank;
 	}
 
+	public boolean isRaceHorseFlag() {
+		return raceHorseFlag;
+	}
 
+	public void setRaceHorseFlag(boolean raceHorseFlag) {
+		this.raceHorseFlag = raceHorseFlag;
+	}
 }
