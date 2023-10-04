@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 				orderRepository.deleteSellVolumePage(tokenNo);
 			}
 			// Sell order remain is less than order remain.
-			else if (orderSummary.getRemain() < remain - TENTH_MINIMUM_ORDER_QUANTITY) {
+			else if (orderSummary.getRemain() < remain + TENTH_MINIMUM_ORDER_QUANTITY) {
 				double orderSummaryRemain = orderSummary.getRemain();
 				// Update order page at order book.
 				orderRepository.deleteSellOrderSummary(tokenNo, minSellVolumePage.getPrice());
@@ -140,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
 				orderRepository.deleteBuyVolumePage(tokenNo);
 			}
 			// Sell order remain is less than order remain.
-			else if (orderSummary.getRemain() < remain  - TENTH_MINIMUM_ORDER_QUANTITY) {
+			else if (orderSummary.getRemain() < remain + TENTH_MINIMUM_ORDER_QUANTITY) {
 				double orderSummaryRemain = orderSummary.getRemain();
 				// Update order page at order book.
 				orderRepository.deleteBuyOrderSummary(tokenNo, maxBuyVolumePage.getPrice());
