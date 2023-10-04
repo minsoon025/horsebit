@@ -254,4 +254,10 @@ public class AssetsServiceImpl implements AssetsService {
 
 //		return possessRepository.save(nPossess).getShareNo();
 	}
+
+	@Override
+	public double findTokenByUserNoAndTokenNo(Long userNo, Long tokenNo) {
+		Possess result = possessRepository.findByUserNoAndTokenNo(userNo, tokenNo);
+		return result.getQuantity();
+	}
 }

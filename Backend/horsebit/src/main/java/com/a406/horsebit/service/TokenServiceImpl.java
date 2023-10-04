@@ -222,11 +222,23 @@ public class TokenServiceImpl implements TokenService {
 		Long hrNo = tokenRepository.findHrNoByTokenNo(tokenNo);
 		HorseDTO result = tokenRepository.findHorseByTokenNo(hrNo);
 
-		String fatherHrName = tokenRepository.findHrNameByTokenNo(result.getFatherHrNo());
-		String motherHrName = tokenRepository.findHrNameByTokenNo(result.getMotherHrNo());
+		if(!result.isRaceHorseFlag()) {
+			result.setRaceRank("-");
+		}
 
-		result.setFatherHrName(fatherHrName);
-		result.setMotherHrName(motherHrName);
+		if(result.getFatherHrNo() != null) {
+			String fatherHrName = tokenRepository.findHrNameByTokenNo(result.getFatherHrNo());
+			result.setFatherHrName(fatherHrName);
+		} else {
+			result.setFatherHrName("-");
+		}
+
+		if(result.getMotherHrNo() != null) {
+			String motherHrName = tokenRepository.findHrNameByTokenNo(result.getMotherHrNo());
+			result.setMotherHrName(motherHrName);
+		} else {
+			result.setMotherHrName("-");
+		}
 
 		TokenDTO tInfo = tokenRepository.findTokenInfoByTokenNo(tokenNo);
 		result.setCode(tInfo.getCode());

@@ -43,6 +43,7 @@ public class CandleServiceImpl implements CandleService {
         int startIndex = endIndex - quantity.intValue() - margin.intValue();
         startIndex = Math.max(startIndex, 0);
         endIndex = Math.min(getIndex(tokenNo, LocalDateTime.now(), candleTypeIndex) + 1, endIndex + margin.intValue());
+        endIndex = Math.max(endIndex, startIndex);
         CandleType candleType = CandleConstant.CANDLE_TYPE_LIST.get(candleTypeIndex);
         log.info("tokenNo: " + tokenNo + "   startIndex: " + startIndex + "   endIndex: " + endIndex + "   candleType: " + candleType.getCandleType());
         return candleRepository.findRangeByTokenNo(tokenNo, startIndex, endIndex - startIndex, candleType);

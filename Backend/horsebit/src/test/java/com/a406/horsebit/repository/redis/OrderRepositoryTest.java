@@ -20,7 +20,7 @@ class OrderRepositoryTest {
         this.redissonClient = redissonClient;
     }
 
-    //@Test
+    @Test
     void generateUser() {
         for (long tokenNo = 1L; tokenNo <= 25L; ++tokenNo) {
 //            orderRepository.newUserOrderList(4L, tokenNo);
@@ -51,7 +51,7 @@ class OrderRepositoryTest {
 
     @Test
     void generateTotalValue() {
-        for (long tokenNo = 1L; tokenNo <= 2L; ++tokenNo) {
+        for (long tokenNo = 1L; tokenNo <= 25L; ++tokenNo) {
             orderRepository.newTotalVolume(tokenNo);
         }
     }

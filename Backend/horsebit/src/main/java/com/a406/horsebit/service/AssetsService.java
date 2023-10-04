@@ -12,4 +12,6 @@ public interface AssetsService {
 	List<UserTradeDTO> findTradeHistoryByUserNo(Long userNo);
 	Long saveDepositWithdraw(Long userNo, Long amount);
 	void saveNewAsset(Long userNo, Long amount);
+
+	double findTokenByUserNoAndTokenNo(Long userNo, Long tokenNo);
 }
