@@ -70,4 +70,6 @@ public class CandleRepository {
         RBucket<LocalDateTime> initialTimeRBucket = redissonClient.getBucket(CANDLE_INITIAL_TIME_PREFIX + tokenNo);
         return initialTimeRBucket.get();
     }
+
+
 }
