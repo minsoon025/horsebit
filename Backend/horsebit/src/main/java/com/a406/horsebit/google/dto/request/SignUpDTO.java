@@ -11,10 +11,13 @@ import lombok.Setter;
 public class SignUpDTO {
     private String token; // Authorization Server(google, naver, kakao) 에서 발급받은 token
     private String userName;
+//    //TODO: 계좌 정보 추가
+//    private String bankAccount;
 
     public User toEntity(){
         return User.builder()
                 .userName(userName)
+//                .bankAccount(bankAccount)
                 .build();
     }
 }

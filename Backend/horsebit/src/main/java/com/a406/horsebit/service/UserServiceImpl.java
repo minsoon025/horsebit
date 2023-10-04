@@ -86,7 +86,6 @@ public class UserServiceImpl implements UserService {
         SignedJWT signedJWT = (SignedJWT) tokenProvider.parseTokenWithoutValidation(idToken);
 
         try {
-//            tokenProvider.validateJwtWithJwk(idToken, jwksStr);
             tokenProvider.validateJwtWithJwk(idToken);
         } catch (Exception e) {
             throw new IllegalArgumentException("Id Token이 유효하지 않습니다. " + e.getMessage());
@@ -96,10 +95,11 @@ public class UserServiceImpl implements UserService {
         log.info("이메일 : " + email);
         String nickname = tokenProvider.extractNickname(idToken);
         User user = User.builder()
-                        .email(email)
-                        .nickname(nickname)
-                        .userName(signUpDTO.getUserName())
-                        .build();
+                .email(email)
+                .nickname(nickname)
+                .userName(signUpDTO.getUserName())
+//                .bankAccount(signUpDTO.getBankAccount())    //TODO: 계좌 추가
+                .build();
 
         user.setRole(Role.USER);
         userRepository.save(user);
@@ -117,8 +117,7 @@ public class UserServiceImpl implements UserService {
         log.info("회원가입 완료");
         return user;
     }
-
-
+    
     @Override
     public RefreshResponseDTO issueAccessTokenByRefreshToken(RefreshDTO refreshDTO) {
         log.info("Refresh Token 검증");
