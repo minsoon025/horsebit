@@ -245,13 +245,14 @@ public class AssetsServiceImpl implements AssetsService {
 
 	@Transactional
 	@Override
-	public void saveNewAsset(Long userNo, Long amount) {
+	public Possess saveNewAsset(Long userNo, Long amount) {
 		Possess nPossess = new Possess();
 		nPossess.setTokenNo(KRW);
 		nPossess.setUserNo(userNo);
-		nPossess.setQuantity(0L);
-		nPossess.setTotalAmountPurchase(0L);
-
+		nPossess.setQuantity(amount);
+		nPossess.setTotalAmountPurchase(amount);
+		possessRepository.save(nPossess);
+		return nPossess;
 //		return possessRepository.save(nPossess).getShareNo();
 	}
 
