@@ -7,15 +7,10 @@ import com.google.gson.JsonParser;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jose.crypto.RSASSAVerifier;
-import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKMatcher;
 import com.nimbusds.jose.jwk.JWKSelector;
-import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import io.jsonwebtoken.Jwts;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,9 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.security.PublicKey;
 import java.security.SecureRandom;
-import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import java.util.Base64;
 import java.util.Collection;
@@ -37,13 +30,6 @@ import java.util.List;
 @Service
 @Slf4j
 public class TokenProvider {
-////    private final JwtProperties jwtProperties;
-//
-////    @Value("${jwt.access.header}")
-//    private String accessHeader;
-//
-////    @Value("${jwt.refresh.header}")
-//    private String refreshHeader;
 
     private final Long ACCESS_TOKEN_EXPIRATION_TIME;
     private final Long REFRESH_TOKEN_EXPIRATION_TIME;
@@ -127,44 +113,6 @@ public class TokenProvider {
         return SignedJWT.parse(token);
     }
 
-        //TODO: 아래 주석처리한 코드는 providerName 사용 했을 때 -> 프론트와 이야기 후 삭제 예정
-//    public void validateJwtWithJwk(String token, String jwkStr) throws JOSEException, ParseException {
-////        try {
-////            log.debug("JWK를 이용하여 JWT 검증 시작... token: {}, jwkStr: {}", token, jwkStr);
-////
-////            SignedJWT signedJWT = SignedJWT.parse(token);
-////            log.debug("검증 대상 토큰의 Calims signedJWT: {}", signedJWT.getJWTClaimsSet().toString());
-////            JWKSelector jwkSelector = new JWKSelector(JWKMatcher.forJWSHeader(signedJWT.getHeader()));
-////
-////            log.debug("JWK String을 파싱...");
-////            JWKSet jwkSet = JWKSet.parse(jwkStr);
-////            log.debug("JWK String 파싱 결과 jwkSet: {}", jwkSet.getKeys());
-////            JWK jwk = jwkSelector.select(jwkSet).get(0);
-////
-////            PublicKey publicKey = jwk.toRSAKey().toPublicKey();
-////
-////            RSASSAVerifier verifier = new RSASSAVerifier((RSAPublicKey) publicKey);
-////
-////            if (!signedJWT.verify(verifier)) {
-////                throw new IllegalArgumentException("ID Token이 유효하지 않습니다.");
-////            }
-////
-////            JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
-////            if (!(jwtClaimsSet.getStringClaim("iss").equals("https://accounts.google.com") || jwtClaimsSet.getStringClaim("aud").equals("423467642364-p8mlbskkjht9t5dptd2odmosrb2g47ta.apps.googleusercontent.com"))) {
-////                throw new IllegalArgumentException(("idToken의 iss 혹은 aud가 일치하지 않습니다."));
-////            }
-////
-////            if (jwtClaimsSet.getExpirationTime().before(new Date())) {
-////                log.info("만료시각을 검증중... now: {}, exp: {}", new Date(), jwtClaimsSet.getExpirationTime());
-////                throw new IllegalArgumentException("idToken이 만료되었습니다.");
-////            }
-////        } catch (JOSEException | ParseException e) {
-////            throw new IllegalArgumentException("id Token이 유효하지 않습니다. " + e.getMessage());
-////        }
-////
-////    }
-
-
     public void validateJwtWithJwk(String token) throws JOSEException, ParseException {
         try {
             log.info("JWK를 이용하여 JWT 검증 시작... token: {}", token);
@@ -172,19 +120,6 @@ public class TokenProvider {
             SignedJWT signedJWT = SignedJWT.parse(token);
             log.debug("검증 대상 토큰의 Calims signedJWT: {}", signedJWT.getJWTClaimsSet().toString());
             JWKSelector jwkSelector = new JWKSelector(JWKMatcher.forJWSHeader(signedJWT.getHeader()));
-
-//            log.debug("JWK String을 파싱...");
-//            JWKSet jwkSet = JWKSet.parse(jwkStr);
-//            log.debug("JWK String 파싱 결과 jwkSet: {}", jwkSet.getKeys());
-//            JWK jwk = jwkSelector.select(jwkSet).get(0);
-
-//            PublicKey publicKey = jwk.toRSAKey().toPublicKey();
-
-//            RSASSAVerifier verifier = new RSASSAVerifier((RSAPublicKey) publicKey);
-//
-//            if (!signedJWT.verify(verifier)) {
-//                throw new IllegalArgumentException("ID Token이 유효하지 않습니다.");
-//            }
 
             JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
             if (!(jwtClaimsSet.getStringClaim("iss").equals("https://accounts.google.com") || jwtClaimsSet.getStringClaim("aud").equals("423467642364-p8mlbskkjht9t5dptd2odmosrb2g47ta.apps.googleusercontent.com"))) {
