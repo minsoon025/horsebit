@@ -35,6 +35,44 @@
             code = arguments?.getString("code") ?: ""
 
             binding.tvOrderBuyNumType.text = code
+            binding.tvOrderCanBuyPrice.text = "0 KRW"
+
+            api.MyTotalAsset(authorization = "Bearer ${1}").enqueue(object: Callback<MyTotalAssetResponseBodyModel> {
+                override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
+                    if(response.code() == 200) {    // 200 Success
+                        Log.d("로그", "매수 주문 요청: 200 Success")
+
+                        val responseBody = response.body()
+
+                        if(responseBody != null) {
+                            binding.tvOrderCanBuyPrice.text = "${responseBody.cashBalance} KRW"
+                        }
+                    }
+                    else if(response.code() == 201) {   // 201 Created
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                        Log.d("로그", "매수 주문 요청: 401 Unauthorized")
+                    }
+                    else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                    }
+                    else if(response.code() == 404) {   // 404 Not Found
+                        Log.d("로그", "매수 주문 요청: 404 Not Found")
+                    }
+                }
+                override fun onFailure(call: Call<MyTotalAssetResponseBodyModel>, t: Throwable) {
+                    Log.d("로그", "매수 주문 요청: onFailure")
+                }
+            })
+
+
 
             binding.etOrderBuyNum.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
