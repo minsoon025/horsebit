@@ -1,15 +1,11 @@
 package com.a406.horsebit.service;
 
 import com.a406.horsebit.domain.redis.Order;
-import com.a406.horsebit.repository.TokenRepository;
-import com.a406.horsebit.repository.TradeRepository;
 import com.a406.horsebit.repository.redis.OrderRepository;
 import com.a406.horsebit.repository.redis.PriceRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class OrderServiceImplTest {

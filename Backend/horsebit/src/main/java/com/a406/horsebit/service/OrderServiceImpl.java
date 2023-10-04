@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 				orderRepository.deleteSellVolumePage(tokenNo);
 			}
 			// Sell order remain is less than order remain.
-			else if (orderSummary.getRemain() < remain - TENTH_MINIMUM_ORDER_QUANTITY) {
+			else if (orderSummary.getRemain() < remain + TENTH_MINIMUM_ORDER_QUANTITY) {
 				double orderSummaryRemain = orderSummary.getRemain();
 				// Update order page at order book.
 				orderRepository.deleteSellOrderSummary(tokenNo, minSellVolumePage.getPrice());
@@ -74,7 +74,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeSellTotalVolume(tokenNo, orderRepository.findSellTotalVolume(tokenNo) - orderSummaryRemain);
 				// Save trade execution.
-				orderAsyncService.buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderCaptureTime);
+				Order sellOrder = orderRepository.findOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
+				orderAsyncService.buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), sellOrder, orderCaptureTime);
 				// Delete buy order.
 				orderRepository.deleteOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
 				// Update current price.
@@ -93,9 +94,9 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeSellTotalVolume(tokenNo, orderRepository.findSellTotalVolume(tokenNo) - remain);
 				// Save trade execution.
-				orderAsyncService.buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderCaptureTime);
-				// Change sell order.
 				Order sellOrder = orderRepository.findOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
+				orderAsyncService.buyExecuteTrade(minSellVolumePage.getPrice(), remain, tokenNo, orderNo, userNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), sellOrder, orderCaptureTime);
+				// Change sell order.
 				sellOrder.setRemain(orderSummary.getRemain());
 				orderRepository.saveOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo(), sellOrder);
 				// Update current price.
@@ -139,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
 				orderRepository.deleteBuyVolumePage(tokenNo);
 			}
 			// Sell order remain is less than order remain.
-			else if (orderSummary.getRemain() < remain  - TENTH_MINIMUM_ORDER_QUANTITY) {
+			else if (orderSummary.getRemain() < remain + TENTH_MINIMUM_ORDER_QUANTITY) {
 				double orderSummaryRemain = orderSummary.getRemain();
 				// Update order page at order book.
 				orderRepository.deleteBuyOrderSummary(tokenNo, maxBuyVolumePage.getPrice());
@@ -149,7 +150,8 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeBuyTotalVolume(tokenNo, orderRepository.findBuyTotalVolume(tokenNo) - orderSummaryRemain);
 				// Save trade execution.
-				orderAsyncService.sellExecuteTrade(maxBuyVolumePage.getPrice(), orderSummaryRemain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderNo, userNo, orderCaptureTime);
+				Order buyOrder = orderRepository.findOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
+				orderAsyncService.sellExecuteTrade(maxBuyVolumePage.getPrice(), orderSummaryRemain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), buyOrder, orderNo, userNo, orderCaptureTime);
 				// Delete buy order.
 				orderRepository.deleteOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
 				// Update current price.
@@ -168,9 +170,9 @@ public class OrderServiceImpl implements OrderService {
 				// Update total volume.
 				orderRepository.changeBuyTotalVolume(tokenNo, orderRepository.findBuyTotalVolume(tokenNo) - remain);
 				// Save trade execution.
-				orderAsyncService.sellExecuteTrade(maxBuyVolumePage.getPrice(), remain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), orderNo, userNo, orderCaptureTime);
-				// Change buy order.
 				Order buyOrder = orderRepository.findOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo());
+				orderAsyncService.sellExecuteTrade(maxBuyVolumePage.getPrice(), remain, tokenNo, orderSummary.getOrderNo(), orderSummary.getUserNo(), buyOrder, orderNo, userNo, orderCaptureTime);
+				// Change buy order.
 				buyOrder.setRemain(orderSummary.getRemain());
 				orderRepository.saveOrder(orderSummary.getUserNo(), tokenNo, orderSummary.getOrderNo(), buyOrder);
 				// Update current price.

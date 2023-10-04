@@ -18,13 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class CandleRepositoryTest {
     private final RedissonClient redissonClient;
+    private final CandleRepository candleRepository;
 
     private static final String CANDLE_PREFIX = "CANDLE_";
     private static final String CANDLE_INITIAL_TIME_PREFIX = "CANDLE_INITIAL_TIME:";
 
     @Autowired
-    public CandleRepositoryTest(RedissonClient redissonClient) {
+    public CandleRepositoryTest(RedissonClient redissonClient, CandleRepository candleRepository) {
         this.redissonClient = redissonClient;
+        this.candleRepository = candleRepository;
     }
 
     private String listNameGenerator(Long tokenNo, String candleType) {
@@ -41,7 +43,7 @@ class CandleRepositoryTest {
             LocalDateTime endTime = LocalDateTime.now();
             long dataSize = 180;
             RBucket<LocalDateTime> initialTimeRBucket = redissonClient.getBucket(CANDLE_INITIAL_TIME_PREFIX + tokenNo);
-            initialTimeRBucket.set(endTime.minusMinutes(dataSize));
+            initialTimeRBucket.set(endTime.minusMinutes(dataSize).minusHours(9L));
             List<Candle> candleList = Arrays.asList(
                     new Candle(LocalDateTime.now(), 3072L, 3101L, 3138L, 3046L, 113.298),
                     new Candle(LocalDateTime.now(), 3101L, 3065L, 3139L, 3063L, 7805.761),
@@ -225,9 +227,10 @@ class CandleRepositoryTest {
                     new Candle(LocalDateTime.now(), 3019L, 3000L, 3117L, 2985L, 2378.965)
             );
             RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, CandleConstant.CANDLE_TYPE_LIST.get(0).getCandleType()));
+            candleRList.delete();
             for(long index = dataSize; 0 < index; --index) {
                 Candle candle = candleList.get((int) (dataSize - index));
-                candle.setStartTime(endTime.minusMinutes(index));
+                candle.setStartTime(endTime.minusMinutes(index).minusHours(9L)); // local: seoul, server: gmt
                 candleRList.add(candle);
             }
         }
