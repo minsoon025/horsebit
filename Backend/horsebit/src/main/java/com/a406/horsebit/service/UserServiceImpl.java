@@ -9,7 +9,9 @@ import com.a406.horsebit.google.dto.response.RefreshResponseDTO;
 import com.a406.horsebit.google.dto.response.SignInResponseDTO;
 import com.a406.horsebit.google.exception.NoSuchUserException;
 import com.a406.horsebit.google.repository.InMemoryProviderRepository;
+import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.UserRepository;
+import com.a406.horsebit.repository.redis.OrderRepository;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,6 +33,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
     private final InMemoryProviderRepository inMemoryProviderRepository;
+    private final AssetsService assetsService;
+    private final OrderRepository orderRepository;
+    private final TokenRepository tokenRepository;
 
     public User findById(Long userId){
         return userRepository.findById(userId)
@@ -94,11 +101,21 @@ public class UserServiceImpl implements UserService {
                         .userName(signUpDTO.getUserName())
                         .build();
 
-//        user.setProviderId(providerId);
         user.setRole(Role.USER);
+        userRepository.save(user);
+        Long userId = user.getId();
+        log.info("1차 회원정보 입력 완료, userId : "+userId);
+
+        //assets 처음 KRW = 0으로 설정
+        assetsService.saveNewAsset(userId, 0L);
+        log.info("saveNewAsset 완료");
+        //전체 코인 리스트 담아넣을 수 있게
+        List<Long> tokenNoList = new ArrayList<>();
+        tokenNoList = tokenRepository.findAllTokenNos();
+        orderRepository.newUserOrderList(userId, tokenNoList);
 
         log.info("회원가입 완료");
-        return userRepository.save(user);
+        return user;
     }
 
 
