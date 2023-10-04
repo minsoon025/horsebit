@@ -33,7 +33,7 @@ class OrderSellTabFragment : Fragment() {
         binding.tvOrderCanSellPrice.text = "0 ${code}"
         binding.tvOrderSellNumType.text = code
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+        val pref = PreferenceManager.getDefaultSharedPreferences(binding.root.context)  // import androidx.preference.PreferenceManager 인지 확인
         val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
 
         api.specificSearch(tokenNo = tokenNo, authorization = "Bearer ${token}").enqueue(object: Callback<SpecificSearchResponseBodyModel> {
