@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import com.a406.horsebit.domain.Account;
@@ -240,5 +241,17 @@ public class AssetsServiceImpl implements AssetsService {
 		accountRepository.save(account);
 
 		return possessRepository.findByUserNoAndTokenNo(userNo, KRW).getTotalAmountPurchase();
+	}
+
+	@Transactional
+	@Override
+	public Long saveNewAsset(Long userNo, Long amount) {
+		Possess nPossess = new Possess();
+		nPossess.setTokenNo(KRW);
+		nPossess.setUserNo(userNo);
+		nPossess.setQuantity(0L);
+		nPossess.setTotalAmountPurchase(0L);
+
+		return possessRepository.save(nPossess).getShareNo();
 	}
 }
