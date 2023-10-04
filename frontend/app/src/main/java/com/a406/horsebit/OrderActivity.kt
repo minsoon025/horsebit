@@ -156,7 +156,11 @@ class OrderActivity : AppCompatActivity() {
             }
 
             2 -> {
+                val bundle = Bundle()
+                bundle.putLong("tokenNo", tokenNo)
+
                 val changeFragment = StockInformationFragment()
+                changeFragment.arguments = bundle
                 ft.replace(R.id.fl_Order, changeFragment)
                 ft.commit()
             }

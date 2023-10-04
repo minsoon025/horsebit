@@ -156,6 +156,12 @@ interface APIS {
         @Header("Authorization") authorization: String,
     ): Call<SpecificSearchResponseBodyModel>
 
+    // 코인 경주마 정보 조회
+    @GET("/api/exchange/tokens/{tokenNo}/info")
+    fun tokenInfo(
+        @Path("tokenNo") tokenNo: Long,
+    ): Call<TokenInfoResponseBodyModel>
+
 
     companion object {
         private const val BASE_URL = "https://j9a406.p.ssafy.io"

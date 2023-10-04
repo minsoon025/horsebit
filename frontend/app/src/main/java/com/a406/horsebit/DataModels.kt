@@ -247,3 +247,19 @@ data class SpecificSearchResponseBodyModel(
     val possessQuantity: Double, //보유개수
     val currentPrice: Long, //단위 현재가
 )
+
+// 코인 경주마 정보 조회
+data class TokenInfoResponseBodyModel(
+    val hrNo: Long, //마번
+    val hrName: String, //마명
+    val code: String, //토큰코드명
+    val content: String, //말 소개글
+    val publishDate: Date, //발행일자
+    val supply: Double, //총 발행량
+    val marketCap: Double, //시가총액
+    val owName: String, //마주 이름
+    val birthPlace: String, //출생지
+    val fatherHrName: String, //부마 이름
+    val motherHrName: String, //모마 이름
+    val raceRank: String, //경주마 등급 (경주마 일 때만)
+)
