@@ -53,8 +53,11 @@ public class User implements UserDetails {
     @Column(name = "biometric_login_flag", nullable = false)
     private boolean biometricLoginFlag;
 
+    @Column(name = "bank_account")
+    private String bankAccount;
+
     @Builder
-    public User(Long id, String nickname, String password, String email, String userName, boolean alarmPushFlag, boolean biometricLoginFlag) {
+    public User(Long id, String nickname, String password, String email, String userName, boolean alarmPushFlag, boolean biometricLoginFlag, String bankAccount) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
@@ -62,6 +65,7 @@ public class User implements UserDetails {
         this.userName = userName;
         this.alarmPushFlag = alarmPushFlag;
         this.biometricLoginFlag = biometricLoginFlag;
+        this.bankAccount = bankAccount;
     }
 
     // 권한 반환
