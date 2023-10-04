@@ -46,28 +46,10 @@ public class OrderController {
 	}
 
 	@PostMapping("/order/buy")
-	public OrderResponseDTO postBuyOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
-		String orderStatus = orderService.processBuyOrder(
-				1L,                     // TODO: Login token 기능 개발 완료 후 삭제
-				orderRequestDTO.getTokenNo(),
-				new Order(orderRequestDTO, OrderConstant.BUY_FLAG)
-		);
-		return new OrderResponseDTO(orderStatus);
-	}
-
-	@PostMapping("/order/sell")
-	public OrderResponseDTO postSellOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
-		String orderStatus = orderService.processSellOrder(
-				1L,                     // TODO: Login token 기능 개발 완료 후 삭제
-				orderRequestDTO.getTokenNo(),
-				new Order(orderRequestDTO, OrderConstant.SELL_FLAG)
-		);
-		return new OrderResponseDTO(orderStatus);
-	}
-
-	// TODO: temporary method. delete after access token feature develop.
-	@PostMapping("/order/buy/{userNo}")
-	public OrderResponseDTO postBuyOrder(@RequestBody OrderRequestDTO orderRequestDTO, @PathVariable("userNo") Long userNo) {
+	public OrderResponseDTO postBuyOrder(HttpServletRequest request, HttpServletResponse response, @RequestBody OrderRequestDTO orderRequestDTO) throws ParseException {
+		String accessToken = (request.getHeader("Authorization")).substring("Bearer ".length());
+		User user = userService.userInfoFromToken(accessToken);
+		Long userNo = user.getId();
 		String orderStatus = orderService.processBuyOrder(
 				userNo,
 				orderRequestDTO.getTokenNo(),
@@ -76,9 +58,11 @@ public class OrderController {
 		return new OrderResponseDTO(orderStatus);
 	}
 
-	// TODO: temporary method. delete after access token feature develop.
-	@PostMapping("/order/sell/{userNo}")
-	public OrderResponseDTO postSellOrder(@RequestBody OrderRequestDTO orderRequestDTO, @PathVariable("userNo") Long userNo) {
+	@PostMapping("/order/sell")
+	public OrderResponseDTO postSellOrder(HttpServletRequest request, HttpServletResponse response, @RequestBody OrderRequestDTO orderRequestDTO) throws ParseException {
+		String accessToken = (request.getHeader("Authorization")).substring("Bearer ".length());
+		User user = userService.userInfoFromToken(accessToken);
+		Long userNo = user.getId();
 		String orderStatus = orderService.processSellOrder(
 				userNo,
 				orderRequestDTO.getTokenNo(),
