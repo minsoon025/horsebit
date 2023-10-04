@@ -9,18 +9,21 @@ import com.a406.horsebit.google.dto.response.RefreshResponseDTO;
 import com.a406.horsebit.google.dto.response.SignInResponseDTO;
 import com.a406.horsebit.google.exception.NoSuchUserException;
 import com.a406.horsebit.google.repository.InMemoryProviderRepository;
+import com.a406.horsebit.repository.TokenRepository;
 import com.a406.horsebit.repository.UserRepository;
+import com.a406.horsebit.repository.redis.OrderRepository;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -30,6 +33,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
     private final InMemoryProviderRepository inMemoryProviderRepository;
+    private final AssetsService assetsService;
+    private final OrderRepository orderRepository;
+    private final TokenRepository tokenRepository;
 
     public User findById(Long userId){
         return userRepository.findById(userId)
@@ -44,8 +50,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public SignInResponseDTO signIn(SignInDTO signInDto) throws ParseException, JOSEException {
         log.info("로그인");
-//        OAuthProvider provider = findProvider(signInDto.getProviderName());
-//        String jwksStr = provider.getJwks();
         String idToken =signInDto.getToken();
         log.info("토큰입니다." + idToken);
         SignedJWT signedJWT = (SignedJWT) tokenProvider.parseTokenWithoutValidation(idToken);
@@ -58,9 +62,6 @@ public class UserServiceImpl implements UserService {
         }
 
         // 사용자 조회
-//        JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
-//        String sub = jwtClaimsSet.getStringClaim("sub");
-//        String providerId = signInDto.getProviderName() + "_" + sub;
         String email = tokenProvider.extractEmail(idToken);
         log.info("이메일 : " + email);
         User user = userRepository.findByEmail(email).orElseThrow(() -> new NoSuchUserException("회원 가입을 먼저 진행하십시오."));
@@ -80,8 +81,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User signUp(SignUpDTO signUpDTO) throws ParseException, JOSEException {
         log.info("회원가입 중");
-//        OAuthProvider provider = findProvider(signUpDTO.getProviderName());
-//        String jwksStr = provider.getJwks();
         String idToken = signUpDTO.getToken();
 
         SignedJWT signedJWT = (SignedJWT) tokenProvider.parseTokenWithoutValidation(idToken);
@@ -93,11 +92,6 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Id Token이 유효하지 않습니다. " + e.getMessage());
         }
 
-        // 사용자 정보를 저장
-//        JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
-//        String sub = jwtClaimsSet.getStringClaim("sub");
-//        String providerId = signUpDTO.getProviderName() + "_" + sub;
-
         String email = tokenProvider.extractEmail(idToken);
         log.info("이메일 : " + email);
         String nickname = tokenProvider.extractNickname(idToken);
@@ -107,11 +101,21 @@ public class UserServiceImpl implements UserService {
                         .userName(signUpDTO.getUserName())
                         .build();
 
-//        user.setProviderId(providerId);
         user.setRole(Role.USER);
+        userRepository.save(user);
+        Long userId = user.getId();
+        log.info("1차 회원정보 입력 완료, userId : "+userId);
+
+        //assets 처음 KRW = 0으로 설정
+        assetsService.saveNewAsset(userId, 0L);
+        log.info("saveNewAsset 완료");
+        //전체 코인 리스트 담아넣을 수 있게
+        List<Long> tokenNoList = new ArrayList<>();
+        tokenNoList = tokenRepository.findAllTokenNos();
+        orderRepository.newUserOrderList(userId, tokenNoList);
 
         log.info("회원가입 완료");
-        return userRepository.save(user);
+        return user;
     }
 
 
@@ -147,15 +151,21 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByUserName(userName);
     }
 
-
-//    private OAuthProvider findProvider(String providerName) {
-//        return inMemoryProviderRepository.findByProviderName(providerName);
-//    }
-
     //회원탈퇴
     @Override
     public void deleteUser(Long userId){
         userRepository.deleteById(userId);
+    }
+
+    //헤더에 담긴 액세스 토큰에서 유저 정보 조회
+    @Override
+    public User userInfoFromToken(String accessToken) throws ParseException {
+        SignedJWT signedJWT = (SignedJWT) tokenProvider.parseAccessToken(accessToken);
+        String email = signedJWT.getJWTClaimsSet().getStringClaim("email");
+        log.info("사용자 이메일 : "+email);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("토큰에 맞는 사용자정보가 없습니다."));
+
+        return user;
     }
 
     @Override

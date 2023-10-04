@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.a406.horsebit.domain.Possess;
+import com.a406.horsebit.domain.Token;
+import com.a406.horsebit.dto.HorseDTO;
 import com.a406.horsebit.dto.PriceDTO;
 import com.a406.horsebit.dto.PriceRateOfChangeDTO;
 import com.a406.horsebit.dto.TokenDTO;
@@ -213,5 +215,39 @@ public class TokenServiceImpl implements TokenService {
 		}
 
 		return priceList;
+	}
+
+	@Override
+	public HorseDTO findHorse(Long tokenNo) {
+		Long hrNo = tokenRepository.findHrNoByTokenNo(tokenNo);
+		HorseDTO result = tokenRepository.findHorseByTokenNo(hrNo);
+
+		if(!result.isRaceHorseFlag()) {
+			result.setRaceRank("-");
+		}
+
+		if(result.getFatherHrNo() != null) {
+			String fatherHrName = tokenRepository.findHrNameByTokenNo(result.getFatherHrNo());
+			result.setFatherHrName(fatherHrName);
+		} else {
+			result.setFatherHrName("-");
+		}
+
+		if(result.getMotherHrNo() != null) {
+			String motherHrName = tokenRepository.findHrNameByTokenNo(result.getMotherHrNo());
+			result.setMotherHrName(motherHrName);
+		} else {
+			result.setMotherHrName("-");
+		}
+
+		TokenDTO tInfo = tokenRepository.findTokenInfoByTokenNo(tokenNo);
+		result.setCode(tInfo.getCode());
+		result.setPublishDate(tInfo.getPublishDate());
+		result.setSupply(tInfo.getSupply());
+
+		Long currPrice = priceRepository.findCurrentPrice(tokenNo).getPrice();
+		result.setMarketCap(currPrice * tInfo.getSupply());
+
+		return result;
 	}
 }

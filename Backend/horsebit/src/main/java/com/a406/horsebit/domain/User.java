@@ -32,7 +32,7 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    private String password; //TODO: 필요없어서 삭제필요
+    private String password;
 
     @Column(name = "user_name")
     private String userName;
@@ -41,9 +41,7 @@ public class User implements UserDetails {
         return userName;
     }
 
-    //    private String providerName; // 우리는 구글 로그인이라 google
-//    private String providerId; // "google_" + Google, Naver, Kakao에서 로그인시 전달되는 id
-    private String refreshToken;    //TODO: 확인필요 - 성민
+    private String refreshToken;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -58,8 +56,6 @@ public class User implements UserDetails {
     @Builder
     public User(Long id, String nickname, String password, String email, String userName, boolean alarmPushFlag, boolean biometricLoginFlag) {
         this.id = id;
-//        this.providerName = providerName;
-//        this.providerId = providerId;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
@@ -79,8 +75,7 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
-
-    //TODO: 성민 확인 필요 - password 필요없다고 했는데 Override 필수인데 어떻게 해야돼?
+    
     //사용자의 패스워드 반환
     @Override
     public String getPassword() {

@@ -12,8 +12,8 @@ class OrderServiceImplTest {
     OrderService orderService;
 
     @Autowired
-    OrderServiceImplTest(OrderRepository orderRepository, PriceRepository priceRepository, OrderAsyncService orderAsyncService) {
-        this.orderService = new OrderServiceImpl(orderRepository, priceRepository, orderAsyncService);
+    OrderServiceImplTest(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @Test
