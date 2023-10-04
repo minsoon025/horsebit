@@ -26,6 +26,7 @@ public class CandleServiceImpl implements CandleService {
     private int getIndex(Long tokenNo, LocalDateTime endTime, Integer candleTypeIndex) {
         LocalDateTime tokenInitialTime = candleRepository.findCandleInitialTime(tokenNo);
         long minutes = ChronoUnit.MINUTES.between(tokenInitialTime, endTime);
+        log.info("tokenInitialTime: " + tokenInitialTime + "   endTime: " + endTime);
         return (int) (minutes / CandleConstant.CANDLE_TYPE_LIST.get(candleTypeIndex).getCandleMinuteTime());
     }
     public CandleDTO getCandle(Long tokenNo, LocalDateTime endTime, Integer candleTypeIndex) {
