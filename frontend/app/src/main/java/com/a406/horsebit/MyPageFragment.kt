@@ -96,7 +96,6 @@ class MyPageFragment : Fragment() {
             }
             override fun onFailure(call: Call<ArrayList<MyAssetResponseBodyModel>>, t: Throwable) {
                 Log.d("로그", "보유 마패 전체 조회: onFailure")
-                Log.d("ddddd", t.toString())
             }
         })
 

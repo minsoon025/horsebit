@@ -37,7 +37,6 @@ class LoginMainActivity : AppCompatActivity() {
                 val credential = oneTapClient?.getSignInCredentialFromIntent(result.data)
 
                 val idToken = credential?.googleIdToken
-                print("이것은 아이디토큰입니다!!!!!!!! "+ idToken)
                 when {
                     idToken != null -> {
                         Log.d("이것은 아이디토큰입니다!!!!!!!! ", idToken)
@@ -122,9 +121,7 @@ class LoginMainActivity : AppCompatActivity() {
                     .build())
             .build()
 
-//        // 이미 구글 토큰을 발급 받았을 경우 자동 로그인 시도
-//        val loadedGoogleToken = pref.getString("GOOGLE_TOKEN", null)
-//        tryLoginToServer(loadedGoogleToken, isAutoLogin = true)
+
 
         // 구글 토큰이 없다면 로그인 버튼 눌러서 진행하도록
         binding.ivGoogleLogin.setOnClickListener {
@@ -137,9 +134,6 @@ class LoginMainActivity : AppCompatActivity() {
         if (loadedGoogleToken != null) {
             // 서버에 로그인 시도
 
-//            val pref = PreferenceManager.getDefaultSharedPreferences(this)
-//            val edit = pref.edit()
-//            edit.putBoolean("firstLoginChk", false).apply()
 
 
             val loginRequestData = LoginRequestBodyModel(token = loadedGoogleToken)
@@ -147,21 +141,16 @@ class LoginMainActivity : AppCompatActivity() {
 
             api.login(request = loginRequestData).enqueue(object : Callback<LoginResponseBodyModel> {
                 override fun onResponse(call: Call<LoginResponseBodyModel>, response: Response<LoginResponseBodyModel>) {
-                    Log.d("로그 응답 코드를 확인합니다", response.code().toString())
 
                     if (response.code() == 400) {
-                        Log.d("로그11111", "로그인 400 Bad Request")
-
-                        // 오류 메시지를 좀 더 자세히 출력
-                        val errorBodyStr = response.errorBody()?.string()
-                        Log.d("로그 400 오류 상세", errorBodyStr ?: "오류 응답 본문이 없습니다")
+                        Log.d("로그인", "로그인 400 Bad Request")
 
                         if (!isAutoLogin) {
                             val intent = Intent(applicationContext, LoginRegisterActivity::class.java)
                             binding.root.context.startActivity(intent)
                         }
                     } else if (response.code() == 200) {
-                        Log.d("로그2000000 서버에 보내졋다!!!", "로그인 200 OK")
+                        Log.d("로그인", "로그인 200 OK")
 
                         val responseBody = response.body()
                         if (responseBody != null) {
@@ -187,12 +176,8 @@ class LoginMainActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<LoginResponseBodyModel>, t: Throwable) {
-                    Log.d("로그???????????", "로그인 onFailure")
+                    Log.d("로그인", "로그인 onFailure")
 
-                    // 로그인 실패 시 회원가입 페이지로 이동 (토큰은 발급받은 상태)
-                    // 거기서 회원가입 정보를 입력 받고 회원가입 진행
-                    // 자동 로그인 때는 이 작업을 강제시키지 말자
-                    // 네트워크 에러인 경우, 저 주소를 찾을 수 없다고 나온다s
 
                     val intent = Intent(binding.root.context, LoginMainActivity::class.java)
                     binding.root.context.startActivity(intent)
@@ -209,13 +194,13 @@ class LoginMainActivity : AppCompatActivity() {
                     val ib = IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                     oneTapResult.launch(ib)
                 } catch (e: IntentSender.SendIntentException) {
-                    Log.e("1111111 google login btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
+                    Log.e("google login btn click", "Couldn't start One Tap UI: ${e.localizedMessage}")
                 }
             }
             ?.addOnFailureListener(this) { e ->
                 // No Google Accounts found. Just continue presenting the signed-out UI
                 displaySignUp()
-                Log.d("2222222google login btn click", e.localizedMessage!!)
+                Log.d("google login btn click", e.localizedMessage!!)
             }
     }
 
@@ -233,7 +218,7 @@ class LoginMainActivity : AppCompatActivity() {
                 // No Google Accounts found. Just continue presenting the signed-out UI
                 // displaySignUp()
                 Log.d("google login btn click", e.localizedMessage!!)
-                Log.d("333333333", e.toString())
+
             }
     }
 }

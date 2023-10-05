@@ -210,7 +210,6 @@ class LoginRegisterActivity : AppCompatActivity() {
                     }
                     override fun onFailure(call: Call<SignUpResponseBodyModel>, t: Throwable) {
                         Log.d("로그", "회원 가입: onFailure")
-                        Log.d("ddddd", t.toString())
                     }
                 })
 
@@ -239,7 +238,6 @@ class LoginRegisterActivity : AppCompatActivity() {
 
                                     val responseBody = response.body()
 
-                                    Log.d("dddd", responseBody.toString())
 
 
                                 } else if (response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
@@ -253,7 +251,6 @@ class LoginRegisterActivity : AppCompatActivity() {
                         }
                         override fun onFailure(call: Call<SignUpResponseBodyModel>, t: Throwable) {
                             Log.d("로그", "회원 가입: onFailure")
-                            Log.d("ddddd", t.toString())
                         }
                     })
 

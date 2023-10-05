@@ -2,7 +2,6 @@ package com.a406.horsebit
 
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -52,7 +51,6 @@ class MyPageCoinItemAdapter(val myassetItemList: ArrayList<MyAssetResponseBodyMo
             binding.llvMyAssetItem.setOnClickListener {
                 val curPos: Int = adapterPosition
                 val mycoinList: MyAssetResponseBodyModel = myassetItemList[curPos] // myassetItemList로 수정
-                Log.d("토큰넘버 입니다ddddddddddddddddddd", mycoinList.tokenNo.toString())
                 if (mycoinList.tokenNo.toLong() != 0L) {
                     val intent = Intent(binding.root.context, OrderActivity::class.java)
                     intent.putExtra("tokenNo", mycoinList.tokenNo)
