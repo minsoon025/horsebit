@@ -282,6 +282,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@DistributedLock(key = "'TOKEN_ORDER_LOCK:' + #tokenNo.toString()")
 	public String processSellOrder(Long userNo, Long tokenNo, Order order, LocalDateTime orderCaptureTime) {
 		String orderStatus = OrderConstant.RESPONSE_EXECUTED;
 		order.setOrderTime(orderCaptureTime);
@@ -391,4 +392,7 @@ public class OrderServiceImpl implements OrderService {
 	private Long generateOrderNo() {
 		return orderRepository.increaseOrderNo();
 	}
+
+	@DistributedLock(key = "'USER' + #userNo.toString()")
+	private void updateUserAsset() {}
 }
