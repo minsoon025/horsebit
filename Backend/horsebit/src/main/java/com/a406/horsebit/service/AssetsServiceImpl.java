@@ -115,7 +115,7 @@ public class AssetsServiceImpl implements AssetsService {
 		result.setTotalPurchase(amtToken); //총 매수 금액
 		result.setTotalEvaluation(amtEvaluation); //총 평가 금액
 		result.setProfitOrLoss(amtEvaluation - amtToken); //평가 손익
-		result.setReturnRate((amtEvaluation - amtToken)/amtToken); //수익률
+		result.setReturnRate(Math.round(((amtEvaluation - amtToken)/amtToken)*1000)/1000.0); //수익률
 
 		return result;
 	}
