@@ -228,7 +228,7 @@ class CandleRepositoryTest {
                     new Candle(LocalDateTime.now(ZoneId.of("Asia/Seoul")), 3019L, 3000L, 3117L, 2985L, 2378.965)
             );
             RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, CandleConstant.CANDLE_TYPE_LIST.get(0).getCandleType()));
-            candleRList.delete();
+            candleRList.clear();
             for(long index = dataSize; 0 < index; --index) {
                 Candle candle = candleList.get((int) (dataSize - index));
                 candle.setStartTime(endTime.minusMinutes(index).minusHours(9L)); // local: seoul, server: gmt
@@ -238,14 +238,11 @@ class CandleRepositoryTest {
     }
 
     @Test
-    void findOneByTokenNo() {
-    }
-
-    @Test
-    void findRangeByTokenNo() {
-    }
-
-    @Test
-    void findCandleInitialTime() {
+    void initiateCandle() {
+        LocalDateTime initialTime = LocalDateTime.parse("2023-09-18T00:00:00.00");
+        for (long tokenNo = 1L; tokenNo <= 25; ++tokenNo) {
+            candleRepository.setCandleInitialTime(tokenNo, initialTime);
+            candleRepository.setInitialCandle(tokenNo, initialTime, 10000L);
+        }
     }
 }

@@ -16,6 +16,7 @@ public class PriceRepository {
     private final RedissonClient redissonClient;
     private static final String CURRENT_PRICE_PREFIX = "CURRENT_PRICE:";
     private static final String START_PRICE_PREFIX = "START_PRICE:";
+    private static final Long INITIAL_PRICE = 10000L;
 
     @Autowired
     public PriceRepository(RedissonClient redissonClient) {
@@ -26,14 +27,14 @@ public class PriceRepository {
     /* --- Token Redis Structure Initiate Methods --- */
     ////////////////////////////////////////////////////
 
-    public Boolean newCurrentPrice(Long tokenNo) {
+    public void newCurrentPrice(Long tokenNo) {
         RBucket<Long> currentPriceRBucket = redissonClient.getBucket(CURRENT_PRICE_PREFIX + tokenNo);
-        return currentPriceRBucket.setIfAbsent(1L);
+        currentPriceRBucket.set(INITIAL_PRICE);
     }
 
-    public Boolean newStartPrice(Long tokenNo) {
+    public void newStartPrice(Long tokenNo) {
         RBucket<Long> startPriceRBucket = redissonClient.getBucket(START_PRICE_PREFIX + tokenNo);
-        return startPriceRBucket.setIfAbsent(1L);
+        startPriceRBucket.set(INITIAL_PRICE);
     }
 
     ///////////////////////////

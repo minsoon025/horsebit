@@ -81,6 +81,26 @@ public class OrderRepository {
         }
     }
 
+    public void resetUserOrderList(Long userNo, Long tokenNo) {
+        // Get order book RMap.
+        RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
+        // Generate user token order map RMap.
+        RMap<Long, Order> userOrderMap = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo + ":" + tokenNo);
+        userOrderMap.clear();
+        userOrderList.fastPut(tokenNo, userOrderMap);
+    }
+
+    public void resetUserOrderList(Long userNo, List<Long> tokenNoList) {
+        // Get order book RMap.
+        RMap<Long, RMap<Long, Order>> userOrderList = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo);
+        // Generate user token order map RMap.
+        for (long tokenNo: tokenNoList) {
+            RMap<Long, Order> userOrderMap = redissonClient.getMap(REDIS_USER_ORDER_LIST_PREFIX + userNo + ":" + tokenNo);
+            userOrderMap.clear();
+            userOrderList.fastPut(tokenNo, userOrderMap);
+        }
+    }
+
     public void newOrderNo() {
         RBucket<Long> orderNoRBucket = redissonClient.getBucket(REDIS_ORDER_NO_NAME);
         Long INITIAL_VALUE = 0L;
@@ -233,6 +253,24 @@ public class OrderRepository {
         orderSummaryRList.fastRemove(FIRST_INDEX);
     }
 
+    public void deleteBuyOrderSummaryList(Long tokenNo, Long price) {
+        deleteOrderSummaryList(tokenNo, price, REDIS_TOKEN_BUY_ORDER_BOOK_PREFIX);
+    }
+
+    public void deleteSellOrderSummaryList(Long tokenNo, Long price) {
+        deleteOrderSummaryList(tokenNo, price, REDIS_TOKEN_SELL_ORDER_BOOK_PREFIX);
+    }
+
+    private void deleteOrderSummaryList(Long tokenNo, Long price, String ORDER_BOOK_PREFIX) {
+        // Get order book.
+        RMap<Long, Double> tokenOrderBookVolume = redissonClient.getMap(ORDER_BOOK_PREFIX + ORDER_BOOK_VOLUME_MAP_PREFIX + tokenNo);
+        RMap<Long, RList<OrderSummary>> tokenOrderBookList = redissonClient.getMap(ORDER_BOOK_PREFIX + ORDER_BOOK_ORDER_SUMMARY_LIST_MAP_PREFIX + tokenNo);
+        // Get order summary list.
+        RList<OrderSummary> orderSummaryRList = tokenOrderBookList.get(price);
+        // Delete order summary list.
+        orderSummaryRList.clear();
+    }
+
     private Double getOrderVolume(Long price, RMap<Long, Double> tokenOrderBookVolume) {
         // Generate if volume is null.
         Double INITIAL_VOLUME = 0.0;
@@ -355,5 +393,15 @@ public class OrderRepository {
     public VolumePage deleteSellVolumePage(Long tokenNo) {
         RScoredSortedSet<VolumePage> tokenSellVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX + tokenNo);
         return tokenSellVolumeBook.pollFirst();
+    }
+
+    public Boolean isBuyVolumeBookEmpty(Long tokenNo) {
+        RScoredSortedSet<VolumePage> tokenBuyVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_BUY_VOLUME_BOOK_PREFIX + tokenNo);
+        return tokenBuyVolumeBook.isEmpty();
+    }
+
+    public Boolean isSellVolumeBookEmpty(Long tokenNo) {
+        RScoredSortedSet<VolumePage> tokenSellVolumeBook = redissonClient.getScoredSortedSet(REDIS_TOKEN_SELL_VOLUME_BOOK_PREFIX + tokenNo);
+        return tokenSellVolumeBook.isEmpty();
     }
 }
