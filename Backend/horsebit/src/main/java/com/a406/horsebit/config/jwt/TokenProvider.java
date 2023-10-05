@@ -1,6 +1,7 @@
 package com.a406.horsebit.config.jwt;
 
 import com.a406.horsebit.domain.User;
+import com.a406.horsebit.google.exception.UnauthorizedException;
 import com.a406.horsebit.repository.UserRepository;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -155,7 +156,7 @@ public class TokenProvider {
             }
 
         } catch (ParseException | JOSEException e) {
-            throw new IllegalArgumentException("Refresh 토큰이 유효하지 않습니다." + e.getMessage());
+            throw new UnauthorizedException("Refresh 토큰이 유효하지 않습니다." + e.getMessage());
         }
 
         return signedJWT;
@@ -168,14 +169,14 @@ public class TokenProvider {
             JWSVerifier verifier = new MACVerifier(sharedSecret);
 
             if (!signedJWT.verify(verifier)) {
-                throw new IllegalArgumentException("Refresh 토큰이 유효하지 않습니다.");
+                throw new UnauthorizedException("Refresh 토큰이 유효하지 않습니다.");
             }
 
             if (signedJWT.getJWTClaimsSet().getExpirationTime().before(new Date())) {
                 throw new IllegalArgumentException("Refresh 토큰이 만료되었습니다.");
             }
         } catch (ParseException | JOSEException e) {
-            throw new IllegalArgumentException("Refresh 토큰이 유효하지 않습니다. " + e.getMessage());
+            throw new UnauthorizedException("Refresh 토큰이 유효하지 않습니다. " + e.getMessage());
         }
 
 
