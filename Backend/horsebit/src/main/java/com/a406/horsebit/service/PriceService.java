@@ -12,5 +12,4 @@ public interface PriceService {
     PriceRateOfChangeDTO getPriceOfRate(Long tokenNo);
     List<PriceRateOfChangeDTO> getPriceOfRate(List<Long> tokenNoList, List<PriceDTO> currentPriceDTOList);
     List<PriceRateOfChangeDTO> getPriceOfRate(List<Long> tokenNoList);
-
 }

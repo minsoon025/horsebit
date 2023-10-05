@@ -81,7 +81,7 @@ public class CandleRepository {
     public void setInitialCandle(Long tokenNo, LocalDateTime initialTime, Long price) {
         CandleConstant.CANDLE_TYPE_LIST.forEach(candleType -> {
             RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, candleType.getCandleType()));
-            candleRList.delete();
+            candleRList.clear();
             Candle candle = new Candle();
             candle.setOpen(price);
             candle.setClose(price);

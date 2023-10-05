@@ -27,15 +27,17 @@ public class OrderServiceImpl implements OrderService {
 	private final PriceRepository priceRepository;
 	private final CandleRepository candleRepository;
 	private final OrderAsyncService orderAsyncService;
+	private final AssetsService assetsService;
 
 	private final double TENTH_MINIMUM_ORDER_QUANTITY = 0.0001;
 
 	@Autowired
-	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, CandleRepository candleRepository, OrderAsyncService orderAsyncService) {
+	public OrderServiceImpl(OrderRepository orderRepository, PriceRepository priceRepository, CandleRepository candleRepository, OrderAsyncService orderAsyncService, AssetsService assetsService) {
 		this.orderRepository = orderRepository;
 		this.priceRepository = priceRepository;
 		this.candleRepository = candleRepository;
 		this.orderAsyncService = orderAsyncService;
+		this.assetsService = assetsService;
 	}
 
 	@Override
