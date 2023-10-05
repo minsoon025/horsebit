@@ -55,6 +55,8 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderTime(orderCaptureTime);
 		// Generate new orderNo.
 		Long orderNo = generateOrderNo();
+		// Reduce user asset.
+//		assetsService.
 		// Get minimum sell volume page.
 		VolumePage minSellVolumePage = orderRepository.findMinSellVolumePage(tokenNo);
 		// Check if order is executable.
@@ -121,7 +123,7 @@ public class OrderServiceImpl implements OrderService {
 		// Update current price.
 		priceRepository.saveCurrentPrice(tokenNo, lastPrice);
 		// Update candle.
-		candleRepository.updateCandle(tokenNo, lastPrice);
+		candleRepository.updateCandle(tokenNo, lastPrice, quantity - remain);
 		return orderStatus;
 	}
 
@@ -198,9 +200,9 @@ public class OrderServiceImpl implements OrderService {
 			orderStatus = OrderConstant.RESPONSE_ORDERED;
 		}
 		// Update current price.
-		priceRepository.saveCurrentPrice(tokenNo, lastPrice);;
+		priceRepository.saveCurrentPrice(tokenNo, lastPrice);
 		// Update candle.
-		candleRepository.updateCandle(tokenNo, lastPrice);
+		candleRepository.updateCandle(tokenNo, lastPrice, quantity - remain);
 		return orderStatus;
 	}
 
@@ -277,7 +279,7 @@ public class OrderServiceImpl implements OrderService {
 		// Update current price.
 		priceRepository.saveCurrentPrice(tokenNo, lastPrice);
 		// Update candle.
-		candleRepository.updateCandle(tokenNo, lastPrice);
+		candleRepository.updateCandle(tokenNo, lastPrice, quantity - remain);
 		return orderStatus;
 	}
 
@@ -355,7 +357,7 @@ public class OrderServiceImpl implements OrderService {
 		// Update current price.
 		priceRepository.saveCurrentPrice(tokenNo, lastPrice);;
 		// Update candle.
-		candleRepository.updateCandle(tokenNo, lastPrice);
+		candleRepository.updateCandle(tokenNo, lastPrice, quantity - remain);
 		return orderStatus;
 	}
 

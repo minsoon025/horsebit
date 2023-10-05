@@ -8,4 +8,5 @@ public interface InitiatorService {
     void resetTokens(Long tokenNo);
     void resetPrice(Long tokenNo, Long price);
     void resetPrice(Long tokenNo);
+    void resetUser(Long userNo, Long tokenNo);
 }
