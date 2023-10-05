@@ -1,5 +1,6 @@
 package com.a406.horsebit.repository.redis;
 
+import com.a406.horsebit.aop.DistributedLock;
 import com.a406.horsebit.cache.CandleCache;
 import com.a406.horsebit.constant.CandleConstant;
 import com.a406.horsebit.domain.redis.Candle;
@@ -93,20 +94,20 @@ public class CandleRepository {
         });
     }
 
-    public void updateCandle(Long tokenNo, Long price) {
+    public void updateCandle(Long tokenNo, Long price, Double volume) {
         CandleConstant.CANDLE_TYPE_LIST.forEach(candleType -> {
-            updateCandle(tokenNo, price, candleType);
+            updateCandle(tokenNo, price, volume, candleType);
         });
     }
 
-    public void updateCandle(Long tokenNo, Long price, CandleType candleType) {
+    public void updateCandle(Long tokenNo, Long price, Double volume, CandleType candleType) {
         LocalDateTime initialTime = candleCache.getInitialTime(tokenNo);
         LocalDateTime updateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         int index = (int) (ChronoUnit.MINUTES.between(initialTime, updateTime) / candleType.getCandleMinuteTime());
         RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, candleType.getCandleType()));
         int candleRListSize = candleRList.size();
         if(candleRListSize <= index) {
-            generateNewCandle(candleRList, index, candleType.getCandleMinuteTime());
+            generateNewCandle(tokenNo, candleRList, index, candleType.getCandleMinuteTime());
         }
         Candle candle = candleRList.get(candleRListSize - 1);
         if (candle.getClose() < price) {
@@ -116,13 +117,16 @@ public class CandleRepository {
             candle.setLow(Math.min(candle.getLow(), price));
         }
         else {
+            candle.setVolume(candle.getVolume() + volume);
             return;
         }
+        candle.setVolume(candle.getVolume() + volume);
         candle.setClose(price);
         candleRList.fastSet(index, candle);
     }
 
-    private void generateNewCandle(RList<Candle> candleRList, Integer targetIndex, Long candleMinuteTime) {
+//    @DistributedLock(key = "'CANDLE_UPDATE:' + #tokenNo.toString() + #candleMinuteTime.toString")
+    private void generateNewCandle(Long tokenNo, RList<Candle> candleRList, Integer targetIndex, Long candleMinuteTime) {
         int index = candleRList.size();
 
         log.info("--------------------------------------size: " + index);
