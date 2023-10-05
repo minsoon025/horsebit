@@ -78,7 +78,7 @@
                     android:layout_weight="5"
                     android:elevation="2dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/happydog" />
+                    android:src="@drawable/horsebit_logo" />
 
                 <TextView
                     android:id="@+id/tv_EditName"
@@ -86,7 +86,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="9"
                     android:gravity="center_vertical"
-                    android:text=" 홀스빗"
+                    android:text=" A406"
                     android:textColor="#000000"
                     android:textSize="24sp" />
 
