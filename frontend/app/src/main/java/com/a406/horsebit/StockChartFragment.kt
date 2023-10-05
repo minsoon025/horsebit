@@ -70,7 +70,7 @@ class StockChartFragment : Fragment() {
                                 candleChart.open.toFloat(),
                                 candleChart.close.toFloat()
                             )
-                            val barShow = BarShow(idx, candleChart.volume.toFloat())
+                            val barShow = BarShow(idx, candleChart.volume.toFloat(), candleChart.low < candleChart.high)
 
                             candleChartData.add(candleShow)
                             barChartData.add(barShow)
@@ -243,11 +243,20 @@ class StockChartFragment : Fragment() {
                 )
             )
         }
+
+        val colorFlag = true // 또는 어떤 조건에 따라서 true 또는 false로 설정
+
+// colorFlag에 따른 다른 색상 정의
+        val increasingColor = if (colorFlag) {
+            ContextCompat.getColor(binding.root.context, R.color.red) // colorFlag가 true일 때의 색상
+        } else {
+            ContextCompat.getColor(binding.root.context, R.color.blue) // colorFlag가 false일 때의 색상
+        }
+
         val barDataSet = BarDataSet(volumeEntries, "").apply {
             this.valueTextColor = Color.TRANSPARENT
 
-            this.color = ContextCompat.getColor(binding.root.context, R.color.red)
-
+            this.color = increasingColor
         }
 
         binding.ccBarChart.apply {

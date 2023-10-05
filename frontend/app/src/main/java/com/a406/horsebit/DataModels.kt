@@ -114,6 +114,7 @@ data class CandleShow(
 data class BarShow(
     val x: Float,
     val value: Float,
+    val colorFlag: Boolean,
 )
 
 // 마이페이지 코인 component
