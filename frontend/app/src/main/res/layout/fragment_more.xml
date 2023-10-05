@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_More"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MoreFragment">
+
+    <ScrollView
+        android:id="@+id/sv_More"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llh_Info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+
+                <LinearLayout
+                    android:id="@+id/llv_InfoText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="75"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/tv_Welcome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="A406 님"
+                        android:textColor="#171717"
+                        android:textSize="28sp" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="26">
+
+                        <TextView
+                            android:id="@+id/tv_Trade"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="거래 "
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_TradePossible"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="가능"
+                            android:textColor="@color/main_color"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_Bar1"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:rotation="90"
+                            android:src="@drawable/baseline_horizontal_rule_24" />
+
+                        <TextView
+                            android:id="@+id/tv_DepositDrawal2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="7"
+                            android:text="가상자산 입출금"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_DepositDrawalPossible"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="가능"
+                            android:textColor="@color/main_color"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:id="@+id/iv_Bar2"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:rotation="90"
+                            android:src="@drawable/baseline_horizontal_rule_24" />
+
+                        <TextView
+                            android:id="@+id/tv_DepositDrawal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:text="원화 입출금"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_DepositDrawalPossible2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="가능"
+                            android:textColor="@color/main_color"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llv_Profile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="15"
+                    android:orientation="vertical"
+                    android:weightSum="15">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="6"
+                        android:baselineAligned="false" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_MoreProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="9"
+                        android:elevation="2dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/horsebit_logo" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <LinearLayout
+                android:id="@+id/lih_Alarm"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_weight="40"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_Alarm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="center_vertical"
+                    android:text="알람 설정"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Switch
+                    android:id="@+id/btn_Alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="18dp" />
+
+            <LinearLayout
+                android:id="@+id/lih_Body"
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:layout_weight="40"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="31dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_BodyCheck"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="center|left"
+                    android:text="생체인증 사용"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="Biometric"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cardview_shadow_end_color"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toTopOf="@id/btn_bio_set"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                <Button
+                    android:id="@+id/btn_bio_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지문 인증"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_default="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_status"
+                    app:layout_constraintWidth_default="spread" />
+
+                <Switch
+                    android:id="@+id/btn_body_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <View
+                android:id="@+id/v_view2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#EFEFEF" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/lih_Notice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_Notice"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="center_vertical"
+                    android:text="공지사항"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_Noticego"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text=">"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lih_InOut"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_GoOut"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="center_vertical"
+                    android:text="입출금 현황"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_InOutgo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text=">"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#EFEFEF" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/lih_Promise"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_Promise"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="center_vertical"
+                    android:text="약관 및 정책"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_tv_InOutgo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="보기"
+                    android:textColor="@color/font_gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <LinearLayout
+                android:id="@+id/llh_MoreGone1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+
+                <FrameLayout
+                    android:id="@+id/fl_MoreGone1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="88">
+
+
+
+                    <View
+                        android:id="@+id/v_MoreGon1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="88"
+                        android:background="@drawable/rounded_shape_ractangle" />
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:fillViewport="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_Moreaccount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/line_seed_kr_rg"
+                                android:padding="10dp"
+                                android:text="제1조 (목적)\n\n
+본 약관은 홀스빗코퍼레이션(이하 '회사')가 제공하는 홀스빗어플리케이션(이하 '앱') 서비스 이용과 관련된 규정을 목적으로 합니다.\n\n\n
+제2조 (약관의 효력 및 변경)\n\n
+본 약관은 '앱' 화면에 게시되거나 이용자에게 공지함으로써 효력이 발생합니다.\n'앱'은 필요한 경우 약관을 변경할 수 있으며, 변경 시 적용일자와 개정사유를 명시하여 7일 이전에 공지합니다.\n 불리한 변경의 경우 이메일로 통지합니다.\n회원이 변경 약관에 동의하지 않으면 7일 내에 거부의사를 표시해야 합니다.\n\n\n
+제3조 (회원가입)\n\n
+이용자는 정해진 양식에 회원정보를 기입하고 약관에 동의함으로써 회원으로 가입합니다.\n전자금융거래를 이용하려면 실명과 주민등록번호(또는 본인인증 정보)를 제공해야 합니다.\n다른 사람의 정보를 도용한 가입은 금지되며, 허위 정보를 기재할 경우 회원 자격이 박탈될 수 있습니다.\n회원정보 변경 시 즉시 '앱'에 알려야 합니다.\n\n\n
+제4조 (회원 탈퇴 및 자격 상실)\n\n
+회원은 언제든지 탈퇴를 요청할 수 있으며, 요청 시 즉시 처리됩니다.\n회원이 허위 정보를 기재하거나 채무를 지급하지 않는 경우, 다른 사람의 이용을 방해하는 경우, 법령을 위반하는 경우에는 자격 상실될 수 있습니다.\n\n\n
+제5조 (회원에 대한 통지)\n\n
+'앱'은 회원에게 통지할 때 회원이 제출한 이메일 주소로 통지할 수 있습니다.\n다수 회원에게 통지할 때는 '앱' 화면에 게시함으로써 통지합니다.\n\n\n
+제6조 (서비스 이용)\n\n
+'앱'은 다양한 서비스를 제공하며, 필요 시 전자금융거래 약관에 동의를 요구할 수 있습니다.\n서비스 내용은 계약에 따라 변경될 수 있으며 변경 시 7일 전에 공지합니다.\n서비스 이용은 정상적인 상황에서 연중무휴로 제공되며, 정기점검을 제외한 예외적 중단 시 통지합니다.\n서비스 중단으로 인한 손해는 관련법에 특별한 규정이 없는 한 보상하지 않습니다.\n\n\n
+제8조 (전자금융거래 신청방법)\n\n
+전자금융거래는 약관 동의, 정보 입력, 결제 등의 절차를 따릅니다.\n\n\n
+제9조 (개인의 의무)\n\n
+ID와 비밀번호 관리는 이용자의 책임이며, 부정 사용 시 회사에 통보해야 합니다.\n약관과 관련법을 준수해야 합니다.\n\n\n
+제10조 (개인정보보호)\n\n
+회사는 최소한의 정보를 수집하며, 개인정보 수집 시 동의를 받습니다.\n개인정보 열람, 정정, 동의 철회를 요구할 수 있으며, 오류 정정 요청 시 해당 정보를 사용하지 않습니다.\n개인정보 관련 사항은 개인정보처리방침에 따릅니다.\n\n\n
+제11조 (저작권의 귀속 및 이용제한)\n\n
+'앱'이 작성한 저작물의 저작권은 '앱'에 속하며, 정보를 무단으로 사용하거나 배포할 수 없습니다.\n\n\n
+제12조 (게시물의 저작권 및 관리)\n\n
+회원이 게시한 게시물의 저작권은 해당 회원에게 속합니다.\n게시물이 법령을 위반하거나 권리자의 요청이 있는 경우, '앱'은 조치를 취할 수 있습니다.\n\n\n
+제13조 (분쟁해결)\n\n
+불만이나 의견은 상담창구를 통해 제출할 수 있으며, 정당한 경우 우선적으로 처리합니다.\n\n\n
+제14조 (준거법 및 재판관할)\n\n
+회사와 '회원' 간 제기된 소송은 대한민국법을 준거법으로 합니다.\n
+회사와 '회원' 간 발생한 분쟁에 관한 소송은 민사소송법 상의 관할법원에 제소합니다." />
+                        </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
+
+
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_MoreGoneSpageSquireRight1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lih_My"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_My"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="center_vertical"
+                    android:text="개인정보 처리방침"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_MyGo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="보기   "
+                    android:textColor="@color/font_gray"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lih_Child"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_MoreGone2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Space
+                    android:id="@+id/sp_GoneSpageSquireLeft1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+
+                <FrameLayout
+                    android:id="@+id/fl_MoreGone2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="88">
+
+
+                    <View
+                        android:id="@+id/v_MoreGon2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="88"
+                        android:background="@drawable/rounded_shape_ractangle" />
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:fillViewport="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_More2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/line_seed_kr_rg"
+                                android:padding="10dp"
+                                android:text="제1조 (목적)\n\n
+본 약관은 홀스빗코퍼레이션(이하 '회사')가 제공하는 홀스빗어플리케이션(이하 '앱') 서비스 이용과 관련된 규정을 목적으로 합니다.\n\n\n
+제2조 (약관의 효력 및 변경)\n\n
+본 약관은 '앱' 화면에 게시되거나 이용자에게 공지함으로써 효력이 발생합니다.\n'앱'은 필요한 경우 약관을 변경할 수 있으며, 변경 시 적용일자와 개정사유를 명시하여 7일 이전에 공지합니다. 불리한 변경의 경우 이메일로 통지합니다.\n회원이 변경 약관에 동의하지 않으면 7일 내에 거부의사를 표시해야 합니다.\n\n\n
+제3조 (회원가입)\n\n
+이용자는 정해진 양식에 회원정보를 기입하고 약관에 동의함으로써 회원으로 가입합니다.\n전자금융거래를 이용하려면 실명과 주민등록번호(또는 본인인증 정보)를 제공해야 합니다.\n다른 사람의 정보를 도용한 가입은 금지되며, 허위 정보를 기재할 경우 회원 자격이 박탈될 수 있습니다.\n회원정보 변경 시 즉시 '앱'에 알려야 합니다.\n\n\n
+제4조 (회원 탈퇴 및 자격 상실)\n\n
+회원은 언제든지 탈퇴를 요청할 수 있으며, 요청 시 즉시 처리됩니다.\n회원이 허위 정보를 기재하거나 채무를 지급하지 않는 경우, 다른 사람의 이용을 방해하는 경우, 법령을 위반하는 경우에는 자격 상실될 수 있습니다.\n\n\n
+제5조 (회원에 대한 통지)\n\n
+'앱'은 회원에게 통지할 때 회원이 제출한 이메일 주소로 통지할 수 있습니다.\n다수 회원에게 통지할 때는 '앱' 화면에 게시함으로써 통지합니다.\n\n\n
+제6조 (서비스 이용)\n\n
+'앱'은 다양한 서비스를 제공하며, 필요 시 전자금융거래 약관에 동의를 요구할 수 있습니다.\n서비스 내용은 계약에 따라 변경될 수 있으며 변경 시 7일 전에 공지합니다.\n서비스 이용은 정상적인 상황에서 연중무휴로 제공되며, 정기점검을 제외한 예외적 중단 시 통지합니다.\n서비스 중단으로 인한 손해는 관련법에 특별한 규정이 없는 한 보상하지 않습니다.\n\n\n
+제8조 (전자금융거래 신청방법)\n\n
+전자금융거래는 약관 동의, 정보 입력, 결제 등의 절차를 따릅니다.\n\n\n
+제9조 (개인의 의무)\n\n
+ID와 비밀번호 관리는 이용자의 책임이며, 부정 사용 시 회사에 통보해야 합니다.\n약관과 관련법을 준수해야 합니다.\n\n\n
+제10조 (개인정보보호)\n\n
+회사는 최소한의 정보를 수집하며, 개인정보 수집 시 동의를 받습니다.\n개인정보 열람, 정정, 동의 철회를 요구할 수 있으며, 오류 정정 요청 시 해당 정보를 사용하지 않습니다.\n개인정보 관련 사항은 개인정보처리방침에 따릅니다.\n\n\n
+제11조 (저작권의 귀속 및 이용제한)\n\n
+'앱'이 작성한 저작물의 저작권은 '앱'에 속하며, 정보를 무단으로 사용하거나 배포할 수 없습니다.\n\n\n
+제12조 (게시물의 저작권 및 관리)\n\n
+회원이 게시한 게시물의 저작권은 해당 회원에게 속합니다.\n게시물이 법령을 위반하거나 권리자의 요청이 있는 경우, '앱'은 조치를 취할 수 있습니다.\n\n\n
+제13조 (분쟁해결)\n\n
+불만이나 의견은 상담창구를 통해 제출할 수 있으며, 정당한 경우 우선적으로 처리합니다.\n\n\n
+제14조 (준거법 및 재판관할)\n\n
+회사와 '회원' 간 제기된 소송은 대한민국법을 준거법으로 합니다.\n
+회사와 '회원' 간 발생한 분쟁에 관한 소송은 민사소송법 상의 관할법원에 제소합니다." />
+                        </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
+
+
+                </FrameLayout>
+
+                <Space
+                    android:id="@+id/sp_MoreGoneSpageSquireRight2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#EFEFEF" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:id="@+id/lih_EditMe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_EditMe"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:gravity="center_vertical"
+                    android:text="내 정보 수정"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_EditMeGo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text=">"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

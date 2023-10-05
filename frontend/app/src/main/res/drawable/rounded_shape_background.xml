@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 동그란 테두리를 먼저 배치합니다 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <corners android:radius="20dp" /> <!-- 둥글게 조절 -->
+            <stroke
+                android:width="2dp"
+                android:color="@color/main_color" />
+        </shape>
+    </item>
+
+    <!-- 그 위에 이미지를 배치합니다 -->
+    <item
+        android:drawable="@drawable/exchang_background"
+        android:left="2dp"
+    android:right="2dp"
+    android:top="2dp"
+    android:bottom="2dp"
+    android:gravity="fill" />
+</layer-list>
+
+
+

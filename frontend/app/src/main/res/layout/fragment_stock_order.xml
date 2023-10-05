@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_Order"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/llh_Order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_Order"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4" />
+
+        <LinearLayout
+            android:id="@+id/llv_OrderTab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyTabHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="매수"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_OrderSellTabHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="매도"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_OrderTransactionHistoryTabHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="거래내역"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_OrderTab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

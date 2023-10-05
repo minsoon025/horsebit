@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/fl_MainFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/llh_ButtomNavigationBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llh_ButtomNavigationBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#2A5874"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_HomeNav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:tint="@color/normal_hover"
+            app:srcCompat="@drawable/baseline_house_24" />
+
+        <ImageView
+            android:id="@+id/iv_MyPageNav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:tint="#FF448FAE"
+            app:srcCompat="@drawable/baseline_face_24" />
+
+        <ImageView
+            android:id="@+id/iv_ExchangeNav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/baseline_compare_arrows_24"
+            app:tint="#448FAE" />
+
+        <ImageView
+            android:id="@+id/iv_MoreNav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            app:tint="#448FAE"
+            app:srcCompat="@drawable/baseline_dashboard_customize_24" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

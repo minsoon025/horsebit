@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="100">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+
+        <ScrollView
+            android:id="@+id/sv_StockInformation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="90"
+            tools:ignore="SpeakableTextPresentCheck">
+
+            <LinearLayout
+                android:id="@+id/llv_StockInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="94"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_MoreProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="35"
+                        android:elevation="2dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/horsebit_logo" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationHorseName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="60"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="말이름(말티커)"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp" />
+
+                <TextView
+                    android:id="@+id/tv_StockInformationContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:text="말 소개"
+                    android:textColor="@color/black" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+
+                <View
+                    android:id="@+id/v_StockInformationLine1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <LinearLayout
+                    android:id="@+id/llv_StockInformationOwName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationOwNameLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="마     주"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationOwNameRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="마주이름"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <LinearLayout
+                    android:id="@+id/llh_StockInformationBirthPlace"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationBirthPlaceLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="출생지"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationBirthPlaceRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="출생지"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <LinearLayout
+                    android:id="@+id/llh_StockInformationFatherHrName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationFatherHrNameLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="부     마"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationFatherHrNameRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="부마이름"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <LinearLayout
+                    android:id="@+id/llh_StockInformationMotherHrName"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationMotherHrNameLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="모     마"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationMotherHrNameRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="모마이름"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <LinearLayout
+                    android:id="@+id/llh_StockInformationRaceRank"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationRaceRankLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="등     급"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationRaceRankRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="경주마등급"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine6"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/blue_light" />
+
+                <LinearLayout
+                    android:id="@+id/llh_StockInformationPublishDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationPublishDateLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="최초발행"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationPublishDateRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="최초발행날짜"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <LinearLayout
+                    android:id="@+id/llh_StockInformationSupply"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationSupplyLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="총 발행 수량"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationSupplyRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="총발행수"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine8"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <LinearLayout
+                    android:id="@+id/llh_StockInformationMarketCap"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationMarketCapLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="30"
+                        android:fontFamily="@font/line_seed_kr_bd"
+                        android:gravity="center_vertical"
+                        android:text="시가총액"
+                        android:textColor="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20" />
+
+                    <TextView
+                        android:id="@+id/tv_StockInformationMarketCapRight"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:gravity="right|center_vertical"
+                        android:text="시가총액"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_StockInformationLine9"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_active" />
+
+                <TextView
+                    android:id="@+id/tv_StockInformationGuide"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="right|center_vertical"
+                    android:text="# 시가 총액 홀스빗 자체 제공" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_FragmentOrderBuyTab"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderBuyTabFragment">
+
+    <LinearLayout
+        android:id="@+id/llv_OrderBuyTab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:id="@+id/llv_OrderCanBuy"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/tv_OrderCanBuy"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="30"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center_vertical"
+                android:text="주문가능"
+                android:textColor="@color/font_gray" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <TextView
+                android:id="@+id/tv_OrderCanBuyPrice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="55"
+                android:fontFamily="@font/line_seed_kr_bd"
+                android:gravity="right|center_vertical"
+                android:text="KRW"
+                android:textColor="@color/black" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/llv_OrderBuyNum"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <LinearLayout
+                android:id="@+id/llh_OrderBuyNumBackground"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="90"
+                android:background="@drawable/edge"
+                android:orientation="horizontal"
+                android:weightSum="20">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyNumText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="수량" />
+
+                <EditText
+                    android:id="@+id/et_OrderBuyNum"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="right|center_vertical"
+                    android:hint="0"
+                    android:includeFontPadding="false"
+                    android:inputType="number|numberDecimal"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyNumType"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center"
+                    android:text="수량" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/llv_OrderBuyPrice"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <LinearLayout
+                android:id="@+id/llh_OrderBuyPriceBackground"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="90"
+                android:background="@drawable/edge"
+                android:orientation="horizontal"
+                android:weightSum="20">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyPriceText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="가격" />
+
+                <EditText
+                    android:id="@+id/et_OrderBuyPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="right|center_vertical"
+                    android:hint="0"
+                    android:includeFontPadding="false"
+                    android:inputType="number"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyPriceType"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center"
+                    android:text="KRW" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/llv_OrderSellTotalPrice"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <LinearLayout
+                android:id="@+id/llh_OrderBuyTotalPriceBackground"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="90"
+                android:background="@drawable/edge"
+                android:orientation="horizontal"
+                android:weightSum="20">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyTotalPriceText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center_vertical"
+                    android:text="총액" />
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyTotalPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="right|center_vertical"
+                    android:includeFontPadding="false"
+                    android:text="0" />
+
+                <TextView
+                    android:id="@+id/tv_OrderBuyTotalPriceType"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/line_seed_kr_rg"
+                    android:gravity="center"
+                    android:text="KRW" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:id="@+id/llh_CommitBuy"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10" />
+
+            <TextView
+                android:id="@+id/tv_OrderBuyReset"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="35"
+                android:background="@color/gray"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:includeFontPadding="true"
+                android:text="초기화"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10" />
+
+            <TextView
+                android:id="@+id/tv_OrderBuyCommit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="35"
+                android:background="@color/red"
+                android:fontFamily="@font/line_seed_kr_rg"
+                android:gravity="center"
+                android:text="매수"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

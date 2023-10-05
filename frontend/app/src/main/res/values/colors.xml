@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF171717</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background">#FF2A5874</color>
+    <color name="normal_hover">#FF448FAE</color>
+    <color name="red">#FFFF0000</color>
+    <color name="blue">#FF0038FF</color>
+    <color name="main_color">#FF4C9FC1</color>
+    <color name="bright_main_color">#FFF0F8FB</color>
+    <color name="gray">#FFD9D9D9</color>
+    <color name="font_gray">#FF9D9DA7</color>
+    <color name="order_back_blue">#FFC8E1EC</color>
+    <color name="order_back_red">#FFECC8C8</color>
+    <color name="order_front_blue">#FF9CCADD</color>
+    <color name="order_front_red">#FFD89191</color>
+    <color name="light_active">#FFC8E1EC</color>
+    <color name="blue_light">#FFEDF5F9</color>
+    <color name="ok_green">#FF3CB371</color>
+    <color name="orange_red">#FFFF4500</color>
+    <color name="yellow">#FFEDC70A</color>
+
+
+</resources>

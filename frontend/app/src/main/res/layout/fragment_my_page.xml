@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_MyPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyPageFragment">
+
+    <ScrollView
+        android:id="@+id/sv_MyPage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:id="@+id/llv_MyPage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_MyCoin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <LinearLayout
+                    android:id="@+id/llh_MyCoinView"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_weight="90"
+                    android:background="@drawable/exchang_background"
+                    android:elevation="5dp"
+                    android:orientation="horizontal">
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3" />
+
+                    <LinearLayout
+                        android:id="@+id/llv_MyCoin"
+                        android:layout_width="0dp"
+                        android:layout_height="250dp"
+                        android:layout_weight="94"
+                        android:orientation="vertical">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp" />
+
+                        <LinearLayout
+                            android:id="@+id/llh_MyTotalCoinTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5" />
+
+                            <TextView
+                                android:id="@+id/tv_MyTotalCoinTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="75"
+                                android:fontFamily="@font/line_seed_kr_rg"
+                                android:outlineAmbientShadowColor="@color/black"
+                                android:outlineSpotShadowColor="@color/black"
+                                android:shadowColor="@color/black"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="1"
+                                android:text="총 보유자산"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llh_MyTotalCoin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_MyTotalCoin"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="80
+    "
+                                android:fontFamily="@font/line_seed_kr_bd"
+                                android:gravity="center"
+                                android:outlineAmbientShadowColor="@color/black"
+                                android:outlineSpotShadowColor="@color/black"
+                                android:shadowColor="@color/black"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="2"
+                                android:text="000,000"
+                                android:textColor="@color/white"
+                                android:textSize="30sp" />
+
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp" />
+
+                        <LinearLayout
+                            android:id="@+id/llh_MyCoinLine1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:id="@+id/v_MyCoinLine1"
+                                android:layout_width="0dp"
+                                android:layout_height="2dp"
+                                android:layout_weight="100"
+                                android:background="@color/white" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp" />
+
+                        <LinearLayout
+                            android:id="@+id/llh_MyOwnKRWTltle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="5" />
+
+                            <TextView
+                                android:id="@+id/tv_MyOwnKRWTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="75"
+                                android:fontFamily="@font/line_seed_kr_rg"
+                                android:outlineAmbientShadowColor="@color/black"
+                                android:outlineSpotShadowColor="@color/black"
+                                android:shadowColor="@color/black"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="1"
+                                android:text="보유 KRW"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llh_MyOwnKRW"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_MyOwnKRW"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="80
+    "
+                                android:fontFamily="@font/line_seed_kr_bd"
+                                android:gravity="center"
+                                android:outlineAmbientShadowColor="@color/black"
+                                android:outlineSpotShadowColor="@color/black"
+                                android:shadowColor="@color/black"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="2"
+                                android:text="000,000"
+                                android:textColor="@color/white"
+                                android:textSize="30sp" />
+
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp" />
+
+                        <LinearLayout
+                            android:id="@+id/llh_MyCoinLine2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <View
+                                android:id="@+id/v_MyCoinLine2"
+                                android:layout_width="0dp"
+                                android:layout_height="2dp"
+                                android:layout_weight="100"
+                                android:background="@color/white" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp" />
+
+                        <LinearLayout
+                            android:id="@+id/llh_MyCoinResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="100"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <LinearLayout
+                                android:id="@+id/llv_MyCoinResultLeft"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="50"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:id="@+id/llh__MyCoinTotalBuy"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="25"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_MyCoinTotalBuyTitle"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="총 매수"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tv_MyCoinTotalBuy"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="0" />
+                                </LinearLayout>
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="15dp"
+                                    android:layout_weight="25" />
+
+                                <LinearLayout
+                                    android:id="@+id/llh__MyCoinTotalVal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="25"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv__MyCoinTotalValTitle"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="총 평가"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tv__MyCoinTotalVal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="0" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llv_MyCoinResultLine"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:id="@+id/v_Line111"
+                                    android:layout_width="2dp"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="100"
+                                    android:background="@color/white" />
+
+                                <Space
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/llv_MyCoinResultRight"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="50"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:id="@+id/llh_MyPlusMinus"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="25"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_MyPlusMinusTitle"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="평가 손익"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tv_MyPlusMinus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="0" />
+                                </LinearLayout>
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="15dp"
+                                    android:layout_weight="25" />
+
+                                <LinearLayout
+                                    android:id="@+id/llh_MyCoinRate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="25"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tv_MyCoinRateTitle"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="수익률"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/tv_MyCoinRate"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="25"
+                                        android:fontFamily="@font/line_seed_kr_rg"
+                                        android:gravity="center"
+                                        android:text="0" />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp" />
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:id="@+id/llh_MyCoinCard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+
+                <FrameLayout
+                    android:id="@+id/fl_MyCoinCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="90">
+
+
+                    <LinearLayout
+                        android:id="@+id/llv_MyCoidCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/semi_circle"
+                        android:elevation="1dp"
+                        android:orientation="vertical">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp" />
+
+                        <TextView
+                            android:id="@+id/tv_MyCoinCardTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:fontFamily="@font/line_seed_kr_bd"
+                            android:outlineAmbientShadowColor="@color/font_gray"
+                            android:outlineSpotShadowColor="@color/font_gray"
+                            android:paddingLeft="30dp"
+                            android:shadowColor="@color/font_gray"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="0.3"
+                            android:text="보유마패"
+                            android:textColor="@color/black"
+                            android:textSize="24sp" />
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp" />
+
+                        <androidx.core.widget.NestedScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fillViewport="true"
+                        >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/rv_MyCoinCard"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:overScrollMode="never">
+
+                                </androidx.recyclerview.widget.RecyclerView>
+                            </LinearLayout>
+                        </androidx.core.widget.NestedScrollView>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="20dp" />
+
+                    </LinearLayout>
+                </FrameLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

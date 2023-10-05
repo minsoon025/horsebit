@@ -1,0 +1,16 @@
+<!-- res/drawable/underline.xml -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:left="0dp"
+        android:right="0dp"
+        android:top="0dp"
+        android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/bright_main_color" /> <!-- 원하는 색상으로 변경 -->
+            <corners android:topLeftRadius="70dp" android:topRightRadius="70dp" /> <!-- radius 값을 조절하여 모양을 조정할 수 있습니다 -->
+        </shape>
+    </item>
+
+</layer-list>
