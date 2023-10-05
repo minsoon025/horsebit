@@ -37,6 +37,12 @@ class StockInformationFragment : Fragment() {
                     val responseBody = response.body()
 
                     if(responseBody != null) {
+                        val resourceName = "pic_$tokenNo"
+                        val resourceId = requireContext().resources.getIdentifier(resourceName, "drawable", requireContext().packageName)
+
+                        if (resourceId != 0) {
+                            binding.ivMoreProfile.setImageResource(resourceId)
+                        }
                         binding.tvStockInformationHorseName.text = "${responseBody.hrName}(${responseBody.code})"
                         binding.tvStockInformationContent.text = "${responseBody.content}"
                         binding.tvStockInformationOwNameRight.text = "${responseBody.owName}"
