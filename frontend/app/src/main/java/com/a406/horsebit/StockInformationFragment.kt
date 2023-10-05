@@ -10,6 +10,7 @@ import com.a406.horsebit.databinding.FragmentStockInformationBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
 import java.util.Date
 
 
@@ -43,9 +44,17 @@ class StockInformationFragment : Fragment() {
                         binding.tvStockInformationFatherHrNameRight.text = "${responseBody.fatherHrName}"
                         binding.tvStockInformationMotherHrNameRight.text = "${responseBody.motherHrName}"
                         binding.tvStockInformationRaceRankRight.text = "${responseBody.raceRank}"
-                        binding.tvStockInformationPublishDateRight.text = "${responseBody.publishDate.year.toString()}.${(responseBody.publishDate.month + 1).toString()}"
-                        binding.tvStockInformationSupplyRight.text = "${responseBody.supply}"
-                        binding.tvStockInformationMarketCapRight.text = "${responseBody.marketCap}"
+
+                        val publishDate: Date = responseBody.publishDate
+                        val calendar = Calendar.getInstance()
+                        calendar.time = publishDate
+                        val year = calendar.get(Calendar.YEAR)
+                        val month = calendar.get(Calendar.MONTH) + 1
+                        val date = calendar.get(Calendar.DATE)
+
+                        binding.tvStockInformationPublishDateRight.text = "${year}.${month}.${date}"
+                        binding.tvStockInformationSupplyRight.text = "${responseBody.supply} ${responseBody.code}"
+                        binding.tvStockInformationMarketCapRight.text = "${responseBody.marketCap} KRW"
                     }
 
                 }

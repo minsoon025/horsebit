@@ -47,7 +47,7 @@ class StockChartFragment : Fragment() {
         val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
         val token = pref.getString("token", "1")
 
-        api.candleChartData(tokenNo = 1L, quantity = 10000L, endTime = customDateTime, candleTypeIndex = 0, margin = 3L, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
+        api.candleChartData(tokenNo = 1L, quantity = 10000000L, endTime = customDateTime, candleTypeIndex = 0, margin = 3L, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
             override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "차트 캔들 조회: 200 Success")
