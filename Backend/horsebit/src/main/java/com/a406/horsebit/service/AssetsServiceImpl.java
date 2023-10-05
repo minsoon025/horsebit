@@ -263,4 +263,30 @@ public class AssetsServiceImpl implements AssetsService {
 		Possess result = possessRepository.findByUserNoAndTokenNo(userNo, tokenNo);
 		return result.getQuantity();
 	}
+
+	@Override
+	public Possess saveTrade(Long userNo, Long tokenNo, double volume, Long currentPrice) {
+		Possess curResult = possessRepository.findByUserNoAndTokenNo(userNo, tokenNo);
+
+		if(curResult == null) { //userNo가 tokenNo를 현재 보유하고 있지 않으면
+			curResult.setUserNo(userNo);
+			curResult.setTokenNo(tokenNo);
+			curResult.setQuantity((long)volume);
+			curResult.setTotalAmountPurchase((long)volume * currentPrice);
+
+			possessRepository.save(curResult);
+			return curResult;
+		}
+
+		//userNo가 tokenNo를 현재 보유하고 있으면
+		double curVol = curResult.getQuantity();
+		Long curTotalAmt = curResult.getTotalAmountPurchase();
+		curVol += volume;
+		curTotalAmt += ((long)volume * currentPrice);
+
+		curResult.setQuantity((long)curVol);
+		curResult.setTotalAmountPurchase(curTotalAmt);
+
+		return curResult;
+	}
 }
