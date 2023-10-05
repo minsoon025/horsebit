@@ -30,7 +30,6 @@ class OrderActivity : AppCompatActivity() {
         tokenNo = intent.getLongExtra("tokenNo", 0)
         code = intent.getStringExtra("code") ?: ""
 
-        Log.d("오다에서 보는 토큰넘버입니다", tokenNo.toString())
         val pref = PreferenceManager.getDefaultSharedPreferences(this)  // import androidx.preference.PreferenceManager 인지 확인
         val token = pref.getString("SERVER_ACCESS_TOKEN", "1")
 
@@ -148,6 +147,7 @@ class OrderActivity : AppCompatActivity() {
 
             1 -> {
                 val bundle = Bundle()
+                bundle.putLong("tokenNo", tokenNo)
 
                 val changeFragment = StockChartFragment()
                 changeFragment.arguments = bundle

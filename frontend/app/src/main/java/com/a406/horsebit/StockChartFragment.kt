@@ -30,6 +30,8 @@ class StockChartFragment : Fragment() {
     private lateinit var binding: FragmentStockChartBinding
     val api = APIS.create()
 
+    var tokenNo: Long = 0
+
     var candleChartData = arrayListOf<CandleShow>()
 
     val barChartData = arrayListOf<BarShow>()
@@ -41,14 +43,12 @@ class StockChartFragment : Fragment() {
 
         initChart()
 
-
         var indexDateTime = LocalDateTime.of(2023, 1, 4, 4, 0,0, 0)
         val customDateTime = LocalDateTime.now()
 
-        val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
-        val token = pref.getString("token", "1")
+        tokenNo = arguments?.getLong("tokenNo") ?: 0
 
-        api.candleChartData(tokenNo = 1L, quantity = 2000L, endTime = customDateTime, candleTypeIndex = 0, margin = 0L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
+        api.candleChartData(tokenNo = tokenNo, quantity = 200L, endTime = customDateTime, candleTypeIndex = 0, margin = 0L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
             override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "차트 캔들 조회: 200 Success")
