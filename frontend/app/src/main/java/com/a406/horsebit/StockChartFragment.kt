@@ -52,7 +52,7 @@ class StockChartFragment : Fragment() {
 
         tokenNo = arguments?.getLong("tokenNo") ?: 0
 
-        api.candleChartData(tokenNo = tokenNo, quantity = 200L, endTime = customDateTime, candleTypeIndex = 0, margin = 0L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
+        api.candleChartData(tokenNo = tokenNo, quantity = 100L, endTime = customDateTime, candleTypeIndex = 0, margin = 0L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
             override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "차트 캔들 조회: 200 Success")
@@ -254,5 +254,11 @@ class StockChartFragment : Fragment() {
             this.data = BarData(barDataSet)
             invalidate()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 페이지를 벗어날 때 핸들러 작업을 삭제하여 반복을 종료합니다.
+        handler.removeCallbacksAndMessages(null)
     }
 }
