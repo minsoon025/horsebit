@@ -78,6 +78,21 @@ public class CandleRepository {
         initialTimeRBucket.set(initialTime);
     }
 
+    public void setInitialCandle(Long tokenNo, LocalDateTime initialTime, Long price) {
+        CandleConstant.CANDLE_TYPE_LIST.forEach(candleType -> {
+            RList<Candle> candleRList = redissonClient.getList(listNameGenerator(tokenNo, candleType.getCandleType()));
+            candleRList.delete();
+            Candle candle = new Candle();
+            candle.setOpen(price);
+            candle.setClose(price);
+            candle.setHigh(price);
+            candle.setLow(price);
+            candle.setVolume(0.0);
+            candle.setStartTime(initialTime);
+            candleRList.add(candle);
+        });
+    }
+
     public void updateCandle(Long tokenNo, Long price) {
         CandleConstant.CANDLE_TYPE_LIST.forEach(candleType -> {
             updateCandle(tokenNo, price, candleType);

@@ -238,14 +238,11 @@ class CandleRepositoryTest {
     }
 
     @Test
-    void findOneByTokenNo() {
-    }
-
-    @Test
-    void findRangeByTokenNo() {
-    }
-
-    @Test
-    void findCandleInitialTime() {
+    void initiateCandle() {
+        LocalDateTime initialTime = LocalDateTime.parse("2023-09-18T00:00:00.00");
+        for (long tokenNo = 1L; tokenNo <= 25; ++tokenNo) {
+            candleRepository.setCandleInitialTime(tokenNo, initialTime);
+            candleRepository.setInitialCandle(tokenNo, initialTime, 10000L);
+        }
     }
 }
