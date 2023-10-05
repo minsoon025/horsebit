@@ -13,7 +13,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.CandleEntry
 
-class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<OrderItemAdapter.CustomViewHolder>() {
+class OrderItemAdapter(val orderList: ArrayList<Order>, val maxVolume: Float): RecyclerView.Adapter<OrderItemAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderItemAdapter.CustomViewHolder {
         val binding = OrderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -26,12 +26,11 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
 
     override fun onBindViewHolder(holder: OrderItemAdapter.CustomViewHolder, position: Int) {
         val order = orderList[position]
-        holder.bind(order)
+        holder.bind(order, maxVolume)
     }
 
-
     class CustomViewHolder(private val binding: OrderItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(order: Order) {
+        fun bind(order: Order, maxVolume: Float) {
             binding.tvPrice.text = order.price.toString()
             binding.tvTrend.text = order.priceRateOfChange.toString()
             binding.tvVolume.text = order.volume.toString()
@@ -47,7 +46,7 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
 
             binding.llvOrderBack.setBackgroundColor(chartBackColor)
 
-            initChart()
+            initChart(maxVolume)
             setChartData(order.volume)
 
         }
@@ -82,15 +81,13 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
             }
         }
 
-        private fun initChart() {
+        private fun initChart(maxVolume: Float) {
             binding.apply {
                 ccOrderVolumeHorizontalBarChart.description.isEnabled = false
                 ccOrderVolumeHorizontalBarChart.setTouchEnabled(false)
 
                 ccOrderVolumeHorizontalBarChart.setFitBars(true)
                 ccOrderVolumeHorizontalBarChart.setExtraOffsets(0f, 0f, 0f, 0f) // 모든 여백을 0으로 설정
-                //ccOrderVolumeHorizontalBarChart.setViewPortOffsets(0f, 0f, 0f, 0f) // 모든 여백을 0으로 설정
-
 
                 ccOrderVolumeHorizontalBarChart.xAxis.apply {
                     this.isEnabled = false
@@ -98,7 +95,7 @@ class OrderItemAdapter(val orderList: ArrayList<Order>): RecyclerView.Adapter<Or
 
                 ccOrderVolumeHorizontalBarChart.axisLeft.apply {
                     this.axisMinimum = 0f // 최소값을 0으로 고정
-                    this.axisMaximum = 1000f // 최대값을 100으로 고정
+                    this.axisMaximum = maxVolume
                     this.isEnabled = false
                 }
 

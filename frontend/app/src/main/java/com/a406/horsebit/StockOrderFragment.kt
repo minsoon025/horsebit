@@ -41,12 +41,16 @@ class StockOrderFragment : Fragment() {
 
                     val responseBody = response.body()
 
+                    var maxVolume: Float = 0f
                     if(responseBody != null) {
+
                         for(order in responseBody) {
                             orderList.add(order)
+                            if(maxVolume < order.volume.toFloat()) maxVolume = order.volume.toFloat()
                         }
                     }
-                    binding.rvOrder.adapter = OrderItemAdapter(orderList)
+                    Log.d("asdasdf", maxVolume.toString())
+                    binding.rvOrder.adapter = OrderItemAdapter(orderList, maxVolume)
                 }
                 else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                     Log.d("로그", "코인 주문 현황 상세 조회 (SSE): 400 Bad Request")

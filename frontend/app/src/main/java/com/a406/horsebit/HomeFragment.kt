@@ -149,12 +149,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // 임시
-        binding.btnTmp.setOnClickListener {
-            val intent = Intent(binding.root.context, LoginMainActivity::class.java)
-            binding.root.context.startActivity(intent)
-        }
-
         val swipeHelperCallback = SwipeHelperCallback(assetTableItemAdapter).apply {
             // 스와이프한 뒤 고정시킬 위치 지정
             setClamp(resources.displayMetrics.widthPixels.toFloat() / 4)    // 1080 / 4 = 270
