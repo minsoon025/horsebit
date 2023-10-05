@@ -157,14 +157,13 @@ public class TokenServiceImpl implements TokenService {
 	 * 주문현황 대상금액 리스트 추출 - 현재가 기준
 	 * @param curPrice 현재가
 	 * @param flag 1:매도, -1:매수
-	 * @param stInd 시작 인덱스(매도:0~9, 매수:1~10)
-	 * @param enInd 끝 인덱스
+	 * @param cnt 금액 리스트의 개수
 	 * @param gap 차이 금액
 	 * @return
 	 */
-	List<Long> getPriceList(Long curPrice, int flag, int stInd, int enInd, int gap) {
+	List<Long> getPriceList(Long curPrice, int flag, int cnt, int gap) {
 		List<Long> result = new ArrayList<>();
-		for(int i = stInd; i <= enInd; i++) {
+		for(int i = 0; i < cnt; i++) {
 			result.add(curPrice + gap * i * flag);
 		}
 
@@ -183,8 +182,8 @@ public class TokenServiceImpl implements TokenService {
 		log.info("TokenServiceImpl::findTokenVolumes() curPrice: " + curPrice);
 
 		//현재가 기준으로 대상금액 추출(총 20건)
-		List<Long> sellPriceList = getPriceList(curPrice, 1, 0, 9, 5);
-		List<Long> buyPriceList = getPriceList(curPrice, -1, 1, 10, 5);
+		List<Long> sellPriceList = getPriceList(curPrice, 1, 10, 10);
+		List<Long> buyPriceList = getPriceList(curPrice, -1, 10, 10);
 
 		//대상금액별 주문량 조회
 		List<Double> sellVolumes = orderRepository.findSellVolumeByPriceAtOrderBook(tokenNo, sellPriceList);
