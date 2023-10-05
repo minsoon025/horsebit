@@ -98,7 +98,7 @@ public class TokenServiceImpl implements TokenService {
 			}
 
 			//변동률 셋팅 - 소수점 3자리까지 표기
-			double rRate = rRates.get(ind).getPriceRateOfChange();
+			double rRate = rRates.get(ind).getPriceRateOfChange() * 100;
 			rRate = Math.round(rRate * 1000) / 1000.0;
 			token.setPriceRateOfChange(rRate);
 			
@@ -142,7 +142,7 @@ public class TokenServiceImpl implements TokenService {
 
 		//동적데이터 - 현재가, 변동률, 변동금액
 		long rPrice = priceService.getCurrentPrice(tokenNo).getPrice();
-		double rRate = priceService.getPriceOfRate(tokenNo).getPriceRateOfChange();
+		double rRate = priceService.getPriceOfRate(tokenNo).getPriceRateOfChange() * 100;
 		rRate = Math.round(rRate * 1000) / 1000.0;
 		long sPrice = priceRepository.findStartPrice(tokenNo).getPrice();
 
@@ -195,7 +195,7 @@ public class TokenServiceImpl implements TokenService {
 			curr.setPrice(sellPriceList.get(ind));
 			curr.setVolume(sellVolumes.get(ind));
 
-			double rRate = priceService.getPriceOfRate(tokenNo, sellPriceList.get(ind)).getPriceRateOfChange();
+			double rRate = priceService.getPriceOfRate(tokenNo, sellPriceList.get(ind)).getPriceRateOfChange() * 100;
 			rRate = Math.round(rRate * 1000) / 1000.0;
 			curr.setPriceRateOfChange(rRate);
 			priceList.add(curr);
@@ -207,7 +207,7 @@ public class TokenServiceImpl implements TokenService {
 			curr.setPrice(buyPriceList.get(ind));
 			curr.setVolume(buyVolumes.get(ind));
 
-			double rRate = priceService.getPriceOfRate(tokenNo, buyPriceList.get(ind)).getPriceRateOfChange();
+			double rRate = priceService.getPriceOfRate(tokenNo, buyPriceList.get(ind)).getPriceRateOfChange() * 100;
 			rRate = Math.round(rRate * 1000) / 1000.0;
 			curr.setPriceRateOfChange(rRate);
 			priceList.add(curr);
