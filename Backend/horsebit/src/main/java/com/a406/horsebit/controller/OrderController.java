@@ -70,4 +70,26 @@ public class OrderController {
 		);
 		return new OrderResponseDTO(orderStatus);
 	}
+
+	@PostMapping("/tokens/{tokenNo}/buy/{userNo}")
+	public OrderResponseDTO buyDataFiller(@PathVariable("tokenNo") Long tokenNo, @PathVariable("userNo") Long userNo, @RequestBody Order order) {
+		String orderStatus = orderService.processBuyOrder(
+				userNo,
+				tokenNo,
+				order,
+				order.getOrderTime()
+		);
+		return new OrderResponseDTO(orderStatus);
+	}
+
+	@PostMapping("/tokens/{tokenNo}/sell/{userNo}")
+	public OrderResponseDTO sellDataFiller(@PathVariable("tokenNo") Long tokenNo, @PathVariable("userNo") Long userNo, @RequestBody Order order) {
+		String orderStatus = orderService.processSellOrder(
+				userNo,
+				tokenNo,
+				order,
+				order.getOrderTime()
+		);
+		return new OrderResponseDTO(orderStatus);
+	}
 }
