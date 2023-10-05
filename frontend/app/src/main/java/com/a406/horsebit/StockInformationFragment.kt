@@ -72,9 +72,6 @@ class StockInformationFragment : Fragment() {
                 Log.d("로그", "코인 경주마 정보 조회: onFailure")
             }
         })
-
-
-
         return view
     }
 }
