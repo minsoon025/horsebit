@@ -124,6 +124,8 @@ public class CandleRepository {
 
     private void generateNewCandle(RList<Candle> candleRList, Integer targetIndex, Long candleMinuteTime) {
         int index = candleRList.size();
+
+        log.info("--------------------------------------size: " + index);
         Candle lastCandle = candleRList.get(index - 1);
         Candle newCandle = new Candle();
         newCandle.setStartTime(lastCandle.getStartTime());
