@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -225,6 +226,14 @@ class HomeFragment : Fragment() {
                         }
                         else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
                             Log.d("로그", "즐겨찾기 코인 목록 조회: 401 Unauthorized")
+
+                            Toast.makeText(context, "[관심]은 로그인 후 이용이 가능합니다", Toast.LENGTH_SHORT).show()
+                            binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
+                            binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+                            binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+                            tokenShowList.clear()
+                            changeShowType(0)
+
                         }
                         else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
                             Log.d("로그", "즐겨찾기 코인 목록 조회: 403 Forbidden")
@@ -256,7 +265,6 @@ class HomeFragment : Fragment() {
                                     tokenShowList.add(tokenShow)
                                 }
                             }
-                            // binding.rvAssetTable.adapter = AssetTableItemAdapter(tokenShowList)
                             assetTableItemAdapter = AssetTableItemAdapter(tokenShowList)
                             binding.rvAssetTable.adapter = assetTableItemAdapter
                         }
@@ -265,6 +273,13 @@ class HomeFragment : Fragment() {
                         }
                         else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
                             Log.d("로그", "보유 코인 목록 조회: 401 Unauthorized")
+
+                            Toast.makeText(context, "[보유]는 로그인 후 이용이 가능합니다", Toast.LENGTH_SHORT).show()
+                            binding.ivWhole.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.black))
+                            binding.ivInterest.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+                            binding.ivHold.setColorFilter(ContextCompat.getColor(binding.root.context, R.color.font_gray))
+                            tokenShowList.clear()
+                            changeShowType(0)
                         }
                         else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
                             Log.d("로그", "보유 코인 목록 조회: 403 Forbidden")

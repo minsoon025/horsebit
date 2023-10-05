@@ -49,7 +49,6 @@ class StockOrderFragment : Fragment() {
                             if(maxVolume < order.volume.toFloat()) maxVolume = order.volume.toFloat()
                         }
                     }
-                    Log.d("asdasdf", maxVolume.toString())
                     binding.rvOrder.adapter = OrderItemAdapter(orderList, maxVolume)
                 }
                 else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입

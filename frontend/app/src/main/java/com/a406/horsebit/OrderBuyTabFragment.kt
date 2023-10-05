@@ -10,6 +10,7 @@
     import android.view.ViewGroup
     import android.widget.ArrayAdapter
     import android.widget.Spinner
+    import android.widget.Toast
     import androidx.preference.PreferenceManager
     import com.a406.horsebit.databinding.FragmentOrderBuyTabBinding
     import com.a406.horsebit.databinding.FragmentStockOrderBinding
@@ -53,10 +54,11 @@
                         }
                     }
                     else if(response.code() == 201) {   // 201 Created
-                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                        Log.d("로그", "매수 주문 요청: 201 Created")
                     }
                     else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
-                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                        Log.d("로그", "매수 주문 요청: 202 Accepted")
+                        Toast.makeText(context, "[매수 주문]이 처리 중 입니다.", Toast.LENGTH_SHORT).show()
                     }
                     else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                         Log.d("로그", "매수 주문 요청: 400 Bad Request")
@@ -66,6 +68,7 @@
                     }
                     else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
                         Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                        Toast.makeText(context, "[매수 주문]은 로그인 후 이용이 가능합니다.", Toast.LENGTH_SHORT).show()
                     }
                     else if(response.code() == 404) {   // 404 Not Found
                         Log.d("로그", "매수 주문 요청: 404 Not Found")

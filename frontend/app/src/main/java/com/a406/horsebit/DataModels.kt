@@ -43,7 +43,7 @@ data class Token(
     val tokenNo: Long,  // 토큰 번호
     val name: String,  //토큰 이름
     val code: String,  // 토큰 코드
-    val currentPrice: Double,  // 토큰 현재가
+    val currentPrice: Long,  // 토큰 현재가
     val priceRateOfChange: Double, //변동추이
     val volume: Double, //거래 금액
     val newFlag: Boolean,   // 새로운 코인 여부
@@ -54,7 +54,7 @@ data class TokenShow(
     val tokenNo: Long,  // 토큰 번호
     val name: String,   // 토큰 이름
     val code: String,   // 토큰 코드
-    val currentPrice: Double,   // 토큰 현재가
+    val currentPrice: Long,   // 토큰 현재가
     val priceRateOfChange: Double, // 변동추이
     val volume: Double, // 거래 금액
     val newFlag: Boolean,   // 새로운 코인 여부

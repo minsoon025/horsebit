@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.FragmentOrderSellTabBinding
 import retrofit2.Call
@@ -21,6 +22,9 @@ class OrderSellTabFragment : Fragment() {
     val api = APIS.create()
     var tokenNo: Long = 0
     var code: String = ""
+
+    var orderSellNum: Double = 0.0
+    var orderSellPrice: Long = 0L
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_order_sell_tab, container, false)
@@ -89,43 +93,50 @@ class OrderSellTabFragment : Fragment() {
 
         binding.tvOrderSellCommit.setOnClickListener {
 
+            orderSellNum = if(!binding.etOrderSellNum.text.toString().isNullOrEmpty()) binding.etOrderSellNum.text.toString().toDouble() else 0.0
+            orderSellPrice = if(!binding.etOrderSellPrice.text.toString().isNullOrEmpty()) binding.etOrderSellPrice.text.toString().toLong() else 0L
+
+
             val requestData = SellRequestRequestBodyModel(
                 tokenNo,
-                binding.etOrderSellNum.text.toString().toDouble(),
-                binding.etOrderSellPrice.text.toString().toLong()
+                orderSellNum,
+                orderSellPrice,
             )
 
-            api.sellRequest(authorization = "Bearer ${token}" , requestData).enqueue(object: Callback<SellRequestResponseBodyModel> {
-                override fun onResponse(call: Call<SellRequestResponseBodyModel>, response: Response<SellRequestResponseBodyModel>) {
-                    if(response.code() == 200) {    // 200 Success
-                        Log.d("로그", "매도 주문 요청: 200 Success")
+            api.sellRequest(authorization = "Bearer ${token}", requestData)
+                .enqueue(object : Callback<SellRequestResponseBodyModel> {
+                    override fun onResponse(
+                        call: Call<SellRequestResponseBodyModel>,
+                        response: Response<SellRequestResponseBodyModel>
+                    ) {
+                        if (response.code() == 200) {    // 200 Success
+                            Log.d("로그", "매도 주문 요청: 200 Success")
 
-                        val responseBody = response.body()
+                            val responseBody = response.body()
 
+                        } else if (response.code() == 201) {   // 201 Created
+                            Log.d("로그", "매도 주문 요청: 201 Created")
+                        } else if (response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
+                            Log.d("로그", "매도 주문 요청: 202 Accepted")
+                            Toast.makeText(context, "[매도 주문]이 처리 중 입니다", Toast.LENGTH_SHORT)
+                                .show()
+                        } else if (response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
+                            Log.d("로그", "매도 주문 요청: 400 Bad Request")
+                        } else if (response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
+                            Log.d("로그", "매도 주문 요청: 401 Unauthorized")
+                        } else if (response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
+                            Log.d("로그", "매도 주문 요청: 400 Bad Request")
+                            Toast.makeText(context,"[매도 주문]은 로그인 후 이용이 가능합니다.", Toast.LENGTH_SHORT).show()
+                        } else if (response.code() == 404) {   // 404 Not Found
+                            Log.d("로그", "매도 주문 요청: 404 Not Found")
+                        }
                     }
-                    else if(response.code() == 201) {   // 201 Created
-                        Log.d("로그", "매도 주문 요청: 201 Created")
+
+                    override fun onFailure(
+                        call: Call<SellRequestResponseBodyModel>, t: Throwable) {
+                        Log.d("로그", "매도 주문 요청: onFailure")
                     }
-                    else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
-                        Log.d("로그", "매도 주문 요청: 202 Accepted")
-                    }
-                    else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
-                        Log.d("로그", "매도 주문 요청: 400 Bad Request")
-                    }
-                    else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
-                        Log.d("로그", "매도 주문 요청: 401 Unauthorized")
-                    }
-                    else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
-                        Log.d("로그", "매도 주문 요청: 400 Bad Request")
-                    }
-                    else if(response.code() == 404) {   // 404 Not Found
-                        Log.d("로그", "매도 주문 요청: 404 Not Found")
-                    }
-                }
-                override fun onFailure(call: Call<SellRequestResponseBodyModel>, t: Throwable) {
-                    Log.d("로그", "매도 주문 요청: onFailure")
-                }
-            })
+                })
         }
 
         return view
