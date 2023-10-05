@@ -48,7 +48,7 @@
 
 
 
-### **프로젝트의 특장점 **
+### **프로젝트의 특장점**
 
 1. 생명과의 교감을 통한 투자 서비스
 2. 실시간으로 반영되는 호가창과 차트
@@ -167,7 +167,7 @@
   		ㄴ📘 DataModels.kt
   		ㄴ📘 ExcahngeFragemnet
   		ㄴ📘 HomeFragment
-  		ㄴ📘 LoginActivity.kt
+  		ㄴ📘 LoginMainActivity.kt
   		ㄴ📘 MainActivity
   		ㄴ📘 MoreFragement
   		ㄴ📘 MyEditFragemnet
@@ -221,7 +221,150 @@
 <h4>💾 BackEnd</h4>
 
 ```
-fffff
+📂 src/main/java
+  ㄴ📦 com.a406.horsebit
+      ㄴ📦 aop
+          ㄴ📄 AopForTransaction.java
+          ㄴ📄 CustomSpringELParser.java
+          ㄴ📄 DistributedLock.java
+          ㄴ📄 DistributedLockAop.java
+      ㄴ📦 cache
+          ㄴ📄 CandleCache.java
+      ㄴ📦 config
+          ㄴ📦 jwt
+              ㄴ📄 JwtAuthenticationEntryPoint.java
+              ㄴ📄 JwtProperties.java
+              ㄴ📄 TokenProvider.java
+          ㄴ📦 oauth
+              ㄴ📄 OAuth2UserCustomService.java
+          ㄴ📄 RedissonConfig.java
+          ㄴ📄 TokenAuthenticationFilter.java
+          ㄴ📄 WebOAuthSecurityConfig.java
+      ㄴ📦 constant
+          ㄴ📄 CandleConstant.java
+          ㄴ📄 OrderConstant.java
+          ㄴ📄 PriceConstant.java
+      ㄴ📦 controller
+          ㄴ📄 AssetsController.java
+          ㄴ📄 HorseController.java
+          ㄴ📄 OrderController.java
+          ㄴ📄 TokenController.java
+          ㄴ📄 TradeController.java
+          ㄴ📄 UserController.java
+      ㄴ📦 domain
+          ㄴ📦 redis
+              ㄴ📄 Candle.java
+              ㄴ📄 CandleType.java
+              ㄴ📄 Order.java
+              ㄴ📄 OrderSummary.java
+              ㄴ📄 Price.java
+              ㄴ📄 PriceRateOfChange.java
+              ㄴ📄 VolumePage.java
+          ㄴ📄 Account.java
+          ㄴ📄 Bookmark.java
+          ㄴ📄 BookmarkPK.java
+          ㄴ📄 Horse.java
+          ㄴ📄 HorseTokenRel.java
+          ㄴ📄 HorseTokenRelPK.java
+          ㄴ📄 Possess.java
+          ㄴ📄 RefreshToken.java
+          ㄴ📄 Token.java
+          ㄴ📄 Trade.java
+          ㄴ📄 TradeHistory.java
+          ㄴ📄 User.java
+      ㄴ📦 dto
+          ㄴ📦 response
+              ㄴ📄 CreateAccessTokenResponse.java
+              ㄴ📄 TokenReponse.java
+          ㄴ📦 request
+              ㄴ📄 AddUserRequest.java
+              ㄴ📄 TokenRequest.java
+          ㄴ📄 AssetsDTO.java
+          ㄴ📄 CandleDTO.java
+          ㄴ📄 HorseDTO.java
+          ㄴ📄 HorseTokenDTO.java
+          ㄴ📄 OrderDTO.java
+          ㄴ📄 OrderRequestDTO.java
+          ㄴ📄 OrderResponseDTO.java
+          ㄴ📄 PriceDTO.java
+          ㄴ📄 PriceRateOfChangeDTO.java
+          ㄴ📄 TokenDTO.java
+          ㄴ📄 TradeDTO.java
+          ㄴ📄 UserSettingDTO.java
+          ㄴ📄 UserTradeDTO.java
+          ㄴ📄 VolumeDTO.java
+      ㄴ📦 exception
+          ㄴ📄 CustomException.java
+      ㄴ📦 exceptionhandler
+          ㄴ📄 GlobalExceptionHandler.java
+      ㄴ📦 google
+          ㄴ📦 controller
+              ㄴ📄 OAuthController.java
+          ㄴ📦 domain
+              ㄴ📄 OAuthAdapter.java
+              ㄴ📄 OAuthConfig.java
+              ㄴ📄 OAuthProperties.java
+              ㄴ📄 OAuthProvider.java
+              ㄴ📄 OIDCKey.java
+              ㄴ📄 Role.java
+          ㄴ📦 dto
+              ㄴ📦 request
+                  ㄴ📄 RefreshDTO.java
+                  ㄴ📄 SignInDTO.java
+                  ㄴ📄 SignUpDTO.java
+                  ㄴ📄 UserDTO.java
+              ㄴ📦 response
+                  ㄴ📄 RefreshResponseDTO.java
+                  ㄴ📄 SignInResponseDTO.java
+                  ㄴ📄 SignUpResponseDTO.java
+                  ㄴ📄 UserNameDuplicatedResponseDTO.java
+          ㄴ📦 exception
+              ㄴ📄 NoSuchUserException.java
+              ㄴ📄 UnauthorizedException.java
+          ㄴ📦 repository
+              ㄴ📄 InMemoryProviderRepository.java
+      ㄴ📦 repository
+          ㄴ📦 redis
+               ㄴ📄 CandleRepository.java
+               ㄴ📄 OrderRepository.java
+               ㄴ📄 PriceRepository.java
+          ㄴ📄 AccountRepository.java
+          ㄴ📄 BookmarkRepository.java
+          ㄴ📄 PossessRepository.java
+          ㄴ📄 RefreshTokenRepository.java
+          ㄴ📄 TokenRepository.java
+          ㄴ📄 TradeRepository.java
+          ㄴ📄 UserRepository.java
+      ㄴ📦 service
+          ㄴ📄 AssetsService.java
+          ㄴ📄 BookmarkService.java
+          ㄴ📄 CandleService.java
+          ㄴ📄 HorseService.java
+          ㄴ📄 InitiatorService.java
+          ㄴ📄 OrderAsyncService.java
+          ㄴ📄 OrderService.java
+          ㄴ📄 PriceService.java
+          ㄴ📄 TokenService.java
+          ㄴ📄 TradeService.java
+          ㄴ📄 UserDetailService.java
+          ㄴ📄 UserService.java
+    ㄴ📄 HorsebitApplication.java
+    ㄴ📄 SpringConfig.java
+📂 src/main/resources
+    ㄴ📂 js
+        ㄴ📄 token.js
+    ㄴ📂 static/img
+        ㄴ📄 google.png
+    ㄴ📂 templates
+        ㄴ📄 oauthLogin.html
+        ㄴ📄 signup.html
+    ㄴ📄 application.yml
+📄 .gitignore
+🐘 build.gradle
+🐳 Dockerfile
+🐘 gradlew
+🐘 gradlew.bat
+🐘 settings.gradle
 ```
 
 
@@ -306,7 +449,7 @@ master
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | <a href="https://github.com/HHongmoris"><img src="https://avatars.githubusercontent.com/u/122426101?v=4?s=100" width="100px;" alt=""/> | **홍성민**<br />  팀원들이 자유롭게 의견을 나누고 원활한 피드백이 프로젝트에 많은 도움이 되었습니다. 기획, 설계에 있어서 서로 지속적인 소통이 있었기에 꼼꼼하게 진행하여 프로젝트를 마무리 할 수 있었습니다. 협업을 통해 새로운 기술들을 경험할 수 있었고 함께 성장할 수 있는 프로젝트였습니다. <br /> 구글 로그인 구현에서 예상보다 너무 오랜 시간을 사용하여 아쉬움이 남습니다. 처음으로 OAuth2를 사용하여 구글 로그인을 개발하다보니 보안, 인증, 인가가 어려웠지만 시행착오를 겪으며 Spring Security와 OAuth 흐름을 이해하고 많은 경험을 쌓을 수 있어서 좋았습니다. 기다려준 팀원들에게 매우 감사합니다. |
 | <a href="https://github.com/h78749891"><img src="https://avatars.githubusercontent.com/u/125847525?v=4?s=100" width="100px;" alt=""/> | **이재홍** <br />백엔드 거래 시스템을 만들면서 실시간 서비스 개발 경험을 쌓을 수 있었습니다. 팀원들과 함께여서 끝까지 달릴 수 있었습니다. |
-| <a href="https://github.com/HwayeongD"><img src="https://avatars.githubusercontent.com/u/121176739?v=4?s=100" width="100px;" alt=""/> | **동화영 **<br /> 실시간 거래소를 구축하자는 팀원들과의 공동의 목표를 가지고 프로젝트를 완수하였습니다. 팀원들과의 활발한 의사소통을 통해 탄탄하게 프로젝트를 기획하고 설계하였기에 원활히 개발까지 완수할 수 있었다고 생각합니다. 로그와 테스트까지도 집중하며 개발하자는 컨벤션을 세웠고 이를 수행하였기에 개발능력은 물론, 팀원들과의 협업능력을 기를 수 있었던 프로젝트였습니다. |
+| <a href="https://github.com/HwayeongD"><img src="https://avatars.githubusercontent.com/u/121176739?v=4?s=100" width="100px;" alt=""/> | **동화영**<br /> 실시간 거래소를 구축하자는 팀원들과의 공동의 목표를 가지고 프로젝트를 완수하였습니다. 팀원들과의 활발한 의사소통을 통해 탄탄하게 프로젝트를 기획하고 설계하였기에 원활히 개발까지 완수할 수 있었다고 생각합니다. 로그와 테스트까지도 집중하며 개발하자는 컨벤션을 세웠고 이를 수행하였기에 개발능력은 물론, 팀원들과의 협업능력을 기를 수 있었던 프로젝트였습니다. |
 | <a href="https://github.com/soybean33"><img src="https://avatars.githubusercontent.com/u/80668684?v=4?s=100" width="100px;" alt=""/> | **김용우**<br /> 6주 기간동안 GIT과 JIRA를 사용한 에자일 방법론으로 빠르게 프로젝트를 완성할 수 있었습니다. 팀원들과 협업을 할 수 있는 기회가 많아서 좋았습니다, 핀테크를 주제로하여 프로젝트를 진행해 보는 좋은 기회가 되었습니다 |
 | <a href="https://github.com/minsoon025"><img src="https://avatars.githubusercontent.com/u/112068306?v=4?s=100" width="100px;" alt=""/> | **김민태**<br /> 경주마 조각투자 거래 플랫폼이라는 흥미로운 주제를 가지고 프로젝트를 진행하는 일은 즐거운 일이였습니다. 매일 개발 방향성을 얘기하고 진행했던 점이 좋은 결과를 가져오지 않았나 싶으며, 직접 구현하고 싶었던 기능인 생체인증은 뿌듯함을 가져왔습니다. 처음 사용하는 코틀린 언어는 자바와 유사해 빠르게 익숙해 졌던 것도 신기한 경험이였습니다. |
 | <a href="https://github.com/seooh99"><img src="https://avatars.githubusercontent.com/u/122509553?v=4?s=100" width="100px;" alt=""/> | **임서희**<br />핀테크 프로젝트지만 아이디어 회의부터 구현에 이르기까지 우리만의 색이 들어가있는 프로젝트를 진행할 수 있어서 좋았습니다. 팀원 모두가 자유로이 소통하는 분위기에서 열심히 프로젝트를 했기에 좋은 환경에서 프로젝트를 마무리할 수 있었습니다.  <br /> 안드로이드 스튜디오를 사용한 두번째 프로젝트지만 Kotlin이라는 새로운 기술 스택을 익힐 수 있어서 좋았습니다. OAuth2를 사용하여 구글 로그인을 개발했고 추후 프로젝트를 할 때 많은 경험이 될 것 같습니다. |
