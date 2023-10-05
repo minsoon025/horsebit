@@ -1,6 +1,5 @@
 package com.a406.horsebit
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -61,7 +60,7 @@ class ExchangeTableAdapter(val exchangeItemList: ArrayList<ExchangeDataResponseB
             binding.tvIExCoin.text = exchange.code
             binding.tvIExType.text = exchange.transactionType
             binding.tvIExSeep.text = exchange.volume
-            binding.tvIExOne.text = exchange.price
+            binding.tvIExOne.text = if (exchange.price.toIntOrNull() == 0) "-" else exchange.price
             binding.tvIExMoney.text = exchange.transactionAmount
             binding.tvIExFee.text = exchange.fee
             binding.tvIExRealMoney.text = exchange.amount

@@ -17,7 +17,6 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import com.a406.horsebit.databinding.FragmentMyEditBinding
 
 class MyEditFragment : Fragment() {
@@ -86,6 +85,9 @@ class MyEditFragment : Fragment() {
                 .setPositiveButton("ok", object : DialogInterface.OnClickListener {
                     override fun onClick(dialog: DialogInterface, which: Int) {
                         Log.d("MyTag", "positive")
+                        val intent = Intent(binding.root.context, LoginMainActivity::class.java)
+                        binding.root.context.startActivity(intent)
+
                     }
                 })
                 .setNegativeButton("cancel", object : DialogInterface.OnClickListener {
@@ -118,7 +120,7 @@ class MyEditFragment : Fragment() {
         }
 
         spinnerBankOrSecurities = view.findViewById(R.id.spinner_bank_or_securities)
-        val bankList = arrayOf("  은행 / 증권사", "  신한은행", "  국민은행", "  우리은행", "  기타")
+        val bankList = arrayOf("  은행 / 증권사", "  신한은행", "  국민은행", "  우리은행", "  부산은행",  "  기타")
 
         val adapter = object : ArrayAdapter<String>(
             requireContext(),
