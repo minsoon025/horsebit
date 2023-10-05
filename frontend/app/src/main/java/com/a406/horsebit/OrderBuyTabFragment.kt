@@ -28,6 +28,9 @@
         var tokenNo: Long = 0L
         var code: String = ""
 
+        var orderBuyNum: Double = 0.0
+        var orderBuyPrice: Long = 0L
+
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
             val view = inflater.inflate(R.layout.fragment_order_buy_tab, container, false)
 
@@ -101,10 +104,18 @@
 
             binding.tvOrderBuyCommit.setOnClickListener {
 
+                orderBuyNum = if(!binding.etOrderBuyNum.text.toString().isNullOrEmpty()) binding.etOrderBuyNum.text.toString().toDouble() else 0.0
+                orderBuyPrice = if(!binding.etOrderBuyPrice.text.toString().isNullOrEmpty()) binding.etOrderBuyPrice.text.toString().toLong() else 0L
+
+                if(orderBuyNum * orderBuyPrice == 0.0){
+                    Toast.makeText(context, "올바른 값을 입력해 주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
                 val requestData = OrderRequestRequestBodyModel(
                     tokenNo,
-                    binding.etOrderBuyNum.text.toString().toDouble(),
-                    binding.etOrderBuyPrice.text.toString().toLong()
+                    orderBuyNum,
+                    orderBuyPrice,
                 )
 
                 api.orderRequest(authorization = "Bearer ${token}" , requestData).enqueue(object: Callback<OrderRequestResponseBodyModel> {
@@ -113,19 +124,22 @@
                             Log.d("로그", "매수 주문 요청: 200 Success")
 
                             val responseBody = response.body()
-
+                            Toast.makeText(context,"[매수 주문] 완료", Toast.LENGTH_SHORT).show()
                         }
                         else if(response.code() == 201) {   // 201 Created
                             Log.d("로그", "매수 주문 요청: 201 Created")
+                            Toast.makeText(context,"[매수 주문] 요청 완료", Toast.LENGTH_SHORT).show()
                         }
                         else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
                             Log.d("로그", "매수 주문 요청: 202 Accepted")
+                            Toast.makeText(context,"[매수 주문] 요청 처리 중", Toast.LENGTH_SHORT).show()
                         }
                         else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                             Log.d("로그", "매수 주문 요청: 400 Bad Request")
                         }
                         else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
                             Log.d("로그", "매수 주문 요청: 401 Unauthorized")
+                            Toast.makeText(context,"[매수 주문]은 로그인 후 이용이 가능합니다.", Toast.LENGTH_SHORT).show()
                         }
                         else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
                             Log.d("로그", "매수 주문 요청: 400 Bad Request")

@@ -96,6 +96,10 @@ class OrderSellTabFragment : Fragment() {
             orderSellNum = if(!binding.etOrderSellNum.text.toString().isNullOrEmpty()) binding.etOrderSellNum.text.toString().toDouble() else 0.0
             orderSellPrice = if(!binding.etOrderSellPrice.text.toString().isNullOrEmpty()) binding.etOrderSellPrice.text.toString().toLong() else 0L
 
+            if(orderSellNum * orderSellPrice == 0.0) {
+                Toast.makeText(context, "올바른 값을 입력해 주세요", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val requestData = SellRequestRequestBodyModel(
                 tokenNo,
@@ -113,20 +117,21 @@ class OrderSellTabFragment : Fragment() {
                             Log.d("로그", "매도 주문 요청: 200 Success")
 
                             val responseBody = response.body()
+                            Toast.makeText(context,"[매도 주문] 완료", Toast.LENGTH_SHORT).show()
 
                         } else if (response.code() == 201) {   // 201 Created
                             Log.d("로그", "매도 주문 요청: 201 Created")
+                            Toast.makeText(context,"[매도 주문] 요청 완료", Toast.LENGTH_SHORT).show()
                         } else if (response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
                             Log.d("로그", "매도 주문 요청: 202 Accepted")
-                            Toast.makeText(context, "[매도 주문]이 처리 중 입니다", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(context, "[매도 주문]이 처리 중", Toast.LENGTH_SHORT).show()
                         } else if (response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                             Log.d("로그", "매도 주문 요청: 400 Bad Request")
                         } else if (response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
                             Log.d("로그", "매도 주문 요청: 401 Unauthorized")
+                            Toast.makeText(context,"[매도 주문]은 로그인 후 이용이 가능합니다.", Toast.LENGTH_SHORT).show()
                         } else if (response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
                             Log.d("로그", "매도 주문 요청: 400 Bad Request")
-                            Toast.makeText(context,"[매도 주문]은 로그인 후 이용이 가능합니다.", Toast.LENGTH_SHORT).show()
                         } else if (response.code() == 404) {   // 404 Not Found
                             Log.d("로그", "매도 주문 요청: 404 Not Found")
                         }
