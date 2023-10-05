@@ -42,13 +42,13 @@ class StockChartFragment : Fragment() {
         initChart()
 
 
-        var indexDateTime = LocalDateTime.of(2023, 10, 4, 4, 0,0, 0)
+        var indexDateTime = LocalDateTime.of(2023, 1, 4, 4, 0,0, 0)
         val customDateTime = LocalDateTime.now()
 
         val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
         val token = pref.getString("token", "1")
 
-        api.candleChartData(tokenNo = 1L, quantity = 2000L, endTime = customDateTime, candleTypeIndex = 0, margin = 3L, authorization = "Bearer ${token}").enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
+        api.candleChartData(tokenNo = 1L, quantity = 2000L, endTime = customDateTime, candleTypeIndex = 0, margin = 0L).enqueue(object: Callback<ArrayList<CandleChartDataResponseBodyBodyModel>> {
             override fun onResponse(call: Call<ArrayList<CandleChartDataResponseBodyBodyModel>>, response: Response<ArrayList<CandleChartDataResponseBodyBodyModel>>) {
                 if(response.code() == 200) {    // 200 Success
                     Log.d("로그", "차트 캔들 조회: 200 Success")
@@ -57,13 +57,8 @@ class StockChartFragment : Fragment() {
 
                     if(responseBody != null) {
                         var idx : Float = 0F
-
                         candleChartData = arrayListOf()
                         for(candleChart in responseBody) {
-                            val startTimeString = candleChart.startTime
-                            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSS")
-                            val startTime = LocalDateTime.parse(startTimeString, formatter)
-
                             val candleShow = CandleShow(
                                 idx,
                                 candleChart.high.toFloat(),
@@ -72,18 +67,9 @@ class StockChartFragment : Fragment() {
                                 candleChart.close.toFloat()
                             )
                             val barShow = BarShow(idx, candleChart.volume.toFloat())
-
-                            if(indexDateTime < startTime) {
-
                                 candleChartData.add(candleShow)
                                 barChartData.add(barShow)
                                 ++idx
-                                indexDateTime = startTime
-                            }
-                            else{
-                                candleChartData[idx.toInt()] = candleShow
-                                barChartData[idx.toInt()] = barShow
-                            }
                         }
                     }
                     setChartData(candleChartData, barChartData)

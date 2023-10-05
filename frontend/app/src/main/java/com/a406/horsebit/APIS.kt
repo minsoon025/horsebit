@@ -101,7 +101,6 @@ interface APIS {
     // 캔들 차트 조회
     @GET("/api/exchange/tokens/{tokenNo}/chart")
     fun candleChartData(
-        @Header("Authorization") authorization: String,
         @Path("tokenNo") tokenNo: Long,
         @Query("quantity") quantity: Long,
         @Query("endTime") endTime: LocalDateTime,
