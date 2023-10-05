@@ -3,6 +3,8 @@ package com.a406.horsebit
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,17 +35,19 @@ class StockChartFragment : Fragment() {
     var tokenNo: Long = 0
 
     var candleChartData = arrayListOf<CandleShow>()
-
     val barChartData = arrayListOf<BarShow>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_stock_chart, container, false)
+    private val handler = Handler(Looper.getMainLooper())
+    private val updateInterval = 1000L // 1초마다 업데이트
 
-        binding = FragmentStockChartBinding.bind(view)
+    private val apiRunnable = object : Runnable {
+        override fun run() {
+            updateChartData() // 캔들 차트 데이터 업데이트
+            handler.postDelayed(this, updateInterval)
+        }
+    }
 
-        initChart()
-
-        var indexDateTime = LocalDateTime.of(2023, 1, 4, 4, 0,0, 0)
+    private fun updateChartData() {
         val customDateTime = LocalDateTime.now()
 
         tokenNo = arguments?.getLong("tokenNo") ?: 0
@@ -67,13 +71,13 @@ class StockChartFragment : Fragment() {
                                 candleChart.close.toFloat()
                             )
                             val barShow = BarShow(idx, candleChart.volume.toFloat())
-                                candleChartData.add(candleShow)
-                                barChartData.add(barShow)
-                                ++idx
+
+                            candleChartData.add(candleShow)
+                            barChartData.add(barShow)
+                            ++idx
                         }
                     }
                     setChartData(candleChartData, barChartData)
-
                 }
                 else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
                     Log.d("로그", "차트 캔들 조회: 400 Bad Request")
@@ -92,6 +96,20 @@ class StockChartFragment : Fragment() {
                 Log.d("로그", "차트 캔들 조회: onFailure")
             }
         })
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_stock_chart, container, false)
+
+        binding = FragmentStockChartBinding.bind(view)
+
+        initChart()
+
+        // 초기화 후 처음 데이터 로드
+        updateChartData()
+
+        // 핸들러를 사용하여 주기적으로 데이터 업데이트
+        handler.postDelayed(apiRunnable, updateInterval)
 
         return view
     }
