@@ -48,7 +48,7 @@
             api.MyTotalAsset(authorization = "Bearer ${token}").enqueue(object: Callback<MyTotalAssetResponseBodyModel> {
                 override fun onResponse(call: Call<MyTotalAssetResponseBodyModel>, response: Response<MyTotalAssetResponseBodyModel>) {
                     if(response.code() == 200) {    // 200 Success
-                        Log.d("로그", "매수 주문 요청: 200 Success")
+                        Log.d("로그", "내 자산 전체 조회: 200 Success")
 
                         val responseBody = response.body()
 
@@ -56,29 +56,21 @@
                             binding.tvOrderCanBuyPrice.text = "${responseBody.cashBalance} KRW"
                         }
                     }
-                    else if(response.code() == 201) {   // 201 Created
-                        Log.d("로그", "매수 주문 요청: 201 Created")
-                    }
-                    else if(response.code() == 202) {   // 202 Accepted - 요청은 정상이나 아직 처리 중
-                        Log.d("로그", "매수 주문 요청: 202 Accepted")
-                        Toast.makeText(context, "[매수 주문]이 처리 중 입니다.", Toast.LENGTH_SHORT).show()
-                    }
                     else if(response.code() == 400) {   // 400 Bad Request - Message에 누락 필드명 기입
-                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
+                        Log.d("로그", "내 자산 전체 조회: 400 Bad Request")
                     }
                     else if(response.code() == 401) {   // 401 Unauthorized - 인증 토큰값 무효
-                        Log.d("로그", "매수 주문 요청: 401 Unauthorized")
+                        Log.d("로그", "내 자산 전체 조회: 401 Unauthorized")
                     }
                     else if(response.code() == 403) {   // 403 Forbidden - 권한 없음 (둘러보기 회원)
-                        Log.d("로그", "매수 주문 요청: 400 Bad Request")
-                        Toast.makeText(context, "[매수 주문]은 로그인 후 이용이 가능합니다.", Toast.LENGTH_SHORT).show()
+                        Log.d("로그", "내 자산 전체 조회: 400 Bad Request")
                     }
                     else if(response.code() == 404) {   // 404 Not Found
-                        Log.d("로그", "매수 주문 요청: 404 Not Found")
+                        Log.d("로그", "내 자산 전체 조회: 404 Not Found")
                     }
                 }
                 override fun onFailure(call: Call<MyTotalAssetResponseBodyModel>, t: Throwable) {
-                    Log.d("로그", "매수 주문 요청: onFailure")
+                    Log.d("로그", "내 자산 전체 조회: onFailure")
                 }
             })
 

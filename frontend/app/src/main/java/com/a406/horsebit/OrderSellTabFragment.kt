@@ -107,11 +107,8 @@ class OrderSellTabFragment : Fragment() {
                 orderSellPrice,
             )
 
-            api.sellRequest(authorization = "Bearer ${token}", requestData)
-                .enqueue(object : Callback<SellRequestResponseBodyModel> {
-                    override fun onResponse(
-                        call: Call<SellRequestResponseBodyModel>,
-                        response: Response<SellRequestResponseBodyModel>
+            api.sellRequest(authorization = "Bearer ${token}", requestData).enqueue(object : Callback<SellRequestResponseBodyModel> {
+                    override fun onResponse(call: Call<SellRequestResponseBodyModel>, response: Response<SellRequestResponseBodyModel>
                     ) {
                         if (response.code() == 200) {    // 200 Success
                             Log.d("로그", "매도 주문 요청: 200 Success")
