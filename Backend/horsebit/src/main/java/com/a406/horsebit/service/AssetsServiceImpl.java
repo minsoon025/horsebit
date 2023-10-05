@@ -212,6 +212,7 @@ public class AssetsServiceImpl implements AssetsService {
 	}
 
 	@Transactional
+	@Override
 	public int updatePossessKRW(Long userNo, Long amount) {
 		Possess curr = possessRepository.findByUserNoAndTokenNo(userNo, KRW);
 		if(curr == null) {
