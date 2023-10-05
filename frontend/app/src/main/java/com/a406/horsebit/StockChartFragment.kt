@@ -61,7 +61,6 @@ class StockChartFragment : Fragment() {
                         candleChartData = arrayListOf()
                         for(candleChart in responseBody) {
                             val startTimeString = candleChart.startTime
-                            Log.d("fasdfads", startTimeString)
                             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSS")
                             val startTime = LocalDateTime.parse(startTimeString, formatter)
 
