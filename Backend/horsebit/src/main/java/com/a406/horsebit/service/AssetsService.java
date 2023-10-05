@@ -15,4 +15,5 @@ public interface AssetsService {
 	Long saveDepositWithdraw(Long userNo, Long amount);
 	Possess saveNewAsset(Long userNo, Long amount);
 	double findTokenByUserNoAndTokenNo(Long userNo, Long tokenNo);
+	Possess saveTrade(Long userNo, Long tokenNo, double volume, Long currentPrice);
 }
