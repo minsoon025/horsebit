@@ -107,6 +107,9 @@ class OrderSellTabFragment : Fragment() {
                 orderSellPrice,
             )
 
+            val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+            val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
             api.sellRequest(authorization = "Bearer ${token}", requestData).enqueue(object : Callback<SellRequestResponseBodyModel> {
                     override fun onResponse(call: Call<SellRequestResponseBodyModel>, response: Response<SellRequestResponseBodyModel>
                     ) {

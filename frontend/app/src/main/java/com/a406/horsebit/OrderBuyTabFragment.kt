@@ -110,6 +110,9 @@
                     orderBuyPrice,
                 )
 
+                val pref = PreferenceManager.getDefaultSharedPreferences(requireContext())  // import androidx.preference.PreferenceManager 인지 확인
+                val token: String = pref.getString("SERVER_ACCESS_TOKEN", "1") ?: "1"
+
                 api.orderRequest(authorization = "Bearer ${token}" , requestData).enqueue(object: Callback<OrderRequestResponseBodyModel> {
                     override fun onResponse(call: Call<OrderRequestResponseBodyModel>, response: Response<OrderRequestResponseBodyModel>) {
                         if(response.code() == 200) {    // 200 Success
