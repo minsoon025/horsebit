@@ -58,61 +58,50 @@
 
 
 
+<style>
+    .resized-image {
+        width: 300px; /* 적절한 크기로 조정하세요 */
+        height: auto;
+    }
+</style>
+
 ## 3️⃣ 서비스 화면
 
 <h4>로그인</h4>
-
-![로그인](./exec/assets/로그인.gif)
-
-</hr>
+<img src="./exec/assets/로그인.gif" alt="로그인" class="resized-image" />
+<hr>
 
 <h4>거래소</h4>
-
-![거래소](./exec/assets/거래소.gif)
-
-</hr>
+<img src="./exec/assets/거래소.gif" alt="거래소" class="resized-image" />
+<hr>
 
 <h4>주문</h4>
-
-![주문](./exec/assets/주문.gif)
-
-</hr>
+<img src="./exec/assets/주문.gif" alt="주문" class="resized-image" />
+<hr>
 
 <h4>차트</h4>
-
-![차트](./exec/assets/차트.gif)
-
-</hr>
+<img src="./exec/assets/차트.gif" alt="차트" class="resized-image" />
+<hr>
 
 <h4>정보</h4>
-
-![정보](./exec/assets/정보.gif)
-
-</hr>
+<img src="./exec/assets/정보.gif" alt="정보" class="resized-image" />
+<hr>
 
 <h4>마이페이지</h4>
-
-![마이페이지](./exec/assets/마이페이지.gif)
-
-</hr>
+<img src="./exec/assets/마이페이지.gif" alt="마이페이지" class="resized-image" />
+<hr>
 
 <h4>입출금 내역</h4>
-
-![입출금 내역](./exec/assets/입출금.gif)
-
-</hr>
+<img src="./exec/assets/입출금.gif" alt="입출금 내역" class="resized-image" />
+<hr>
 
 <h4>더보기</h4>
-
-![더보기](./exec/assets/더보기.gif)
-
-</hr>
+<img src="./exec/assets/더보기.gif" alt="더보기" class="resized-image" />
+<hr>
 
 <h4>내정보 수정</h4>
-
-![내정보 수정](./exec/assets/이름수정.gif)
-
-</hr>
+<img src="./exec/assets/이름수정.gif" alt="내정보 수정" class="resized-image" />
+<hr>
 
 
 
