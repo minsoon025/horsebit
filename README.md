@@ -61,7 +61,7 @@
 <style>
     .resized-image {
         width: 300px; /* 적절한 크기로 조정하세요 */
-        height: auto;
+        height: 450px;
     }
 </style>
 
